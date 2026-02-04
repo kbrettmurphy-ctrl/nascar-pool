@@ -510,7 +510,7 @@
       gap: 4px;
       margin: 0;
     }
-    .navBtn .ico{ font-size: 16px; line-height: 1; }
+    .navBtn .{ font-size: 16px; line-height: 1; }
     .navBtn.active{
       background: rgba(255,255,255,0.10);
       border-color: rgba(255,255,255,0.22);
@@ -539,7 +539,7 @@
       .pName{ font-size: 19px; }
       .pMeta{ font-size: 15px; }
       .navBtn{ font-size: 13px; }
-      .navBtn .ico{ font-size: 18px; }
+      .navBtn .{ font-size: 18px; }
       .card{ padding: 14px; }
     }
   </style>
@@ -618,6 +618,9 @@
       <button class="navBtn" id="nav-race" onclick="showView('current')">
         <div class="ico">🏁</div><div>Race</div>
       </button>
+      <button class="navBtn" id="nav-bracket" onclick="showView('bracket')">
+        <div class="ico">🏆</div><div>Bracket</div>
+      </button>
       <button class="navBtn" id="nav-me" onclick="showView('mymatchup')">
         <div class="ico">🧍</div><div>Me</div>
       </button>
@@ -626,9 +629,6 @@
       </button>
       <button class="navBtn" id="nav-dues" onclick="showView('dues')">
         <div class="ico">💰</div><div>Dues</div>
-      </button>
-      <button class="navBtn" id="nav-bracket" onclick="showView('bracket')">
-        <div class="ico">🏆</div><div>Bracket</div>
       </button>
     </div>
   </div>
