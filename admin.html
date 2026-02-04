@@ -373,17 +373,28 @@
     return !!base && !!key;
   }
 
-  function applyConfigVisibility(){
-    const wrap = document.getElementById("apiConfigWrap");
-    if(!wrap) return;
+  // Tracks whether user manually opened the config card
+window.__configOpen = false;
 
-    // Hide the whole card when configured
-    if(hasAdminConfig()){
-      wrap.classList.add("hide");
-    } else {
-      wrap.classList.remove("hide");
-    }
+function applyConfigVisibility(){
+  const wrap = document.getElementById("apiConfigWrap");
+  if(!wrap) return;
+
+  // If not configured, always show the card
+  if(!hasAdminConfig()){
+    wrap.classList.remove("hide");
+    wrap.style.display = "";        // reset any inline styling
+    window.__configOpen = true;     // treat as open
+    return;
   }
+
+  // Configured: hide by default unless user opened it
+  if(window.__configOpen){
+    wrap.classList.remove("hide");
+  }else{
+    wrap.classList.add("hide");
+  }
+}
 
   function saveConfig(){
     const apiBase = document.getElementById("apiBase").value.trim();
@@ -403,20 +414,26 @@
     showMsg(msg, "Saved. ✅", false);
     syncConfigUI();
     bootstrap();
+    window.__configOpen = false; // auto-hide after saving
     applyConfigVisibility();
   }
 
   function editConfig(){
+    window.__configOpen = true; // force open
+    const wrap = document.getElementById("apiConfigWrap");
+    if(wrap) wrap.classList.remove("hide");
+
     const { apiBase, adminKey } = getCfg();
 
     // show inputs
     document.getElementById("configSummary").classList.add("hide");
     document.getElementById("configInputs").classList.remove("hide");
 
-    // prefill inputs with what’s already saved
+    // prefill
     document.getElementById("apiBase").value = apiBase || "";
     document.getElementById("adminKey").value = adminKey || "";
   }
+
 
 
   function clearConfig(){
@@ -688,11 +705,11 @@
     const {apiBase, adminKey} = getCfg();
     if(!apiBase || !adminKey) return;
 
-    await refreshContext();
-    await loadRaceHeadersForTournament();
-    await loadRaceHeadersForSheet();
-    await loadPlayers();
+    await refreshContext();           // sets __ctx + defaults Numbers panel
+    await loadRaceHeadersForSheet();  // fills paste dropdown headers
+    await loadPlayers();              // fills Add Funds players
   }
+
 
   // Tournament change
   
@@ -703,18 +720,21 @@
   });
   
   // Init
-  syncConfigUI();
-  bootstrap();
 
-function toggleConfigCard() {
+function toggleConfigCard(){
   const wrap = document.getElementById("apiConfigWrap");
-  if (!wrap) return;
+  if(!wrap) return;
 
-  wrap.style.display = (wrap.style.display === "none") ? "block" : "none";
+  // flip open state
+  window.__configOpen = !window.__configOpen;
+
+  // show/hide via class (NOT inline style)
+  if(window.__configOpen){
+    wrap.classList.remove("hide");
+  }else{
+    wrap.classList.add("hide");
+  }
 }
-document.addEventListener("DOMContentLoaded", () => {
-  applyConfigVisibility();
-});
 
 document.addEventListener("DOMContentLoaded", async () => {
   syncConfigUI();
