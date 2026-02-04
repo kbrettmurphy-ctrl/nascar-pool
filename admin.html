@@ -594,7 +594,7 @@
     try{
       showMsg(msg, "Loading…", false);
       // Expose your existing GAS function buildTournamentWinningsText_ via an admin endpoint if not already.
-      const r = await apiCall("adminTournamentWinnings", { tournament: t }, true);
+      const r = await apiCall("adminGetTournamentWinnings", { tournament: t }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
       showMsg(msg, r.data?.text || "(no data)", false);
     }catch(e){
