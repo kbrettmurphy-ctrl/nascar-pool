@@ -7,9 +7,9 @@
 
   <style>
     :root{
-      --bg:#f6f7f9;
+      --bg:#0b0b0b;
       --card:#111111;
-      --text:#000000;
+      --text:#ffffff;
       --muted:rgba(255,255,255,.72);
       --line:rgba(255,255,255,.12);
 
@@ -20,9 +20,9 @@
       --yellow:#FFD659;   /* Mustard */
       --black:#000000;
 
-      --btn:#007AC2;
-      --btn2:#E4002B;
-      --danger:#E4002B;
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
 
       --shadow: 0 16px 40px rgba(0,0,0,.45);
       --radius:18px;
@@ -31,14 +31,14 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
       background: var(--bg);
       color: var(--text);
     }
     .wrap{
-      max-width: 820px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 18px 14px 110px; /* bottom space for nav */
+      padding: 18px 14px 120px;
     }
     .title{
       font-size: 34px;
@@ -52,22 +52,19 @@
       align-items:center;
       padding:10px 12px;
       border-radius: 999px;
-      background: rgba(255,214,89,.16);
-      border:1px solid var(--yellow);
-      color: var(--blue);
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
       font-weight: 900;
       font-size: 14px;
     }
-    .pill small{font-weight:800;color: var(--black)}
+    .pill small{font-weight:800;color:rgba(255,255,255,.88)}
 
     .grid{
       display:grid;
       grid-template-columns: 1fr;
       gap: 14px;
       margin-top: 14px;
-    }
-    @media (min-width: 860px){
-      .grid.two{grid-template-columns: 1fr 1fr;}
     }
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
@@ -76,19 +73,19 @@
       padding: 16px;
       box-shadow: var(--shadow);
     }
-
     .card h3{
       margin:0 0 10px;
       font-size: 18px;
       font-weight: 900;
     }
-    .muted{color:var(--yellow); font-size: 13px;}
+    .muted{color:var(--muted); font-size: 13px;}
+
     label{
       display:block;
       font-weight: 800;
       margin: 10px 0 6px;
       font-size: 13px;
-      color:#111827;
+      color: rgba(255,255,255,.9);
     }
     input, select, textarea{
       width:100%;
@@ -101,10 +98,11 @@
       color: var(--text);
     }
     input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
-
     textarea{min-height:120px; resize: vertical;}
+
     .row{display:flex; gap:10px; align-items:center;}
     .row > *{flex:1}
+
     .btn{
       display:inline-flex;
       align-items:center;
@@ -116,13 +114,15 @@
       cursor:pointer;
       font-weight: 900;
       font-size: 16px;
-      background: var(--btn2); /* red primary */
+      background: var(--btnPrimary);
       color:#fff;
     }
-    .btn.secondary{background: var(--btn);}     /* blue */
-    .btn.danger{background: var(--danger);}     /* red */
+    .btn.secondary{background: var(--btnSecondary);}
+    .btn.danger{background: var(--danger);}
     .btn:disabled{opacity:.55; cursor:not-allowed;}
+
     .spacer{height:8px}
+
     .msg{
       margin-top:10px;
       font-size: 13px;
@@ -136,6 +136,8 @@
     .err{border-color: rgba(228,0,43,.55); background: rgba(228,0,43,.10); }
     .ok{border-color: rgba(255,214,89,.55); background: rgba(255,214,89,.10); }
 
+    .hide{display:none !important;}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
 
     /* Bottom Nav */
     .bottomNav{
@@ -145,14 +147,25 @@
       background: rgba(0,0,0,.92);
       backdrop-filter: blur(10px);
       border-top: 1px solid rgba(255,255,255,.10);
+      z-index: 9999;
+    }
+    .navInner{
+      max-width: 920px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
     }
     .navBtn{
-      flex:0 0 auto; min-width: 92px;
+      flex:0 0 auto;
+      min-width: 98px;
       background: rgba(255,255,255,.06);
       color:#fff;
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 14px;
-      padding: 10px 8px;
+      padding: 10px 10px;
       font-weight: 900;
       font-size: 13px;
       cursor:pointer;
@@ -161,56 +174,12 @@
       align-items:center;
       justify-content:center;
       text-align:center;
+      white-space:nowrap;
     }
-
-    .navInner{
-      max-width: 820px;
-      margin:0 auto;
-      display:flex;
-      gap:10px;
-      justify-content: space-between;
-      align-items:center;
-      overflow-x:auto;
-    }
-    
     .navBtn.active{
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
     }
-
-    .hide{display:none !important;}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-
-    /* ===== NASCAR watermark background ===== */
-  body{
-    position: relative;
-  }
-
-  body::before{
-    content:"";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-
-    background-image: url("nascar-logo.png"); /* or assets/nascar-logo.png */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: min(900px, 90vw);
-
-    opacity: 0.1;
-    /* filter: grayscale(100%); */
-  }
-
-  .wrap{
-    position: relative;
-    z-index: 1;
-  }
-
-  .bottomNav{
-    z-index: 10;
-  }
-
   </style>
 </head>
 
@@ -218,90 +187,66 @@
   <div class="wrap">
     <div class="title">NASCAR Pool Admin</div>
 
-    <div class="pill" id="ctxPill">
-      Current: <small>(loading…)</small>
-    </div>
+    <div class="pill" id="ctxPill">Current: <small>(loading…)</small></div>
 
-    <div class="grid two" style="margin-top:12px;">
+    <!-- API CONFIG (hidden when configured; can be opened from ⚙️) -->
+    <div class="grid" style="margin-top:12px;">
+      <div id="apiConfigWrap" class="card">
+        <h3>API Config</h3>
+        <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
 
-  <!-- API CONFIG (this is the ONLY thing that gets hidden) -->
-  <div id="apiConfigWrap" class="card" style="margin:0;">
-    <h3>API Config</h3>
-    <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
+        <div id="configSummary" class="hide" style="margin-top:10px;">
+          <div class="msg ok">
+            Configured ✅
+            <div style="margin-top:6px;">
+              API Base: <span class="mono" id="apiBaseMasked"></span><br/>
+              Admin Key: <span class="mono" id="adminKeyMasked"></span>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <button class="btn secondary" onclick="editConfig()">Edit</button>
+            <button class="btn danger" onclick="clearConfig()">Clear</button>
+          </div>
+        </div>
 
-    <!-- Stored summary -->
-    <div id="configSummary" class="hide" style="margin-top:10px;">
-      <div class="msg ok">
-        Configured ✅
-        <div style="margin-top:6px;">
-          API Base: <span class="mono" id="apiBaseMasked"></span><br/>
-          Admin Key: <span class="mono" id="adminKeyMasked"></span>
+        <div id="configInputs" style="margin-top:10px;">
+          <label>API Base (GAS /exec)</label>
+          <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
+
+          <label>Admin Key</label>
+          <input id="adminKey" placeholder="ADMIN_KEY" />
+
+          <div class="spacer"></div>
+          <button class="btn secondary" onclick="saveConfig()">Save Config</button>
+          <div id="configMsg" class="msg hide"></div>
         </div>
       </div>
-      <div class="row" style="margin-top:10px;">
-        <button class="btn secondary" onclick="editConfig()">Edit</button>
-        <button class="btn danger" onclick="clearConfig()">Clear</button>
-      </div>
     </div>
 
-    <!-- Inputs -->
-    <div id="configInputs" style="margin-top:10px;">
-      <label>API Base (GAS /exec)</label>
-      <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
-
-      <label>Admin Key</label>
-      <input id="adminKey" placeholder="ADMIN_KEY" />
-
-      <div class="spacer"></div>
-      <button class="btn secondary" onclick="saveConfig()">Save Config</button>
-      <div id="configMsg" class="msg hide"></div>
-    </div>
-  </div>
-</div>
-
-
-    <!-- Panels (switched by bottom nav) -->
+    <!-- Panels -->
     <div class="grid" style="margin-top:14px;">
-      
-      <div class="card panel hide" id="panelNumbers">
+
+      <div class="card panel" id="panelNumbers">
         <h3>Assign Numbers</h3>
         <div class="muted">Defaults to the current race detected at the top.</div>
-       <label>Tournament</label>
-       <select id="numTourneySel">
-         <option value="1">Tournament 1</option>
-         <option value="2">Tournament 2</option>
-         <option value="3">Tournament 3</option>
-         <option value="4">Tournament 4</option>
-         <option value="5">Tournament 5</option>
-         <option value="6">Tournament 6</option>
-         <option value="7">Tournament 7</option>
-         <option value="8">Tournament 8</option>
-         <option value="9">Tournament 9</option>
-       </select>
-       <label>Race</label>
-       <select id="numRaceSel">
-         <option value="">(loading…)</option>
-       </select>
-       <div class="spacer"></div>
-       <button class="btn" onclick="assignNumbersSelectedFromPanel()">Assign Numbers (Current Race)</button>
-       <div class="spacer"></div>
-       <button class="btn secondary" onclick="assignNumbersAllFromPanel()">Assign Numbers (ALL 4 Races)</button>
-       <div id="numMsg" class="msg hide"></div>
-    </div>
 
-      
-      <div class="card panel" id="panelAddFunds">
-        <h3>Add Funds</h3>
-        <label>Player</label>
-        <select id="playerSel"><option value="">(loading…)</option></select>
+        <label>Tournament</label>
+        <select id="numTourneySel">
+          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
+        </select>
 
-        <label>Amount</label>
-        <input id="fundsAmt" placeholder="25 or 25.00" />
+        <label>Race</label>
+        <select id="numRaceSel"><option value="">(loading…)</option></select>
 
         <div class="spacer"></div>
-        <button class="btn" onclick="addFunds()">Add Funds</button>
+        <button class="btn" onclick="assignNumbersSelectedFromPanel()">Assign Numbers (Selected Race)</button>
 
-        <div id="fundsMsg" class="msg hide"></div>
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="assignNumbersAllFromPanel()">Assign Numbers (ALL 4 Races)</button>
+
+        <div id="numMsg" class="msg hide"></div>
       </div>
 
       <div class="card panel hide" id="panelImport">
@@ -350,18 +295,53 @@
 
         <div id="winningsMsg" class="msg hide"></div>
       </div>
+
+      <div class="card panel hide" id="panelFunds">
+        <h3>Add Funds</h3>
+        <label>Player</label>
+        <select id="playerSel"><option value="">(loading…)</option></select>
+
+        <label>Amount</label>
+        <input id="fundsAmt" placeholder="25 or 25.00" />
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="addFunds()">Add Funds</button>
+
+        <div id="fundsMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelPublish">
+        <h3>Publish to GitHub (Static Snapshot)</h3>
+        <div class="muted">
+          This pushes fresh JSON files into <span class="mono">/data</span> in your repo so the player site loads fast.
+          After you assign numbers, import finishes, or update stats… hit this once.
+        </div>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
+
+        <div id="pubMsg" class="msg hide"></div>
+
+        <div class="spacer"></div>
+        <div class="muted">
+          Required once in GAS Script Properties:<br/>
+          <span class="mono">GITHUB_TOKEN</span>, <span class="mono">GITHUB_OWNER</span>, <span class="mono">GITHUB_REPO</span>, (optional) <span class="mono">GITHUB_BRANCH</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <!-- Bottom nav -->
   <div class="bottomNav">
     <div class="navInner">
-      <button class="navBtn active" id="navNums" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
-      <button class="navBtn" id="navImport" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
-      <button class="navBtn" id="navRanks" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
-      <button class="navBtn" id="navWin" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
-      <button class="navBtn" id="navFunds" onclick="showPanel('AddFunds', this)">💵<span>Add</span></button>
-      <button class="navBtn" id="navCfg" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
+      <button class="navBtn active" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
+      <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
+      <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
+      <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
+      <button class="navBtn" onclick="showPanel('Funds', this)">💵<span>Add</span></button>
+      <button class="navBtn" onclick="showPanel('Publish', this)">🚀<span>Publish</span></button>
+      <button class="navBtn" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
     </div>
   </div>
 
@@ -382,6 +362,7 @@
     return s.slice(0, 12) + "…";
   }
 
+  // ---------- Config UI ----------
   function syncConfigUI(){
     const {apiBase, adminKey} = getCfg();
     const has = !!apiBase && !!adminKey;
@@ -399,33 +380,41 @@
   }
 
   function hasAdminConfig(){
-    const base = (localStorage.getItem(LS_API) || "").trim();
-    const key  = (localStorage.getItem(LS_KEY) || "").trim();
-    return !!base && !!key;
+    const {apiBase, adminKey} = getCfg();
+    return !!apiBase && !!adminKey;
   }
 
-  // Tracks whether user manually opened the config card
-window.__configOpen = false;
+  // When configured we hide the big card (but Config button can still open it)
+  function applyConfigVisibility(forceShow=false){
+    const wrap = document.getElementById("apiConfigWrap");
+    if(!wrap) return;
 
-function applyConfigVisibility(){
-  const wrap = document.getElementById("apiConfigWrap");
-  if(!wrap) return;
-
-  // If not configured, always show the card
-  if(!hasAdminConfig()){
-    wrap.classList.remove("hide");
-    wrap.style.display = "";        // reset any inline styling
-    window.__configOpen = true;     // treat as open
-    return;
+    if(forceShow){
+      wrap.classList.remove("hide");
+      return;
+    }
+    if(hasAdminConfig()){
+      wrap.classList.add("hide");
+    }else{
+      wrap.classList.remove("hide");
+    }
   }
 
-  // Configured: hide by default unless user opened it
-  if(window.__configOpen){
-    wrap.classList.remove("hide");
-  }else{
-    wrap.classList.add("hide");
+  function toggleConfigCard(){
+    const wrap = document.getElementById("apiConfigWrap");
+    if(!wrap) return;
+
+    const isHidden = wrap.classList.contains("hide");
+    if(isHidden){
+      wrap.classList.remove("hide");
+      // also make sure inputs/summary reflect saved state
+      syncConfigUI();
+    }else{
+      // if not configured, don't allow hiding (you need to see it)
+      if(!hasAdminConfig()) return;
+      wrap.classList.add("hide");
+    }
   }
-}
 
   function saveConfig(){
     const apiBase = document.getElementById("apiBase").value.trim();
@@ -440,39 +429,32 @@ function applyConfigVisibility(){
       showMsg(msg, "Error: Admin Key required.", true);
       return;
     }
+
     localStorage.setItem(LS_API, apiBase);
     localStorage.setItem(LS_KEY, adminKey);
-    showMsg(msg, "Saved. ✅", false);
+
+    showMsg(msg, "Saved ✅", false);
     syncConfigUI();
+    applyConfigVisibility(false);
     bootstrap();
-    window.__configOpen = false; // auto-hide after saving
-    applyConfigVisibility();
   }
 
   function editConfig(){
-    window.__configOpen = true; // force open
-    const wrap = document.getElementById("apiConfigWrap");
-    if(wrap) wrap.classList.remove("hide");
-
-    const { apiBase, adminKey } = getCfg();
-
-    // show inputs
+    // Show the card + inputs but KEEP the saved values (don’t nuke localStorage)
+    applyConfigVisibility(true);
+    const {apiBase, adminKey} = getCfg();
     document.getElementById("configSummary").classList.add("hide");
     document.getElementById("configInputs").classList.remove("hide");
-
-    // prefill
     document.getElementById("apiBase").value = apiBase || "";
     document.getElementById("adminKey").value = adminKey || "";
   }
-
-
 
   function clearConfig(){
     localStorage.removeItem(LS_API);
     localStorage.removeItem(LS_KEY);
     syncConfigUI();
     document.getElementById("ctxPill").innerHTML = `Current: <small>(not configured)</small>`;
-    applyConfigVisibility();
+    applyConfigVisibility(false);
   }
 
   // ---------- UI helpers ----------
@@ -494,10 +476,11 @@ function applyConfigVisibility(){
 
   function showPanel(name, btn){
     document.querySelectorAll(".panel").forEach(p => p.classList.add("hide"));
-    document.getElementById("panel"+name).classList.remove("hide");
+    const panel = document.getElementById("panel"+name);
+    if(panel) panel.classList.remove("hide");
 
     document.querySelectorAll(".navBtn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+    if(btn) btn.classList.add("active");
   }
 
   // ---------- API ----------
@@ -526,24 +509,16 @@ function applyConfigVisibility(){
       if(!r.ok) throw new Error(r.error || "API failed");
       const c = r.data || {};
 
-      // Save for later (Numbers default)
-      window.__ctx = {
-        tournament: String(c.tournament || ""),
-        round: String(c.round || ""),
-        raceLabel: String(c.raceLabel || "")
-      };
+      window.__ctx = { tournament: String(c.tournament||""), raceLabel: String(c.raceLabel||"") };
 
       pill.innerHTML = `Current: <small>T${c.tournament} · Round ${c.round} · ${escapeHtml(c.raceLabel || "(no label)")}</small>`;
 
-      // After context loads, sync Numbers panel defaults
       try { await syncNumbersPanelDefaults(); } catch(e) {}
-
     }catch(e){
       pill.innerHTML = `Current: <small>(could not detect)</small>`;
       window.__ctx = null;
     }
   }
-
 
   async function loadPlayers(){
     const sel = document.getElementById("playerSel");
@@ -559,7 +534,6 @@ function applyConfigVisibility(){
   }
 
   async function loadRaceHeadersForSheet(){
-    // For paste importer: we use Starting Lineups / Finishes sheet headers
     const sheetType = document.getElementById("sheetTypeSel").value;
     const sel = document.getElementById("raceHeaderSel");
     sel.innerHTML = `<option value="">(loading…)</option>`;
@@ -597,23 +571,24 @@ function applyConfigVisibility(){
     const rSel = document.getElementById("numRaceSel");
     if(!tSel || !rSel) return;
 
-    // Default tournament to detected one (fallback to 1)
     const t = ctx?.tournament || "1";
     tSel.value = t;
 
-    // Load races for that tournament
     const headers = await loadRaceHeadersForTournamentInto(rSel, t);
-
-    // Default race to detected raceLabel if it exists in the list
     const want = ctx?.raceLabel || "";
-    if(want && headers.includes(want)){
-      rSel.value = want;
-    }
+    if(want && headers.includes(want)) rSel.value = want;
   }
+
+  // Tournament changed inside Numbers panel
+  document.getElementById("numTourneySel").addEventListener("change", async () => {
+    const t = document.getElementById("numTourneySel").value;
+    const rSel = document.getElementById("numRaceSel");
+    await loadRaceHeadersForTournamentInto(rSel, t);
+  });
 
   // ---------- Actions ----------
   async function assignNumbersSelectedFromPanel(){
-    const msg = document.getElementById("numMsg");  
+    const msg = document.getElementById("numMsg");
     hideMsg(msg);
 
     const t = document.getElementById("numTourneySel").value;
@@ -628,7 +603,7 @@ function applyConfigVisibility(){
       refreshContext();
     }catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
-    }  
+    }
   }
 
   async function assignNumbersAllFromPanel(){
@@ -659,8 +634,6 @@ function applyConfigVisibility(){
 
     try{
       showMsg(msg, "Working…", false);
-      // You need an admin endpoint for this in api.gs if you don't already have it.
-      // If your GAS function is named submitAddFunds(player, amountInput), expose it as adminAddFunds.
       const r = await apiCall("adminAddFunds", { player, amount: amt }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
       showMsg(msg, r.data?.message || "Saved.", false);
@@ -685,7 +658,7 @@ function applyConfigVisibility(){
       const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
 
-      // AUTO-RUN compileOverallRanks after FINISHES import
+      // Auto run ranks after finishes import
       if(String(sheetType).toLowerCase().includes("finish")){
         showMsg(msg, "Imported. Now updating ranks…", false);
         const rr = await apiCall("adminCompileOverallRanks", {}, true);
@@ -722,7 +695,6 @@ function applyConfigVisibility(){
     const t = document.getElementById("winTourneySel").value;
     try{
       showMsg(msg, "Loading…", false);
-      // Expose your existing GAS function buildTournamentWinningsText_ via an admin endpoint if not already.
       const r = await apiCall("adminGetTournamentWinnings", { tournament: t }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
       showMsg(msg, r.data?.text || "(no data)", false);
@@ -731,49 +703,34 @@ function applyConfigVisibility(){
     }
   }
 
+  async function publishSnapshot(){
+    const msg = document.getElementById("pubMsg");
+    hideMsg(msg);
+
+    try{
+      showMsg(msg, "Publishing…", false);
+      const r = await apiCall("adminPublishSnapshot", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, (r.data?.message || "Published ✅") + "\n" + (r.data?.publishedAt || ""), false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
   // ---------- Bootstrap ----------
   async function bootstrap(){
-    const {apiBase, adminKey} = getCfg();
-    if(!apiBase || !adminKey) return;
+    syncConfigUI();
+    applyConfigVisibility(false);
 
-    await refreshContext();           // sets __ctx + defaults Numbers panel
-    await loadRaceHeadersForSheet();  // fills paste dropdown headers
-    await loadPlayers();              // fills Add Funds players
+    if(!hasAdminConfig()) return;
+
+    await refreshContext();
+    await loadRaceHeadersForSheet();
+    await loadPlayers();
   }
 
-
-  // Tournament change
-  
-  document.getElementById("numTourneySel").addEventListener("change", async () => {
-  const t = document.getElementById("numTourneySel").value;
-  const rSel = document.getElementById("numRaceSel");
-  await loadRaceHeadersForTournamentInto(rSel, t);
-  });
-  
   // Init
-
-function toggleConfigCard(){
-  const wrap = document.getElementById("apiConfigWrap");
-  if(!wrap) return;
-
-  // flip open state
-  window.__configOpen = !window.__configOpen;
-
-  // show/hide via class (NOT inline style)
-  if(window.__configOpen){
-    wrap.classList.remove("hide");
-  }else{
-    wrap.classList.add("hide");
-  }
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  syncConfigUI();
-  applyConfigVisibility();
-  await bootstrap();
-});
- 
-
+  document.addEventListener("DOMContentLoaded", bootstrap);
 </script>
 </body>
 </html>
