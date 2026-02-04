@@ -441,6 +441,7 @@
     }
     .elimBox{
       position:relative;
+      margin-top:8px; /* tighter gap under button */
       border:1px dashed #cbd5e1;
       background: repeating-linear-gradient(
         45deg,
@@ -450,6 +451,8 @@
         #f1f5f9 20px
       );
     }
+    .elimTopRow{ margin-bottom:8px; }
+    .deadBadge.inBox{ background:#0f172a; }
     .elimBox .boxSkull{
       position:absolute;
       top:10px;
@@ -964,12 +967,10 @@
           const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
 
           out.innerHTML = `
-            <div class="mmHeader">
-              <span class="deadBadge"><span class="skull">☠️</span> ELIMINATED</span>
-            </div>
-
             <div class="microBox elimBox">
-          <div class="boxSkull" aria-hidden="true">☠️</div>
+              <div class="elimTopRow">
+                <span class="deadBadge inBox"><span class="skull">☠️</span> ELIMINATED</span>
+              </div>
               <div class="microTitle elimTitle">
                 ${escapeHtml(data.you)}, you're eliminated…
               </div>
