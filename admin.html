@@ -148,7 +148,7 @@ input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
   border-top: 1px solid rgba(255,255,255,.10);
 }
 .navBtn{
-  flex:1;
+  flex:0 0 auto; min-width: 92px;
   background: rgba(255,255,255,.06);
   color:#fff;
   border: 1px solid rgba(255,255,255,.10);
@@ -171,6 +171,7 @@ input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
   gap:10px;
   justify-content: space-between;
   align-items:center;
+  overflow-x:auto;
 }
     
 .navBtn.active{
