@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>NASCAR Pool Admin</title>
+  <button id="configToggleBtn" class="secondary" style="width:auto;padding:10px 12px;border-radius:12px;display:none;"
+        onclick="toggleConfigCard()">
+  ⚙️ Config
+</button>
 
   <style>
     :root{
@@ -171,11 +175,13 @@
       Current: <small>(loading…)</small>
     </div>
 
+    <div id="apiConfigWrap">
     <div class="grid two" style="margin-top:12px;">
       <div class="card" id="configCard">
         <h3>API Config</h3>
         <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
-
+        </div>
+        
         <!-- Stored summary -->
         <div id="configSummary" class="hide" style="margin-top:10px;">
           <div class="msg ok">
@@ -366,6 +372,7 @@
     showMsg(msg, "Saved. ✅", false);
     syncConfigUI();
     bootstrap();
+    applyConfigVisibility();
   }
 
   function editConfig(){
@@ -380,6 +387,7 @@
     localStorage.removeItem(LS_KEY);
     syncConfigUI();
     document.getElementById("ctxPill").innerHTML = `Current: <small>(not configured)</small>`;
+    applyConfigVisibility();
   }
 
   // ---------- UI helpers ----------
@@ -619,6 +627,37 @@
   // Init
   syncConfigUI();
   bootstrap();
+
+  function hasAdminConfig() {
+  const base = (localStorage.getItem("nascar_api_base") || "").trim();
+  const key  = (localStorage.getItem("nascar_admin_key") || "").trim();
+  return !!base && !!key;
+}
+
+function applyConfigVisibility() {
+  const wrap = document.getElementById("apiConfigWrap");
+  const btn  = document.getElementById("configToggleBtn");
+  if (!wrap || !btn) return;
+
+  if (hasAdminConfig()) {
+    wrap.style.display = "none";              // hide big box
+    btn.style.display = "inline-flex";        // show ⚙️ button
+  } else {
+    wrap.style.display = "block";             // show setup
+    btn.style.display = "none";               // hide ⚙️ until configured
+  }
+}
+
+function toggleConfigCard() {
+  const wrap = document.getElementById("apiConfigWrap");
+  if (!wrap) return;
+
+  wrap.style.display = (wrap.style.display === "none") ? "block" : "none";
+}
+document.addEventListener("DOMContentLoaded", () => {
+  applyConfigVisibility();
+});
+
 </script>
 </body>
 </html>
