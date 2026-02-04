@@ -2,9 +2,14 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.05, maximum-scale=1.05, user-scalable=no" />
+  <base target="_top">
+
+  <!-- ✅ Correct viewport (prevents iOS weird scaling + supports safe-area) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+
   <title>NASCAR Pool 2026</title>
 
   <style>
@@ -18,27 +23,31 @@
       --nav:#0b1220;
       --nav2:#111827;
 
-      --pad:14px;
+      /* Slight overall scale-down (not blurry, just smaller defaults) */
+      --pad:12px;
       --radius:16px;
       --radius2:14px;
 
-      /* sizing */
-      --h2:26px;
-      --big:22px;
-      --body:16px;
+      --h2:24px;
+      --big:20px;
+      --body:15px;
 
-      /* spacing */
       --tight:10px;
       --micro:8px;
       --nano:6px;
 
-      /* My Matchup “tight mode” */
+      /* My Matchup tight mode */
       --mmPad:8px;
       --mmGap:6px;
       --mmHeaderGap:4px;
+
+      /* iOS bottom bar fix vars */
+      --vvb: 0px;    /* visual viewport bottom gap */
+      --navH: 74px;  /* approximate bottom nav height */
     }
 
     *{ box-sizing:border-box; }
+
     body {
       font-size: var(--body);
       font-family: Arial, sans-serif;
@@ -47,7 +56,9 @@
       margin: 0 auto;
       background: var(--bg);
       color: var(--ink);
-      padding-bottom: calc(78px + env(safe-area-inset-bottom));
+
+      /* ✅ keeps nav visible even with iOS toolbar */
+      padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
     }
 
     h2 { margin: 0 0 6px 0; font-size: var(--h2); letter-spacing: -0.3px; }
@@ -115,6 +126,7 @@
 
     .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
 
+    /* Current Race cards */
     .raceHeaderRow{
       display:flex;
       align-items:baseline;
@@ -187,7 +199,7 @@
     .elimTitle{ margin-top: 10px; font-weight: 900; font-size: 18px; }
     .elimItem{ font-size: 14px; color: var(--muted); margin-top: 4px; }
 
-    /* ---- Bracket: Sportsbook Mode (tight + no overflow) ---- */
+    /* ---- Bracket (your existing styles) ---- */
     .bracketGrid{
       display:grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -319,7 +331,10 @@
       line-height:1;
     }
 
-    .bracketWrap{ position: relative; margin-top:10px; }
+    .bracketWrap{
+      position: relative;
+      margin-top:10px;
+    }
     .bracketSticky{
       position: sticky;
       top: 0;
@@ -371,6 +386,7 @@
       right: 0;
       background: linear-gradient(270deg, rgba(246,247,249,1) 0%, rgba(246,247,249,0) 100%);
     }
+
     @media (max-width: 900px){
       .bracketSticky{ display:flex; }
       .bracketGrid{
@@ -384,6 +400,7 @@
       .bracketCol{ scroll-snap-align: start; }
     }
 
+    /* ---- My Matchup tight mode ---- */
     .mmWrap{ margin-top: 6px; }
     .mmHeader{
       font-weight: 900;
@@ -432,14 +449,39 @@
         #f1f5f9 20px
       );
     }
-    .elimTitle{ font-weight:900; font-size:14px; margin-bottom:4px; opacity:.85; }
-    .elimSub{ font-size:13px; color:#475569; }
+    .elimTitle{
+      font-weight:900;
+      font-size:14px;
+      margin-bottom:4px;
+      opacity:.85;
+    }
+    .elimSub{
+      font-size:13px;
+      color:#475569;
+    }
+    .deadBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      background:#0f172a;
+      color:#fff;
+      opacity:.9;
+    }
+    .deadBadge .skull{ font-size:12px; line-height:1; }
 
+    /* ---- Bottom Nav ---- */
     .bottomNav{
       position: fixed;
       left: 0;
       right: 0;
-      bottom: 0;
+
+      /* ✅ key fix: sit above iOS bottom toolbar gap */
+      bottom: var(--vvb);
+
       padding-bottom: env(safe-area-inset-bottom);
       background: linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%);
       border-top: 1px solid rgba(255,255,255,0.08);
@@ -475,26 +517,12 @@
       color:#fff;
     }
 
-    .deadBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 8px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-      background:#0f172a;
-      color:#fff;
-      opacity:.9;
-    }
-    .deadBadge .skull{ font-size:12px; line-height:1; }
-
     @media (max-width: 520px){
       :root{
-        --pad: 18px;
-        --h2: 32px;
-        --big: 26px;
-        --body: 18px;
+        --pad: 16px;
+        --h2: 30px;
+        --big: 24px;
+        --body: 17px;
         --radius: 18px;
         --radius2: 16px;
       }
@@ -536,7 +564,6 @@
       <div id="currentHeader">Current Race</div>
     </div>
     <div class="muted" id="currentSub"></div>
-
     <div id="matchupsArea" style="margin-top:10px;"></div>
     <div id="eliminatedArea" style="margin-top:12px;"></div>
   </div>
@@ -550,7 +577,6 @@
     <select id="mmName"></select>
 
     <button class="primary" onclick="loadMyMatchup()">Show my matchup</button>
-
     <div id="mmStatus" class="mmWrap"></div>
   </div>
 
@@ -570,7 +596,6 @@
     <select id="duesName"></select>
 
     <button class="primary" onclick="loadDues()">Show my dues</button>
-
     <div class="status" id="duesStatus"></div>
   </div>
 
@@ -593,9 +618,6 @@
       <button class="navBtn" id="nav-race" onclick="showView('current')">
         <div class="ico">🏁</div><div>Race</div>
       </button>
-      <button class="navBtn" id="nav-bracket" onclick="showView('bracket')">
-        <div class="ico">🏆</div><div>Bracket</div>
-      </button>
       <button class="navBtn" id="nav-me" onclick="showView('mymatchup')">
         <div class="ico">🧍</div><div>Me</div>
       </button>
@@ -605,56 +627,104 @@
       <button class="navBtn" id="nav-dues" onclick="showView('dues')">
         <div class="ico">💰</div><div>Dues</div>
       </button>
+      <button class="navBtn" id="nav-bracket" onclick="showView('bracket')">
+        <div class="ico">🏆</div><div>Bracket</div>
+      </button>
     </div>
   </div>
 
   <script>
-    // === YOUR APPS SCRIPT WEB APP /exec URL ===
-    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec";
+    /**********************
+     * CONFIG
+     **********************/
+    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
+    const STORAGE_KEY = "nascar_pool_player_name";
 
     const views = ["current","mymatchup","standings","dues","bracket"];
-    const STORAGE_KEY = "nascar_pool_player_name";
     let activeView = "current";
 
-    // ---------- JSONP API helper ----------
-    function apiCall(action, params = {}) {
+    /**********************
+     * iOS “loads shifted/zoomed until pinch” fix
+     **********************/
+    (function fixIOSBottomBar(){
+      function update(){
+        const vv = window.visualViewport;
+        if (!vv) return;
+
+        const bottomGap = Math.max(
+          0,
+          window.innerHeight - (vv.height + vv.offsetTop)
+        );
+
+        document.documentElement.style.setProperty("--vvb", bottomGap + "px");
+      }
+
+      update();
+      window.addEventListener("resize", update);
+      window.addEventListener("orientationchange", update);
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", update);
+        window.visualViewport.addEventListener("scroll", update);
+      }
+    })();
+
+    /**********************
+     * API helpers (Fetch + JSONP fallback)
+     **********************/
+    function apiUrl(params){
+      const u = new URL(API_BASE);
+      Object.keys(params).forEach(k => u.searchParams.set(k, params[k]));
+      return u.toString();
+    }
+
+    function jsonp(url){
       return new Promise((resolve, reject) => {
-        const cbName = "__jsonp_cb_" + Math.random().toString(36).slice(2);
-        const qs = new URLSearchParams({ action, callback: cbName, ...params });
-
-        const script = document.createElement("script");
-        script.src = API_BASE + "?" + qs.toString();
-        script.async = true;
-
+        const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
         const timeout = setTimeout(() => {
           cleanup();
-          reject(new Error("API timeout"));
-        }, 12000);
+          reject(new Error("JSONP timeout"));
+        }, 15000);
 
-        function cleanup() {
+        function cleanup(){
           clearTimeout(timeout);
-          if (script && script.parentNode) script.parentNode.removeChild(script);
-          try { delete window[cbName]; } catch(e) { window[cbName] = undefined; }
+          delete window[cb];
+          if (s && s.parentNode) s.parentNode.removeChild(s);
         }
 
-        window[cbName] = (payload) => {
+        window[cb] = (data) => {
           cleanup();
-          if (!payload || payload.ok !== true) {
-            reject(new Error(payload && payload.error ? payload.error : "API error"));
-            return;
-          }
-          resolve(payload.data);
+          resolve(data);
         };
 
-        script.onerror = () => {
+        const glue = (url.includes("?") ? "&" : "?");
+        s.src = url + glue + "callback=" + encodeURIComponent(cb);
+        s.onerror = () => {
           cleanup();
-          reject(new Error("API load failed"));
+          reject(new Error("JSONP load failed"));
         };
-
-        document.head.appendChild(script);
+        document.head.appendChild(s);
       });
     }
 
+    async function apiCall(action, extraParams = {}){
+      const url = apiUrl({ action, ...extraParams });
+
+      // Try normal fetch first (works if CORS allows)
+      try {
+        const r = await fetch(url, { method: "GET", cache: "no-store" });
+        const j = await r.json();
+        return j;
+      } catch (e) {
+        // CORS? Fine. We go around.
+        return await jsonp(url);
+      }
+    }
+
+    /**********************
+     * UI helpers
+     **********************/
     function setActiveNav(which){
       const map = {
         current: "nav-race",
@@ -725,6 +795,24 @@
       w.textContent = name ? `Welcome back, ${name}` : "";
     }
 
+    function escapeHtml(s) {
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+
+    function escapeAttr(s) {
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+
     function populatePlayerDropdowns(playerList) {
       const mm = document.getElementById("mmName");
       const dd = document.getElementById("duesName");
@@ -757,21 +845,6 @@
       };
     }
 
-    async function loadPlayersThenInit() {
-      try {
-        const list = await apiCall("playerGetPlayerList");
-        const players = Array.isArray(list) ? list : [];
-        populatePlayerDropdowns(players);
-        setWelcome();
-        if (hasPlayerName()) showView("mymatchup");
-        else showView("current");
-      } catch (err) {
-        console.log("playerGetPlayerList failed:", err);
-        setWelcome();
-        showView("current");
-      }
-    }
-
     function formatDriversOrNumbers(driversArr, numsArr){
       const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
       const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
@@ -783,6 +856,25 @@
       return "";
     }
 
+    /**********************
+     * Loaders
+     **********************/
+    async function loadPlayersThenInit() {
+      try{
+        const res = await apiCall("playerGetPlayerList");
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const players = Array.isArray(res.data) ? res.data : [];
+        populatePlayerDropdowns(players);
+        setWelcome();
+        if (hasPlayerName()) showView("mymatchup");
+        else showView("current");
+      }catch(e){
+        console.log(e);
+        setWelcome();
+        showView("current");
+      }
+    }
+
     async function loadCurrent() {
       const header = document.getElementById("currentHeader");
       const sub = document.getElementById("currentSub");
@@ -792,8 +884,11 @@
       area.innerHTML = "Loading current race...";
       elim.innerHTML = "";
 
-      try {
-        const data = await apiCall("playerGetCurrentRaceMatchups");
+      try{
+        const res = await apiCall("playerGetCurrentRaceMatchups");
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const data = res.data || {};
+
         header.textContent = data.race || "Current Race";
         sub.textContent = `Tournament ${data.tournament} · Round ${data.round}`;
         area.innerHTML = "";
@@ -827,7 +922,7 @@
           eliminated.forEach(p => { html += `<div class="elimItem">${escapeHtml(p)}</div>`; });
           elim.innerHTML = html;
         }
-      } catch (err) {
+      }catch(e){
         area.innerHTML = "Error loading matchups.";
       }
     }
@@ -842,8 +937,10 @@
       savePlayerName(name);
       out.textContent = "Loading…";
 
-      try {
-        const data = await apiCall("playerGetMyMatchup", { name });
+      try{
+        const res = await apiCall("playerGetMyMatchup", { name });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const data = res.data || {};
 
         if (data.status !== "active") {
           const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
@@ -858,7 +955,7 @@
                 ${escapeHtml(data.you)}, you're eliminated…
               </div>
               <div class="microMeta elimSub">
-                …but here's your ${youMeta ? "drivers/numbers" : "stuff"} anyway.
+                …but here's your ${youMeta ? "shit" : "shit"} anyway.
                 Maybe you can still win $25. Don't suck next time.
               </div>
             </div>
@@ -893,8 +990,8 @@
             ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
           </div>
         `;
-      } catch (err) {
-        out.textContent = "Error: " + (err && err.message ? err.message : err);
+      }catch(e){
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
       }
     }
 
@@ -908,12 +1005,15 @@
       savePlayerName(name);
       out.textContent = "Loading…";
 
-      try {
+      try{
         const res = await apiCall("playerGetDues", { name });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const data = res.data || {};
+
         out.textContent =
-          `${res.name}\nPaid: $${Number(res.paid || 0).toFixed(2)}\nBalance Due: $${Number(res.balance || 0).toFixed(2)}`;
-      } catch (err) {
-        out.textContent = "Error: " + (err && err.message ? err.message : err);
+          `${data.name}\nPaid: $${Number(data.paid || 0).toFixed(2)}\nBalance Due: $${Number(data.balance || 0).toFixed(2)}`;
+      }catch(e){
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
       }
     }
 
@@ -921,8 +1021,10 @@
       const area = document.getElementById("standingsArea");
       area.innerHTML = "Loading standings...";
 
-      try {
-        const data = await apiCall("playerGetStandings");
+      try{
+        const res = await apiCall("playerGetStandings");
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const data = res.data || {};
 
         let html = `<div style="margin-top:10px;font-weight:900;font-size:18px;">Overall</div>`;
         html += `<div style="overflow-x:auto;margin-top:8px;">`;
@@ -960,8 +1062,8 @@
         area.innerHTML = html;
         window.__tournaments = data.tournaments || {};
         if (headers.length) showTournamentRanks(headers[0]);
-      } catch (err) {
-        area.innerHTML = "Error: " + (err && err.message ? err.message : err);
+      }catch(e){
+        area.innerHTML = "Error: " + (e && e.message ? e.message : e);
       }
     }
 
@@ -988,8 +1090,11 @@
 
       const fmtAvg = (n) => (n == null ? "" : Number(n).toFixed(1).replace(/\.0$/,""));
 
-      try {
-        const data = await apiCall("playerGetBracket");
+      try{
+        const res = await apiCall("playerGetBracket");
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        const data = res.data || {};
+
         sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · Round ${data.currentRound}`;
 
         const rounds = data.rounds || [];
@@ -1024,37 +1129,16 @@
               </div>
           `;
 
-          const realMatchups = (r.matchups || []).filter(m => (m.p1 || m.p2));
-          const needsPlaceholders = isFuture && realMatchups.length === 0;
-
-          const placeholderCount = Math.max(
-            1,
-            Math.round(8 / Math.pow(2, (Number(r.round) || 1) - 1))
-          );
-
-          const listToRender = needsPlaceholders
-            ? Array.from({ length: placeholderCount }, () => ({
-                p1: "Winner advances",
-                p2: "Winner advances",
-                s1: "—",
-                s2: "—",
-                a1: null,
-                a2: null,
-                winner: ""
-              }))
-            : (r.matchups || []);
-
-          listToRender.forEach(m => {
+          (r.matchups || []).forEach(m => {
             const p1Win = (m.winner && m.p1 && m.winner === m.p1);
             const p2Win = (m.winner && m.p2 && m.winner === m.p2);
-            const isPlaceholder = needsPlaceholders;
 
             html += `
-              <div class="ticket ${isPlaceholder ? "placeholder" : ""}">
+              <div class="ticket">
                 <div class="ticketRow">
                   <div class="sideLeft">
                     <span class="seedBadge">${escapeHtml(m.s1 || "—")}</span>
-                    <span class="nameText ${isPlaceholder ? "placeholderHint" : ""}">${escapeHtml(m.p1 || "")}</span>
+                    <span class="nameText">${escapeHtml(m.p1 || "")}</span>
                   </div>
                   <div class="sideRight">
                     <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
@@ -1065,7 +1149,7 @@
                 <div class="ticketRow">
                   <div class="sideLeft">
                     <span class="seedBadge">${escapeHtml(m.s2 || "—")}</span>
-                    <span class="nameText ${isPlaceholder ? "placeholderHint" : ""}">${escapeHtml(m.p2 || "")}</span>
+                    <span class="nameText">${escapeHtml(m.p2 || "")}</span>
                   </div>
                   <div class="sideRight">
                     <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
@@ -1092,29 +1176,10 @@
             };
           });
         }
-
-      } catch (err) {
+      }catch(e){
         sub.textContent = "Bracket failed to load.";
-        area.innerHTML = "Error: " + (err && err.message ? err.message : err);
+        area.innerHTML = "Error: " + (e && e.message ? e.message : e);
       }
-    }
-
-    function escapeHtml(s) {
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-    }
-
-    function escapeAttr(s) {
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&lt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
     }
 
     window.onload = () => { loadPlayersThenInit(); };
