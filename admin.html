@@ -7,26 +7,26 @@
 
   <style>
     :root{
-  --bg:#f6f7f9;
-  --card:#111111;
-  --text:#000000;
-  --muted:rgba(255,255,255,.72);
-  --line:rgba(255,255,255,.12);
+      --bg:#f6f7f9;
+      --card:#111111;
+      --text:#000000;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
 
-  --nav:#000000;
+      --nav:#000000;
 
-  --blue:#007AC2;     /* Lochmara */
-  --red:#E4002B;      /* Monza */
-  --yellow:#FFD659;   /* Mustard */
-  --black:#000000;
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;
 
-  --btn:#007AC2;
-  --btn2:#E4002B;
-  --danger:#E4002B;
+      --btn:#007AC2;
+      --btn2:#E4002B;
+      --danger:#E4002B;
 
-  --shadow: 0 16px 40px rgba(0,0,0,.45);
-  --radius:18px;
-}
+      --shadow: 0 16px 40px rgba(0,0,0,.45);
+      --radius:18px;
+    }
 
     *{box-sizing:border-box}
     body{
@@ -139,47 +139,75 @@
 
     /* Bottom Nav */
     .bottomNav{
-  position: fixed;
-  left:0; right:0; bottom:0;
-  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(0,0,0,.92);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255,255,255,.10);
-}
-.navBtn{
-  flex:0 0 auto; min-width: 92px;
-  background: rgba(255,255,255,.06);
-  color:#fff;
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 14px;
-  padding: 10px 8px;
-  font-weight: 900;
-  font-size: 13px;
-  cursor:pointer;
-  display:flex;
-  gap:8px;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .navBtn{
+      flex:0 0 auto; min-width: 92px;
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 8px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
 
-.navInner{
-  max-width: 820px;
-  margin:0 auto;
-  display:flex;
-  gap:10px;
-  justify-content: space-between;
-  align-items:center;
-  overflow-x:auto;
-}
+    .navInner{
+      max-width: 820px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      justify-content: space-between;
+      align-items:center;
+      overflow-x:auto;
+    }
     
-.navBtn.active{
-  background: rgba(0,122,194,.22);
-  border-color: rgba(0,122,194,.55);
-}
+    .navBtn.active{
+      background: rgba(0,122,194,.22);
+      border-color: rgba(0,122,194,.55);
+    }
 
     .hide{display:none !important;}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    /* --- Faded NASCAR logo background --- */
+    body{
+      position: relative; /* needed for the pseudo-element layer */
+    }
+
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+
+      background-image: url("assets/nascar-logo.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: min(900px, 90vw);
+
+      opacity: 0.06;           /* adjust this: 0.03 - 0.10 is usually the sweet spot */
+      filter: grayscale(100%); /* optional: keeps it from fighting your theme */
+    }
+
+    /* Make sure your app content stays above the background */
+    .wrap, .bottomNav{
+      position: relative;
+      z-index: 1;
+    }
+
   </style>
 </head>
 
