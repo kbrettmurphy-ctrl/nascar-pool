@@ -440,8 +440,6 @@
       letter-spacing: .5px;
     }
     .elimBox{
-      position:relative;
-      margin-top:8px; /* tighter gap under button */
       border:1px dashed #cbd5e1;
       background: repeating-linear-gradient(
         45deg,
@@ -450,17 +448,6 @@
         #f1f5f9 10px,
         #f1f5f9 20px
       );
-    }
-    .elimTopRow{ margin-bottom:8px; }
-    .deadBadge.inBox{ background:#0f172a; }
-    .elimBox .boxSkull{
-      position:absolute;
-      top:10px;
-      right:12px;
-      font-size:18px;
-      line-height:1;
-      opacity:.75;
-      filter: grayscale(20%);
     }
     .elimTitle{
       font-weight:900;
@@ -471,14 +458,6 @@
     .elimSub{
       font-size:13px;
       color:#475569;
-      margin-top:2px;
-      line-height:1.25;
-    }
-    .elimPayout{
-      margin-top:6px;
-      font-size:13px;
-      font-weight:900;
-      color:#111827;
     }
     .deadBadge{
       display:inline-flex;
@@ -730,6 +709,59 @@
     }
 
     async function apiCall(action, extraParams = {}){
+  // Player site: prefer fast static snapshot from GitHub Pages.
+  // Falls back to GAS if snapshot isn't present yet.
+  const SNAP_MAP = {
+    "playerGetPlayerList": "players.json",
+    "playerGetCurrentRaceMatchups": "matchups.json",
+    "playerGetBracket": "bracket.json",
+    "playerGetStandings": "standings.json",
+    "playerGetDues": "dues.json",
+    "adminGetCurrentContext": "context.json"
+  };
+
+  try{
+    // Special case: My Matchup (needs player param)
+    if(action === "playerGetMyMatchup"){
+      const all = await fetchSnapshotJson("myMatchups.json");
+      const p = String(extraParams.player || "");
+      const data = (all && p && all[p]) ? all[p] : null;
+      if(data) return { ok:true, data };
+      // If snapshot exists but player missing, still return ok (keeps UI calm)
+      if(all) return { ok:true, data: null };
+      // no snapshot -> fallthrough to GAS
+    } else if(SNAP_MAP[action]){
+      const data = await fetchSnapshotJson(SNAP_MAP[action]);
+      if(data !== null) return { ok:true, data };
+    }
+  }catch(e){
+    // snapshot fetch failed -> fall back to GAS
+  }
+
+  // GAS fallback (slower)
+  const url = apiUrl({ action, ...extraParams });
+
+  try {
+    const r = await fetch(url, { method: "GET", cache: "no-store" });
+    const j = await r.json();
+    return j;
+  } catch (e) {
+    return await jsonp(url);
+  }
+}
+
+async function fetchSnapshotJson(file){
+  // cache in-memory for the session
+  window.__snap = window.__snap || {};
+  if(window.__snap[file]) return window.__snap[file];
+
+  const url = "./data/" + file + "?v=" + Date.now();
+  const r = await fetch(url, { cache: "no-store" });
+  if(!r.ok) return null;
+  const j = await r.json();
+  window.__snap[file] = j;
+  return j;
+}){
       const url = apiUrl({ action, ...extraParams });
 
       // Try normal fetch first (works if CORS allows)
@@ -967,20 +999,23 @@
           const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
 
           out.innerHTML = `
+            <div class="mmHeader">
+              <span class="deadBadge"><span class="skull">☠️</span> ELIMINATED</span>
+            </div>
+
             <div class="microBox elimBox">
-              <div class="elimTopRow">
-                <span class="deadBadge inBox"><span class="skull">☠️</span> ELIMINATED</span>
-              </div>
               <div class="microTitle elimTitle">
                 ${escapeHtml(data.you)}, you're eliminated…
               </div>
-              <div class="microMeta elimSub">…but here's your ${youMeta ? "shit" : "shit"} anyway.</div>
-              <div class="elimPayout">Maybe you can still win $25. Don’t suck next time.</div>
+              <div class="microMeta elimSub">
+                …but here's your ${youMeta ? "shit" : "shit"} anyway.
+                Maybe you can still win $25. Don't suck next time.
+              </div>
             </div>
 
             ${youMeta ? `
               <div class="microBox" style="margin-top:6px;">
-                <div class="microTitle" id="youPicksLabel">${((data.youDrivers||[]).some(n => String(n||"").trim())) ? "Your Drivers" : "Your Numbers"}</div>
+                <div class="microTitle">Your picks</div>
                 <div class="microMeta">${escapeHtml(youMeta)}</div>
               </div>
             ` : ``}
