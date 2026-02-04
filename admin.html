@@ -175,75 +175,78 @@
       Current: <small>(loading…)</small>
     </div>
 
-    <div id="apiConfigWrap">
     <div class="grid two" style="margin-top:12px;">
-      <div class="card" id="configCard">
-        <h3>API Config</h3>
-        <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
-        </div>
-        
-        <!-- Stored summary -->
-        <div id="configSummary" class="hide" style="margin-top:10px;">
-          <div class="msg ok">
-            Configured ✅
-            <div style="margin-top:6px;">
-              API Base: <span class="mono" id="apiBaseMasked"></span><br/>
-              Admin Key: <span class="mono" id="adminKeyMasked"></span>
-            </div>
-          </div>
-          <div class="row" style="margin-top:10px;">
-            <button class="btn secondary" onclick="editConfig()">Edit</button>
-            <button class="btn danger" onclick="clearConfig()">Clear</button>
-          </div>
-        </div>
 
-        <!-- Inputs -->
-        <div id="configInputs" style="margin-top:10px;">
-          <label>API Base (GAS /exec)</label>
-          <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
+  <!-- API CONFIG (this is the ONLY thing that gets hidden) -->
+  <div id="apiConfigWrap" class="card" style="margin:0;">
+    <h3>API Config</h3>
+    <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
 
-          <label>Admin Key</label>
-          <input id="adminKey" placeholder="ADMIN_KEY" />
-
-          <div class="spacer"></div>
-          <button class="btn secondary" onclick="saveConfig()">Save Config</button>
-          <div id="configMsg" class="msg hide"></div>
+    <!-- Stored summary -->
+    <div id="configSummary" class="hide" style="margin-top:10px;">
+      <div class="msg ok">
+        Configured ✅
+        <div style="margin-top:6px;">
+          API Base: <span class="mono" id="apiBaseMasked"></span><br/>
+          Admin Key: <span class="mono" id="adminKeyMasked"></span>
         </div>
       </div>
-
-      <div class="card" id="quickCard">
-        <h3>Quick Actions</h3>
-
-        <label>Tournament</label>
-        <select id="tournamentSel">
-          <option value="1">Tournament 1</option>
-          <option value="2">Tournament 2</option>
-          <option value="3">Tournament 3</option>
-          <option value="4">Tournament 4</option>
-          <option value="5">Tournament 5</option>
-          <option value="6">Tournament 6</option>
-          <option value="7">Tournament 7</option>
-          <option value="8">Tournament 8</option>
-          <option value="9">Tournament 9</option>
-        </select>
-
-        <label>Race</label>
-        <select id="raceSel">
-          <option value="">Select a tournament first</option>
-        </select>
-
-        <div class="spacer"></div>
-        <button class="btn secondary" onclick="refreshContext()">🔄 Refresh Current Race</button>
-
-        <div class="spacer"></div>
-        <button class="btn" onclick="assignNumbersSelected()">Assign Numbers (Selected Race)</button>
-
-        <div class="spacer"></div>
-        <button class="btn danger" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
-
-        <div id="quickMsg" class="msg hide"></div>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn secondary" onclick="editConfig()">Edit</button>
+        <button class="btn danger" onclick="clearConfig()">Clear</button>
       </div>
     </div>
+
+    <!-- Inputs -->
+    <div id="configInputs" style="margin-top:10px;">
+      <label>API Base (GAS /exec)</label>
+      <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
+
+      <label>Admin Key</label>
+      <input id="adminKey" placeholder="ADMIN_KEY" />
+
+      <div class="spacer"></div>
+      <button class="btn secondary" onclick="saveConfig()">Save Config</button>
+      <div id="configMsg" class="msg hide"></div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS (never hidden) -->
+  <div class="card" id="quickCard">
+    <h3>Quick Actions</h3>
+
+    <label>Tournament</label>
+    <select id="tournamentSel">
+      <option value="1">Tournament 1</option>
+      <option value="2">Tournament 2</option>
+      <option value="3">Tournament 3</option>
+      <option value="4">Tournament 4</option>
+      <option value="5">Tournament 5</option>
+      <option value="6">Tournament 6</option>
+      <option value="7">Tournament 7</option>
+      <option value="8">Tournament 8</option>
+      <option value="9">Tournament 9</option>
+    </select>
+
+    <label>Race</label>
+    <select id="raceSel">
+      <option value="">Select a tournament first</option>
+    </select>
+
+    <div class="spacer"></div>
+    <button class="btn secondary" onclick="refreshContext()">🔄 Refresh Current Race</button>
+
+    <div class="spacer"></div>
+    <button class="btn" onclick="assignNumbersSelected()">Assign Numbers (Selected Race)</button>
+
+    <div class="spacer"></div>
+    <button class="btn danger" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
+
+    <div id="quickMsg" class="msg hide"></div>
+  </div>
+
+</div>
+
 
     <!-- Panels (switched by bottom nav) -->
     <div class="grid" style="margin-top:14px;">
