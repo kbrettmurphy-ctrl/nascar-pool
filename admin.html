@@ -4,25 +4,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>NASCAR Pool Admin</title>
-  <button id="configToggleBtn" class="secondary" style="width:auto;padding:10px 12px;border-radius:12px;display:none;"
-        onclick="toggleConfigCard()">
-  ⚙️ Config
-</button>
 
   <style>
     :root{
-      --bg:#f3f5f8;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --nav:#0b1220;
-      --btn:#243446;
-      --btn2:#111827;
-      --danger:#8b2a2a;
-      --shadow: 0 10px 30px rgba(15,23,42,.08);
-      --radius:18px;
-    }
+  --bg:#0b0b0b;
+  --card:#111111;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.12);
+
+  --nav:#000000;
+
+  --blue:#007AC2;     /* Lochmara */
+  --red:#E4002B;      /* Monza */
+  --yellow:#FFD659;   /* Mustard */
+  --black:#000000;
+
+  --btn:#007AC2;
+  --btn2:#E4002B;
+  --danger:#E4002B;
+
+  --shadow: 0 16px 40px rgba(0,0,0,.45);
+  --radius:18px;
+}
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -42,17 +47,19 @@
       margin: 6px 0 10px;
     }
     .pill{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 12px;
-      border-radius: 999px;
-      background:#eaf0ff;
-      color:#1f3a8a;
-      font-weight: 800;
-      font-size: 14px;
-    }
-    .pill small{font-weight:700;color:#334155}
+  display:inline-flex;
+  gap:10px;
+  align-items:center;
+  padding:10px 12px;
+  border-radius: 999px;
+  background: rgba(255,214,89,.16);
+  border:1px solid rgba(255,214,89,.35);
+  color: var(--yellow);
+  font-weight: 900;
+  font-size: 14px;
+}
+.pill small{font-weight:800;color:rgba(255,255,255,.85)}
+
     .grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -63,12 +70,13 @@
       .grid.two{grid-template-columns: 1fr 1fr;}
     }
     .card{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-    }
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
     .card h3{
       margin:0 0 10px;
       font-size: 18px;
@@ -83,85 +91,83 @@
       color:#111827;
     }
     input, select, textarea{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      outline:none;
-      font-size: 16px;
-      background:#fff;
-    }
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border:1px solid var(--line);
+  outline:none;
+  font-size: 16px;
+  background: rgba(0,0,0,.45);
+  color: var(--text);
+}
+input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
+
     textarea{min-height:120px; resize: vertical;}
     .row{display:flex; gap:10px; align-items:center;}
     .row > *{flex:1}
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-      padding: 13px 14px;
-      border-radius: 14px;
-      border:none;
-      cursor:pointer;
-      font-weight: 900;
-      font-size: 16px;
-      background: var(--btn2);
-      color:#fff;
-    }
-    .btn.secondary{background: var(--btn); }
-    .btn.danger{background: var(--danger); }
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding: 13px 14px;
+  border-radius: 14px;
+  border:none;
+  cursor:pointer;
+  font-weight: 900;
+  font-size: 16px;
+  background: var(--btn2); /* red primary */
+  color:#fff;
+}
+.btn.secondary{background: var(--btn);}     /* blue */
+.btn.danger{background: var(--danger);}     /* red */
+
     .btn:disabled{opacity:.55; cursor:not-allowed;}
     .spacer{height:8px}
     .msg{
-      margin-top:10px;
-      font-size: 13px;
-      color:#111827;
-      background:#f8fafc;
-      border:1px solid var(--line);
-      padding:10px 12px;
-      border-radius: 14px;
-      white-space: pre-wrap;
-    }
-    .err{border-color:#fecaca; background:#fff1f2; color:#7f1d1d;}
-    .ok{border-color:#bbf7d0; background:#f0fdf4; color:#14532d;}
+  margin-top:10px;
+  font-size: 13px;
+  color: var(--text);
+  background: rgba(255,255,255,.06);
+  border:1px solid var(--line);
+  padding:10px 12px;
+  border-radius: 14px;
+  white-space: pre-wrap;
+}
+.err{border-color: rgba(228,0,43,.55); background: rgba(228,0,43,.10); }
+.ok{border-color: rgba(255,214,89,.55); background: rgba(255,214,89,.10); }
+
 
     /* Bottom Nav */
     .bottomNav{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(11,18,32,.92);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,.08);
-    }
-    .navInner{
-      max-width: 820px;
-      margin:0 auto;
-      display:flex;
-      gap:10px;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .navBtn{
-      flex:1;
-      background: rgba(255,255,255,.08);
-      color:#fff;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 10px 8px;
-      font-weight: 900;
-      font-size: 13px;
-      cursor:pointer;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-    }
-    .navBtn.active{
-      background: rgba(255,255,255,.18);
-      border-color: rgba(255,255,255,.20);
-    }
+  position: fixed;
+  left:0; right:0; bottom:0;
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(0,0,0,.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+.navBtn{
+  flex:1;
+  background: rgba(255,255,255,.06);
+  color:#fff;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 10px 8px;
+  font-weight: 900;
+  font-size: 13px;
+  cursor:pointer;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.navBtn.active{
+  background: rgba(0,122,194,.22);
+  border-color: rgba(0,122,194,.55);
+}
+
     .hide{display:none !important;}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
   </style>
@@ -210,47 +216,39 @@
       <div id="configMsg" class="msg hide"></div>
     </div>
   </div>
-
-  <!-- QUICK ACTIONS (never hidden) -->
-  <div class="card" id="quickCard">
-    <h3>Quick Actions</h3>
-
-    <label>Tournament</label>
-    <select id="tournamentSel">
-      <option value="1">Tournament 1</option>
-      <option value="2">Tournament 2</option>
-      <option value="3">Tournament 3</option>
-      <option value="4">Tournament 4</option>
-      <option value="5">Tournament 5</option>
-      <option value="6">Tournament 6</option>
-      <option value="7">Tournament 7</option>
-      <option value="8">Tournament 8</option>
-      <option value="9">Tournament 9</option>
-    </select>
-
-    <label>Race</label>
-    <select id="raceSel">
-      <option value="">Select a tournament first</option>
-    </select>
-
-    <div class="spacer"></div>
-    <button class="btn secondary" onclick="refreshContext()">🔄 Refresh Current Race</button>
-
-    <div class="spacer"></div>
-    <button class="btn" onclick="assignNumbersSelected()">Assign Numbers (Selected Race)</button>
-
-    <div class="spacer"></div>
-    <button class="btn danger" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
-
-    <div id="quickMsg" class="msg hide"></div>
-  </div>
-
 </div>
 
 
     <!-- Panels (switched by bottom nav) -->
     <div class="grid" style="margin-top:14px;">
+      
+      <div class="card panel hide" id="panelNumbers">
+        <h3>Assign Numbers</h3>
+        <div class="muted">Defaults to the current race detected at the top.</div>
+       <label>Tournament</label>
+       <select id="numTourneySel">
+         <option value="1">Tournament 1</option>
+         <option value="2">Tournament 2</option>
+         <option value="3">Tournament 3</option>
+         <option value="4">Tournament 4</option>
+         <option value="5">Tournament 5</option>
+         <option value="6">Tournament 6</option>
+         <option value="7">Tournament 7</option>
+         <option value="8">Tournament 8</option>
+         <option value="9">Tournament 9</option>
+       </select>
+       <label>Race</label>
+       <select id="numRaceSel">
+         <option value="">(loading…)</option>
+       </select>
+       <div class="spacer"></div>
+       <button class="btn" onclick="assignNumbersSelectedFromPanel()">Assign Numbers (Current Race)</button>
+       <div class="spacer"></div>
+       <button class="btn secondary" onclick="assignNumbersAllFromPanel()">Assign Numbers (ALL 4 Races)</button>
+       <div id="numMsg" class="msg hide"></div>
+    </div>
 
+      
       <div class="card panel" id="panelAddFunds">
         <h3>Add Funds</h3>
         <label>Player</label>
@@ -317,10 +315,12 @@
   <!-- Bottom nav -->
   <div class="bottomNav">
     <div class="navInner">
-      <button class="navBtn active" id="navFunds" onclick="showPanel('AddFunds', this)">💵<span>Add</span></button>
+      <button class="navBtn active" id="navNums" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
       <button class="navBtn" id="navImport" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
       <button class="navBtn" id="navRanks" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
       <button class="navBtn" id="navWin" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
+      <button class="navBtn" id="navFunds" onclick="showPanel('AddFunds', this)">💵<span>Add</span></button>
+      <button class="navBtn" id="navCfg" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
     </div>
   </div>
 
@@ -443,11 +443,25 @@
       const r = await apiCall("adminGetCurrentContext", {}, true);
       if(!r.ok) throw new Error(r.error || "API failed");
       const c = r.data || {};
+
+      // Save for later (Numbers default)
+      window.__ctx = {
+        tournament: String(c.tournament || ""),
+        round: String(c.round || ""),
+        raceLabel: String(c.raceLabel || "")
+      };
+
       pill.innerHTML = `Current: <small>T${c.tournament} · Round ${c.round} · ${escapeHtml(c.raceLabel || "(no label)")}</small>`;
+
+      // After context loads, sync Numbers panel defaults
+      try { await syncNumbersPanelDefaults(); } catch(e) {}
+
     }catch(e){
       pill.innerHTML = `Current: <small>(could not detect)</small>`;
+      window.__ctx = null;
     }
   }
+
 
   async function loadPlayers(){
     const sel = document.getElementById("playerSel");
@@ -495,12 +509,49 @@
     }
   }
 
+  async function loadRaceHeadersForTournamentInto(selectEl, tournament){
+    selectEl.innerHTML = `<option value="">(loading…)</option>`;
+    try{
+      const r = await apiCall("adminGetTournamentRaceHeaders", { tournament }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const headers = r.data || [];
+      selectEl.innerHTML = headers.length
+        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
+        : `<option value="">(none)</option>`;
+      return headers;
+    }catch(e){
+      selectEl.innerHTML = `<option value="">(error)</option>`;
+      return [];
+    }
+  }
+
+  async function syncNumbersPanelDefaults(){
+    const ctx = window.__ctx;
+    const tSel = document.getElementById("numTourneySel");
+    const rSel = document.getElementById("numRaceSel");
+    if(!tSel || !rSel) return;
+
+    // Default tournament to detected one (fallback to 1)
+    const t = ctx?.tournament || "1";
+    tSel.value = t;
+
+    // Load races for that tournament
+    const headers = await loadRaceHeadersForTournamentInto(rSel, t);
+
+    // Default race to detected raceLabel if it exists in the list
+    const want = ctx?.raceLabel || "";
+    if(want && headers.includes(want)){
+      rSel.value = want;
+    }
+  }
+
   // ---------- Actions ----------
-  async function assignNumbersSelected(){
-    const msg = document.getElementById("quickMsg");
+  async function assignNumbersSelectedFromPanel(){
+    const msg = document.getElementById("numMsg");  
     hideMsg(msg);
-    const t = document.getElementById("tournamentSel").value;
-    const race = document.getElementById("raceSel").value;
+
+    const t = document.getElementById("numTourneySel").value;
+    const race = document.getElementById("numRaceSel").value;
     if(!race){ showMsg(msg, "Pick a race first.", true); return; }
 
     try{
@@ -511,13 +562,14 @@
       refreshContext();
     }catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
-    }
+    }  
   }
 
-  async function assignNumbersAll(){
-    const msg = document.getElementById("quickMsg");
+  async function assignNumbersAllFromPanel(){
+    const msg = document.getElementById("numMsg");
     hideMsg(msg);
-    const t = document.getElementById("tournamentSel").value;
+
+    const t = document.getElementById("numTourneySel").value;
 
     try{
       showMsg(msg, "Working…", false);
@@ -626,30 +678,16 @@
 
   // Tournament change
   document.getElementById("tournamentSel").addEventListener("change", loadRaceHeadersForTournament);
-
+  
+  document.getElementById("numTourneySel").addEventListener("change", async () => {
+  const t = document.getElementById("numTourneySel").value;
+  const rSel = document.getElementById("numRaceSel");
+  await loadRaceHeadersForTournamentInto(rSel, t);
+  });
+  
   // Init
   syncConfigUI();
   bootstrap();
-
-  function hasAdminConfig() {
-  const base = (localStorage.getItem("nascar_api_base") || "").trim();
-  const key  = (localStorage.getItem("nascar_admin_key") || "").trim();
-  return !!base && !!key;
-}
-
-function applyConfigVisibility() {
-  const wrap = document.getElementById("apiConfigWrap");
-  const btn  = document.getElementById("configToggleBtn");
-  if (!wrap || !btn) return;
-
-  if (hasAdminConfig()) {
-    wrap.style.display = "none";              // hide big box
-    btn.style.display = "inline-flex";        // show ⚙️ button
-  } else {
-    wrap.style.display = "block";             // show setup
-    btn.style.display = "none";               // hide ⚙️ until configured
-  }
-}
 
 function toggleConfigCard() {
   const wrap = document.getElementById("apiConfigWrap");
