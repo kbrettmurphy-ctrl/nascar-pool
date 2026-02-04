@@ -2,18 +2,39 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <base target="_top">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>NASCAR Pool Admin</title>
 
   <style>
-    body { font-family: Arial, sans-serif; padding: 14px; max-width: 560px; margin: 0 auto; background:#f6f7f9; }
+    :root{
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --stroke:#e5e7eb;
+      --muted:#6b7280;
+      --ink:#0f172a;
+
+      --vvb: 0px;
+      --pad: 12px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: var(--pad);
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--bg);
+      color: var(--ink);
+      padding-bottom: calc(24px + env(safe-area-inset-bottom) + var(--vvb));
+    }
+
     h2 { margin: 0 0 6px 0; }
     .sub { color:#666; font-size:12px; margin-bottom:12px; }
     .card { background:#fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 14px; margin: 12px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:#111; }
-    select, button, input { width: 100%; font-size: 16px; padding: 12px; border-radius: 12px; }
-    select, input { border: 1px solid #cbd5e1; background: #fff; }
+    select, button { width: 100%; font-size: 16px; padding: 12px; border-radius: 12px; }
+    select { border: 1px solid #cbd5e1; background: #fff; }
     button { border: 0; margin-top: 10px; background: #111; color: #fff; font-weight: 700; cursor:pointer; }
     button.secondary { background: #334155; }
     button.warn { background: #7f1d1d; }
@@ -25,9 +46,21 @@
     .pill { display:inline-block; padding:6px 10px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px; font-weight:700; }
     .status { margin-top: 10px; font-size: 14px; white-space: pre-wrap; }
 
-    .tiny { font-size:12px; color:#6b7280; margin-top:8px; }
-    .ok { color:#166534; font-weight:700; }
-    .bad { color:#991b1b; font-weight:700; }
+    .keyRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top: 8px;
+    }
+    .keyRow button{
+      width:auto;
+      margin-top:0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+    .keyHint{ font-size:12px; color:#64748b; }
   </style>
 </head>
 
@@ -35,16 +68,15 @@
   <h2>NASCAR Pool Admin</h2>
   <div class="sub">
     <span id="currentPill" class="pill">Detecting current race…</span>
+    <div class="keyRow">
+      <button class="secondary" onclick="setAdminKey()">🔑 Set Admin Key</button>
+      <button class="secondary" onclick="clearAdminKey()">🧼 Clear Key</button>
+      <span class="keyHint" id="keyHint"></span>
+    </div>
   </div>
 
   <div class="card">
-    <label for="adminKey">Admin key</label>
-    <input id="adminKey" type="password" placeholder="Paste your ADMIN_KEY" />
-    <div class="tiny">
-      Stored locally in your browser. If you’re on a government computer, maybe don’t leave the keys under the doormat.
-    </div>
-
-    <div class="row" style="margin-top:10px;">
+    <div class="row">
       <div>
         <label for="tournament">Tournament</label>
         <select id="tournament"></select>
@@ -59,7 +91,6 @@
 
     <button class="secondary" id="refreshCtxBtn" onclick="detectCurrentContext()">🔄 Refresh Current Race</button>
 
-    <button id="exportBtn" onclick="exportMatchups()">Export Matchups (updates Public sheet)</button>
     <button id="assignRaceBtn" onclick="assignNumbersRace()">Assign Numbers (Selected Race)</button>
     <button class="warn" id="assignAllBtn" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
 
@@ -67,83 +98,130 @@
   </div>
 
   <script>
-    // === YOUR APPS SCRIPT WEB APP /exec URL ===
-    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec";
-
-    // OPTIONAL: prefill (you can leave blank)
-    const PREFILL_KEY = "032712";
+    /**********************
+     * CONFIG
+     **********************/
+    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- same Apps Script /exec as index.html
+    const ADMIN_KEY_STORAGE = "nascar_pool_admin_key";
 
     const statusEl = document.getElementById("status");
     const currentPill = document.getElementById("currentPill");
-
     const tSel = document.getElementById("tournament");
     const rSel = document.getElementById("race");
-    const keyInput = document.getElementById("adminKey");
+    const keyHint = document.getElementById("keyHint");
 
     const btns = [
       document.getElementById("refreshCtxBtn"),
-      document.getElementById("exportBtn"),
       document.getElementById("assignRaceBtn"),
       document.getElementById("assignAllBtn"),
     ];
 
-    const LS_KEY = "nascar_admin_key";
+    /**********************
+     * iOS visual viewport fix
+     **********************/
+    (function fixIOSBottomBar(){
+      function update(){
+        const vv = window.visualViewport;
+        if (!vv) return;
+        const bottomGap = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop));
+        document.documentElement.style.setProperty("--vvb", bottomGap + "px");
+      }
+      update();
+      window.addEventListener("resize", update);
+      window.addEventListener("orientationchange", update);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", update);
+        window.visualViewport.addEventListener("scroll", update);
+      }
+    })();
 
-    function setStatus(msg) { statusEl.textContent = msg || ""; }
-    function setBusy(isBusy) { btns.forEach(b => b.disabled = !!isBusy); }
-
-    function getKey() {
-      const k = String(keyInput.value || "").trim();
-      if (k) return k;
-      const saved = String(localStorage.getItem(LS_KEY) || "").trim();
-      return saved;
+    /**********************
+     * API helpers (Fetch + JSONP fallback)
+     **********************/
+    function apiUrl(params){
+      const u = new URL(API_BASE);
+      Object.keys(params).forEach(k => u.searchParams.set(k, params[k]));
+      return u.toString();
     }
-    function saveKey(k) {
-      localStorage.setItem(LS_KEY, String(k || "").trim());
-    }
 
-    // ---------- JSONP API helper ----------
-    function apiCall(action, params = {}) {
+    function jsonp(url){
       return new Promise((resolve, reject) => {
-        const cbName = "__jsonp_cb_" + Math.random().toString(36).slice(2);
-        const qs = new URLSearchParams({ action, callback: cbName, ...params });
-
-        const script = document.createElement("script");
-        script.src = API_BASE + "?" + qs.toString();
-        script.async = true;
-
+        const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
         const timeout = setTimeout(() => {
           cleanup();
-          reject(new Error("API timeout"));
-        }, 12000);
+          reject(new Error("JSONP timeout"));
+        }, 15000);
 
-        function cleanup() {
+        function cleanup(){
           clearTimeout(timeout);
-          if (script && script.parentNode) script.parentNode.removeChild(script);
-          try { delete window[cbName]; } catch(e) { window[cbName] = undefined; }
+          delete window[cb];
+          if (s && s.parentNode) s.parentNode.removeChild(s);
         }
 
-        window[cbName] = (payload) => {
+        window[cb] = (data) => {
           cleanup();
-          if (!payload || payload.ok !== true) {
-            reject(new Error(payload && payload.error ? payload.error : "API error"));
-            return;
-          }
-          resolve(payload.data);
+          resolve(data);
         };
 
-        script.onerror = () => {
+        const glue = (url.includes("?") ? "&" : "?");
+        s.src = url + glue + "callback=" + encodeURIComponent(cb);
+        s.onerror = () => {
           cleanup();
-          reject(new Error("API load failed"));
+          reject(new Error("JSONP load failed"));
         };
-
-        document.head.appendChild(script);
+        document.head.appendChild(s);
       });
     }
 
-    // ---------- UI ----------
+    async function apiCall(action, extraParams = {}){
+      const key = getAdminKey();
+      const url = apiUrl({ action, key, ...extraParams });
+
+      try {
+        const r = await fetch(url, { method: "GET", cache: "no-store" });
+        const j = await r.json();
+        return j;
+      } catch (e) {
+        return await jsonp(url);
+      }
+    }
+
+    /**********************
+     * Key handling
+     **********************/
+    function getAdminKey(){
+      return String(localStorage.getItem(ADMIN_KEY_STORAGE) || "");
+    }
+
+    function setAdminKey(){
+      const current = getAdminKey();
+      const k = prompt("Enter Admin Key:", current || "");
+      if (k == null) return;
+      localStorage.setItem(ADMIN_KEY_STORAGE, String(k || "").trim());
+      updateKeyHint();
+    }
+
+    function clearAdminKey(){
+      localStorage.removeItem(ADMIN_KEY_STORAGE);
+      updateKeyHint();
+      setStatus("Admin key cleared.");
+    }
+
+    function updateKeyHint(){
+      const k = getAdminKey();
+      keyHint.textContent = k ? "Key: saved" : "Key: not set";
+    }
+
+    /**********************
+     * UI helpers
+     **********************/
+    function setStatus(msg) { statusEl.textContent = msg || ""; }
+    function setBusy(isBusy) { btns.forEach(b => b.disabled = !!isBusy); }
+
     function init() {
-      // tournaments
+      updateKeyHint();
+
       for (let i = 1; i <= 9; i++) {
         const opt = document.createElement("option");
         opt.value = String(i);
@@ -151,68 +229,50 @@
         tSel.appendChild(opt);
       }
 
-      // key: prefill from localStorage, else optional constant
-      const saved = String(localStorage.getItem(LS_KEY) || "").trim();
-      if (saved) keyInput.value = saved;
-      else if (PREFILL_KEY && PREFILL_KEY !== "PUT_YOUR_ADMIN_KEY_HERE") keyInput.value = PREFILL_KEY;
-
-      keyInput.addEventListener("change", () => {
-        const k = String(keyInput.value || "").trim();
-        if (k) saveKey(k);
-      });
-
-      tSel.addEventListener("change", () => loadRaces());
-
       detectCurrentContext();
+      tSel.addEventListener("change", loadRaces);
     }
 
     async function detectCurrentContext() {
-      const key = getKey();
-      if (!key) {
-        currentPill.textContent = "Current: (enter admin key)";
-        setStatus("Enter your admin key first.");
-        return;
-      }
-
       setBusy(true);
       setStatus("Detecting current race…");
 
-      try {
-        const ctx = await apiCall("adminGetCurrentContext", { key });
+      try{
+        const res = await apiCall("adminGetCurrentContext");
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
 
+        const ctx = res.data || {};
         const label = (ctx && ctx.raceLabel) ? ctx.raceLabel : "(unknown)";
         currentPill.textContent = `Current: Tournament ${ctx.tournament} · ${label} · Round ${ctx.round}`;
 
-        tSel.value = String(ctx.tournament);
-        await loadRaces(true);
+        tSel.value = String(ctx.tournament || "1");
 
+        await loadRaces();
         if (ctx.raceLabel) rSel.value = ctx.raceLabel;
 
         setStatus("");
-      } catch (err) {
+      }catch(e){
+        setStatus("Error: " + (e && e.message ? e.message : e));
         currentPill.textContent = "Current: (could not detect)";
-        setStatus("Error: " + (err && err.message ? err.message : err));
-      } finally {
+
+        const msg = String(e && e.message ? e.message : e).toLowerCase();
+        if (msg.includes("unauthorized") || msg.includes("admin key")) {
+          setStatus("Admin API needs a key.\nTap 🔑 Set Admin Key, then try again.");
+        }
+      }finally{
         setBusy(false);
       }
     }
 
-    async function loadRaces(silent) {
-      const key = getKey();
-      if (!key) {
-        if (!silent) setStatus("Enter your admin key first.");
-        return;
-      }
-
-      if (!silent) setStatus("Loading races…");
+    async function loadRaces() {
+      setStatus("Loading races…");
       rSel.innerHTML = `<option value="">Select race...</option>`;
 
-      try {
-        const headers = await apiCall("adminGetTournamentRaceHeaders", {
-          key,
-          tournament: String(tSel.value || "")
-        });
+      try{
+        const res = await apiCall("adminGetTournamentRaceHeaders", { tournament: tSel.value });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
 
+        const headers = res.data || [];
         (headers || []).forEach(h => {
           const opt = document.createElement("option");
           opt.value = h;
@@ -220,69 +280,49 @@
           rSel.appendChild(opt);
         });
 
-        if (!silent) setStatus("");
-      } catch (err) {
-        if (!silent) setStatus("Error: " + (err && err.message ? err.message : err));
-      }
-    }
-
-    async function exportMatchups() {
-      const key = getKey();
-      if (!key) return setStatus("Enter your admin key first.");
-      const t = String(tSel.value || "").trim();
-      const race = String(rSel.value || "").trim();
-      if (!race) return setStatus("Pick a race first.");
-
-      setBusy(true);
-      setStatus("Exporting matchups & updating Public sheet…");
-
-      try {
-        const res = await apiCall("adminExportMatchups", { key, tournament: t, race });
-        setStatus((res && res.message) ? res.message : "Done.");
-      } catch (err) {
-        setStatus("Error: " + (err && err.message ? err.message : err));
-      } finally {
-        setBusy(false);
+        setStatus("");
+      }catch(e){
+        setStatus("Error: " + (e && e.message ? e.message : e));
       }
     }
 
     async function assignNumbersRace() {
-      const key = getKey();
-      if (!key) return setStatus("Enter your admin key first.");
-      const t = String(tSel.value || "").trim();
-      const race = String(rSel.value || "").trim();
+      const race = rSel.value;
       if (!race) return setStatus("Pick a race first.");
 
       setBusy(true);
       setStatus("Assigning numbers (selected race)…");
 
-      try {
-        const res = await apiCall("adminAssignNumbersForRace", { key, tournament: t, race });
-        setStatus((res && res.message) ? res.message : "Done.");
-      } catch (err) {
-        setStatus("Error: " + (err && err.message ? err.message : err));
-      } finally {
+      try{
+        const res = await apiCall("adminAssignNumbersForRace", { tournament: tSel.value, race });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+
+        const payload = res.data || {};
+        setStatus(payload.message || "Done.");
+      }catch(e){
+        setStatus("Error: " + (e && e.message ? e.message : e));
+      }finally{
         setBusy(false);
       }
     }
 
     async function assignNumbersAll() {
-      const key = getKey();
-      if (!key) return setStatus("Enter your admin key first.");
-      const t = String(tSel.value || "").trim();
-
+      const t = tSel.value;
       const ok = confirm(`Assign ALL four race number blocks for Tournament ${t}?\n\nThis overwrites F/J/N/R number ranges.`);
       if (!ok) return;
 
       setBusy(true);
       setStatus("Assigning numbers for ALL races…");
 
-      try {
-        const res = await apiCall("adminAssignNumbersAllRaces", { key, tournament: t });
-        setStatus((res && res.message) ? res.message : "Done.");
-      } catch (err) {
-        setStatus("Error: " + (err && err.message ? err.message : err));
-      } finally {
+      try{
+        const res = await apiCall("adminAssignNumbersAllRaces", { tournament: t });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+
+        const payload = res.data || {};
+        setStatus(payload.message || "Done.");
+      }catch(e){
+        setStatus("Error: " + (e && e.message ? e.message : e));
+      }finally{
         setBusy(false);
       }
     }
