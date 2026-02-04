@@ -367,6 +367,24 @@
     }
   }
 
+  function hasAdminConfig(){
+    const base = (localStorage.getItem(LS_API) || "").trim();
+    const key  = (localStorage.getItem(LS_KEY) || "").trim();
+    return !!base && !!key;
+  }
+
+  function applyConfigVisibility(){
+    const wrap = document.getElementById("apiConfigWrap");
+    if(!wrap) return;
+
+    // Hide the whole card when configured
+    if(hasAdminConfig()){
+      wrap.classList.add("hide");
+    } else {
+      wrap.classList.remove("hide");
+    }
+  }
+
   function saveConfig(){
     const apiBase = document.getElementById("apiBase").value.trim();
     const adminKey = document.getElementById("adminKey").value.trim();
@@ -489,22 +507,6 @@
       sel.innerHTML = `<option value="">Select…</option>` + list.map(x => `<option>${escapeHtml(x)}</option>`).join("");
     }catch(e){
       sel.innerHTML = `<option value="">(error)</option>`;
-    }
-  }
-
-  async function loadRaceHeadersForTournament(){
-    const t = document.getElementById("tournamentSel").value;
-    const raceSel = document.getElementById("raceSel");
-    raceSel.innerHTML = `<option value="">(loading…)</option>`;
-    try{
-      const r = await apiCall("adminGetTournamentRaceHeaders", { tournament: t }, true);
-      if(!r.ok) throw new Error(r.error || "API failed");
-      const headers = r.data || [];
-      raceSel.innerHTML = headers.length
-        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
-        : `<option value="">(none)</option>`;
-    }catch(e){
-      raceSel.innerHTML = `<option value="">(error)</option>`;
     }
   }
 
@@ -693,7 +695,6 @@
   }
 
   // Tournament change
-  document.getElementById("tournamentSel").addEventListener("change", loadRaceHeadersForTournament);
   
   document.getElementById("numTourneySel").addEventListener("change", async () => {
   const t = document.getElementById("numTourneySel").value;
@@ -714,6 +715,13 @@ function toggleConfigCard() {
 document.addEventListener("DOMContentLoaded", () => {
   applyConfigVisibility();
 });
+
+document.addEventListener("DOMContentLoaded", async () => {
+  syncConfigUI();
+  applyConfigVisibility();
+  await bootstrap();
+});
+ 
 
 </script>
 </body>
