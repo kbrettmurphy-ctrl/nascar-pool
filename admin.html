@@ -1,431 +1,624 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>NASCAR Pool Admin</title>
+
   <style>
-    :root { --bg:#f6f7f9; --card:#fff; --border:#e5e7eb; --text:#111; --muted:#666; }
-    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family: Arial, sans-serif; }
-    body{ padding:14px; max-width: 760px; margin:0 auto; }
-    h2{ margin: 0 0 6px 0; }
-    .sub{ color:var(--muted); font-size:12px; margin-bottom:12px; }
+    :root{
+      --bg:#f3f5f8;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --nav:#0b1220;
+      --btn:#243446;
+      --btn2:#111827;
+      --danger:#8b2a2a;
+      --shadow: 0 10px 30px rgba(15,23,42,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 18px 14px 110px; /* bottom space for nav */
+    }
+    .title{
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin: 6px 0 10px;
+    }
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      background:#eaf0ff;
+      color:#1f3a8a;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .pill small{font-weight:700;color:#334155}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 860px){
+      .grid.two{grid-template-columns: 1fr 1fr;}
+    }
     .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:14px;
-      margin:12px 0;
-      box-shadow:0 2px 10px rgba(0,0,0,0.05);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
-    label{ display:block; font-size:13px; margin:10px 0 6px; }
-    select, input, textarea, button{
+    .card h3{
+      margin:0 0 10px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .muted{color:var(--muted); font-size: 13px;}
+    label{
+      display:block;
+      font-weight: 800;
+      margin: 10px 0 6px;
+      font-size: 13px;
+      color:#111827;
+    }
+    input, select, textarea{
       width:100%;
-      font-size:16px;
-      padding:12px;
-      border-radius:12px;
-      box-sizing:border-box;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      outline:none;
+      font-size: 16px;
+      background:#fff;
     }
-    select,input,textarea{ border:1px solid #cbd5e1; background:#fff; }
-    textarea{ min-height:140px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
-    button{ border:0; margin-top:10px; background:#111; color:#fff; font-weight:800; cursor:pointer; }
-    button.secondary{ background:#334155; }
-    button.warn{ background:#7f1d1d; }
-    button:disabled{ opacity:.55; cursor:not-allowed; }
-    .row{ display:flex; gap:10px; flex-wrap:wrap; }
-    .row > div{ flex:1 1 240px; }
-    .pill{ display:inline-block; padding:6px 10px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px; font-weight:800; }
-    .status{ margin-top:10px; font-size:14px; white-space:pre-wrap; }
-    .tiny{ font-size:12px; color:var(--muted); margin-top:6px; }
-    .divider{ height:1px; background:var(--border); margin:14px 0; }
-    .right{ text-align:right; }
-    .kbd{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; padding:2px 6px; border:1px solid var(--border); border-radius:8px; background:#fff; }
+    textarea{min-height:120px; resize: vertical;}
+    .row{display:flex; gap:10px; align-items:center;}
+    .row > *{flex:1}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border:none;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 16px;
+      background: var(--btn2);
+      color:#fff;
+    }
+    .btn.secondary{background: var(--btn); }
+    .btn.danger{background: var(--danger); }
+    .btn:disabled{opacity:.55; cursor:not-allowed;}
+    .spacer{height:8px}
+    .msg{
+      margin-top:10px;
+      font-size: 13px;
+      color:#111827;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+    }
+    .err{border-color:#fecaca; background:#fff1f2; color:#7f1d1d;}
+    .ok{border-color:#bbf7d0; background:#f0fdf4; color:#14532d;}
+
+    /* Bottom Nav */
+    .bottomNav{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11,18,32,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .navInner{
+      max-width: 820px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navBtn{
+      flex:1;
+      background: rgba(255,255,255,.08);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 8px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    .navBtn.active{
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.20);
+    }
+    .hide{display:none !important;}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
   </style>
 </head>
+
 <body>
-  <h2>NASCAR Pool Admin</h2>
-  <div class="sub">
-    <span id="currentPill" class="pill">Detecting current race…</span>
-  </div>
+  <div class="wrap">
+    <div class="title">NASCAR Pool Admin</div>
 
-  <!-- CONFIG -->
-  <div class="card">
-    <div class="row">
-      <div>
-        <label>API Base (GAS /exec)</label>
-        <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
-        <div class="tiny">This is your deployed Web App URL (ends with <span class="kbd">/exec</span>).</div>
-      </div>
-      <div>
-        <label>Admin Key</label>
-        <input id="adminKey" placeholder="ADMIN_KEY (stored locally)" />
-        <div class="tiny">Stored in this browser only (localStorage).</div>
-      </div>
-    </div>
-    <button class="secondary" onclick="saveConfig()">Save Config</button>
-    <div id="configStatus" class="status"></div>
-  </div>
-
-  <!-- CORE CONTEXT / NUMBERS -->
-  <div class="card">
-    <div class="row">
-      <div>
-        <label for="tournament">Tournament</label>
-        <select id="tournament"></select>
-      </div>
-      <div>
-        <label for="race">Race</label>
-        <select id="race"><option value="">Select a tournament first</option></select>
-      </div>
+    <div class="pill" id="ctxPill">
+      Current: <small>(loading…)</small>
     </div>
 
-    <button class="secondary" id="refreshCtxBtn" onclick="detectCurrentContext()">🔄 Refresh Current Race</button>
-    <button id="assignRaceBtn" onclick="assignNumbersRace()">Assign Numbers (Selected Race)</button>
-    <button class="warn" id="assignAllBtn" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
+    <div class="grid two" style="margin-top:12px;">
+      <div class="card" id="configCard">
+        <h3>API Config</h3>
+        <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
 
-    <div id="status" class="status"></div>
-  </div>
+        <!-- Stored summary -->
+        <div id="configSummary" class="hide" style="margin-top:10px;">
+          <div class="msg ok">
+            Configured ✅
+            <div style="margin-top:6px;">
+              API Base: <span class="mono" id="apiBaseMasked"></span><br/>
+              Admin Key: <span class="mono" id="adminKeyMasked"></span>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <button class="btn secondary" onclick="editConfig()">Edit</button>
+            <button class="btn danger" onclick="clearConfig()">Clear</button>
+          </div>
+        </div>
 
-  <!-- ADD FUNDS -->
-  <div class="card">
-    <div style="font-weight:900;font-size:18px;">Add Funds</div>
-    <div class="row">
-      <div>
-        <label for="fundsPlayer">Player</label>
-        <select id="fundsPlayer"><option value="">Loading…</option></select>
+        <!-- Inputs -->
+        <div id="configInputs" style="margin-top:10px;">
+          <label>API Base (GAS /exec)</label>
+          <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
+
+          <label>Admin Key</label>
+          <input id="adminKey" placeholder="ADMIN_KEY" />
+
+          <div class="spacer"></div>
+          <button class="btn secondary" onclick="saveConfig()">Save Config</button>
+          <div id="configMsg" class="msg hide"></div>
+        </div>
       </div>
-      <div>
-        <label for="fundsAmount">Amount</label>
-        <input id="fundsAmount" placeholder="25 or 25.00" inputmode="decimal" />
+
+      <div class="card" id="quickCard">
+        <h3>Quick Actions</h3>
+
+        <label>Tournament</label>
+        <select id="tournamentSel">
+          <option value="1">Tournament 1</option>
+          <option value="2">Tournament 2</option>
+          <option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option>
+          <option value="5">Tournament 5</option>
+          <option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option>
+          <option value="8">Tournament 8</option>
+          <option value="9">Tournament 9</option>
+        </select>
+
+        <label>Race</label>
+        <select id="raceSel">
+          <option value="">Select a tournament first</option>
+        </select>
+
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="refreshContext()">🔄 Refresh Current Race</button>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="assignNumbersSelected()">Assign Numbers (Selected Race)</button>
+
+        <div class="spacer"></div>
+        <button class="btn danger" onclick="assignNumbersAll()">Assign Numbers (ALL 4 Races)</button>
+
+        <div id="quickMsg" class="msg hide"></div>
       </div>
     </div>
-    <button onclick="addFunds()">Add Funds</button>
-    <div id="fundsStatus" class="status"></div>
-  </div>
 
-  <!-- PASTE IMPORT -->
-  <div class="card">
-    <div style="font-weight:900;font-size:18px;">Paste Starting Lineups / Finishes</div>
+    <!-- Panels (switched by bottom nav) -->
+    <div class="grid" style="margin-top:14px;">
 
-    <label for="pasteSheetType">Which sheet?</label>
-    <select id="pasteSheetType" onchange="loadPasteHeaders()">
-      <option value="starting">Starting Lineups</option>
-      <option value="finishes">Finishes</option>
-    </select>
+      <div class="card panel" id="panelAddFunds">
+        <h3>Add Funds</h3>
+        <label>Player</label>
+        <select id="playerSel"><option value="">(loading…)</option></select>
 
-    <label for="pasteHeader">Race Header</label>
-    <select id="pasteHeader"></select>
+        <label>Amount</label>
+        <input id="fundsAmt" placeholder="25 or 25.00" />
 
-    <label for="pasteText">Paste the table block</label>
-    <textarea id="pasteText" placeholder="Paste from Wikipedia (or wherever) here…"></textarea>
-    <div class="tiny">We’ll strip junk like “(R)” and “(i)” and match against your Drivers tab when possible.</div>
+        <div class="spacer"></div>
+        <button class="btn" onclick="addFunds()">Add Funds</button>
 
-    <button onclick="importPaste()">Import Paste</button>
-    <div id="pasteStatus" class="status"></div>
-  </div>
-
-  <!-- RANKS / STATS REFRESH -->
-  <div class="card">
-    <div style="font-weight:900;font-size:18px;">Refresh Overall Rankings</div>
-    <div class="tiny">This runs your restored <span class="kbd">compileOverallRanks()</span> so the Stats page updates.</div>
-    <button onclick="runOverallRanks()">Run CompileOverallRanks</button>
-    <div id="ranksStatus" class="status"></div>
-  </div>
-
-  <!-- TOURNAMENT WINNINGS -->
-  <div class="card">
-    <div style="font-weight:900;font-size:18px;">Tournament Winnings</div>
-    <div class="row">
-      <div>
-        <label for="winTournament">Tournament</label>
-        <select id="winTournament"></select>
+        <div id="fundsMsg" class="msg hide"></div>
       </div>
-      <div class="right" style="align-self:flex-end;">
-        <button class="secondary" style="margin-top:0;" onclick="loadWinnings()">Show Winnings</button>
+
+      <div class="card panel hide" id="panelImport">
+        <h3>Paste Starting Lineups / Finishes</h3>
+        <div class="muted">Paste the Wikipedia table block. We’ll strip junk like “(R)” and “(i)” and try to match your Drivers tab.</div>
+
+        <label>Which sheet?</label>
+        <select id="sheetTypeSel" onchange="loadRaceHeadersForSheet()">
+          <option>Starting Lineups</option>
+          <option>Finishes</option>
+        </select>
+
+        <label>Race Header</label>
+        <select id="raceHeaderSel"><option value="">(loading…)</option></select>
+
+        <label>Paste the table block</label>
+        <textarea id="rawPaste" placeholder="Paste from Wikipedia (or wherever) here…"></textarea>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="importPaste()">Import Paste</button>
+
+        <div id="importMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelRanks">
+        <h3>Refresh Overall Rankings</h3>
+        <div class="muted">Runs <span class="mono">compileOverallRanks()</span> so the Stats page updates.</div>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="runCompileOverallRanks()">Run CompileOverallRanks</button>
+
+        <div id="ranksMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelWinnings">
+        <h3>Tournament Winnings</h3>
+        <label>Tournament</label>
+        <select id="winTourneySel">
+          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
+        </select>
+
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="showWinnings()">Show Winnings</button>
+
+        <div id="winningsMsg" class="msg hide"></div>
       </div>
     </div>
-    <div id="winBox" class="status"></div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottomNav">
+    <div class="navInner">
+      <button class="navBtn active" id="navFunds" onclick="showPanel('AddFunds', this)">💵<span>Add</span></button>
+      <button class="navBtn" id="navImport" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
+      <button class="navBtn" id="navRanks" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
+      <button class="navBtn" id="navWin" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
+    </div>
   </div>
 
 <script>
-  // ====== STATE / UI ======
-  const statusEl = document.getElementById("status");
-  const currentPill = document.getElementById("currentPill");
-  const tSel = document.getElementById("tournament");
-  const rSel = document.getElementById("race");
+  // ---------- Storage ----------
+  const LS_API = "nascar_api_base";
+  const LS_KEY = "nascar_admin_key";
 
-  const btns = [
-    document.getElementById("refreshCtxBtn"),
-    document.getElementById("assignRaceBtn"),
-    document.getElementById("assignAllBtn"),
-  ];
-
-  function setStatus(msg){ statusEl.textContent = msg || ""; }
-  function setBusy(isBusy){ btns.forEach(b => b.disabled = !!isBusy); }
-
-  function getApiBase(){
-    return (document.getElementById("apiBase").value || "").trim();
+  function getCfg(){
+    return {
+      apiBase: (localStorage.getItem(LS_API) || "").trim(),
+      adminKey: (localStorage.getItem(LS_KEY) || "").trim(),
+    };
   }
-  function getAdminKey(){
-    return (document.getElementById("adminKey").value || "").trim();
+  function mask(s){
+    if(!s) return "(empty)";
+    if(s.length <= 10) return "••••••";
+    return s.slice(0, 12) + "…";
+  }
+
+  function syncConfigUI(){
+    const {apiBase, adminKey} = getCfg();
+    const has = !!apiBase && !!adminKey;
+
+    document.getElementById("configSummary").classList.toggle("hide", !has);
+    document.getElementById("configInputs").classList.toggle("hide", has);
+
+    if(has){
+      document.getElementById("apiBaseMasked").textContent = mask(apiBase);
+      document.getElementById("adminKeyMasked").textContent = mask(adminKey);
+    }else{
+      document.getElementById("apiBase").value = apiBase || "";
+      document.getElementById("adminKey").value = adminKey || "";
+    }
   }
 
   function saveConfig(){
-    const base = getApiBase();
-    const key = getAdminKey();
-    localStorage.setItem("nascar_api_base", base);
-    localStorage.setItem("nascar_admin_key", key);
-    document.getElementById("configStatus").textContent = "Saved.";
-  }
+    const apiBase = document.getElementById("apiBase").value.trim();
+    const adminKey = document.getElementById("adminKey").value.trim();
+    const msg = document.getElementById("configMsg");
 
-  function loadConfig(){
-    const base = localStorage.getItem("nascar_api_base") || "";
-    const key = localStorage.getItem("nascar_admin_key") || "";
-    document.getElementById("apiBase").value = base;
-    document.getElementById("adminKey").value = key;
-  }
-
-  // ====== API CALL ======
-  async function apiCall(action, params = {}, isAdmin = false){
-    const base = getApiBase();
-    if(!base) throw new Error("Missing API Base URL.");
-
-    const u = new URL(base);
-    u.searchParams.set("action", action);
-
-    if(isAdmin){
-      const key = getAdminKey();
-      if(!key) throw new Error("Missing Admin Key.");
-      u.searchParams.set("key", key);
+    if(!apiBase || !apiBase.includes("/exec")){
+      showMsg(msg, "Error: API Base must be your GAS Web App URL ending in /exec", true);
+      return;
     }
+    if(!adminKey){
+      showMsg(msg, "Error: Admin Key required.", true);
+      return;
+    }
+    localStorage.setItem(LS_API, apiBase);
+    localStorage.setItem(LS_KEY, adminKey);
+    showMsg(msg, "Saved. ✅", false);
+    syncConfigUI();
+    bootstrap();
+  }
 
-    Object.keys(params || {}).forEach(k => {
-      if(params[k] !== undefined && params[k] !== null){
-        u.searchParams.set(k, String(params[k]));
-      }
-    });
+  function editConfig(){
+    // Show inputs but prefill
+    localStorage.removeItem(LS_API);
+    localStorage.removeItem(LS_KEY);
+    syncConfigUI();
+  }
 
-    const res = await fetch(u.toString(), { method:"GET", cache:"no-store" });
+  function clearConfig(){
+    localStorage.removeItem(LS_API);
+    localStorage.removeItem(LS_KEY);
+    syncConfigUI();
+    document.getElementById("ctxPill").innerHTML = `Current: <small>(not configured)</small>`;
+  }
+
+  // ---------- UI helpers ----------
+  function showMsg(el, text, isErr){
+    el.classList.remove("hide","err","ok");
+    el.classList.add(isErr ? "err" : "ok");
+    el.textContent = text;
+  }
+  function hideMsg(el){ el.classList.add("hide"); }
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function showPanel(name, btn){
+    document.querySelectorAll(".panel").forEach(p => p.classList.add("hide"));
+    document.getElementById("panel"+name).classList.remove("hide");
+
+    document.querySelectorAll(".navBtn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+
+  // ---------- API ----------
+  async function apiCall(action, params={}, isAdmin=true){
+    const {apiBase, adminKey} = getCfg();
+    if(!apiBase) throw new Error("Missing API Base URL.");
+    if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+
+    const q = new URLSearchParams();
+    q.set("action", action);
+    if(isAdmin) q.set("key", adminKey);
+    Object.keys(params || {}).forEach(k => q.set(k, params[k]));
+
+    const url = apiBase + "?" + q.toString();
+    const res = await fetch(url, { cache: "no-store" });
     const json = await res.json();
     return json;
   }
 
-  // ====== INIT ======
-  function init(){
-    loadConfig();
-
-    for(let i=1;i<=9;i++){
-      const opt = document.createElement("option");
-      opt.value = String(i);
-      opt.textContent = "Tournament " + i;
-      tSel.appendChild(opt);
-
-      const opt2 = document.createElement("option");
-      opt2.value = String(i);
-      opt2.textContent = "Tournament " + i;
-      document.getElementById("winTournament").appendChild(opt2);
-    }
-
-    tSel.addEventListener("change", loadRaces);
-
-    detectCurrentContext();
-    loadPlayersForFunds();
-    loadPasteHeaders();
-  }
-
-  // ====== CONTEXT / RACES / NUMBERS ======
-  async function detectCurrentContext(){
-    setBusy(true);
-    setStatus("Detecting current race…");
-
+  // ---------- Data loaders ----------
+  async function refreshContext(){
+    const pill = document.getElementById("ctxPill");
     try{
-      const ctxRes = await apiCall("adminGetCurrentContext", {}, true);
-      if(!ctxRes.ok) throw new Error(ctxRes.error || "API failed");
-
-      const ctx = ctxRes.data || {};
-      const label = ctx.raceLabel ? ctx.raceLabel : "(unknown)";
-      currentPill.textContent = `Current: Tournament ${ctx.tournament} · ${label} · Round ${ctx.round}`;
-
-      tSel.value = String(ctx.tournament);
-      await loadRaces();
-      if(ctx.raceLabel) rSel.value = ctx.raceLabel;
-
-      setStatus("");
+      pill.innerHTML = `Current: <small>(loading…)</small>`;
+      const r = await apiCall("adminGetCurrentContext", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const c = r.data || {};
+      pill.innerHTML = `Current: <small>T${c.tournament} · Round ${c.round} · ${escapeHtml(c.raceLabel || "(no label)")}</small>`;
     }catch(e){
-      currentPill.textContent = "Current: (could not detect)";
-      setStatus("Error: " + (e && e.message ? e.message : e));
-    }finally{
-      setBusy(false);
+      pill.innerHTML = `Current: <small>(could not detect)</small>`;
     }
   }
 
-  async function loadRaces(){
-    setStatus("Loading races…");
-    rSel.innerHTML = `<option value="">Select race...</option>`;
-
+  async function loadPlayers(){
+    const sel = document.getElementById("playerSel");
+    sel.innerHTML = `<option value="">(loading…)</option>`;
     try{
-      const res = await apiCall("adminGetTournamentRaceHeaders", { tournament: tSel.value }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      (res.data || []).forEach(h => {
-        const opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        rSel.appendChild(opt);
-      });
-      setStatus("");
+      const r = await apiCall("playerGetPlayerList", {}, false);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const list = r.data || [];
+      sel.innerHTML = `<option value="">Select…</option>` + list.map(x => `<option>${escapeHtml(x)}</option>`).join("");
     }catch(e){
-      setStatus("Error: " + (e && e.message ? e.message : e));
-    }
-  }
-
-  async function assignNumbersRace(){
-    const race = rSel.value;
-    if(!race) return setStatus("Pick a race first.");
-
-    setBusy(true);
-    setStatus("Assigning numbers (selected race)…");
-
-    try{
-      const res = await apiCall("adminAssignNumbersForRace", { tournament: tSel.value, race }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      setStatus(res.data?.message || "Done.");
-    }catch(e){
-      setStatus("Error: " + (e && e.message ? e.message : e));
-    }finally{
-      setBusy(false);
-    }
-  }
-
-  async function assignNumbersAll(){
-    const t = tSel.value;
-    const ok = confirm(`Assign ALL four race number blocks for Tournament ${t}?\n\nThis overwrites F/J/N/R number ranges.`);
-    if(!ok) return;
-
-    setBusy(true);
-    setStatus("Assigning numbers for ALL races…");
-
-    try{
-      const res = await apiCall("adminAssignNumbersAllRaces", { tournament: t }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      setStatus(res.data?.message || "Done.");
-    }catch(e){
-      setStatus("Error: " + (e && e.message ? e.message : e));
-    }finally{
-      setBusy(false);
-    }
-  }
-
-  // ====== ADD FUNDS ======
-  async function loadPlayersForFunds(){
-    const sel = document.getElementById("fundsPlayer");
-    sel.innerHTML = `<option value="">Loading…</option>`;
-    try{
-      const res = await apiCall("adminGetMainPlayerList", {}, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      const list = res.data || [];
-      sel.innerHTML = `<option value="">Select…</option>`;
-      list.forEach(n => {
-        const opt = document.createElement("option");
-        opt.value = n;
-        opt.textContent = n;
-        sel.appendChild(opt);
-      });
-    }catch(e){
-      document.getElementById("fundsStatus").textContent = "Error: " + (e && e.message ? e.message : e);
       sel.innerHTML = `<option value="">(error)</option>`;
     }
   }
 
-  async function addFunds(){
-    const player = document.getElementById("fundsPlayer").value;
-    const amt = document.getElementById("fundsAmount").value.trim();
-    const out = document.getElementById("fundsStatus");
-    out.textContent = "Saving…";
+  async function loadRaceHeadersForTournament(){
+    const t = document.getElementById("tournamentSel").value;
+    const raceSel = document.getElementById("raceSel");
+    raceSel.innerHTML = `<option value="">(loading…)</option>`;
     try{
-      if(!player) throw new Error("Pick a player.");
-      if(!amt) throw new Error("Enter an amount.");
-      const res = await apiCall("adminAddFunds", { player, amount: amt }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      out.textContent = res.data?.message || "Saved.";
-      document.getElementById("fundsAmount").value = "";
+      const r = await apiCall("adminGetTournamentRaceHeaders", { tournament: t }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const headers = r.data || [];
+      raceSel.innerHTML = headers.length
+        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
+        : `<option value="">(none)</option>`;
     }catch(e){
-      out.textContent = "Error: " + (e && e.message ? e.message : e);
+      raceSel.innerHTML = `<option value="">(error)</option>`;
     }
   }
 
-  // ====== PASTE IMPORT ======
-  async function loadPasteHeaders(){
-    const sheetType = document.getElementById("pasteSheetType").value;
-    const headerSel = document.getElementById("pasteHeader");
-    const out = document.getElementById("pasteStatus");
-    out.textContent = "";
-    headerSel.innerHTML = `<option value="">Loading…</option>`;
+  async function loadRaceHeadersForSheet(){
+    // For paste importer: we use Starting Lineups / Finishes sheet headers
+    const sheetType = document.getElementById("sheetTypeSel").value;
+    const sel = document.getElementById("raceHeaderSel");
+    sel.innerHTML = `<option value="">(loading…)</option>`;
+    try{
+      const r = await apiCall("adminGetRaceHeaders", { sheetType }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const headers = r.data || [];
+      sel.innerHTML = headers.length
+        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
+        : `<option value="">(none)</option>`;
+    }catch(e){
+      sel.innerHTML = `<option value="">(error)</option>`;
+    }
+  }
+
+  // ---------- Actions ----------
+  async function assignNumbersSelected(){
+    const msg = document.getElementById("quickMsg");
+    hideMsg(msg);
+    const t = document.getElementById("tournamentSel").value;
+    const race = document.getElementById("raceSel").value;
+    if(!race){ showMsg(msg, "Pick a race first.", true); return; }
 
     try{
-      const res = await apiCall("adminGetRaceHeaders", { sheetType }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      const headers = res.data || [];
-      headerSel.innerHTML = `<option value="">Select race header…</option>`;
-      headers.forEach(h => {
-        const opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        headerSel.appendChild(opt);
-      });
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminAssignNumbersForRace", { tournament: t, race }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Done.", false);
+      refreshContext();
     }catch(e){
-      headerSel.innerHTML = `<option value="">(error)</option>`;
-      out.textContent = "Error: " + (e && e.message ? e.message : e);
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function assignNumbersAll(){
+    const msg = document.getElementById("quickMsg");
+    hideMsg(msg);
+    const t = document.getElementById("tournamentSel").value;
+
+    try{
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminAssignNumbersAllRaces", { tournament: t }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Done.", false);
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function addFunds(){
+    const msg = document.getElementById("fundsMsg");
+    hideMsg(msg);
+
+    const player = document.getElementById("playerSel").value;
+    const amt = document.getElementById("fundsAmt").value.trim();
+    if(!player){ showMsg(msg, "Pick a player.", true); return; }
+    if(!amt){ showMsg(msg, "Enter an amount.", true); return; }
+
+    try{
+      showMsg(msg, "Working…", false);
+      // You need an admin endpoint for this in api.gs if you don't already have it.
+      // If your GAS function is named submitAddFunds(player, amountInput), expose it as adminAddFunds.
+      const r = await apiCall("adminAddFunds", { player, amount: amt }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Saved.", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
   async function importPaste(){
-    const sheetType = document.getElementById("pasteSheetType").value;
-    const header = document.getElementById("pasteHeader").value;
-    const rawText = document.getElementById("pasteText").value || "";
-    const out = document.getElementById("pasteStatus");
-    out.textContent = "Importing…";
+    const msg = document.getElementById("importMsg");
+    hideMsg(msg);
+
+    const sheetType = document.getElementById("sheetTypeSel").value;
+    const header = document.getElementById("raceHeaderSel").value;
+    const rawText = document.getElementById("rawPaste").value;
+
+    if(!header){ showMsg(msg, "Pick a race header.", true); return; }
+    if(!rawText.trim()){ showMsg(msg, "Paste the table block first.", true); return; }
 
     try{
-      if(!header) throw new Error("Pick a race header.");
-      if(!rawText.trim()) throw new Error("Paste the list first.");
+      showMsg(msg, "Importing…", false);
+      const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
 
-      const res = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      out.textContent = res.data?.message || "Imported.";
-      document.getElementById("pasteText").value = "";
+      // AUTO-RUN compileOverallRanks after FINISHES import
+      if(String(sheetType).toLowerCase().includes("finish")){
+        showMsg(msg, "Imported. Now updating ranks…", false);
+        const rr = await apiCall("adminCompileOverallRanks", {}, true);
+        if(!rr.ok) throw new Error(rr.error || "Ranks update failed");
+        showMsg(msg, "Imported + Ranks updated ✅", false);
+      } else {
+        showMsg(msg, `Imported ✅ (${r.data?.rowsWritten || "?"} rows)`, false);
+      }
+
+      refreshContext();
     }catch(e){
-      out.textContent = "Error: " + (e && e.message ? e.message : e);
+      showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
-  // ====== COMPILE OVERALL RANKS ======
-  async function runOverallRanks(){
-    const out = document.getElementById("ranksStatus");
-    out.textContent = "Running…";
+  async function runCompileOverallRanks(){
+    const msg = document.getElementById("ranksMsg");
+    hideMsg(msg);
+
     try{
-      const res = await apiCall("adminRunCompileOverallRanks", {}, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      out.textContent = res.data?.message || "Done.";
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminCompileOverallRanks", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Updated ✅", false);
     }catch(e){
-      out.textContent = "Error: " + (e && e.message ? e.message : e);
+      showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
-  // ====== TOURNAMENT WINNINGS ======
-  async function loadWinnings(){
-    const t = document.getElementById("winTournament").value;
-    const box = document.getElementById("winBox");
-    box.textContent = "Loading…";
+  async function showWinnings(){
+    const msg = document.getElementById("winningsMsg");
+    hideMsg(msg);
+
+    const t = document.getElementById("winTourneySel").value;
     try{
-      const res = await apiCall("adminGetTournamentWinnings", { tournament: t }, true);
-      if(!res.ok) throw new Error(res.error || "API failed");
-      box.textContent = res.data?.text || "(no data)";
+      showMsg(msg, "Loading…", false);
+      // Expose your existing GAS function buildTournamentWinningsText_ via an admin endpoint if not already.
+      const r = await apiCall("adminTournamentWinnings", { tournament: t }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.text || "(no data)", false);
     }catch(e){
-      box.textContent = "Error: " + (e && e.message ? e.message : e);
+      showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
-  init();
+  // ---------- Bootstrap ----------
+  async function bootstrap(){
+    const {apiBase, adminKey} = getCfg();
+    if(!apiBase || !adminKey) return;
+
+    await refreshContext();
+    await loadRaceHeadersForTournament();
+    await loadRaceHeadersForSheet();
+    await loadPlayers();
+  }
+
+  // Tournament change
+  document.getElementById("tournamentSel").addEventListener("change", loadRaceHeadersForTournament);
+
+  // Init
+  syncConfigUI();
+  bootstrap();
 </script>
 </body>
 </html>
