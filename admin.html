@@ -389,11 +389,17 @@
   }
 
   function editConfig(){
-    // Show inputs but prefill
-    localStorage.removeItem(LS_API);
-    localStorage.removeItem(LS_KEY);
-    syncConfigUI();
+    const { apiBase, adminKey } = getCfg();
+
+    // show inputs
+    document.getElementById("configSummary").classList.add("hide");
+    document.getElementById("configInputs").classList.remove("hide");
+
+    // prefill inputs with what’s already saved
+    document.getElementById("apiBase").value = apiBase || "";
+    document.getElementById("adminKey").value = adminKey || "";
   }
+
 
   function clearConfig(){
     localStorage.removeItem(LS_API);
