@@ -181,32 +181,35 @@
     .hide{display:none !important;}
     .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
 
-    /* --- Faded NASCAR logo background --- */
-    body{
-      position: relative; /* needed for the pseudo-element layer */
-    }
+    /* ===== NASCAR watermark background ===== */
+  body{
+    position: relative;
+  }
 
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+  body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 
-      background-image: url("nascar-pool/nascar-logo.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: min(900px, 90vw);
+    background-image: url("nascar-logo.png"); /* or assets/nascar-logo.png */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: min(900px, 90vw);
 
-      opacity: 0.06;           /* adjust this: 0.03 - 0.10 is usually the sweet spot */
-      filter: grayscale(100%); /* optional: keeps it from fighting your theme */
-    }
+    opacity: 0.06;
+    filter: grayscale(100%);
+  }
 
-    /* Make sure your app content stays above the background */
-    .wrap, .bottomNav{
-      position: relative;
-      z-index: 1;
-    }
+  .wrap{
+    position: relative;
+    z-index: 1;
+  }
+
+  .bottomNav{
+    z-index: 10;
+  }
 
   </style>
 </head>
