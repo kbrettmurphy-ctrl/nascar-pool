@@ -13,9 +13,9 @@
   <title>NASCAR Pool 2026</title>
 
   <style>
-    :root{
+    :root{ --cardA: 0.78; --microA: 0.72; --cardBg: rgba(255,255,255,var(--cardA)); --microBg: rgba(255,255,255,var(--microA)); 
       --bg:#f6f7f9;
-      --card:rgba(255,255,255,0.90);
+      --card:rgba(255,255,255,0.78);
       --stroke:#e5e7eb;
       --muted:#6b7280;
       --ink:#0f172a;
@@ -412,7 +412,7 @@
       border:1px solid var(--stroke);
       border-radius: var(--radius2);
       padding: var(--mmPad);
-      background:#fff;
+      background: var(--microBg);
     }
     .youBox{
       border:2px solid #16a34a;
@@ -546,7 +546,7 @@
 
     /* Watermark background */
     :root{
-      --wmOpacity: 0.10;   /* 10% */
+      --wmOpacity: 0.12;   /* 10% */
       --wmShift: 0px;      /* parallax shift */
     }
     body{
@@ -559,7 +559,7 @@
       inset: 0;
       background-image: url("nascar-logo.png");
       background-repeat: no-repeat;
-      background-size: min(75vmin, 520px);
+      background-size: min(78vw, 560px);
       background-position: 50% calc(50% + var(--wmShift));
       opacity: var(--wmOpacity);
       pointer-events: none;
@@ -575,7 +575,7 @@
       -webkit-backdrop-filter: blur(6px);
     }
     @media (prefers-color-scheme: dark){
-      :root{ --wmOpacity: 0.08; }
+      :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); }
     }
 
 </style>
@@ -1390,5 +1390,21 @@ Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
   })();
 </script>
 
+<script>
+(function(){
+  let ticking=false;
+  function onScroll(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(()=>{
+      const y=window.scrollY||0;
+      document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
+      ticking=false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 </body>
 </html>
