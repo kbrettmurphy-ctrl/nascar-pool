@@ -1,0 +1,61 @@
+{
+  "tournament": 2,
+  "race": "Martinsville",
+  "round": 3,
+  "matchups": [
+    {
+      "p1": "Nate M.",
+      "p2": "Beau",
+      "p1Drivers": [
+        "Michael McDowell",
+        "Noah Gragson"
+      ],
+      "p2Drivers": [
+        "Denny Hamlin",
+        "Ryan Preece"
+      ],
+      "p1Nums": [
+        15,
+        24
+      ],
+      "p2Nums": [
+        5,
+        21
+      ]
+    },
+    {
+      "p1": "Jason",
+      "p2": "Chris",
+      "p1Drivers": [
+        "Daniel Su?rez",
+        "Joey Logano"
+      ],
+      "p2Drivers": [
+        "Justin Haley",
+        "William Byron"
+      ],
+      "p1Nums": [
+        26,
+        7
+      ],
+      "p2Nums": [
+        30,
+        10
+      ]
+    }
+  ],
+  "eliminated": [
+    "Bob",
+    "Brett",
+    "Don",
+    "Justin",
+    "Nate C.",
+    "Nick",
+    "Pat",
+    "Rob",
+    "Russ",
+    "Stacy",
+    "Steven",
+    "Tyler"
+  ]
+}
