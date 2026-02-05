@@ -542,34 +542,6 @@
       .navBtn .ico{ font-size: 18px; }
       .card{ padding: 14px; }
     }
-  
-    /* ===== NASCAR Watermark Background ===== */
-    :root{
-      --wm-image: url("./nascar-logo.png");
-      --wm-opacity: 0.035;
-      --wm-rotate: -6deg;
-      --wm-shift: 0px;
-      --wm-size: min(60vw, 650px);
-    }
-    @media (prefers-color-scheme: dark){
-      :root{ --wm-opacity: 0.055; }
-    }
-    body{ position: relative; }
-    body.wm-on::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      background-image: var(--wm-image);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: var(--wm-size);
-      opacity: var(--wm-opacity);
-      transform: translateY(var(--wm-shift)) rotate(var(--wm-rotate));
-      transform-origin: center;
-      pointer-events: none;
-      z-index: -1;
-    }
-
   </style>
 </head>
 
@@ -667,28 +639,6 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
-
-    /**********************
-     * WATERMARK CONTROLS
-     **********************/
-    const WM_SHOW_ON = new Set(["current","mymatchup","standings","dues","bracket"]); // edit if you want fewer tabs
-    function setWatermark(view){
-      document.body.classList.toggle("wm-on", WM_SHOW_ON.has(view));
-    }
-    // subtle parallax: move watermark slightly opposite scroll
-    function bindWatermarkParallax(){
-      let ticking = false;
-      window.addEventListener("scroll", () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const y = window.scrollY || 0;
-          const shift = Math.round(-y * 0.04); // gentle
-          document.documentElement.style.setProperty("--wm-shift", shift + "px");
-          ticking = false;
-        });
-      }, { passive: true });
-    }
 
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
@@ -824,9 +774,39 @@ async function fetchSnapshotJson(key, bustCache=false){
       if (btn) btn.classList.add("active");
     }
 
+    // Cache for large snapshot maps so we don't refetch them over and over
+    let _cache_myMatchupsAll = null;
+
+    async function getMyMatchupsAllSnapshot(){
+      if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
+      try{
+        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
+      }catch(e){
+        _cache_myMatchupsAll = null;
+      }
+      return _cache_myMatchupsAll;
+    }
+
+    function extractPicksFromMyEntry(entry){
+      if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
+      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
+      const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
+      return { drivers, nums };
+    }
+
+    function getEntryByName(map, name){
+      if(!map || !name) return null;
+      if(map[name]) return map[name];
+      const target = String(name).trim().toLowerCase();
+      // Build a one-off lookup without mutating the snapshot structure
+      for(const k in map){
+        if(String(k).trim().toLowerCase() === target) return map[k];
+      }
+      return null;
+    }
+
     function showView(which) {
       activeView = which;
-      setWatermark(which);
       setActiveNav(which);
 
       views.forEach(v => {
@@ -1000,7 +980,17 @@ async function fetchSnapshotJson(key, bustCache=false){
         const eliminated = data.eliminated || [];
         if (eliminated.length > 0) {
           let html = `<div class="elimTitle">Eliminated</div>`;
-          eliminated.forEach(p => { html += `<div class="elimItem">${escapeHtml(p)}</div>`; });
+
+          // Try to enrich eliminated list with their assigned drivers/numbers
+          const myAll = await getMyMatchupsAllSnapshot();
+
+          eliminated.forEach(p => {
+            const entry = getEntryByName(myAll, p);
+            const picks = extractPicksFromMyEntry(entry);
+            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+          });
+
           elim.innerHTML = html;
         }
       }catch(e){
@@ -1179,28 +1169,59 @@ Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
     function showTournamentRanks(label) {
   const box = document.getElementById("tourneyRanksBox");
   const t = window.__tournaments || {};
-  const list = t[label] || [];
+  const listRaw = t[label] || [];
 
   let html = `<div style="margin-top:10px;font-weight:900;font-size:16px;">${escapeHtml(label)}</div>`;
 
-  if (!Array.isArray(list) || list.length === 0) {
+  if (!Array.isArray(listRaw) || listRaw.length === 0) {
     html += `<div class="muted">(No data yet)</div>`;
     box.innerHTML = html;
     return;
   }
 
-  // If list is "the eliminated players so far" (i.e., ranks at the bottom),
-  // the numbering should end at 16.
-  let startRank = 17 - list.length;
+  // Normalize list items:
+  // - If GAS returns objects like { rank: 9, player: "Brett" }, render player name + use rank.
+  // - If it returns strings, render string + compute ranks.
+  const items = listRaw
+    .map((it) => {
+      if (it && typeof it === "object") {
+        const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
+        const rank = Number(it.rank ?? it.Rank ?? it.RANK);
+        return { rank: Number.isFinite(rank) ? rank : null, player: String(player || "").trim() };
+      }
+      return { rank: null, player: String(it || "").trim() };
+    })
+    .filter(x => x.player);
 
-  // Safety clamp (just in case something weird gets returned)
+  if (items.length === 0) {
+    html += `<div class="muted">(No data yet)</div>`;
+    box.innerHTML = html;
+    return;
+  }
+
+  // If ranks are provided, sort by rank and display exactly those ranks (perfect for partial tournaments).
+  const hasRanks = items.some(x => Number.isFinite(x.rank));
+  if (hasRanks) {
+    items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
+    html += `<div style="margin-top:8px;font-size:14px;color:#111;line-height:1.7;">`;
+    items.forEach((it, i) => {
+      const r = Number.isFinite(it.rank) ? it.rank : (i + 1);
+      html += `<div>${r}. ${escapeHtml(it.player)}</div>`;
+    });
+    html += `</div>`;
+    box.innerHTML = html;
+    return;
+  }
+
+  // Otherwise it's a plain list of names: number them so they end at 16.
+  let startRank = 17 - items.length;
   if (startRank < 1) startRank = 1;
   if (startRank > 16) startRank = 16;
 
   html += `<div style="margin-top:8px;font-size:14px;color:#111;line-height:1.7;">`;
-  list.forEach((name, i) => {
+  items.forEach((it, i) => {
     const rank = startRank + i;
-    html += `<div>${rank}. ${escapeHtml(name)}</div>`;
+    html += `<div>${rank}. ${escapeHtml(it.player)}</div>`;
   });
   html += `</div>`;
 
