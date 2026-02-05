@@ -12,32 +12,50 @@
     {
       "Rank": "1",
       "Player": "Bob",
-      "Wins": "5",
+      "Wins": "6",
       "Losses": "0",
-      "Total Matches": "5",
+      "Total Matches": "6",
       "Win %": "100.0%",
-      "Avg Finish": "17.00"
+      "Avg Finish": "16.75"
     },
     {
       "Rank": "2",
       "Player": "Jason",
-      "Wins": "4",
+      "Wins": "5",
       "Losses": "1",
-      "Total Matches": "5",
-      "Win %": "80.0%",
-      "Avg Finish": "16.00"
+      "Total Matches": "6",
+      "Win %": "83.3%",
+      "Avg Finish": "14.50"
     },
     {
       "Rank": "3",
       "Player": "Nate M.",
-      "Wins": "3",
+      "Wins": "4",
       "Losses": "1",
-      "Total Matches": "4",
-      "Win %": "75.0%",
-      "Avg Finish": "17.88"
+      "Total Matches": "5",
+      "Win %": "80.0%",
+      "Avg Finish": "17.00"
     },
     {
       "Rank": "4",
+      "Player": "Justin",
+      "Wins": "2",
+      "Losses": "2",
+      "Total Matches": "4",
+      "Win %": "50.0%",
+      "Avg Finish": "15.50"
+    },
+    {
+      "Rank": "5",
+      "Player": "Rob",
+      "Wins": "2",
+      "Losses": "2",
+      "Total Matches": "4",
+      "Win %": "50.0%",
+      "Avg Finish": "18.25"
+    },
+    {
+      "Rank": "6",
       "Player": "Russ",
       "Wins": "2",
       "Losses": "2",
@@ -46,25 +64,16 @@
       "Avg Finish": "18.25"
     },
     {
-      "Rank": "5",
-      "Player": "Justin",
-      "Wins": "2",
-      "Losses": "1",
-      "Total Matches": "3",
-      "Win %": "66.7%",
-      "Avg Finish": "15.50"
-    },
-    {
-      "Rank": "6",
-      "Player": "Rob",
-      "Wins": "2",
-      "Losses": "1",
-      "Total Matches": "3",
-      "Win %": "66.7%",
-      "Avg Finish": "17.00"
-    },
-    {
       "Rank": "7",
+      "Player": "Chris",
+      "Wins": "2",
+      "Losses": "1",
+      "Total Matches": "3",
+      "Win %": "66.7%",
+      "Avg Finish": "12.83"
+    },
+    {
+      "Rank": "8",
       "Player": "Brett",
       "Wins": "1",
       "Losses": "2",
@@ -73,7 +82,7 @@
       "Avg Finish": "19.67"
     },
     {
-      "Rank": "8",
+      "Rank": "9",
       "Player": "Beau",
       "Wins": "1",
       "Losses": "2",
@@ -82,30 +91,21 @@
       "Avg Finish": "20.83"
     },
     {
-      "Rank": "9",
-      "Player": "Chris",
-      "Wins": "1",
-      "Losses": "1",
-      "Total Matches": "2",
-      "Win %": "50.0%",
-      "Avg Finish": "14.50"
-    },
-    {
       "Rank": "10",
       "Player": "Tyler",
       "Wins": "1",
-      "Losses": "1",
-      "Total Matches": "2",
-      "Win %": "50.0%",
-      "Avg Finish": "21.25"
+      "Losses": "2",
+      "Total Matches": "3",
+      "Win %": "33.3%",
+      "Avg Finish": "22.33"
     },
     {
       "Rank": "11",
       "Player": "Stacy",
       "Wins": "1",
-      "Losses": "1",
-      "Total Matches": "2",
-      "Win %": "50.0%",
+      "Losses": "2",
+      "Total Matches": "3",
+      "Win %": "33.3%",
       "Avg Finish": "25.50"
     },
     {
@@ -233,6 +233,22 @@
       }
     ],
     "Tournament 2": [
+      {
+        "rank": 5,
+        "player": "Justin"
+      },
+      {
+        "rank": 6,
+        "player": "Rob"
+      },
+      {
+        "rank": 7,
+        "player": "Tyler"
+      },
+      {
+        "rank": 8,
+        "player": "Stacy"
+      },
       {
         "rank": 9,
         "player": "Nick"
