@@ -7,40 +7,40 @@
       "p1": "Nate M.",
       "p2": "Beau",
       "p1Drivers": [
-        "Michael McDowell",
-        "Noah Gragson"
+        "Cole Custer",
+        "Erik Jones"
       ],
       "p2Drivers": [
-        "Denny Hamlin",
-        "Ryan Preece"
+        "Ryan Blaney",
+        "Alex Bowman"
       ],
       "p1Nums": [
-        15,
-        24
+        22,
+        31
       ],
       "p2Nums": [
-        5,
-        21
+        32,
+        3
       ]
     },
     {
       "p1": "Jason",
       "p2": "Chris",
       "p1Drivers": [
-        "Daniel Su?rez",
-        "Joey Logano"
+        "Joey Logano",
+        "Michael McDowell"
       ],
       "p2Drivers": [
-        "Justin Haley",
-        "William Byron"
+        "Chase Briscoe",
+        "Christopher Bell"
       ],
       "p1Nums": [
-        26,
-        7
+        7,
+        15
       ],
       "p2Nums": [
-        30,
-        10
+        11,
+        1
       ]
     }
   ],
