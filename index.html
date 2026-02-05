@@ -15,7 +15,7 @@
   <style>
     :root{
       --bg:#f6f7f9;
-      --card:#ffffff;
+      --card:rgba(255,255,255,0.90);
       --stroke:#e5e7eb;
       --muted:#6b7280;
       --ink:#0f172a;
@@ -542,7 +542,43 @@
       .navBtn .ico{ font-size: 18px; }
       .card{ padding: 14px; }
     }
-  </style>
+  
+
+    /* Watermark background */
+    :root{
+      --wmOpacity: 0.10;   /* 10% */
+      --wmShift: 0px;      /* parallax shift */
+    }
+    body{
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: url("nascar-logo.png");
+      background-repeat: no-repeat;
+      background-size: min(75vmin, 520px);
+      background-position: 50% calc(50% + var(--wmShift));
+      opacity: var(--wmOpacity);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > *{
+      position: relative;
+      z-index: 1;
+    }
+    /* Let the watermark show through cards */
+    .card{
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --wmOpacity: 0.08; }
+    }
+
+</style>
 </head>
 
 <body>
@@ -1340,5 +1376,19 @@ Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
     }
     window.onload = () => { loadPlayersThenInit(); };
   </script>
+
+<script>
+  // Subtle parallax watermark drift
+  (function(){
+    function update(){
+      var y = (window.scrollY || 0) * 0.05; // tweak factor if you want
+      document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>
+
 </body>
 </html>
