@@ -497,7 +497,7 @@
       right: 0;
 
       /* ✅ key fix: sit above iOS bottom toolbar gap */
-      bottom: var(--vvb);
+      /*bottom: var(--vvb); */
 
       padding-bottom: env(safe-area-inset-bottom);
       background: rgba(0,0,0,.92); /*linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%); */
@@ -505,12 +505,13 @@
       z-index: 9999;
     }
     .navInner{
-      max-width: 700px;
-      margin: 0 auto;
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      padding: 10px 10px 12px 10px;
+      max-width: 920px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
     }
      .navBtn{
       flex:0 0 auto;
