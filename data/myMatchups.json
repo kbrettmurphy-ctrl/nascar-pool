@@ -6,20 +6,20 @@
     "you": "Beau",
     "opponent": "Nate M.",
     "youDrivers": [
-      "Denny Hamlin",
-      "Ryan Preece"
+      "Ryan Blaney",
+      "Alex Bowman"
     ],
     "oppDrivers": [
-      "Michael McDowell",
-      "Noah Gragson"
+      "Cole Custer",
+      "Erik Jones"
     ],
     "youNums": [
-      5,
-      21
+      32,
+      3
     ],
     "oppNums": [
-      15,
-      24
+      22,
+      31
     ],
     "status": "active"
   },
@@ -29,12 +29,12 @@
     "round": 3,
     "you": "Bob",
     "youDrivers": [
-      "A. J. Allmendinger",
-      "Ross Chastain"
+      "Tyler Reddick",
+      "Justin Haley"
     ],
     "youNums": [
-      23,
-      17
+      9,
+      30
     ],
     "status": "not_in_round"
   },
@@ -44,12 +44,12 @@
     "round": 3,
     "you": "Brett",
     "youDrivers": [
-      "Josh Berry",
-      "Brad Keselowski"
+      "John Hunter Nemechek",
+      "Ross Chastain"
     ],
     "youNums": [
-      14,
-      27
+      16,
+      17
     ],
     "status": "not_in_round"
   },
@@ -60,20 +60,20 @@
     "you": "Chris",
     "opponent": "Jason",
     "youDrivers": [
-      "Justin Haley",
-      "William Byron"
+      "Chase Briscoe",
+      "Christopher Bell"
     ],
     "oppDrivers": [
-      "Daniel Su?rez",
-      "Joey Logano"
+      "Joey Logano",
+      "Michael McDowell"
     ],
     "youNums": [
-      30,
-      10
+      11,
+      1
     ],
     "oppNums": [
-      26,
-      7
+      7,
+      15
     ],
     "status": "active"
   },
@@ -83,12 +83,12 @@
     "round": 3,
     "you": "Don",
     "youDrivers": [
-      "Chase Elliott",
-      "Cole Custer"
+      "Ty Dillon",
+      "Chris Buescher"
     ],
     "youNums": [
-      2,
-      22
+      28,
+      6
     ],
     "status": "not_in_round"
   },
@@ -99,20 +99,20 @@
     "you": "Jason",
     "opponent": "Chris",
     "youDrivers": [
-      "Daniel Su?rez",
-      "Joey Logano"
+      "Joey Logano",
+      "Michael McDowell"
     ],
     "oppDrivers": [
-      "Justin Haley",
-      "William Byron"
+      "Chase Briscoe",
+      "Christopher Bell"
     ],
     "youNums": [
-      26,
-      7
+      7,
+      15
     ],
     "oppNums": [
-      30,
-      10
+      11,
+      1
     ],
     "status": "active"
   },
@@ -122,12 +122,12 @@
     "round": 3,
     "you": "Justin",
     "youDrivers": [
-      "Chase Briscoe",
-      "Kyle Larson"
+      "Carson Hocevar",
+      "Zane Smith"
     ],
     "youNums": [
-      11,
-      4
+      29,
+      19
     ],
     "status": "not_in_round"
   },
@@ -137,12 +137,12 @@
     "round": 3,
     "you": "Nate C.",
     "youDrivers": [
-      "Ty Gibbs",
-      "Christopher Bell"
+      "Daniel Su?rez",
+      "Ryan Preece"
     ],
     "youNums": [
-      13,
-      1
+      26,
+      21
     ],
     "status": "not_in_round"
   },
@@ -153,20 +153,20 @@
     "you": "Nate M.",
     "opponent": "Beau",
     "youDrivers": [
-      "Michael McDowell",
-      "Noah Gragson"
+      "Cole Custer",
+      "Erik Jones"
     ],
     "oppDrivers": [
-      "Denny Hamlin",
-      "Ryan Preece"
+      "Ryan Blaney",
+      "Alex Bowman"
     ],
     "youNums": [
-      15,
-      24
+      22,
+      31
     ],
     "oppNums": [
-      5,
-      21
+      32,
+      3
     ],
     "status": "active"
   },
@@ -176,12 +176,12 @@
     "round": 3,
     "you": "Nick",
     "youDrivers": [
-      "Carson Hocevar",
-      "Erik Jones"
+      "Noah Gragson",
+      "Brad Keselowski"
     ],
     "youNums": [
-      29,
-      31
+      24,
+      27
     ],
     "status": "not_in_round"
   },
@@ -192,11 +192,11 @@
     "you": "Pat",
     "youDrivers": [
       "Bubba Wallace",
-      "Kyle Busch"
+      "Josh Berry"
     ],
     "youNums": [
       8,
-      12
+      14
     ],
     "status": "not_in_round"
   },
@@ -206,12 +206,12 @@
     "round": 3,
     "you": "Rob",
     "youDrivers": [
-      "Austin Dillon",
-      "John Hunter Nemechek"
+      "Ty Gibbs",
+      "Austin Dillon"
     ],
     "youNums": [
-      18,
-      16
+      13,
+      18
     ],
     "status": "not_in_round"
   },
@@ -221,12 +221,12 @@
     "round": 3,
     "you": "Russ",
     "youDrivers": [
-      "Zane Smith",
-      "Alex Bowman"
+      "Kyle Larson",
+      "Kyle Busch"
     ],
     "youNums": [
-      19,
-      3
+      4,
+      12
     ],
     "status": "not_in_round"
   },
@@ -236,12 +236,12 @@
     "round": 3,
     "you": "Stacy",
     "youDrivers": [
-      "Todd Gilliland",
-      "Ty Dillon"
+      "Chase Elliott",
+      "A. J. Allmendinger"
     ],
     "youNums": [
-      25,
-      28
+      2,
+      23
     ],
     "status": "not_in_round"
   },
@@ -251,12 +251,12 @@
     "round": 3,
     "you": "Steven",
     "youDrivers": [
-      "Austin Cindric",
-      "Ryan Blaney"
+      "William Byron",
+      "Austin Cindric"
     ],
     "youNums": [
-      20,
-      32
+      10,
+      20
     ],
     "status": "not_in_round"
   },
@@ -266,12 +266,12 @@
     "round": 3,
     "you": "Tyler",
     "youDrivers": [
-      "Chris Buescher",
-      "Tyler Reddick"
+      "Denny Hamlin",
+      "Todd Gilliland"
     ],
     "youNums": [
-      6,
-      9
+      5,
+      25
     ],
     "status": "not_in_round"
   }
