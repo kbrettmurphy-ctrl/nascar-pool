@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NASCAR Pool Admin</title>
+
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --card:#111111;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
+
+      --nav:#000000;
+
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;
+
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
+
+      --shadow: 0 16px 40px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .wrap{
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 18px 14px 120px;
+    }
+    .title{
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin: 6px 0 10px;
+    }
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .pill small{font-weight:800;color:rgba(255,255,255,.88)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .muted{color:var(--muted); font-size: 13px;}
+
+    label{
+      display:block;
+      font-weight: 800;
+      margin: 10px 0 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,.9);
+    }
+    input, select, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      outline:none;
+      font-size: 16px;
+      background: rgba(0,0,0,.45);
+      color: var(--text);
+    }
+    input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
+    textarea{min-height:120px; resize: vertical;}
+
+    .row{display:flex; gap:10px; align-items:center;}
+    .row > *{flex:1}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border:none;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 16px;
+      background: var(--btnPrimary);
+      color:#fff;
+    }
+    .btn.secondary{background: var(--btnSecondary);}
+    .btn.danger{background: var(--danger);}
+    .btn:disabled{opacity:.55; cursor:not-allowed;}
+
+    .spacer{height:8px}
+
+    .msg{
+      margin-top:10px;
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+    }
+    .err{border-color: rgba(228,0,43,.55); background: rgba(228,0,43,.10); }
+    .ok{border-color: rgba(255,214,89,.55); background: rgba(255,214,89,.10); }
+
+    .hide{display:none !important;}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    /* Bottom Nav */
+    .bottomNav{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
+      z-index: 9999;
+    }
+    .navInner{
+      max-width: 920px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .navBtn{
+      flex:0 0 auto;
+      min-width: 98px;
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      white-space:nowrap;
+    }
+    .navBtn.active{
+      background: rgba(0,122,194,.22);
+      border-color: rgba(0,122,194,.55);
+    }
+  
+    /* ===== NASCAR Watermark Background ===== */
+    :root{
+      --wm-image: url("./nascar-logo.png");
+      --wm-opacity: 0.045;
+      --wm-rotate: -6deg;
+      --wm-shift: 0px;
+      --wm-size: min(60vw, 650px);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --wm-opacity: 0.06; }
+    }
+    body{ position: relative; }
+    body.wm-on::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: var(--wm-image);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: var(--wm-size);
+      opacity: var(--wm-opacity);
+      transform: translateY(var(--wm-shift)) rotate(var(--wm-rotate));
+      transform-origin: center;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+  </style>
+</head>
+
+<body class="wm-on">
+  <div class="wrap">
+    <div class="title">NASCAR Pool Admin</div>
+
+    <div class="pill" id="ctxPill">Current: <small>(loading…)</small></div>
+
+    <!-- API CONFIG (hidden when configured; can be opened from ⚙️) -->
+    <div class="grid" style="margin-top:12px;">
+      <div id="apiConfigWrap" class="card">
+        <h3>API Config</h3>
+        <div class="muted">Saved locally on this device. If you switch browsers/devices, you’ll re-enter it.</div>
+
+        <div id="configSummary" class="hide" style="margin-top:10px;">
+          <div class="msg ok">
+            Configured ✅
+            <div style="margin-top:6px;">
+              API Base: <span class="mono" id="apiBaseMasked"></span><br/>
+              Admin Key: <span class="mono" id="adminKeyMasked"></span>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <button class="btn secondary" onclick="editConfig()">Edit</button>
+            <button class="btn danger" onclick="clearConfig()">Clear</button>
+          </div>
+        </div>
+
+        <div id="configInputs" style="margin-top:10px;">
+          <label>API Base (GAS /exec)</label>
+          <input id="apiBase" placeholder="https://script.google.com/macros/s/.../exec" />
+
+          <label>Admin Key</label>
+          <input id="adminKey" placeholder="ADMIN_KEY" />
+
+          <div class="spacer"></div>
+          <button class="btn secondary" onclick="saveConfig()">Save Config</button>
+          <div id="configMsg" class="msg hide"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panels -->
+    <div class="grid" style="margin-top:14px;">
+
+      <div class="card panel" id="panelNumbers">
+        <h3>Assign Numbers</h3>
+        <div class="muted">Defaults to the current race detected at the top.</div>
+
+        <label>Tournament</label>
+        <select id="numTourneySel">
+          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
+        </select>
+
+        <label>Race</label>
+        <select id="numRaceSel"><option value="">(loading…)</option></select>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="assignNumbersSelectedFromPanel()">Assign Numbers (Selected Race)</button>
+
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="assignNumbersAllFromPanel()">Assign Numbers (ALL 4 Races)</button>
+
+        <div id="numMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelImport">
+        <h3>Paste Starting Lineups / Finishes</h3>
+        <div class="muted">Paste the Wikipedia table block. We’ll strip junk like “(R)” and “(i)” and try to match your Drivers tab.</div>
+
+        <label>Which sheet?</label>
+        <select id="sheetTypeSel" onchange="loadRaceHeadersForSheet()">
+          <option>Starting Lineups</option>
+          <option>Finishes</option>
+        </select>
+
+        <label>Race Header</label>
+        <select id="raceHeaderSel"><option value="">(loading…)</option></select>
+
+        <label>Paste the table block</label>
+        <textarea id="rawPaste" placeholder="Paste from Wikipedia (or wherever) here…"></textarea>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="importPaste()">Import Paste</button>
+
+        <div id="importMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelRanks">
+        <h3>Refresh Overall Rankings</h3>
+        <div class="muted">Runs <span class="mono">compileOverallRanks()</span> so the Stats page updates.</div>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="runCompileOverallRanks()">Run CompileOverallRanks</button>
+
+        <div id="ranksMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelWinnings">
+        <h3>Tournament Winnings</h3>
+        <label>Tournament</label>
+        <select id="winTourneySel">
+          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
+        </select>
+
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="showWinnings()">Show Winnings</button>
+
+        <div id="winningsMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelFunds">
+        <h3>Add Funds</h3>
+        <label>Player</label>
+        <select id="playerSel"><option value="">(loading…)</option></select>
+
+        <label>Amount</label>
+        <input id="fundsAmt" placeholder="25 or 25.00" />
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="addFunds()">Add Funds</button>
+
+        <div id="fundsMsg" class="msg hide"></div>
+      </div>
+
+      <div class="card panel hide" id="panelPublish">
+        <h3>Publish to GitHub (Static Snapshot)</h3>
+        <div class="muted">
+          This pushes fresh JSON files into <span class="mono">/data</span> in your repo so the player site loads fast.
+          After you assign numbers, import finishes, or update stats… hit this once.
+        </div>
+
+        <div class="spacer"></div>
+        <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
+
+        <div id="pubMsg" class="msg hide"></div>
+
+        <div class="spacer"></div>
+        <div class="muted">
+          Required once in GAS Script Properties:<br/>
+          <span class="mono">GITHUB_TOKEN</span>, <span class="mono">GITHUB_OWNER</span>, <span class="mono">GITHUB_REPO</span>, (optional) <span class="mono">GITHUB_BRANCH</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <div class="bottomNav">
+    <div class="navInner">
+      <button class="navBtn active" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
+      <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
+      <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
+      <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
+      <button class="navBtn" onclick="showPanel('Funds', this)">💵<span>Add</span></button>
+      <button class="navBtn" onclick="showPanel('Publish', this)">🚀<span>Publish</span></button>
+      <button class="navBtn" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
+    </div>
+  </div>
+
+<script>
+  // ---------- Storage ----------
+  const LS_API = "nascar_api_base";
+  const LS_KEY = "nascar_admin_key";
+
+  function getCfg(){
+    return {
+      apiBase: (localStorage.getItem(LS_API) || "").trim(),
+      adminKey: (localStorage.getItem(LS_KEY) || "").trim(),
+    };
+  }
+  function mask(s){
+    if(!s) return "(empty)";
+    if(s.length <= 10) return "••••••";
+    return s.slice(0, 12) + "…";
+  }
+
+  // ---------- Config UI ----------
+  function syncConfigUI(){
+    const {apiBase, adminKey} = getCfg();
+    const has = !!apiBase && !!adminKey;
+
+    document.getElementById("configSummary").classList.toggle("hide", !has);
+    document.getElementById("configInputs").classList.toggle("hide", has);
+
+    if(has){
+      document.getElementById("apiBaseMasked").textContent = mask(apiBase);
+      document.getElementById("adminKeyMasked").textContent = mask(adminKey);
+    }else{
+      document.getElementById("apiBase").value = apiBase || "";
+      document.getElementById("adminKey").value = adminKey || "";
+    }
+  }
+
+  function hasAdminConfig(){
+    const {apiBase, adminKey} = getCfg();
+    return !!apiBase && !!adminKey;
+  }
+
+  // When configured we hide the big card (but Config button can still open it)
+  function applyConfigVisibility(forceShow=false){
+    const wrap = document.getElementById("apiConfigWrap");
+    if(!wrap) return;
+
+    if(forceShow){
+      wrap.classList.remove("hide");
+      return;
+    }
+    if(hasAdminConfig()){
+      wrap.classList.add("hide");
+    }else{
+      wrap.classList.remove("hide");
+    }
+  }
+
+  function toggleConfigCard(){
+    const wrap = document.getElementById("apiConfigWrap");
+    if(!wrap) return;
+
+    const isHidden = wrap.classList.contains("hide");
+    if(isHidden){
+      wrap.classList.remove("hide");
+      // also make sure inputs/summary reflect saved state
+      syncConfigUI();
+    }else{
+      // if not configured, don't allow hiding (you need to see it)
+      if(!hasAdminConfig()) return;
+      wrap.classList.add("hide");
+    }
+  }
+
+  function saveConfig(){
+    const apiBase = document.getElementById("apiBase").value.trim();
+    const adminKey = document.getElementById("adminKey").value.trim();
+    const msg = document.getElementById("configMsg");
+
+    if(!apiBase || !apiBase.includes("/exec")){
+      showMsg(msg, "Error: API Base must be your GAS Web App URL ending in /exec", true);
+      return;
+    }
+    if(!adminKey){
+      showMsg(msg, "Error: Admin Key required.", true);
+      return;
+    }
+
+    localStorage.setItem(LS_API, apiBase);
+    localStorage.setItem(LS_KEY, adminKey);
+
+    showMsg(msg, "Saved ✅", false);
+    syncConfigUI();
+    applyConfigVisibility(false);
+    bootstrap();
+  }
+
+  function editConfig(){
+    // Show the card + inputs but KEEP the saved values (don’t nuke localStorage)
+    applyConfigVisibility(true);
+    const {apiBase, adminKey} = getCfg();
+    document.getElementById("configSummary").classList.add("hide");
+    document.getElementById("configInputs").classList.remove("hide");
+    document.getElementById("apiBase").value = apiBase || "";
+    document.getElementById("adminKey").value = adminKey || "";
+  }
+
+  function clearConfig(){
+    localStorage.removeItem(LS_API);
+    localStorage.removeItem(LS_KEY);
+    syncConfigUI();
+    document.getElementById("ctxPill").innerHTML = `Current: <small>(not configured)</small>`;
+    applyConfigVisibility(false);
+  }
+
+  // ---------- UI helpers ----------
+  function showMsg(el, text, isErr){
+    el.classList.remove("hide","err","ok");
+    el.classList.add(isErr ? "err" : "ok");
+    el.textContent = text;
+  }
+  function hideMsg(el){ el.classList.add("hide"); }
+
+  function escapeHtml(s){
+    return String(s ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function showPanel(name, btn){
+    document.querySelectorAll(".panel").forEach(p => p.classList.add("hide"));
+    const panel = document.getElementById("panel"+name);
+    if(panel) panel.classList.remove("hide");
+
+    document.querySelectorAll(".navBtn").forEach(b => b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+  }
+
+  // ---------- API ----------
+  async function apiCall(action, params={}, isAdmin=true){
+    const {apiBase, adminKey} = getCfg();
+    if(!apiBase) throw new Error("Missing API Base URL.");
+    if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+
+    const q = new URLSearchParams();
+    q.set("action", action);
+    if(isAdmin) q.set("key", adminKey);
+    Object.keys(params || {}).forEach(k => q.set(k, params[k]));
+
+    const url = apiBase + "?" + q.toString();
+    const res = await fetch(url, { cache: "no-store" });
+    const json = await res.json();
+    return json;
+  }
+
+  // ---------- Data loaders ----------
+  async function refreshContext(){
+    const pill = document.getElementById("ctxPill");
+    try{
+      pill.innerHTML = `Current: <small>(loading…)</small>`;
+      const r = await apiCall("adminGetCurrentContext", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const c = r.data || {};
+
+      window.__ctx = { tournament: String(c.tournament||""), raceLabel: String(c.raceLabel||"") };
+
+      pill.innerHTML = `Current: <small>T${c.tournament} · Round ${c.round} · ${escapeHtml(c.raceLabel || "(no label)")}</small>`;
+
+      try { await syncNumbersPanelDefaults(); } catch(e) {}
+    }catch(e){
+      pill.innerHTML = `Current: <small>(could not detect)</small>`;
+      window.__ctx = null;
+    }
+  }
+
+  async function loadPlayers(){
+    const sel = document.getElementById("playerSel");
+    sel.innerHTML = `<option value="">(loading…)</option>`;
+    try{
+      const r = await apiCall("playerGetPlayerList", {}, false);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const list = r.data || [];
+      sel.innerHTML = `<option value="">Select…</option>` + list.map(x => `<option>${escapeHtml(x)}</option>`).join("");
+    }catch(e){
+      sel.innerHTML = `<option value="">(error)</option>`;
+    }
+  }
+
+  async function loadRaceHeadersForSheet(){
+    const sheetType = document.getElementById("sheetTypeSel").value;
+    const sel = document.getElementById("raceHeaderSel");
+    sel.innerHTML = `<option value="">(loading…)</option>`;
+    try{
+      const r = await apiCall("adminGetRaceHeaders", { sheetType }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const headers = r.data || [];
+      sel.innerHTML = headers.length
+        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
+        : `<option value="">(none)</option>`;
+    }catch(e){
+      sel.innerHTML = `<option value="">(error)</option>`;
+    }
+  }
+
+  async function loadRaceHeadersForTournamentInto(selectEl, tournament){
+    selectEl.innerHTML = `<option value="">(loading…)</option>`;
+    try{
+      const r = await apiCall("adminGetTournamentRaceHeaders", { tournament }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      const headers = r.data || [];
+      selectEl.innerHTML = headers.length
+        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
+        : `<option value="">(none)</option>`;
+      return headers;
+    }catch(e){
+      selectEl.innerHTML = `<option value="">(error)</option>`;
+      return [];
+    }
+  }
+
+  async function syncNumbersPanelDefaults(){
+    const ctx = window.__ctx;
+    const tSel = document.getElementById("numTourneySel");
+    const rSel = document.getElementById("numRaceSel");
+    if(!tSel || !rSel) return;
+
+    const t = ctx?.tournament || "1";
+    tSel.value = t;
+
+    const headers = await loadRaceHeadersForTournamentInto(rSel, t);
+    const want = ctx?.raceLabel || "";
+    if(want && headers.includes(want)) rSel.value = want;
+  }
+
+  // Tournament changed inside Numbers panel
+  document.getElementById("numTourneySel").addEventListener("change", async () => {
+    const t = document.getElementById("numTourneySel").value;
+    const rSel = document.getElementById("numRaceSel");
+    await loadRaceHeadersForTournamentInto(rSel, t);
+  });
+
+  // ---------- Actions ----------
+  async function assignNumbersSelectedFromPanel(){
+    const msg = document.getElementById("numMsg");
+    hideMsg(msg);
+
+    const t = document.getElementById("numTourneySel").value;
+    const race = document.getElementById("numRaceSel").value;
+    if(!race){ showMsg(msg, "Pick a race first.", true); return; }
+
+    try{
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminAssignNumbersForRace", { tournament: t, race }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Done.", false);
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function assignNumbersAllFromPanel(){
+    const msg = document.getElementById("numMsg");
+    hideMsg(msg);
+
+    const t = document.getElementById("numTourneySel").value;
+
+    try{
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminAssignNumbersAllRaces", { tournament: t }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Done.", false);
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function addFunds(){
+    const msg = document.getElementById("fundsMsg");
+    hideMsg(msg);
+
+    const player = document.getElementById("playerSel").value;
+    const amt = document.getElementById("fundsAmt").value.trim();
+    if(!player){ showMsg(msg, "Pick a player.", true); return; }
+    if(!amt){ showMsg(msg, "Enter an amount.", true); return; }
+
+    try{
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminAddFunds", { player, amount: amt }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Saved.", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function importPaste(){
+    const msg = document.getElementById("importMsg");
+    hideMsg(msg);
+
+    const sheetType = document.getElementById("sheetTypeSel").value;
+    const header = document.getElementById("raceHeaderSel").value;
+    const rawText = document.getElementById("rawPaste").value;
+
+    if(!header){ showMsg(msg, "Pick a race header.", true); return; }
+    if(!rawText.trim()){ showMsg(msg, "Paste the table block first.", true); return; }
+
+    try{
+      showMsg(msg, "Importing…", false);
+      const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+
+      // Auto run ranks after finishes import
+      if(String(sheetType).toLowerCase().includes("finish")){
+        showMsg(msg, "Imported. Now updating ranks…", false);
+        const rr = await apiCall("adminCompileOverallRanks", {}, true);
+        if(!rr.ok) throw new Error(rr.error || "Ranks update failed");
+        showMsg(msg, "Imported + Ranks updated ✅", false);
+      } else {
+        showMsg(msg, `Imported ✅ (${r.data?.rowsWritten || "?"} rows)`, false);
+      }
+
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function runCompileOverallRanks(){
+    const msg = document.getElementById("ranksMsg");
+    hideMsg(msg);
+
+    try{
+      showMsg(msg, "Working…", false);
+      const r = await apiCall("adminCompileOverallRanks", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Updated ✅", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function showWinnings(){
+    const msg = document.getElementById("winningsMsg");
+    hideMsg(msg);
+
+    const t = document.getElementById("winTourneySel").value;
+    try{
+      showMsg(msg, "Loading…", false);
+      const r = await apiCall("adminGetTournamentWinnings", { tournament: t }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.text || "(no data)", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function publishSnapshot(){
+    const msg = document.getElementById("pubMsg");
+    hideMsg(msg);
+
+    try{
+      showMsg(msg, "Publishing…", false);
+      const r = await apiCall("adminPublishSnapshot", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, (r.data?.message || "Published ✅") + "\n" + (r.data?.publishedAt || ""), false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  // ---------- Bootstrap ----------
+  async function bootstrap(){
+    syncConfigUI();
+    applyConfigVisibility(false);
+
+    if(!hasAdminConfig()) return;
+
+    await refreshContext();
+    await loadRaceHeadersForSheet();
+    await loadPlayers();
+  }
+
+  // Init
+  document.addEventListener("DOMContentLoaded", bootstrap);
+</script>
+</body>
+</html>
