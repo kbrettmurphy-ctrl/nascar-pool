@@ -542,6 +542,34 @@
       .navBtn .ico{ font-size: 18px; }
       .card{ padding: 14px; }
     }
+  
+    /* ===== NASCAR Watermark Background ===== */
+    :root{
+      --wm-image: url("./nascar-logo.png");
+      --wm-opacity: 0.035;
+      --wm-rotate: -6deg;
+      --wm-shift: 0px;
+      --wm-size: min(60vw, 650px);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --wm-opacity: 0.055; }
+    }
+    body{ position: relative; }
+    body.wm-on::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: var(--wm-image);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: var(--wm-size);
+      opacity: var(--wm-opacity);
+      transform: translateY(var(--wm-shift)) rotate(var(--wm-rotate));
+      transform-origin: center;
+      pointer-events: none;
+      z-index: -1;
+    }
+
   </style>
 </head>
 
@@ -639,6 +667,28 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
+
+    /**********************
+     * WATERMARK CONTROLS
+     **********************/
+    const WM_SHOW_ON = new Set(["current","mymatchup","standings","dues","bracket"]); // edit if you want fewer tabs
+    function setWatermark(view){
+      document.body.classList.toggle("wm-on", WM_SHOW_ON.has(view));
+    }
+    // subtle parallax: move watermark slightly opposite scroll
+    function bindWatermarkParallax(){
+      let ticking = false;
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || 0;
+          const shift = Math.round(-y * 0.04); // gentle
+          document.documentElement.style.setProperty("--wm-shift", shift + "px");
+          ticking = false;
+        });
+      }, { passive: true });
+    }
 
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
@@ -774,39 +824,9 @@ async function fetchSnapshotJson(key, bustCache=false){
       if (btn) btn.classList.add("active");
     }
 
-    // Cache for large snapshot maps so we don't refetch them over and over
-    let _cache_myMatchupsAll = null;
-
-    async function getMyMatchupsAllSnapshot(){
-      if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
-      try{
-        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
-      }catch(e){
-        _cache_myMatchupsAll = null;
-      }
-      return _cache_myMatchupsAll;
-    }
-
-    function extractPicksFromMyEntry(entry){
-      if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
-      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
-      const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
-      return { drivers, nums };
-    }
-
-    function getEntryByName(map, name){
-      if(!map || !name) return null;
-      if(map[name]) return map[name];
-      const target = String(name).trim().toLowerCase();
-      // Build a one-off lookup without mutating the snapshot structure
-      for(const k in map){
-        if(String(k).trim().toLowerCase() === target) return map[k];
-      }
-      return null;
-    }
-
     function showView(which) {
       activeView = which;
+      setWatermark(which);
       setActiveNav(which);
 
       views.forEach(v => {
@@ -980,17 +1000,7 @@ async function fetchSnapshotJson(key, bustCache=false){
         const eliminated = data.eliminated || [];
         if (eliminated.length > 0) {
           let html = `<div class="elimTitle">Eliminated</div>`;
-
-          // Try to enrich eliminated list with their assigned drivers/numbers
-          const myAll = await getMyMatchupsAllSnapshot();
-
-          eliminated.forEach(p => {
-            const entry = getEntryByName(myAll, p);
-            const picks = extractPicksFromMyEntry(entry);
-            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
-          });
-
+          eliminated.forEach(p => { html += `<div class="elimItem">${escapeHtml(p)}</div>`; });
           elim.innerHTML = html;
         }
       }catch(e){
