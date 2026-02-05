@@ -14,15 +14,31 @@
 
   <style>
     :root{ --cardA: 0.78; --microA: 0.72; --cardBg: rgba(255,255,255,var(--cardA)); --microBg: rgba(255,255,255,var(--microA)); 
-      --bg:#f6f7f9;
-      --card:rgba(255,255,255,0.78);
+      /* --bg:#0b0b0b; */
+      /* --card:#111111; */
       --stroke:#e5e7eb;
-      --muted:#6b7280;
+      /* --muted:#6b7280; */
       --ink:#0f172a;
 
-      --nav:#0b1220;
+      --bg:#0b0b0b;
+      --card:#111111;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);   
+
+      /* --nav:#0b1220;   <----- Old from white background*/
+      --nav:#000000       /*New to match admin portal with black background*/ 
       --nav2:#111827;
 
+      /* -- NASCAR Color theme -- */
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;   
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
+          
       /* Slight overall scale-down (not blurry, just smaller defaults) */
       --pad:12px;
       --radius:16px;
@@ -30,7 +46,7 @@
 
       --h2:24px;
       --big:20px;
-      --body:15px;
+      --body:14px;
 
       --tight:10px;
       --micro:8px;
@@ -55,7 +71,7 @@
       max-width: 700px;
       margin: 0 auto;
       background: var(--bg);
-      color: var(--ink);
+      color: var(--text);
 
       /* ✅ keeps nav visible even with iOS toolbar */
       padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
@@ -77,8 +93,9 @@
       display:inline-block;
       padding:6px 10px;
       border-radius:999px;
-      background:#eef2ff;
-      color:#3730a3;
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
       font-size:12px;
       font-weight:700;
     }
@@ -543,7 +560,6 @@
       .card{ padding: 14px; }
     }
   
-
     /* Watermark background */
     :root{
       --wmOpacity: 0.42;   /* 10% */
@@ -559,7 +575,7 @@
       inset: 0;
       background-image: url("nascar-logo.png");
       background-repeat: no-repeat;
-      background-size: min(78vw, 560px);
+      background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
       opacity: var(--wmOpacity);
       pointer-events: none;
