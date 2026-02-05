@@ -774,6 +774,37 @@ async function fetchSnapshotJson(key, bustCache=false){
       if (btn) btn.classList.add("active");
     }
 
+    // Cache for large snapshot maps so we don't refetch them over and over
+    let _cache_myMatchupsAll = null;
+
+    async function getMyMatchupsAllSnapshot(){
+      if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
+      try{
+        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
+      }catch(e){
+        _cache_myMatchupsAll = null;
+      }
+      return _cache_myMatchupsAll;
+    }
+
+    function extractPicksFromMyEntry(entry){
+      if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
+      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
+      const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
+      return { drivers, nums };
+    }
+
+    function getEntryByName(map, name){
+      if(!map || !name) return null;
+      if(map[name]) return map[name];
+      const target = String(name).trim().toLowerCase();
+      // Build a one-off lookup without mutating the snapshot structure
+      for(const k in map){
+        if(String(k).trim().toLowerCase() === target) return map[k];
+      }
+      return null;
+    }
+
     function showView(which) {
       activeView = which;
       setActiveNav(which);
@@ -949,7 +980,17 @@ async function fetchSnapshotJson(key, bustCache=false){
         const eliminated = data.eliminated || [];
         if (eliminated.length > 0) {
           let html = `<div class="elimTitle">Eliminated</div>`;
-          eliminated.forEach(p => { html += `<div class="elimItem">${escapeHtml(p)}</div>`; });
+
+          // Try to enrich eliminated list with their assigned drivers/numbers
+          const myAll = await getMyMatchupsAllSnapshot();
+
+          eliminated.forEach(p => {
+            const entry = getEntryByName(myAll, p);
+            const picks = extractPicksFromMyEntry(entry);
+            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+          });
+
           elim.innerHTML = html;
         }
       }catch(e){
