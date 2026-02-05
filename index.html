@@ -1067,7 +1067,6 @@ async function fetchSnapshotJson(key, bustCache=false){
 
       try{
         const data = await getData_("standings", "playerGetStandings");
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
 
         let html = `<div style="margin-top:10px;font-weight:900;font-size:18px;">Overall</div>`;
         html += `<div style="overflow-x:auto;margin-top:8px;">`;
