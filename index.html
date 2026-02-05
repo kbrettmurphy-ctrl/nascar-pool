@@ -708,74 +708,51 @@
       });
     }
 
-    async function apiCall(action, extraParams = {}){
-  // Player site: prefer fast static snapshot from GitHub Pages.
-  // Falls back to GAS if snapshot isn't present yet.
-  const SNAP_MAP = {
-    "playerGetPlayerList": "players.json",
-    "playerGetCurrentRaceMatchups": "matchups.json",
-    "playerGetBracket": "bracket.json",
-    "playerGetStandings": "standings.json",
-    "playerGetDues": "dues.json",
-    "adminGetCurrentContext": "context.json"
-  };
+    async function apiCall(action, params = {}, isAdmin = false){
+  // Player site should usually be static. We keep this as a fallback for admin-only calls
+  // (or if you ever decide to revert player pages to live GAS).
+  const { apiBase, adminKey } = getCfg();
+  if(!apiBase) throw new Error("Missing API Base URL.");
+  if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
 
-  try{
-    // Special case: My Matchup (needs player param)
-    if(action === "playerGetMyMatchup"){
-      const all = await fetchSnapshotJson("myMatchups.json");
-      const p = String(extraParams.player || "");
-      const data = (all && p && all[p]) ? all[p] : null;
-      if(data) return { ok:true, data };
-      // If snapshot exists but player missing, still return ok (keeps UI calm)
-      if(all) return { ok:true, data: null };
-      // no snapshot -> fallthrough to GAS
-    } else if(SNAP_MAP[action]){
-      const data = await fetchSnapshotJson(SNAP_MAP[action]);
-      if(data !== null) return { ok:true, data };
-    }
-  }catch(e){
-    // snapshot fetch failed -> fall back to GAS
-  }
+  const q = new URLSearchParams();
+  q.set("action", action);
+  if(isAdmin) q.set("key", adminKey);
 
-  // GAS fallback (slower)
-  const url = apiUrl({ action, ...extraParams });
+  Object.keys(params || {}).forEach(k => {
+    const v = params[k];
+    if(v !== undefined && v !== null) q.set(k, v);
+  });
 
-  try {
-    const r = await fetch(url, { method: "GET", cache: "no-store" });
-    const j = await r.json();
-    return j;
-  } catch (e) {
-    return await jsonp(url);
-  }
+  const url = apiBase + "?" + q.toString();
+  return fetch(url, { cache: "no-store" }).then(r => r.json());
 }
 
-async function fetchSnapshotJson(file){
-  // cache in-memory for the session
-  window.__snap = window.__snap || {};
-  if(window.__snap[file]) return window.__snap[file];
+// ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
+const SNAP_MAP = {
+  context:   "./data/context.json",
+  players:   "./data/players.json",
+  matchups:  "./data/matchups.json",
+  bracket:   "./data/bracket.json",
+  standings: "./data/standings.json",
+  dues:      "./data/dues.json",
+  my:        "./data/myMatchups.json",
+};
 
-  const url = "./data/" + file + "?v=" + Date.now();
-  const r = await fetch(url, { cache: "no-store" });
-  if(!r.ok) return null;
-  const j = await r.json();
-  window.__snap[file] = j;
-  return j;
-}){
-      const url = apiUrl({ action, ...extraParams });
+async function fetchSnapshotJson(key, bustCache=false){
+  const base = SNAP_MAP[key];
+  if(!base) throw new Error("Unknown snapshot key: " + key);
 
-      // Try normal fetch first (works if CORS allows)
-      try {
-        const r = await fetch(url, { method: "GET", cache: "no-store" });
-        const j = await r.json();
-        return j;
-      } catch (e) {
-        // CORS? Fine. We go around.
-        return await jsonp(url);
-      }
-    }
+  const url = bustCache
+    ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
+    : base;
 
-    /**********************
+  const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
+  if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+  return await res.json();
+}
+
+/**********************
      * UI helpers
      **********************/
     function setActiveNav(which){
@@ -914,10 +891,9 @@ async function fetchSnapshotJson(file){
      **********************/
     async function loadPlayersThenInit() {
       try{
-        const res = await apiCall("playerGetPlayerList");
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
-        const players = Array.isArray(res.data) ? res.data : [];
-        populatePlayerDropdowns(players);
+        const players = await getData_("players", "playerGetPlayerList");
+        const safePlayers = Array.isArray(players) ? players : [];
+        populatePlayerDropdowns(safePlayers);
         setWelcome();
         if (hasPlayerName()) showView("mymatchup");
         else showView("current");
@@ -938,9 +914,7 @@ async function fetchSnapshotJson(file){
       elim.innerHTML = "";
 
       try{
-        const res = await apiCall("playerGetCurrentRaceMatchups");
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
-        const data = res.data || {};
+        const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
 
         header.textContent = data.race || "Current Race";
         sub.textContent = `Tournament ${data.tournament} · Round ${data.round}`;
@@ -991,9 +965,16 @@ async function fetchSnapshotJson(file){
       out.textContent = "Loading…";
 
       try{
-        const res = await apiCall("playerGetMyMatchup", { name });
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
-        const data = res.data || {};
+        let data = {};
+        try{
+          const all = await fetchSnapshotJson("my", false);
+          data = (all && all[name]) ? all[name] : {};
+        }catch(e){
+          // snapshot missing; fall back to live GAS
+          const res = await apiCall("playerGetMyMatchup", { name });
+          if (!res || !res.ok) throw new Error(res?.error || "API failed");
+          data = res.data || {};
+        }
 
         if (data.status !== "active") {
           const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
@@ -1256,4 +1237,13 @@ async function fetchSnapshotJson(file){
     window.onload = () => { loadPlayersThenInit(); };
   </script>
 </body>
-</html>
+</html>async function getData_(snapKey, action, params){
+  try{
+    return await fetchSnapshotJson(snapKey, false);
+  }catch(e){
+    // Snapshot not available yet; fall back to live GAS (slower)
+    const resp = await apiCall(action, params || {}, false);
+    if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
+    return resp.data;
+  }
+}
