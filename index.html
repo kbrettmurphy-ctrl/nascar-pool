@@ -708,20 +708,13 @@
       });
     }
 
-
-
-    // ✅ Config getter (you were calling getCfg() but never defined it)
-    // Keep it simple for the player site: just use the API_BASE constant.
-    // If you ever add an admin page later, you can set ADMIN_KEY and return it here.
-    const ADMIN_KEY = "";
-    function getCfg(){
-      return { apiBase: API_BASE, adminKey: ADMIN_KEY };
-    }
+    // Player site uses API_BASE directly. (No extra config helper needed.)
+    const ADMIN_KEY = ""; // leave blank on the public site
 
     async function apiCall(action, params = {}, isAdmin = false){
-  // Player site should usually be static. We keep this as a fallback for admin-only calls
-  // (or if you ever decide to revert player pages to live GAS).
-  const { apiBase, adminKey } = getCfg();
+  // Live GAS fallback (used only if snapshots are missing)
+  const apiBase = API_BASE;
+  const adminKey = ADMIN_KEY;
   if(!apiBase) throw new Error("Missing API Base URL.");
   if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
 
@@ -989,25 +982,30 @@ async function fetchSnapshotJson(key, bustCache=false){
         if (data.status !== "active") {
           const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
 
-          out.innerHTML = `
-            <div class="mmHeader">
-              <span class="deadBadge"><span class="skull">☠️</span> ELIMINATED</span>
-            </div>
+          // Decide whether we should show numbers or drivers (and label it correctly)
+          const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
+          const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+          const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+          const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+          const youListLabel = youDriversArr.length ? "Your drivers" : ((n1 || n2) ? "Your numbers" : "Your picks");
+          const youListText  = youDriversArr.length ? youDriversArr.join(", ") : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
+          out.innerHTML = `
             <div class="microBox elimBox">
+              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+
               <div class="microTitle elimTitle">
                 ${escapeHtml(data.you)}, you're eliminated…
               </div>
               <div class="microMeta elimSub">
-                …but here's your ${youMeta ? "shit" : "shit"} anyway.
-                Maybe you can still win $25. Don't suck next time.
+                …but here's your shit anyway. Maybe you can still win $25. Don't suck next time.
               </div>
             </div>
 
-            ${youMeta ? `
+            ${youListText ? `
               <div class="microBox" style="margin-top:6px;">
-                <div class="microTitle">Your picks</div>
-                <div class="microMeta">${escapeHtml(youMeta)}</div>
+                <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                <div class="microMeta">${escapeHtml(youListText)}</div>
               </div>
             ` : ``}
           `;
@@ -1050,12 +1048,30 @@ async function fetchSnapshotJson(key, bustCache=false){
       out.textContent = "Loading…";
 
       try{
-        const res = await apiCall("playerGetDues", { name });
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
-        const data = res.data || {};
+        const all = await getData_("dues", "playerGetDues", { name });
+
+        // dues.json might be:
+        // - a single object (already filtered)
+        // - an object keyed by player name
+        // - an array of rows/objects
+        let data = null;
+
+        if(all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)){
+          data = all; // already a single record
+        } else if(all && typeof all === "object" && !Array.isArray(all) && all[name]){
+          data = all[name];
+        } else if(Array.isArray(all)){
+          data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        } else if(all && Array.isArray(all.dues)){
+          data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        }
+
+        if(!data) throw new Error("No dues record found for " + name);
 
         out.textContent =
-          `${data.name}\nPaid: $${Number(data.paid || 0).toFixed(2)}\nBalance Due: $${Number(data.balance || 0).toFixed(2)}`;
+          `${data.name || name}
+Paid: $${Number(data.paid || 0).toFixed(2)}
+Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
       }catch(e){
         out.textContent = "Error: " + (e && e.message ? e.message : e);
       }
@@ -1151,9 +1167,7 @@ async function fetchSnapshotJson(key, bustCache=false){
       const fmtAvg = (n) => (n == null ? "" : Number(n).toFixed(1).replace(/\.0$/,""));
 
       try{
-        const res = await apiCall("playerGetBracket");
-        if (!res || !res.ok) throw new Error(res?.error || "API failed");
-        const data = res.data || {};
+        const data = await getData_("bracket", "playerGetBracket");
 
         sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · Round ${data.currentRound}`;
 
