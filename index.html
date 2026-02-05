@@ -1233,6 +1233,7 @@ async function fetchSnapshotJson(key, bustCache=false){
         area.innerHTML = "Error: " + (e && e.message ? e.message : e);
       }
     }
+    
     async function getData_(snapKey, action, params){
       try{
       return await fetchSnapshotJson(snapKey, false);
@@ -1241,9 +1242,9 @@ async function fetchSnapshotJson(key, bustCache=false){
       const resp = await apiCall(action, params || {}, false);
       if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
       return resp.data;
-    }
+      }
+    }  
     window.onload = () => { loadPlayersThenInit(); };
   </script>
 </body>
 </html>
-}
