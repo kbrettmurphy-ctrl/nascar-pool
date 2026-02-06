@@ -146,10 +146,11 @@
 
     /* Current Race cards */
     .raceHeaderRow{
-      display:flex;
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
       /* align-items:baseline; */
       /* justify-content:space-between; */
-      /* gap:10px; */
+      gap:10px;
       margin-bottom: 6px;
     }
     #currentHeader{ font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
