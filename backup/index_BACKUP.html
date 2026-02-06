@@ -14,15 +14,31 @@
 
   <style>
     :root{ --cardA: 0.78; --microA: 0.72; --cardBg: rgba(255,255,255,var(--cardA)); --microBg: rgba(255,255,255,var(--microA)); 
-      --bg:#f6f7f9;
-      --card:rgba(255,255,255,0.78);
+      /* --bg:#0b0b0b; */
+      /* --card:#111111; */
       --stroke:#e5e7eb;
-      --muted:#6b7280;
+      /* --muted:#6b7280; */
       --ink:#0f172a;
 
-      --nav:#0b1220;
+      --bg:#0b0b0b;
+      --card:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);   
+
+      /* --nav:#0b1220;   <----- Old from white background*/
+      --nav:#000000       /*New to match admin portal with black background*/ 
       --nav2:#111827;
 
+      /* -- NASCAR Color theme -- */
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;   
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
+          
       /* Slight overall scale-down (not blurry, just smaller defaults) */
       --pad:12px;
       --radius:16px;
@@ -30,7 +46,7 @@
 
       --h2:24px;
       --big:20px;
-      --body:15px;
+      --body:14px;
 
       --tight:10px;
       --micro:8px;
@@ -50,12 +66,12 @@
 
     body {
       font-size: var(--body);
-      font-family: Arial, sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
       padding: var(--pad);
       max-width: 700px;
       margin: 0 auto;
       background: var(--bg);
-      color: var(--ink);
+      color: var(--text);
 
       /* ✅ keeps nav visible even with iOS toolbar */
       padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
@@ -77,15 +93,16 @@
       display:inline-block;
       padding:6px 10px;
       border-radius:999px;
-      background:#eef2ff;
-      color:#3730a3;
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
       font-size:12px;
       font-weight:700;
     }
 
     .card {
       background: var(--card);
-      border: 1px solid var(--stroke);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 12px;
       margin: 12px 0;
@@ -111,14 +128,15 @@
     button.secondary{ background:#334155; color:#fff; }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
-    label { display:block; font-size: 13px; margin: 10px 0 6px; color:#111; }
+    label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
     select, input {
       width:100%;
       font-size: 16px;
+      color: var(--text);
       padding: 12px;
       border-radius: 12px;
-      border:1px solid #cbd5e1;
-      background:#fff;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.45);
     }
 
     .big { font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
@@ -140,7 +158,7 @@
     .matchupCard{
       border:1px solid var(--stroke);
       border-radius: var(--radius2);
-      background: #fafafa;
+      background: rgba(0,122,194,.14);
       padding: var(--micro);
       margin: 8px 0;
     }
@@ -172,7 +190,7 @@
 
     .pMeta{
       font-size: 14px;
-      color:#374151;
+      color: var(--yellow);
       line-height: 1.2;
       white-space:nowrap;
       overflow:hidden;
@@ -476,45 +494,58 @@
     /* ---- Bottom Nav ---- */
     .bottomNav{
       position: fixed;
-      left: 0;
-      right: 0;
-
-      /* ✅ key fix: sit above iOS bottom toolbar gap */
-      bottom: var(--vvb);
-
-      padding-bottom: env(safe-area-inset-bottom);
-      background: linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
       z-index: 9999;
     }
+    /*.bottomNav{*/
+      /*position: fixed;*/
+      /*left: 0;*/
+      /*right: 0;*/
+
+      /* ✅ key fix: sit above iOS bottom toolbar gap */
+      /*bottom: var(--vvb); */
+
+      /*padding-bottom: env(safe-area-inset-bottom);*/
+      /*background: rgba(0,0,0,.92); /*linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%); */
+      /*border-top: 1px solid rgba(255,255,255,0.08);*/
+      /*z-index: 9999;*/
+    /*}*/
     .navInner{
-      max-width: 700px;
-      margin: 0 auto;
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
-      padding: 10px 10px 12px 10px;
-    }
-    .navBtn{
-      background: transparent;
-      color: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 14px;
-      padding: 10px 8px;
-      font-weight: 800;
-      font-size: 12px;
+      max-width: 920px;
+      margin:0 auto;
       display:flex;
-      flex-direction:column;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+     .navBtn{
+      flex:0 0 auto;
+      min-width: 98px;
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
       align-items:center;
       justify-content:center;
-      gap: 4px;
-      margin: 0;
+      text-align:center;
+      white-space:nowrap;
     }
-    .navBtn .ico{ font-size: 16px; line-height: 1; }
+    
+    /*.navBtn .ico{ font-size: 16px; line-height: 1; }*/
     .navBtn.active{
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.22);
-      color:#fff;
+      background: rgba(0,122,194,.22);
+      border-color: rgba(0,122,194,.55);
     }
 
     @media (max-width: 520px){
@@ -539,14 +570,13 @@
       .pName{ font-size: 19px; }
       .pMeta{ font-size: 15px; }
       .navBtn{ font-size: 13px; }
-      .navBtn .ico{ font-size: 18px; }
+      .navBtn .ico{ font-size: 16px; }
       .card{ padding: 14px; }
-    }
+      }
   
-
     /* Watermark background */
     :root{
-      --wmOpacity: 0.12;   /* 10% */
+      --wmOpacity: 0.42;   /* 10% */
       --wmShift: 0px;      /* parallax shift */
     }
     body{
@@ -559,7 +589,7 @@
       inset: 0;
       background-image: url("nascar-logo.png");
       background-repeat: no-repeat;
-      background-size: min(78vw, 560px);
+      background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
       opacity: var(--wmOpacity);
       pointer-events: none;
