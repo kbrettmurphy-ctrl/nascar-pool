@@ -444,7 +444,7 @@
     }
     .microMeta{
       font-size: 14px;
-      color:#374151;
+      color:#475569;
       margin: 0;
       line-height: 1.2;
     }
@@ -474,7 +474,7 @@
       opacity:.85;
     }
     .elimSub{
-      font-size:13px;
+      font-size:14px;
       color:#475569;
     }
     .deadBadge{
@@ -1100,7 +1100,6 @@ async function fetchSnapshotJson(key, bustCache=false){
           out.innerHTML = `
             <div class="microBox elimBox">
               <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-
               <div class="microMeta elimSub">
                 ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.
               </div>
