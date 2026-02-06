@@ -1087,15 +1087,17 @@ async function fetchSnapshotJson(key, bustCache=false){
         }
 
         if (data.status !== "active") {
-          const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-
-          // Decide whether we should show numbers or drivers (and label it correctly)
           const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
           const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
           const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
           const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+
           const youListLabel = youDriversArr.length ? "Your drivers" : ((n1 || n2) ? "Your numbers" : "Your picks");
-          const youListText  = youDriversArr.length ? youDriversArr.join("<br>") : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+          const youListText  = youDriversArr.length
+            ? youDriversArr.join("<br>")
+            : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
 
           out.innerHTML = `
             <div class="microBox" style="margin-top:6px;">
@@ -1104,17 +1106,15 @@ async function fetchSnapshotJson(key, bustCache=false){
                 ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
               </div>
 
-            ${youListText ? `
-              
+              ${youListText ? `
                 <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                <div class="microMeta">${escapeHtml(youListText)}</div>
-              </div>     
-            
-
-            ` : ``}
+                <div class="microMeta">${youListHtml}</div>
+              ` : ``}
+            </div>
           `;
           return;
         }
+
 
         const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
         const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
