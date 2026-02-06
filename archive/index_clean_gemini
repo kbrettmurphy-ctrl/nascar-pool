@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>NASCAR Pool 2026</title>
+  <style>
+    /*
+     * ===============================================
+     * CSS VARIABLES (THEME & SIZING)
+     * This is the main control panel for your site's
+     * colors, fonts, and sizes. Change a value here,
+     * and it updates everywhere it's used.
+     * ===============================================
+     */
+    :root {
+      /* --- Transparency & Backgrounds --- */
+      --cardA: 0.78;
+      --microA: 0.72;
+      --cardBg: rgba(255,255,255,var(--cardA));
+      --microBg: rgba(255,255,255,var(--microA));
+
+      /* --- Core Colors --- */
+      /* --bg:#0b0b0b; */
+      /* --card:#111111; */
+      --stroke:#e5e7eb;
+      /* --muted:#6b7280; */
+      --ink:#0f172a;
+      --bg:#0b0b0b;
+      --card:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
+
+      /* --- Navigation Colors --- */
+      /* --nav:#0b1220;   <----- Old from white background*/
+      --nav:#000000       /*New to match admin portal with black background*/
+      --nav2:#111827;
+
+      /* --- NASCAR Color Theme --- */
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;
+
+      /* --- Button Theme Colors --- */
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
+
+      /* --- Font & Element Sizing --- */
+      --pad:12px;
+      --radius:16px;
+      --radius2:14px;
+      --h2:24px;
+      --big:20px;
+      --body:14px;
+      --tight:10px;
+      --micro:8px;
+      --nano:6px;
+
+      /* --- Component-Specific Sizing --- */
+      --mmPad:8px;       /* My Matchup padding */
+      --mmGap:6px;       /* My Matchup gap */
+      --mmHeaderGap:4px; /* My Matchup header gap */
+
+      /* --- iOS Fixes & Watermark --- */
+      --vvb: 0px;         /* visual viewport bottom gap */
+      --navH: 74px;       /* approximate bottom nav height */
+      --wmOpacity: 0.42;
+      --wmShift: 0px;     /* parallax shift */
+    }
+
+    /*
+     * ===============================================
+     * BASE & GENERAL STYLES
+     * These are foundational styles for the whole page.
+     * ===============================================
+     */
+    * { box-sizing:border-box; }
+
+    body {
+      font-size: var(--body);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      padding: var(--pad);
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg);
+      color: var(--text);
+      /* Keeps nav visible even with iOS toolbar */
+      padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
+      position: relative; /* Needed for the watermark effect */
+      overflow-x: hidden;
+    }
+
+    h2 { margin: 0 0 6px 0; font-size: var(--h2); letter-spacing: -0.3px; }
+
+    /*
+     * ===============================================
+     * REUSABLE COMPONENTS (Cards, Pills, Buttons)
+     * ===============================================
+     */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin: 12px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      /* Let the watermark show through cards */
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .pill {
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .topActions{
+      display:flex;
+      gap:10px;
+      width:100%;
+      margin: 10px 0 8px 0;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      font-weight:800;
+      border-radius: 12px;
+      padding: 12px 12px;
+      font-size: 15px;
+    }
+
+    button.primary{ background:#111; color:#fff; margin-top: 12px; }
+    button.secondary{ background:#334155; color:#fff; }
+    button:disabled{ opacity:.55; cursor:not-allowed; }
+
+    label {
+      display:block;
+      font-size: 13px;
+      margin: 10px 0 6px;
+      color:rgba(255,255,255,.9);
+    }
+
+    select, input {
+      width:100%;
+      font-size: 16px;
+      color: var(--text);
+      padding: 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,122,194,.14);
+    }
+
+    /* This rule ensures dropdown text is readable on mobile */
+    option {
+      color: #000; /* Force black text */
+      background: #fff; /* Suggest white background on desktop */
+    }
+    /* Your original commented-out option style, preserved */
+    /* option { */
+      /* color: var(--text); /* Sets the text color to black */ */
+      /* background: var(--black); /* Ensures the background of each option is white on desktop */ */
+    /* } */
+
+
+    /*
+     * ===============================================
+     * TYPOGRAPHY & HELPER CLASSES
+     * ===============================================
+     */
+    .big { font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
+    .muted { color: var(--muted); font-size: 13px; }
+    .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
+
+
+    /*
+     * ===============================================
+     * CURRENT RACE CARD STYLES
+     * ===============================================
+     */
+    .raceHeaderRow{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:10px;
+      /* margin-bottom: 6px; */ /* Commented out for consistency */
+    }
+    #currentHeader{ font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
+    #currentSub{ font-size: 13px; color: var(--muted); }
+    .matchupCard{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(0,122,194,.14);
+      padding: var(--micro);
+      margin: 8px 0;
+    }
+    .matchupRow{
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items:center;
+    }
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .side.right{ text-align:right; align-items:flex-end; }
+    .pName{
+      font-weight: 900;
+      font-size: 17px;
+      line-height: 1.1;
+      margin: 0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .pMeta{
+      font-size: 14px;
+      color: var(--yellow);
+      line-height: 1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .vsBadge{
+      font-weight: 900;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 10px;
+      background: #e5e7eb;
+      color: #111;
+      letter-spacing: 0.4px;
+    }
+    .elimTitle{ margin-top: 10px; font-weight: 900; font-size: 18px; }
+    .elimItem{ font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+    /*
+     * ===============================================
+     * "MY MATCHUP" CARD STYLES
+     * ===============================================
+     */
+    .mmWrap{ margin-top: 6px; }
+    .mmHeader{
+      font-weight: 900;
+      font-size: 14px;
+      margin: 0 0 var(--mmHeaderGap) 0;
+      line-height: 1.2;
+    }
+    .microBox{
+      border:1px solid var(--line);
+      border-radius: 12px;
+      padding: var(--mmPad);
+      background: rgba(0,122,194,.14);
+    }
+    .youBox{
+      border:2px solid #16a34a;
+      background: rgba(0,122,194,.14);
+    }
+    .microTitle{
+      font-weight: 900;
+      font-size: 14px;
+      margin: 0 0 2px 0;
+      line-height: 1.15;
+    }
+    .microMeta{
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--yellow);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .centerVS{
+      text-align:center;
+      font-weight:900;
+      font-size: 12px;
+      color: var(--red);
+      margin: var(--mmGap) 0;
+      /* opacity:.75; */
+      letter-spacing: .5px;
+    }
+    .elimTitle{
+      font-weight:900;
+      font-size:14px;
+      margin-bottom:4px;
+      opacity:.85;
+    }
+    .elimSub{
+      font-weight:400;
+      font-size:14px;
+      color: rgba(255,255,255,.9);
+    }
+    .deadBadge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 6px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      background: rgba(228,0,43,.85);
+      color:#fff;
+      opacity:.9;
+    }
+    .deadBadge .skull{ font-size:12px; line-height:1; }
+
+    /* Your original commented-out elimBox style */
+    /* .elimBox{ */
+      /* border:1px dashed #cbd5e1; */
+      /* background: repeating-linear-gradient( */
+        /* 45deg, */
+        /* #f8fafc, */
+        /* #f8fafc 10px, */
+        /* #f1f5f9 10px, */
+        /* #f1f5f9 20px */
+      /* ); */
+    /* } */
+
+    /*
+     * ===============================================
+     * BRACKET STYLES
+     * ===============================================
+     */
+    .bracketGrid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+    .bracketCol{
+      min-width: 0;
+      border:1px solid var(--stroke);
+      border-radius: 12px;
+      background:#fff;
+      padding: 6px;
+    }
+    .bracketHdr{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:6px;
+      margin-bottom:6px;
+    }
+    .roundTag{
+      display:inline-block;
+      font-weight:900;
+      font-size:10px;
+      letter-spacing:.5px;
+      padding:3px 7px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:#3730a3;
+      line-height:1;
+    }
+    .title{ display:flex; align-items:center; gap:6px; min-width:0; }
+    .race{
+      font-size:11px;
+      color: var(--muted);
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-width:0;
+    }
+    .ticket{
+      border:1px solid var(--stroke);
+      border-radius: 12px;
+      background:#0b1220;
+      color:#fff;
+      overflow:hidden;
+      margin: 4px 0;
+    }
+    .ticketRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:6px;
+      padding:5px 7px;
+      min-width:0;
+    }
+    .ticketRow + .ticketRow{
+      border-top:1px solid rgba(255,255,255,0.10);
+    }
+    .sideLeft{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex: 1 1 auto;
+      min-width:0;
+      overflow:hidden;
+      font-weight:900;
+      font-size:11px;
+      line-height:1.1;
+    }
+    .nameText{
+      flex: 1 1 auto;
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      display:block;
+    }
+    .seedBadge{
+      flex: 0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 18px;
+      height: 16px;
+      padding:0 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 10px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .sideRight{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex: 0 0 auto;
+    }
+    .winSlot{
+      width: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .winDot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:#16a34a;
+      box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
+    }
+    .avgBox{
+      font-variant-numeric: tabular-nums;
+      font-weight:900;
+      font-size:11px;
+      padding:3px 7px;
+      border-radius:10px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.12);
+      line-height:1;
+    }
+    .noAvg{
+      font-weight:900;
+      opacity:.7;
+      font-size:11px;
+      padding:3px 7px;
+      line-height:1;
+    }
+    .bracketWrap{
+      position: relative;
+      margin-top:10px;
+    }
+    .bracketSticky{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display:none; /* Shown on smaller screens via media query */
+      gap:10px;
+      padding: 6px 10px;
+      margin: 0 0 6px 0;
+      background: rgba(246,247,249,0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(229,231,235,0.9);
+      border-radius: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+    }
+    .bracketSticky .chip{
+      flex: 0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(229,231,235,0.9);
+      background:#fff;
+      font-size:11px;
+      font-weight:900;
+      color:#111827;
+      scroll-snap-align: start;
+    }
+    .bracketSticky .chip .small{
+      font-size:10px;
+      font-weight:800;
+      color:#6b7280;
+    }
+    .bracketFade{
+      pointer-events:none;
+      position:absolute;
+      top: 42px;
+      bottom: 0;
+      width: 18px;
+      z-index: 15;
+    }
+    .bracketFade.left{
+      left: 0;
+      background: linear-gradient(90deg, rgba(246,247,249,1) 0%, rgba(246,247,249,0) 100%);
+    }
+    .bracketFade.right{
+      right: 0;
+      background: linear-gradient(270deg, rgba(246,247,249,1) 0%, rgba(246,247,249,0) 100%);
+    }
+
+    /*
+     * ===============================================
+     * BOTTOM NAVIGATION
+     * ===============================================
+     */
+    .bottomNav{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
+      z-index: 9999;
+    }
+    /* Your original commented-out bottomNav style */
+    /*.bottomNav{*/
+      /*position: fixed;*/
+      /*left: 0;*/
+      /*right: 0;*/
+      /* ✅ key fix: sit above iOS bottom toolbar gap */
+      /*bottom: var(--vvb); */
+      /*padding-bottom: env(safe-area-inset-bottom);*/
+      /*background: rgba(0,0,0,.92); /*linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%); */
+      /*border-top: 1px solid rgba(255,255,255,0.08);*/
+      /*z-index: 9999;*/
+    /*}*/
+    .navInner{
+      max-width: 920px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+     .navBtn{
+      flex:0 0 auto;
+      min-width: 98px;
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      white-space:nowrap;
+    }
+    /* Your original commented-out navBtn .ico style */
+    /*.navBtn .ico{ font-size: 16px; line-height: 1; }*/
+    .navBtn.active{
+      background: rgba(0,122,194,.22);
+      border-color: rgba(0,122,194,.55);
+    }
+
+    /*
+     * ===============================================
+     * RESPONSIVE MEDIA QUERIES
+     * These rules apply only on screens of a certain size.
+     * ===============================================
+     */
+
+    /* For medium screens (tablets, small desktops) */
+    @media (max-width: 900px){
+      .bracketSticky{ display:flex; }
+      .bracketGrid{
+        grid-template-columns: repeat(4, 210px);
+        gap: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 10px 10px 10px;
+        scroll-snap-type: x proximity;
+      }
+      .bracketCol{ scroll-snap-align: start; }
+    }
+
+    /* For small screens (most mobile phones) */
+    @media (max-width: 520px){
+      /* Make fonts and padding larger for better touch interaction */
+      :root{
+        --pad: 16px;
+        --h2: 30px;
+        --big: 24px;
+        --body: 17px;
+        --radius: 18px;
+        --radius2: 16px;
+      }
+      button,
+      select,
+      input {
+        font-size: 16px;
+        padding: 14px 12px;
+        border-radius: 14px;
+      }
+      .pName{ font-size: 19px; }
+      .pMeta{ font-size: 15px; }
+      .navBtn{ font-size: 13px; }
+      .navBtn .ico{ font-size: 16px; } /* Your original .ico style, applied here */
+      .card{ padding: 14px; }
+    }
+
+    /* For very small screens */
+    @media (max-width: 480px){
+      .matchupRow{ grid-template-columns: 1fr; gap: 6px; text-align:center; }
+      .side.right{ text-align:center; align-items:center; }
+      .vsBadge{ margin: 2px auto; }
+      .pMeta{ white-space:normal; }
+    }
+
+
+    /*
+     * ===============================================
+     * WATERMARK & BACKGROUND EFFECTS
+     * ===============================================
+     */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: url("nascar-logo.png");
+      background-repeat: no-repeat;
+      background-size: min(78vw, 700px);
+      background-position: 50% calc(50% + var(--wmShift));
+      opacity: var(--wmOpacity);
+      pointer-events: none;
+      z-index: -1; /* Pushed behind content */
+    }
+    body > *{
+      position: relative; /* Ensures content stays above the watermark */
+      z-index: 1;
+    }
+    /* Your original commented-out dark mode style */
+    /* @media (prefers-color-scheme: dark){ */
+      /* :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); } */
+    /* } */
+  </style>
+</head>
+<body>
+
+  <!-- =============================================== -->
+  <!-- HEADER & GLOBAL ACTIONS                           -->
+  <!-- =============================================== -->
+  <h2>NASCAR Pool 2026</h2>
+  <div class="sub">
+    <span class="pill">Player Portal</span>
+    <span id="welcomeName"></span>
+  </div>
+  <div class="topActions">
+    <button class="secondary" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
+    <button class="secondary" onclick="refreshActiveView()">🔄 Refresh</button>
+  </div>
+
+
+  <!-- =============================================== -->
+  <!-- PAGE VIEWS (CARDS)                                -->
+  <!-- Each of these divs is a separate "page" or "view". -->
+  <!-- JavaScript shows/hides them as needed.            -->
+  <!-- =============================================== -->
+
+  <!-- CURRENT RACE VIEW -->
+  <div id="view-current" class="card" style="display:none;">
+    <div class="raceHeaderRow">
+      <div id="currentHeader">Current Race</div>
+    </div>
+    <div class="muted" id="currentSub"></div>
+    <div id="matchupsArea" style="margin-top:10px;"></div>
+    <div id="eliminatedArea" style="margin-top:12px;"></div>
+  </div>
+
+  <!-- MY MATCHUP VIEW -->
+  <div id="view-mymatchup" class="card" style="display:none;">
+    <div class="big">My Matchup</div>
+    <div class="muted">Pick your name once — I might remember it, might not.</div>
+    <label for="mmName">Your name</label>
+    <select id="mmName"></select>
+    <button class="primary" onclick="loadMyMatchup()">Show my matchup</button>
+    <div id="mmStatus" class="mmWrap"></div>
+  </div>
+
+  <!-- STANDINGS VIEW -->
+  <div id="view-standings" class="card" style="display:none;">
+    <div class="big">Standings</div>
+    <div class="muted">Overall standings + tournament ranks</div>
+    <div id="standingsArea" class="status">Loading…</div>
+  </div>
+
+  <!-- DUES VIEW -->
+  <div id="view-dues" class="card" style="display:none;">
+    <div class="big">Dues</div>
+    <div class="muted">Pick your name.</div>
+    <label for="duesName">Your name</label>
+    <select id="duesName"></select>
+    <button class="primary" onclick="loadDues()">Show my dues</button>
+    <div class="status" id="duesStatus"></div>
+  </div>
+
+  <!-- BRACKET VIEW -->
+  <div id="view-bracket" class="card" style="display:none;">
+    <div class="big">Bracket</div>
+    <div class="muted" id="bracketSub">Loading…</div>
+    <div class="bracketWrap">
+      <div id="bracketSticky" class="bracketSticky"></div>
+      <div class="bracketFade left"></div>
+      <div class="bracketFade right"></div>
+      <div id="bracketArea">Loading…</div>
+    </div>
+  </div>
+
+  <!-- =============================================== -->
+  <!-- BOTTOM NAVIGATION                               -->
+  <!-- =============================================== -->
+  <div class="bottomNav">
+    <div class="navInner">
+      <button class="navBtn" id="nav-race" onclick="showView('current')">
+        <div class="ico">🏁</div><div>Race</div>
+      </button>
+      <button class="navBtn" id="nav-bracket" onclick="showView('bracket')">
+        <div class="ico">🏆</div><div>Bracket</div>
+      </button>
+      <button class="navBtn" id="nav-me" onclick="showView('mymatchup')">
+        <div class="ico">🧍</div><div>Me</div>
+      </button>
+      <button class="navBtn" id="nav-stats" onclick="showView('standings')">
+        <div class="ico">📊</div><div>Stats</div>
+      </button>
+      <button class="navBtn" id="nav-dues" onclick="showView('dues')">
+        <div class="ico">💰</div><div>Dues</div>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- =============================================== -->
+  <!-- JAVASCRIPT                                      -->
+  <!-- =============================================== -->
+  <script>
+    /*
+     * ===============================================
+     * SECTION 1: CONFIGURATION & GLOBAL VARIABLES
+     * ===============================================
+     */
+    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
+    const STORAGE_KEY = "nascar_pool_player_name";
+    const ADMIN_KEY = ""; // leave blank on the public site
+    const views = ["current", "mymatchup", "standings", "dues", "bracket"];
+    let activeView = "current"; // Tracks which "page" is currently visible
+
+    // This is a memory cache for data we fetch, so we don't have to re-fetch it constantly.
+    let _cache_myMatchupsAll = null;
+
+
+    /*
+     * ===============================================
+     * SECTION 2: CORE APP LOGIC (View & State Management)
+     * Functions that control what the user sees and their saved data.
+     * ===============================================
+     */
+
+    // Switches the visible card and highlights the correct nav button.
+    function showView(which) {
+      activeView = which;
+      setActiveNav(which);
+      views.forEach(v => {
+        const el = document.getElementById("view-" + v);
+        if (el) el.style.display = (v === which) ? "block" : "none";
+      });
+      refreshActiveView(); // After showing the view, load its content.
+    }
+
+    // This function acts like a router, calling the correct "load" function for the active view.
+    function refreshActiveView() {
+      if (activeView === "current") loadCurrent();
+      else if (activeView === "standings") loadStandings();
+      else if (activeView === "dues") loadDues();
+      else if (activeView === "mymatchup") loadMyMatchup();
+      else if (activeView === "bracket") loadBracket();
+    }
+
+    // Saves the selected player's name to the browser's local storage.
+    function savePlayerName(name) {
+      localStorage.setItem(STORAGE_KEY, String(name || ""));
+      setWelcome();
+    }
+
+    // Retrieves the saved player name from local storage.
+    function loadPlayerName() {
+      return String(localStorage.getItem(STORAGE_KEY) || "").trim();
+    }
+
+    // Checks if a player name is currently saved.
+    function hasPlayerName() {
+      return !!loadPlayerName();
+    }
+
+    // Clears the saved player name and resets the dropdowns.
+    function clearSavedAndReset() {
+      localStorage.removeItem(STORAGE_KEY);
+      const mm = document.getElementById("mmName");
+      const dd = document.getElementById("duesName");
+      if (mm) mm.value = "";
+      if (dd) dd.value = "";
+      setWelcome();
+      showView("current");
+    }
+
+
+    /*
+     * ===============================================
+     * SECTION 3: UI HELPER FUNCTIONS
+     * Small functions that help build or update parts of the UI.
+     * ===============================================
+     */
+
+    // Updates the "Welcome back, [Name]" message.
+    function setWelcome() {
+      const w = document.getElementById("welcomeName");
+      const name = loadPlayerName();
+      if (!w) return;
+      w.textContent = name ? `Welcome back, ${name}` : "";
+    }
+
+    // Changes the active class on the bottom navigation buttons.
+    function setActiveNav(which) {
+      const map = { current: "nav-race", mymatchup: "nav-me", standings: "nav-stats", dues: "nav-dues", bracket: "nav-bracket" };
+      Object.values(map).forEach(id => {
+        document.getElementById(id)?.classList.remove("active");
+      });
+      document.getElementById(map[which])?.classList.add("active");
+    }
+
+    // Fills the player dropdowns with a list of names.
+    function populatePlayerDropdowns(playerList) {
+      const mm = document.getElementById("mmName");
+      const dd = document.getElementById("duesName");
+      const options = [`<option value="">Select your name…</option>`]
+        .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
+        .join("");
+
+      if (mm) mm.innerHTML = options;
+      if (dd) dd.innerHTML = options;
+
+      const saved = loadPlayerName();
+      if (saved) {
+        if (mm) mm.value = saved;
+        if (dd) dd.value = saved;
+      }
+
+      // Syncs the two dropdowns and saves the name on change.
+      if (mm) mm.onchange = () => {
+        if (mm.value) {
+          savePlayerName(mm.value);
+          if (dd) dd.value = mm.value;
+        }
+      };
+      if (dd) dd.onchange = () => {
+        if (dd.value) {
+          savePlayerName(dd.value);
+          if (mm) mm.value = dd.value;
+        }
+      };
+    }
+
+    // Takes driver/number arrays and formats them into a clean string like "Driver A, Driver B".
+    function formatDriversOrNumbers(driversArr, numsArr) {
+      const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
+      const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
+      if (d1 || d2) return [d1, d2].filter(Boolean).join(", ");
+
+      const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
+      const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
+      if (n1 || n2) return `Numbers: ${[n1,n2].filter(Boolean).join(", ")}`;
+
+      return "";
+    }
+
+    // Safely escapes text to prevent HTML injection issues.
+    function escapeHtml(s) {
+      return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+    }
+    // A separate function for escaping attributes, though it does the same thing here.
+    function escapeAttr(s) {
+      return escapeHtml(s);
+    }
+
+
+    /*
+     * ===============================================
+     * SECTION 4: DATA FETCHING & API LOGIC
+     * Functions responsible for getting data from snapshots or the live API.
+     * ===============================================
+     */
+
+    // A smart data-fetcher. Tries to get data from a fast local snapshot first,
+    // and if that fails, it calls the slower live API as a fallback.
+    async function getData_(snapKey, action, params) {
+      try {
+        return await fetchSnapshotJson(snapKey, false);
+      } catch (e) {
+        // Snapshot failed, so call the live API.
+        const resp = await apiCall(action, params || {}, false);
+        if (!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
+        return resp.data;
+      }
+    }
+
+    // Fetches a local JSON file (a "snapshot").
+    async function fetchSnapshotJson(key, bustCache = false) {
+      const SNAP_MAP = { context: "./data/context.json", players: "./data/players.json", matchups: "./data/matchups.json", bracket: "./data/bracket.json", standings: "./data/standings.json", dues: "./data/dues.json", my: "./data/myMatchups.json" };
+      const base = SNAP_MAP[key];
+      if (!base) throw new Error("Unknown snapshot key: " + key);
+
+      const url = bustCache ? `${base}?v=${Date.now()}` : base;
+      const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
+      if (!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+      return await res.json();
+    }
+
+    // Calls the live Google Apps Script API.
+    async function apiCall(action, params = {}, isAdmin = false) {
+      if (!API_BASE) throw new Error("Missing API Base URL.");
+      if (isAdmin && !ADMIN_KEY) throw new Error("Missing Admin Key.");
+
+      const q = new URLSearchParams({ action });
+      if (isAdmin) q.set("key", ADMIN_KEY);
+      Object.keys(params || {}).forEach(k => {
+        const v = params[k];
+        if (v !== undefined && v !== null) q.set(k, v);
+      });
+
+      const url = `${API_BASE}?${q.toString()}`;
+      return fetch(url, { cache: "no-store" }).then(r => r.json());
+    }
+
+    // Gets the big "my matchups" data and caches it in memory.
+    async function getMyMatchupsAllSnapshot() {
+      if (_cache_myMatchupsAll) return _cache_myMatchupsAll;
+      try {
+        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
+      } catch (e) {
+        _cache_myMatchupsAll = null;
+      }
+      return _cache_myMatchupsAll;
+    }
+
+    // Finds a player's entry in a map, ignoring case and whitespace.
+    function getEntryByName(map, name) {
+      if (!map || !name) return null;
+      if (map[name]) return map[name];
+      const target = String(name).trim().toLowerCase();
+      for (const k in map) {
+        if (String(k).trim().toLowerCase() === target) return map[k];
+      }
+      return null;
+    }
+
+    // Extracts driver or number picks from a player's data object.
+    function extractPicksFromMyEntry(entry) {
+      if (!entry || typeof entry !== "object") return { drivers: null, nums: null };
+      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
+      const nums = entry.youNums || entry.nums || entry.picksNums || entry.assignedNums || null;
+      return { drivers, nums };
+    }
+
+
+    /*
+     * ===============================================
+     * SECTION 5: VIEW LOADER FUNCTIONS
+     * These functions fetch data and build the HTML for each view.
+     * ===============================================
+     */
+
+    // --- CURRENT RACE LOADER ---
+    async function loadCurrent() {
+      const header = document.getElementById("currentHeader");
+      const sub = document.getElementById("currentSub");
+      const area = document.getElementById("matchupsArea");
+      const elim = document.getElementById("eliminatedArea");
+
+      area.innerHTML = "Loading current race...";
+      elim.innerHTML = "";
+
+      try {
+        const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
+        header.textContent = data.race || "Current Race";
+        sub.textContent = `Tournament ${data.tournament} · Round ${data.round}`;
+        area.innerHTML = "";
+
+        (data.matchups || []).forEach(m => {
+          const card = document.createElement("div");
+          card.className = "matchupCard";
+          const leftMeta = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
+          const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+          card.innerHTML = `
+            <div class="matchupRow">
+              <div class="side left">
+                <div class="pName">${escapeHtml(m.p1)}</div>
+                ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ''}
+              </div>
+              <div class="vsBadge">VS</div>
+              <div class="side right">
+                <div class="pName">${escapeHtml(m.p2)}</div>
+                ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ''}
+              </div>
+            </div>`;
+          area.appendChild(card);
+        });
+
+        const eliminated = data.eliminated || [];
+        if (eliminated.length > 0) {
+          let html = `<div class="elimTitle">Eliminated</div>`;
+          const myAll = await getMyMatchupsAllSnapshot();
+          eliminated.forEach(p => {
+            const entry = getEntryByName(myAll, p);
+            const picks = extractPicksFromMyEntry(entry);
+            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ''}</div>`;
+          });
+          elim.innerHTML = html;
+        }
+      } catch (e) {
+        area.innerHTML = "Error loading matchups.";
+        console.error("Error in loadCurrent:", e);
+      }
+    }
+
+    // --- MY MATCHUP LOADER ---
+    async function loadMyMatchup() {
+      const sel = document.getElementById("mmName");
+      const out = document.getElementById("mmStatus");
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) { out.textContent = "Pick your name first."; return; }
+
+      savePlayerName(name);
+      out.textContent = "Loading…";
+
+      try {
+        let data = {};
+        try {
+          const all = await fetchSnapshotJson("my", false);
+          data = getEntryByName(all, name) || {};
+        } catch (e) {
+          const res = await apiCall("playerGetMyMatchup", { name });
+          if (!res || !res.ok) throw new Error(res?.error || "API failed");
+          data = res.data || {};
+        }
+
+        if (data.status !== "active") {
+          const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean) : [];
+          const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+          const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+          const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+          const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "It's not the weekend yet!");
+          const youListText = youDriversArr.length ? youDriversArr.join("<br>") : ((n1 || n2) ? [n1, n2].filter(Boolean).join(", ") : "");
+          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+
+          out.innerHTML = `
+            <div class="microBox" style="margin-top:6px;">
+              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+              <div class="microMeta elimSub">
+                ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
+              </div>
+              ${youListText ? `
+                <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                <div class="microMeta">${youListHtml}</div>` : ''}
+            </div>`;
+          return;
+        }
+
+        const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
+        const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
+        out.innerHTML = `
+          <div class="mmHeader">
+            Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+          </div>
+          <div class="microBox youBox">
+            <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+            ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ''}
+          </div>
+          <div class="centerVS">VS</div>
+          <div class="microBox">
+            <div class="microTitle">${escapeHtml(data.opponent)}</div>
+            ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ''}
+          </div>`;
+      } catch (e) {
+        out.textContent = "Error: " + (e.message || e);
+        console.error("Error in loadMyMatchup:", e);
+      }
+    }
+
+    // --- DUES LOADER ---
+    async function loadDues() {
+      const sel = document.getElementById("duesName");
+      const out = document.getElementById("duesStatus");
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) { out.textContent = "Pick your name first."; return; }
+
+      savePlayerName(name);
+      out.textContent = "Loading…";
+
+      try {
+        const all = await getData_("dues", "playerGetDues", { name });
+        let data = getEntryByName(all, name); // Simplified data finding
+
+        if (!data) { // Check other possible structures if the first fails
+            if (Array.isArray(all)) data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+            else if (all && Array.isArray(all.dues)) data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        }
+
+        if (!data) throw new Error("No dues record found for " + name);
+
+        const paid = Number(data.paid || 0);
+        const balance = Number(data.balance || 0);
+        const winnings = 180 - balance; // Assuming 180 is the total payout
+        out.textContent = `${data.name || name}\nPaid: $${paid.toFixed(2)}\nWinnings: $${winnings.toFixed(2)}\nBalance Due: $${balance.toFixed(2)}`;
+
+        // Color the "Balance Due" line red
+        out.innerHTML = out.innerHTML.replace(
+          /Balance Due: \$[0-9\.\-]+/,
+          match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
+        );
+      } catch (e) {
+        out.textContent = "Error: " + (e.message || e);
+        console.error("Error in loadDues:", e);
+      }
+    }
+
+    // --- STANDINGS LOADER ---
+    async function loadStandings() {
+      const area = document.getElementById("standingsArea");
+      area.innerHTML = "Loading standings...";
+      try {
+        const data = await getData_("standings", "playerGetStandings");
+        let html = `<div style="margin-top:10px;font-weight:900;font-size:18px;">Overall</div>`;
+        html += `<div style="overflow-x:auto;margin-top:8px;">`;
+        html += `<table style="width:100%;border-collapse:collapse;font-size:14px;">`;
+        html += `<tr>`;
+        (data.overallHeaders || []).forEach(h => {
+          html += `<th style="text-align:left;padding:8px;border-bottom:1px solid #e5e7eb;white-space:nowrap;">${escapeHtml(h)}</th>`;
+        });
+        html += `</tr>`;
+        (data.overall || []).forEach(r => {
+          html += `<tr>`;
+          (data.overallHeaders || []).forEach(h => {
+            html += `<td style="padding:8px;border-bottom:1px solid #f1f5f9;white-space:nowrap;">${escapeHtml(r[h] ?? "")}</td>`;
+          });
+          html += `</tr>`;
+        });
+        html += `</table></div>`;
+
+        const headers = data.tournamentHeaders || [];
+        if (headers.length) {
+          html += `<div style="margin-top:16px;font-weight:900;font-size:18px;">Tournament Ranks</div>`;
+          html += `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;">`;
+          headers.forEach(h => {
+            html += `<button class="secondary" style="width:auto;padding:10px 12px;border-radius:12px;" onclick="showTournamentRanks('${escapeAttr(h)}')">${escapeHtml(h)}</button>`;
+          });
+          html += `</div><div id="tourneyRanksBox" style="margin-top:10px;"></div>`;
+        }
+
+        area.innerHTML = html;
+        window.__tournaments = data.tournaments || {};
+        if (headers.length) showTournamentRanks(headers[0]);
+      } catch (e) {
+        area.innerHTML = "Error: " + (e.message || e);
+        console.error("Error in loadStandings:", e);
+      }
+    }
+
+    // --- TOURNAMENT RANKS (Helper for Standings) ---
+    function showTournamentRanks(label) {
+      const box = document.getElementById("tourneyRanksBox");
+      const t = window.__tournaments || {};
+      const listRaw = t[label] || [];
+      let html = `<div style="margin-top:10px;font-weight:900;font-size:16px;">${escapeHtml(label)}</div>`;
+
+      if (!Array.isArray(listRaw) || listRaw.length === 0) {
+        html += `<div class="muted">(No data yet)</div>`;
+        box.innerHTML = html;
+        return;
+      }
+
+      const items = listRaw.map((it) => {
+        if (it && typeof it === "object") {
+          const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
+          const rank = Number(it.rank ?? it.Rank ?? it.RANK);
+          return { rank: Number.isFinite(rank) ? rank : null, player: String(player || "").trim() };
+        }
+        return { rank: null, player: String(it || "").trim() };
+      }).filter(x => x.player);
+
+      if (items.length === 0) {
+        html += `<div class="muted">(No data yet)</div>`;
+        box.innerHTML = html;
+        return;
+      }
+
+      const hasRanks = items.some(x => Number.isFinite(x.rank));
+      if (hasRanks) {
+        items.sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+        html += `<div style="margin-top:8px;font-size:14px;color:#111;line-height:1.7;">`;
+        items.forEach((it, i) => {
+          const r = Number.isFinite(it.rank) ? it.rank : (i + 1);
+          html += `<div>${r}. ${escapeHtml(it.player)}</div>`;
+        });
+        html += `</div>`;
+      } else {
+        let startRank = 17 - items.length;
+        if (startRank < 1) startRank = 1;
+        if (startRank > 16) startRank = 16;
+        html += `<div style="margin-top:8px;font-size:14px;color:#111;line-height:1.7;">`;
+        items.forEach((it, i) => {
+          const rank = startRank + i;
+          html += `<div>${rank}. ${escapeHtml(it.player)}</div>`;
+        });
+        html += `</div>`;
+      }
+      box.innerHTML = html;
+    }
+
+    // --- BRACKET LOADER ---
+    async function loadBracket() {
+      const sub = document.getElementById("bracketSub");
+      const area = document.getElementById("bracketArea");
+      sub.textContent = "Loading…";
+      area.innerHTML = "Loading…";
+      const fmtAvg = (n) => (n == null ? "" : Number(n).toFixed(1).replace(/\.0$/, ""));
+
+      try {
+        const data = await getData_("bracket", "playerGetBracket");
+        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · Round ${data.currentRound}`;
+        const rounds = data.rounds || [];
+        let html = `<div class="bracketGrid">`;
+
+        const sticky = document.getElementById("bracketSticky");
+        if (sticky) {
+          sticky.innerHTML = rounds.map((r, idx) => {
+            const label = r.isCurrent ? "CURRENT" : `ROUND ${r.round}`;
+            return `<div class="chip" data-idx="${idx}"><span>${escapeHtml(label)}</span><span class="small">${escapeHtml(r.raceLabel || "")}</span></div>`;
+          }).join("");
+        }
+
+        rounds.forEach(r => {
+          const tag = r.isCurrent ? `<span class="roundTag">CURRENT</span>` : `<span class="roundTag">ROUND ${escapeHtml(r.round)}</span>`;
+          const isFuture = !r.isCurrent && (r.round > data.currentRound);
+          html += `<div class="bracketCol ${isFuture ? "isFuture" : ""}">
+                     <div class="bracketHdr">
+                       <div class="title">${tag}</div>
+                       <div class="race">${escapeHtml(r.raceLabel || "")}</div>
+                     </div>`;
+          (r.matchups || []).forEach(m => {
+            const p1Win = (m.winner && m.p1 && m.winner === m.p1);
+            const p2Win = (m.winner && m.p2 && m.winner === m.p2);
+            html += `
+              <div class="ticket">
+                <div class="ticketRow">
+                  <div class="sideLeft"><span class="seedBadge">${escapeHtml(m.s1 || "—")}</span><span class="nameText">${escapeHtml(m.p1 || "")}</span></div>
+                  <div class="sideRight"><span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ''}</span>${m.a1 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a1))}</span>`}</div>
+                </div>
+                <div class="ticketRow">
+                  <div class="sideLeft"><span class="seedBadge">${escapeHtml(m.s2 || "—")}</span><span class="nameText">${escapeHtml(m.p2 || "")}</span></div>
+                  <div class="sideRight"><span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ''}</span>${m.a2 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a2))}</span>`}</div>
+                </div>
+              </div>`;
+          });
+          html += `</div>`;
+        });
+        html += `</div>`;
+        area.innerHTML = html;
+
+        const grid = area.querySelector(".bracketGrid");
+        if (grid && sticky) {
+          sticky.querySelectorAll(".chip").forEach(chip => {
+            chip.onclick = () => {
+              const idx = Number(chip.getAttribute("data-idx") || "0");
+              const col = grid.children[idx];
+              if (col) col.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+            };
+          });
+        }
+      } catch (e) {
+        sub.textContent = "Bracket failed to load.";
+        area.innerHTML = "Error: " + (e.message || e);
+        console.error("Error in loadBracket:", e);
+      }
+    }
+
+
+    /*
+     * ===============================================
+     * SECTION 6: PAGE INITIALIZATION & UTILITIES
+     * These run when the page loads to set things up.
+     * ===============================================
+     */
+
+    // This function runs once the entire page is loaded.
+    window.onload = () => {
+      loadPlayersThenInit();
+      setupUtilityListeners();
+    };
+
+    // This is the first thing that happens to kick off the app.
+    async function loadPlayersThenInit() {
+      try {
+        const players = await getData_("players", "playerGetPlayerList");
+        const safePlayers = Array.isArray(players) ? players : [];
+        populatePlayerDropdowns(safePlayers);
+        setWelcome();
+        // If a player was already saved, show their matchup. Otherwise, show the current race.
+        if (hasPlayerName()) {
+          showView("mymatchup");
+        } else {
+          showView("current");
+        }
+      } catch (e) {
+        console.error("Critical error loading initial player list:", e);
+        setWelcome();
+        showView("current"); // Show a default view even if players fail to load
+      }
+    }
+
+    // Sets up listeners for animations and OS-specific fixes.
+    function setupUtilityListeners() {
+      // --- iOS visual viewport fix ---
+      // This helps prevent the page from getting weirdly zoomed or shifted on iPhones.
+      (function fixIOSBottomBar() {
+        function update() {
+          if (!window.visualViewport) return;
+          const bottomGap = Math.max(0, window.innerHeight - (window.visualViewport.height + window.visualViewport.offsetTop));
+          document.documentElement.style.setProperty("--vvb", bottomGap + "px");
+        }
+        window.addEventListener("resize", update);
+        window.visualViewport?.addEventListener("resize", update);
+        window.visualViewport?.addEventListener("scroll", update);
+        update();
+      })();
+
+      // --- Parallax watermark effect ---
+      // This makes the background logo drift slightly as you scroll.
+      // The `requestAnimationFrame` makes it more performant than a simple scroll listener.
+      (function parallaxWatermark() {
+        let ticking = false;
+        function update() {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            const y = (window.scrollY || 0) * 0.08; // Adjust this factor for more/less drift
+            document.documentElement.style.setProperty('--wmShift', `${y.toFixed(1)}px`);
+            ticking = false;
+          });
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update(); // Run once on load
+      })();
+    }
+
+    /* Original JSONP function - preserved in case it's needed, but modern `fetch` is generally better. */
+    function jsonp(url) {
+      return new Promise((resolve, reject) => {
+        const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
+        const timeout = setTimeout(() => { cleanup(); reject(new Error("JSONP timeout")); }, 15000);
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cb];
+          if (s && s.parentNode) s.parentNode.removeChild(s);
+        }
+        window[cb] = (data) => { cleanup(); resolve(data); };
+        const glue = url.includes("?") ? "&" : "?";
+        s.src = `${url}${glue}callback=${encodeURIComponent(cb)}`;
+        s.onerror = () => { cleanup(); reject(new Error("JSONP load failed")); };
+        document.head.appendChild(s);
+      });
+    }
+
+  </script>
+
+</body>
+</html>
