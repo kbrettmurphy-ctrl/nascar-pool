@@ -573,46 +573,251 @@
       .navBtn .ico{ font-size: 16px; }
       .card{ padding: 14px; }
       }
-  
-    /* Watermark background */
-    :root{
-      --wmOpacity: 0.42;   /* 10% */
-      --wmShift: 0px;      /* parallax shift */
+
+/* =============================
+   ADMIN THEME (copied from admin.html)
+   ============================= */
+:root{
+      --bg:#0b0b0b;
+      --card:#111111;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.12);
+
+      --nav:#000000;
+
+      --blue:#007AC2;     /* Lochmara */
+      --red:#E4002B;      /* Monza */
+      --yellow:#FFD659;   /* Mustard */
+      --black:#000000;
+
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
+
+      --shadow: 0 16px 40px rgba(0,0,0,.45);
+      --radius:18px;
     }
+
+    *{box-sizing:border-box}
     body{
-      position: relative;
-      overflow-x: hidden;
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      background-image: url("nascar-logo.png");
-      background-repeat: no-repeat;
-      background-size: min(78vw, 700px);
-      background-position: 50% calc(50% + var(--wmShift));
-      opacity: var(--wmOpacity);
-      pointer-events: none;
-      z-index: 0;
+    body::before{content:'';position:fixed;inset:0;background:url('nascar-logo.png') center/ min(78vw,700px) no-repeat;opacity:0.12;pointer-events:none;transform:translate3d(0,var(--wmY,0px),0);z-index:0;filter:none;mix-blend-mode:normal;}
+    body{position:relative;}
+    body>*{position:relative;z-index:1;}
+
+    .wrap{
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 18px 14px 120px;
     }
-    body > *{
-      position: relative;
-      z-index: 1;
+    .title{
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin: 6px 0 10px;
     }
-    /* Let the watermark show through cards */
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(255,214,89,.14);
+      border:1px solid rgba(255,214,89,.40);
+      color: var(--yellow);
+      font-weight: 900;
+      font-size: 14px;
+    }
+    .pill small{font-weight:800;color:rgba(255,255,255,.88)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
     .card{
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
-    /* @media (prefers-color-scheme: dark){ */
-      /* :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); } */
-    /* } */
+    .card h3{
+      margin:0 0 10px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .muted{color:var(--muted); font-size: 13px;}
+
+    label{
+      display:block;
+      font-weight: 800;
+      margin: 10px 0 6px;
+      font-size: 13px;
+      color: rgba(255,255,255,.9);
+    }
+    input, select, textarea{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      outline:none;
+      font-size: 16px;
+      background: rgba(0,0,0,.45);
+      color: var(--text);
+    }
+    input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
+    textarea{min-height:120px; resize: vertical;}
+
+    .row{display:flex; gap:10px; align-items:center;}
+    .row > *{flex:1}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border:none;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 16px;
+      background: var(--btnPrimary);
+      color:#fff;
+    }
+    .btn.secondary{background: var(--btnSecondary);}
+    .btn.danger{background: var(--danger);}
+    .btn:disabled{opacity:.55; cursor:not-allowed;}
+
+    .spacer{height:8px}
+
+    .msg{
+      margin-top:10px;
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+    }
+    .err{border-color: rgba(228,0,43,.55); background: rgba(228,0,43,.10); }
+    .ok{border-color: rgba(255,214,89,.55); background: rgba(255,214,89,.10); }
+
+    .hide{display:none !important;}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    /* Bottom Nav */
+    .bottomNav{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(0,0,0,.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,.10);
+      z-index: 9999;
+    }
+    .navInner{
+      max-width: 920px;
+      margin:0 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .navBtn{
+      flex:0 0 auto;
+      min-width: 98px;
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px 10px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      white-space:nowrap;
+    }
+    .navBtn.active{
+      background: rgba(0,122,194,.22);
+      border-color: rgba(0,122,194,.55);
+    }
+
+/* ----- Index-specific tweaks so the watermark can actually be seen ----- */
+.card{
+  background: rgba(17,17,17,.72) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  backdrop-filter: blur(10px);
+}
+.microBox{
+  background: rgba(17,17,17,.62) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+}
+.chip{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+input, select, textarea{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+
+/* Keep the bottom nav readable while still matching admin */
+.bottomNav{
+  background: rgba(10,10,10,.92) !important;
+  border-top: 1px solid rgba(255,255,255,.06) !important;
+}
+
+/* =============================
+   WATERMARK (nascar-logo.png)
+   Centered, not rotated, visible through cards
+   ============================= */
+:root{
+  --wmOpacity: .12;         /* 12% so you can actually see it */
+  --wmSize: 1100px;         /* big enough for phones + desktop */
+  --wmY: 0px;               /* parallax offset */
+  --wmX: 0px;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* behind content */
+  background-image: url("nascar-logo.png");
+  background-repeat: no-repeat;
+  background-position: calc(50% + var(--wmX)) calc(58% + var(--wmY));
+  background-size: min(var(--wmSize), 140vw);
+  opacity: var(--wmOpacity);
+  filter: none; /* NOT grayscale */
+  transform: none; /* NOT rotated */
+}
+
+/* Make sure the app content stays above the watermark */
+.wrap, .bottomNav{
+  position: relative;
+  z-index: 1;
+}
 
 </style>
 </head>
 
 <body>
-  <h2>NASCAR Pool 2026</h2>
+  <h1 class="title">NASCAR Pool 2026</h1>
 
   <div class="sub">
     <span class="pill">Player Portal</span>
@@ -1436,5 +1641,28 @@ Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
   onScroll();
 })();
 </script>
+
+<script>
+(function(){
+  // Tiny parallax. Subtle. No rotation. No drama.
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  let ticking = false;
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY || 0;
+      const yOff = Math.max(-24, Math.min(24, y * 0.03)); // clamp
+      document.documentElement.style.setProperty('--wmY', yOff + 'px');
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
 </body>
 </html>
