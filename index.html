@@ -1170,7 +1170,7 @@ async function fetchSnapshotJson(key, bustCache=false){
 
     const paid = Number(data.paid || 0);
     const balance = Number(data.balance || 0);
-    const winnings = balance - 180;
+    const winnings = 180 - balance;
 
     out.textContent =
 `${data.name || name}
