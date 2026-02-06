@@ -1154,14 +1154,10 @@ async function fetchSnapshotJson(key, bustCache=false){
   try {
     const all = await getData_("dues", "playerGetDues", { name });
 
-    // dues.json might be:
-    // - a single object (already filtered)
-    // - an object keyed by player name
-    // - an array of rows/objects
     let data = null;
 
     if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
-      data = all; // already a single record
+      data = all;
     } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
       data = all[name];
     } else if (Array.isArray(all)) {
@@ -1176,14 +1172,18 @@ async function fetchSnapshotJson(key, bustCache=false){
     const balance = Number(data.balance || 0);
     const winnings = paid - balance;
 
-    out.innerHTML = `
-      <div style="font-weight:800;">${escapeHtml(data.name || name)}</div>
-      <div>Paid: $${paid.toFixed(2)}</div>
-      <div>Winnings: $${winnings.toFixed(2)}</div>
-      <div style="color: var(--red); opacity: 0.9;">
-        Balance Due: $${balance.toFixed(2)}
-      </div>
-    `;
+    out.textContent =
+`${data.name || name}
+Paid: $${paid.toFixed(2)}
+Winnings: $${winnings.toFixed(2)}
+Balance Due: $${balance.toFixed(2)}`;
+
+    // OPTIONAL: color just the Balance Due line AFTER render
+    out.innerHTML = out.innerHTML.replace(
+      /Balance Due: \$[0-9\.\-]+/,
+      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
+    );
+
   } catch (e) {
     out.textContent = "Error: " + (e && e.message ? e.message : e);
   }
