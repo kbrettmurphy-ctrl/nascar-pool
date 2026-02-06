@@ -457,16 +457,16 @@
       opacity:.75;
       letter-spacing: .5px;
     }
-    .elimBox{
-      border:1px dashed #cbd5e1;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(0,122,194,.14),
-        rgba(0,122,194,.14) 10px,
-        #f1f5f9 10px,
-        #f1f5f9 20px
-      );
-    }
+    /* .elimBox{ */
+      /* border:1px dashed #cbd5e1; */
+      /* background: repeating-linear-gradient( */
+        /* 45deg, */
+        /* #f8fafc, */
+        /* #f8fafc 10px, */
+        /* #f1f5f9 10px, */
+        /* #f1f5f9 20px */
+      /* ); */
+    /* } */
     .elimTitle{
       font-weight:900;
       font-size:14px;
@@ -1098,18 +1098,19 @@ async function fetchSnapshotJson(key, bustCache=false){
           const youListText  = youDriversArr.length ? youDriversArr.join(", ") : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
           out.innerHTML = `
-            <div class="microBox elimBox">
+            <div class="microBox" style="margin-top:6px;">
               <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
               <div class="microMeta elimSub">
                 ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.
               </div>
-            </div>
 
             ${youListText ? `
-              <div class="microBox" style="margin-top:6px;">
+              
                 <div class="microTitle">${escapeHtml(youListLabel)}</div>
                 <div class="microMeta">${escapeHtml(youListText)}</div>
-              </div>
+              </div>     
+            
+
             ` : ``}
           `;
           return;
