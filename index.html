@@ -1095,7 +1095,7 @@ async function fetchSnapshotJson(key, bustCache=false){
           const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
           const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
           const youListLabel = youDriversArr.length ? "Your drivers" : ((n1 || n2) ? "Your numbers" : "Your picks");
-          const youListText  = youDriversArr.length ? youDriversArr.join(<br>) : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+          const youListText  = youDriversArr.length ? youDriversArr.join("<br>") : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
           out.innerHTML = `
             <div class="microBox" style="margin-top:6px;">
