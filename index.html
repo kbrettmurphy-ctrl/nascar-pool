@@ -1172,52 +1172,78 @@ async function fetchSnapshotJson(key, bustCache=false){
     }
 
     async function loadDues() {
-  const sel = document.getElementById("duesName");
-  const out = document.getElementById("duesStatus");
+      const sel = document.getElementById("duesName");
+      const out = document.getElementById("duesStatus");
 
-  const name = sel ? String(sel.value || "").trim() : "";
-  if (!name) { out.textContent = "Pick your name first."; return; }
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) {
+        out.textContent = "Pick your name first.";
+        return;
+      }
 
-  savePlayerName(name);
-  out.textContent = "Loading…";
+      savePlayerName(name);
+      out.textContent = "Loading…";
 
-  try {
-    const all = await getData_("dues", "playerGetDues", { name });
+      try {
+        const all = await getData_("dues", "playerGetDues", { name });
 
-    let data = null;
+        let data = null;
 
-    if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
-      data = all;
-    } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
-      data = all[name];
-    } else if (Array.isArray(all)) {
-      data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-    } else if (all && Array.isArray(all.dues)) {
-      data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        if (
+          all &&
+          typeof all === "object" &&
+          !Array.isArray(all) &&
+          (all.name || all.paid != null || all.balance != null)
+        ) {
+          data = all;
+        } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+          data = all[name];
+        } else if (Array.isArray(all)) {
+          data =
+            all.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        } else if (all && Array.isArray(all.dues)) {
+          data =
+            all.dues.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        }
+
+        if (!data) throw new Error("No dues record found for " + name);
+
+        const paid = Number(data.paid || 0);
+        const balance = Number(data.balance || 0);
+        const winnings = 180 - balance;
+
+        const paidLine =
+          paid === 180
+            ? `<span style="color: var(--green); opacity: 0.9;">Paid: $${paid.toFixed(2)}</span>`
+            : `Paid: $${paid.toFixed(2)}`;
+
+        const balanceLine =
+          balance > 0
+            ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
+            : `Balance Due: $${balance.toFixed(2)}`;
+
+        out.innerHTML = `
+    ${data.name || name}
+    ${paidLine}
+    Winnings: $${winnings.toFixed(2)}
+    ${balanceLine}
+    `;
+
+      } catch (e) {
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
+      }
     }
 
-    if (!data) throw new Error("No dues record found for " + name);
-
-    const paid = Number(data.paid || 0);
-    const balance = Number(data.balance || 0);
-    const winnings = 180 - balance;
-
-    out.textContent =
-`${data.name || name}
-Paid: $${paid.toFixed(2)}
-Winnings: $${winnings.toFixed(2)}
-Balance Due: $${balance.toFixed(2)}`;
-
-    // OPTIONAL: color just the Balance Due line AFTER render
-    out.innerHTML = out.innerHTML.replace(
-      /Balance Due: \$[0-9\.\-]+/,
-      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
-    );
-
-  } catch (e) {
-    out.textContent = "Error: " + (e && e.message ? e.message : e);
-  }
-}
 
     async function loadStandings() {
       const area = document.getElementById("standingsArea");
