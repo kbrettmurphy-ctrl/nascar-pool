@@ -220,9 +220,13 @@
     /* ---- Bracket (your existing styles) ---- */
     .bracketGrid{
       display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 6px;
+      grid-template-columns: repeat(4, 210px);
+      gap: 10px;
       width: 100%;
+      overflow-x:auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 6px 10px 10px 10px;
+      scroll-snap-type: x proximity;
     }
     .bracketCol{
       min-width: 0;
@@ -823,9 +827,9 @@ async function fetchSnapshotJson(key, bustCache=false){
   const base = SNAP_MAP[key];
   if(!base) throw new Error("Unknown snapshot key: " + key);
 
-  const url = bustCache
-    ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
-    : base;
+  const ctx = window.__context;
+  const v = ctx?.publishedAt ? encodeURIComponent(ctx.publishedAt) : "";
+  const url = v ? `${base}?v=${v}` : base;
 
   const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
   if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
