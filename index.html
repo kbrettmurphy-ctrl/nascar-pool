@@ -715,7 +715,7 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
-    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : 'Round ${n}');
+    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -1322,7 +1322,7 @@ Balance Due: $${balance.toFixed(2)}`;
       try{
         const data = await getData_("bracket", "playerGetBracket");
 
-        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · Round ${data.currentRound}`;
+        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · ${roundLabel(data.currentRound)}`;
 
         const rounds = data.rounds || [];
         let html = `<div class="bracketGrid">`;
