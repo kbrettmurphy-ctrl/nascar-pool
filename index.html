@@ -715,7 +715,7 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
-
+    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : 'Round ${n}');
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -1027,7 +1027,7 @@ async function fetchSnapshotJson(key, bustCache=false){
         const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
 
         header.textContent = data.race || "Current Race";
-        sub.textContent = `Tournament ${data.tournament} · Round ${data.round}`;
+        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · ${Number(data.currentRound) === 4 ? "Championship" : `Round ${data.currentRound}`}`;
         area.innerHTML = "";
 
         (data.matchups || []).forEach(m => {
@@ -1344,7 +1344,8 @@ Balance Due: $${balance.toFixed(2)}`;
         rounds.forEach(r => {
           const tag = r.isCurrent
             ? `<span class="roundTag">CURRENT</span>`
-            : `<span class="roundTag">ROUND ${escapeHtml(r.round)}</span>`;
+            : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
+
 
           const isFuture = !r.isCurrent && (r.round > data.currentRound);
 
