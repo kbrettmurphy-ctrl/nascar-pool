@@ -1032,7 +1032,18 @@ async function fetchSnapshotJson(key, bustCache=false){
         const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
 
         header.textContent = data.race || "Current Race";
-        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · ${Number(data.currentRound) === 4 ? "Championship" : `Round ${data.currentRound}`}`;
+        const tour  = data.tournament ?? "";
+        const race  = data.currentRace ?? data.race ?? "";
+        const round = data.currentRound ?? data.round ?? "";
+        const roundText =
+          round === "" ? "" :
+          (Number(round) === 4 ? "Championship" : `Round ${round}`);
+
+        sub.textContent =
+          `Tournament ${tour}` +
+          (race ? ` · Current: ${race}` : "") +
+          (roundText ? ` · ${roundText}` : "");
+
         area.innerHTML = "";
 
         (data.matchups || []).forEach(m => {
