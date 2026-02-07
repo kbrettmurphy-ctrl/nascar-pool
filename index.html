@@ -1041,7 +1041,7 @@ async function fetchSnapshotJson(key, bustCache=false){
 
         sub.textContent =
           `Tournament ${tour}` +
-          (race ? ` · Current: ${race}` : "") +
+          (race ? ` · ${race}` : "") +
           (roundText ? ` · ${roundText}` : "");
 
         area.innerHTML = "";
@@ -1338,7 +1338,15 @@ Balance Due: $${balance.toFixed(2)}`;
       try{
         const data = await getData_("bracket", "playerGetBracket");
 
-        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · ${roundLabel(data.currentRound)}`;
+        const tour  = data.tournament ?? "";
+        const race  = data.currentRace ?? data.race ?? "";
+        const round = data.currentRound ?? data.round ?? "";
+
+        sub.textContent =
+          `Tournament ${tour}` +
+          (race ? ` · ${race}` : "") +
+          (round !== "" ? ` · ${roundLabel(round)}` : "");
+
 
         const rounds = data.rounds || [];
         let html = `<div class="bracketGrid">`;
