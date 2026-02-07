@@ -124,7 +124,7 @@
       padding: 12px 12px;
       font-size: 15px;
     }
-    button.primary{ background:#111; color:#fff; }
+    button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
@@ -136,7 +136,7 @@
       padding: 12px;
       border-radius: 12px;
       border:1px solid var(--line);
-      background:rgba(0,0,0,.45);
+      background: rgba(0,122,194,.14);
     }
 
     .big { font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
@@ -150,13 +150,13 @@
       align-items:baseline;
       justify-content:space-between;
       gap:10px;
-      margin-bottom: 6px;
+      /* margin-bottom: 6px; */
     }
-    #currentHeader{ font-size: 26px; font-weight: 900; letter-spacing:-0.4px; }
+    #currentHeader{ font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
     #currentSub{ font-size: 13px; color: var(--muted); }
 
     .matchupCard{
-      border:1px solid var(--stroke);
+      border:1px solid var(--line);
       border-radius: var(--radius2);
       background: rgba(0,122,194,.14);
       padding: var(--micro);
@@ -427,14 +427,14 @@
       line-height: 1.2;
     }
     .microBox{
-      border:1px solid var(--stroke);
-      border-radius: var(--radius2);
+      border:1px solid var(--line);
+      border-radius: 12px;
       padding: var(--mmPad);
-      background: var(--microBg);
+      background: rgba(0,122,194,.14);
     }
     .youBox{
       border:2px solid #16a34a;
-      background:#f0fdf4;
+      background: rgba(0,122,194,.14);
     }
     .microTitle{
       font-weight: 900;
@@ -444,7 +444,8 @@
     }
     .microMeta{
       font-size: 14px;
-      color:#374151;
+      font-weight: 900;
+      color: var(--yellow);
       margin: 0;
       line-height: 1.2;
     }
@@ -452,21 +453,21 @@
       text-align:center;
       font-weight:900;
       font-size: 12px;
-      color:#111;
+      color: var(--red);
       margin: var(--mmGap) 0;
-      opacity:.75;
+      /* opacity:.75; */
       letter-spacing: .5px;
     }
-    .elimBox{
-      border:1px dashed #cbd5e1;
-      background: repeating-linear-gradient(
-        45deg,
-        #f8fafc,
-        #f8fafc 10px,
-        #f1f5f9 10px,
-        #f1f5f9 20px
-      );
-    }
+    /* .elimBox{ */
+      /* border:1px dashed #cbd5e1; */
+      /* background: repeating-linear-gradient( */
+        /* 45deg, */
+        /* #f8fafc, */
+        /* #f8fafc 10px, */
+        /* #f1f5f9 10px, */
+        /* #f1f5f9 20px */
+      /* ); */
+    /* } */
     .elimTitle{
       font-weight:900;
       font-size:14px;
@@ -474,8 +475,9 @@
       opacity:.85;
     }
     .elimSub{
-      font-size:13px;
-      color:#475569;
+      font-weight:400;
+      font-size:14px;
+      color: rgba(255,255,255,.9);
     }
     .deadBadge{
       display:inline-flex;
@@ -485,7 +487,7 @@
       border-radius:999px;
       font-size:11px;
       font-weight:900;
-      background:#0f172a;
+      background: rgba(228,0,43,.85);
       color:#fff;
       opacity:.9;
     }
@@ -606,6 +608,11 @@
     }
     /* @media (prefers-color-scheme: dark){ */
       /* :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); } */
+    /* } */
+
+    /* option { */
+      /* color: var(--text); /* Sets the text color to black */ */
+      /* background: var(--black); /* Ensures the background of each option is white on desktop */ */
     /* } */
 
 </style>
@@ -1087,37 +1094,34 @@ async function fetchSnapshotJson(key, bustCache=false){
         }
 
         if (data.status !== "active") {
-          const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-
-          // Decide whether we should show numbers or drivers (and label it correctly)
           const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
           const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
           const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
           const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
-          const youListLabel = youDriversArr.length ? "Your drivers" : ((n1 || n2) ? "Your numbers" : "Your picks");
-          const youListText  = youDriversArr.length ? youDriversArr.join(", ") : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+          const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "It's not the weekend yet!");
+          const youListText  = youDriversArr.length
+            ? youDriversArr.join("<br>")
+            : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
 
           out.innerHTML = `
-            <div class="microBox elimBox">
+            <div class="microBox" style="margin-top:6px;">
               <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-
-              <div class="microTitle elimTitle">
-                ${escapeHtml(data.you)}, you're eliminated…
-              </div>
               <div class="microMeta elimSub">
-                …but here's your shit anyway. Maybe you can still win $25. Don't suck next time.
+                ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
               </div>
-            </div>
 
-            ${youListText ? `
-              <div class="microBox" style="margin-top:6px;">
+              ${youListText ? `
                 <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                <div class="microMeta">${escapeHtml(youListText)}</div>
-              </div>
-            ` : ``}
+                <div class="microMeta">${youListHtml}</div>
+              ` : ``}
+            </div>
           `;
           return;
         }
+
 
         const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
         const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
@@ -1145,44 +1149,52 @@ async function fetchSnapshotJson(key, bustCache=false){
     }
 
     async function loadDues() {
-      const sel = document.getElementById("duesName");
-      const out = document.getElementById("duesStatus");
+  const sel = document.getElementById("duesName");
+  const out = document.getElementById("duesStatus");
 
-      const name = sel ? String(sel.value || "").trim() : "";
-      if (!name) { out.textContent = "Pick your name first."; return; }
+  const name = sel ? String(sel.value || "").trim() : "";
+  if (!name) { out.textContent = "Pick your name first."; return; }
 
-      savePlayerName(name);
-      out.textContent = "Loading…";
+  savePlayerName(name);
+  out.textContent = "Loading…";
 
-      try{
-        const all = await getData_("dues", "playerGetDues", { name });
+  try {
+    const all = await getData_("dues", "playerGetDues", { name });
 
-        // dues.json might be:
-        // - a single object (already filtered)
-        // - an object keyed by player name
-        // - an array of rows/objects
-        let data = null;
+    let data = null;
 
-        if(all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)){
-          data = all; // already a single record
-        } else if(all && typeof all === "object" && !Array.isArray(all) && all[name]){
-          data = all[name];
-        } else if(Array.isArray(all)){
-          data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-        } else if(all && Array.isArray(all.dues)){
-          data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-        }
-
-        if(!data) throw new Error("No dues record found for " + name);
-
-        out.textContent =
-          `${data.name || name}
-Paid: $${Number(data.paid || 0).toFixed(2)}
-Balance Due: $${Number(data.balance || 0).toFixed(2)}`;
-      }catch(e){
-        out.textContent = "Error: " + (e && e.message ? e.message : e);
-      }
+    if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
+      data = all;
+    } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+      data = all[name];
+    } else if (Array.isArray(all)) {
+      data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+    } else if (all && Array.isArray(all.dues)) {
+      data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
     }
+
+    if (!data) throw new Error("No dues record found for " + name);
+
+    const paid = Number(data.paid || 0);
+    const balance = Number(data.balance || 0);
+    const winnings = 180 - balance;
+
+    out.textContent =
+`${data.name || name}
+Paid: $${paid.toFixed(2)}
+Winnings: $${winnings.toFixed(2)}
+Balance Due: $${balance.toFixed(2)}`;
+
+    // OPTIONAL: color just the Balance Due line AFTER render
+    out.innerHTML = out.innerHTML.replace(
+      /Balance Due: \$[0-9\.\-]+/,
+      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
+    );
+
+  } catch (e) {
+    out.textContent = "Error: " + (e && e.message ? e.message : e);
+  }
+}
 
     async function loadStandings() {
       const area = document.getElementById("standingsArea");
