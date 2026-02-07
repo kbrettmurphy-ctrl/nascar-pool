@@ -715,6 +715,7 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
+    const VIEW_KEY = "nascar_pool_active_view";
     const roundLabel = (n) => (Number(n) === 4 ? "Championship" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
@@ -884,7 +885,7 @@ async function fetchSnapshotJson(key, bustCache=false){
     function showView(which) {
       activeView = which;
       setActiveNav(which);
-
+      localStorage.setItem(VIEW_KEY, which);
       views.forEach(v => {
         const el = document.getElementById("view-" + v);
         if (el) el.style.display = (v === which) ? "block" : "none";
@@ -1005,8 +1006,12 @@ async function fetchSnapshotJson(key, bustCache=false){
         const safePlayers = Array.isArray(players) ? players : [];
         populatePlayerDropdowns(safePlayers);
         setWelcome();
-        if (hasPlayerName()) showView("mymatchup");
+        const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
+        const allowed = views.includes(last) ? last : "";
+        if (allowed) showView(allowed);
+        else if (hasPlayerName()) showView("mymatchup");
         else showView("current");
+
       }catch(e){
         console.log(e);
         setWelcome();
