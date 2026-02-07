@@ -226,10 +226,12 @@
     }
     .bracketCol{
       min-width: 0;
-      border:1px solid var(--stroke);
+      border:1px solid var(--line);
       border-radius: 12px;
-      background:#fff;
+      background: var(--card);
       padding: 6px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filer: blue(6px);
     }
     .bracketHdr{
       display:flex;
@@ -245,8 +247,9 @@
       letter-spacing:.5px;
       padding:3px 7px;
       border-radius:999px;
-      background:#eef2ff;
-      color:#3730a3;
+      background: rgba(255,214,89,.14);
+      border: 1px solid vrgba(255,214,89,.14);
+      color: var(--yellow);
       line-height:1;
     }
     .title{ display:flex; align-items:center; gap:6px; min-width:0; }
@@ -260,9 +263,9 @@
       min-width:0;
     }
     .ticket{
-      border:1px solid var(--stroke);
+      border:1px solid var(--line);
       border-radius: 12px;
-      background:#0b1220;
+      background:rgba(0,122,194,.14);
       color:#fff;
       overflow:hidden;
       margin: 4px 0;
@@ -357,13 +360,13 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      display:none;
+      display:none !important;
       gap:10px;
       padding: 6px 10px;
       margin: 0 0 6px 0;
-      background: rgba(246,247,249,0.92);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(229,231,235,0.9);
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
       border-radius: 12px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -376,17 +379,17 @@
       gap:6px;
       padding:4px 8px;
       border-radius:999px;
-      border:1px solid rgba(229,231,235,0.9);
-      background:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
       font-size:11px;
       font-weight:900;
-      color:#111827;
+      color: var(--text);
       scroll-snap-align: start;
     }
     .bracketSticky .chip .small{
       font-size:10px;
       font-weight:800;
-      color:#6b7280;
+      color: var(--muted);
     }
     .bracketFade{
       pointer-events:none;
@@ -398,11 +401,11 @@
     }
     .bracketFade.left{
       left: 0;
-      background: linear-gradient(90deg, rgba(246,247,249,1) 0%, rgba(246,247,249,0) 100%);
+      background: linear-gradient(90deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
     }
     .bracketFade.right{
       right: 0;
-      background: linear-gradient(270deg, rgba(246,247,249,1) 0%, rgba(246,247,249,0) 100%);
+      background: linear-gradient(270deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
     }
 
     @media (max-width: 900px){
@@ -712,7 +715,8 @@
      **********************/
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
-
+    const VIEW_KEY = "nascar_pool_active_view";
+    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -881,7 +885,7 @@ async function fetchSnapshotJson(key, bustCache=false){
     function showView(which) {
       activeView = which;
       setActiveNav(which);
-
+      localStorage.setItem(VIEW_KEY, which);
       views.forEach(v => {
         const el = document.getElementById("view-" + v);
         if (el) el.style.display = (v === which) ? "block" : "none";
@@ -1002,8 +1006,12 @@ async function fetchSnapshotJson(key, bustCache=false){
         const safePlayers = Array.isArray(players) ? players : [];
         populatePlayerDropdowns(safePlayers);
         setWelcome();
-        if (hasPlayerName()) showView("mymatchup");
+        const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
+        const allowed = views.includes(last) ? last : "";
+        if (allowed) showView(allowed);
+        else if (hasPlayerName()) showView("mymatchup");
         else showView("current");
+
       }catch(e){
         console.log(e);
         setWelcome();
@@ -1024,7 +1032,18 @@ async function fetchSnapshotJson(key, bustCache=false){
         const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
 
         header.textContent = data.race || "Current Race";
-        sub.textContent = `Tournament ${data.tournament} · Round ${data.round}`;
+        const tour  = data.tournament ?? "";
+        const race  = data.currentRace ?? data.race ?? "";
+        const round = data.currentRound ?? data.round ?? "";
+        const roundText =
+          round === "" ? "" :
+          (Number(round) === 4 ? "Championship" : `Round ${round}`);
+
+        sub.textContent =
+          `Tournament ${tour}` +
+          // (race ? ` · ${race}` : "") +
+          (roundText ? ` · ${roundText}` : "");
+
         area.innerHTML = "";
 
         (data.matchups || []).forEach(m => {
@@ -1319,7 +1338,15 @@ Balance Due: $${balance.toFixed(2)}`;
       try{
         const data = await getData_("bracket", "playerGetBracket");
 
-        sub.textContent = `Tournament ${data.tournament} · Current: ${data.currentRace} · Round ${data.currentRound}`;
+        const tour  = data.tournament ?? "";
+        const race  = data.currentRace ?? data.race ?? "";
+        const round = data.currentRound ?? data.round ?? "";
+
+        sub.textContent =
+          `Tournament ${tour}` +
+          (race ? ` · ${race}` : "") +
+          (round !== "" ? ` · ${roundLabel(round)}` : "");
+
 
         const rounds = data.rounds || [];
         let html = `<div class="bracketGrid">`;
@@ -1341,7 +1368,8 @@ Balance Due: $${balance.toFixed(2)}`;
         rounds.forEach(r => {
           const tag = r.isCurrent
             ? `<span class="roundTag">CURRENT</span>`
-            : `<span class="roundTag">ROUND ${escapeHtml(r.round)}</span>`;
+            : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
+
 
           const isFuture = !r.isCurrent && (r.round > data.currentRound);
 
