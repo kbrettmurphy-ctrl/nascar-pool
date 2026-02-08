@@ -841,6 +841,23 @@
   background: rgba(255,255,255,.18);
   border-radius: 999px;
 }
+
+/* Stat pills: single row, horizontal scroll, no stacking */
+.statsBadges{
+  display: flex;
+  flex-wrap: nowrap;          /* ⛔ no stacking */
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+/* Pills themselves must not shrink */
+.statsBadges .miniPill{
+  flex: 0 0 auto;
+}
+
 </style>
 </head>
 
@@ -1500,6 +1517,7 @@ Balance Due: $${balance.toFixed(2)}`;
 
       if (!rows.length || !headers.length){
         box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
+        requestAnimationFrame(resetStatPillScroll);
         return;
       }
 
@@ -1540,6 +1558,7 @@ Balance Due: $${balance.toFixed(2)}`;
       const headers = Array.isArray(data.tournamentHeaders) ? data.tournamentHeaders : [];
       if (!headers.length){
         box.innerHTML = `<div class="muted">(No tournament rank data yet)</div>`;
+        requestAnimationFrame(resetStatPillScroll);
         return;
       }
 
@@ -1631,6 +1650,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="h2hOut" style="margin-top:10px;">Loading…</div>
       `;
+      requestAnimationFrame(resetStatPillScroll);
 
       // use cached player list if possible
       const players = await getData_("players", "playerGetPlayerList");
@@ -1685,6 +1705,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="winsOut" style="margin-top:10px;">Loading…</div>
       `;
+      requestAnimationFrame(resetStatPillScroll);
 
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("winsPick");
@@ -1736,6 +1757,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="drvOut" style="margin-top:10px;">Loading…</div>
       `;
+      requestAnimationFrame(resetStatPillScroll);
 
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("drvPick");
@@ -1901,6 +1923,13 @@ Balance Due: $${balance.toFixed(2)}`;
       }
     }
     window.onload = () => { loadPlayersThenInit(); };
+
+    function resetStatPillScroll(){
+      document.querySelectorAll('.statsBadges').forEach(el => {
+        el.scrollLeft = 0;
+      });
+    }
+
   </script>
 
 <script>
