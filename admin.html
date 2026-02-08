@@ -367,6 +367,7 @@
   // ---------- Storage ----------
   const LS_API = "nascar_api_base";
   const LS_KEY = "nascar_admin_key";
+  const LS_ADMIN_PANEL = "nascar_admin_active_panel";
 
   function getCfg(){
     return {
@@ -493,13 +494,26 @@
   }
 
   function showPanel(name, btn){
+    // hide all panels
     document.querySelectorAll(".panel").forEach(p => p.classList.add("hide"));
     const panel = document.getElementById("panel"+name);
     if(panel) panel.classList.remove("hide");
 
+    // nav active state
     document.querySelectorAll(".navBtn").forEach(b => b.classList.remove("active"));
-    if(btn) btn.classList.add("active");
-  }
+
+    // If caller passed the button, use it. Otherwise find the matching one.
+    let activeBtn = btn;
+    if(!activeBtn){
+      activeBtn = Array.from(document.querySelectorAll(".navBtn"))
+        .find(b => (b.getAttribute("onclick") || "").includes(`showPanel('${name}'`));
+    }
+  if(activeBtn) activeBtn.classList.add("active");
+
+  // ✅ persist
+  try{ localStorage.setItem(LS_ADMIN_PANEL, String(name || "")); }catch(e){}
+}
+
 
   // ---------- API ----------
   async function apiCall(action, params={}, isAdmin=true){
@@ -766,6 +780,9 @@ async function publishSnapshot(){
     syncConfigUI();
     applyConfigVisibility(false);
 
+    // ✅ restore last panel (default = Numbers)
+    const last = (localStorage.getItem(LS_ADMIN_PANEL) || "Numbers").trim();
+    showPanel(last);
     if(!hasAdminConfig()) return;
 
     await refreshContext();
