@@ -2,20 +2,20 @@
   "Beau": {
     "player": "Beau",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 1
+    "bracketWins": 1,
+    "tourneyWins": 0
   },
   "Bob": {
     "player": "Bob",
     "raceWins": 1,
-    "bracketWins": 1,
-    "tourneyWins": 4
+    "bracketWins": 4,
+    "tourneyWins": 1
   },
   "Brett": {
     "player": "Brett",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 1
+    "bracketWins": 1,
+    "tourneyWins": 0
   },
   "Chris": {
     "player": "Chris",
@@ -32,8 +32,8 @@
   "Jason": {
     "player": "Jason",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 3
+    "bracketWins": 3,
+    "tourneyWins": 0
   },
   "Justin": {
     "player": "Justin",
@@ -44,8 +44,8 @@
   "Nate C.": {
     "player": "Nate C.",
     "raceWins": 1,
-    "bracketWins": 0,
-    "tourneyWins": 1
+    "bracketWins": 1,
+    "tourneyWins": 0
   },
   "Nate M.": {
     "player": "Nate M.",
@@ -56,8 +56,8 @@
   "Nick": {
     "player": "Nick",
     "raceWins": 1,
-    "bracketWins": 0,
-    "tourneyWins": 2
+    "bracketWins": 2,
+    "tourneyWins": 0
   },
   "Pat": {
     "player": "Pat",
@@ -68,14 +68,14 @@
   "Rob": {
     "player": "Rob",
     "raceWins": 1,
-    "bracketWins": 0,
-    "tourneyWins": 1
+    "bracketWins": 1,
+    "tourneyWins": 0
   },
   "Russ": {
     "player": "Russ",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 2
+    "bracketWins": 2,
+    "tourneyWins": 0
   },
   "Stacy": {
     "player": "Stacy",
