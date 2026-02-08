@@ -144,6 +144,12 @@
     .muted { color: var(--muted); font-size: 13px; }
 
     .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
+    
+    /* Stats lives inside #standingsArea.status, so undo pre-wrap there */
+    #standingsArea{
+      white-space: normal;
+    }
+
 
     /* Current Race cards */
     .raceHeaderRow{
@@ -626,12 +632,12 @@
 /* Make the mode buttons a horizontal row (tabs) with scroll if needed */
 .statsModes{
   display:flex;
-  flex-wrap:nowrap;              /* <-- no stacking */
-  gap:6px;
-  margin: 8px 0 10px 0;          /* tighter */
-  overflow-x:auto;
+  flex-wrap: nowrap;            /* force horizontal */
+  gap:8px;
+  margin-top:8px;
+  overflow-x:auto;              /* if it doesn't fit, scroll */
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 .statsModes::-webkit-scrollbar{ height:6px; }
 .statsModes::-webkit-scrollbar-thumb{
@@ -641,11 +647,10 @@
 
 /* Keep buttons compact and prevent them from stretching */
 .statsModes button.secondary{
-  flex:0 0 auto;
+  flex: 0 0 auto;               /* prevent stretching/wrapping */
   width:auto;
-  padding:8px 12px;              /* tighter */
+  padding:8px 12px;             /* slightly tighter */
   border-radius:12px;
-  line-height: 1;
 }
 .statsModes button.secondary.active{
   background: rgba(0,122,194,.22);
@@ -742,6 +747,20 @@
   .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .statsControls select{ width:100%; }
 }
+/* Tighten Stats spacing */
+.statsPanel{ margin-top:8px; }
+
+.statsPanel .big{ margin: 6px 0 4px; }
+.statsPanel .muted{ margin: 0 0 8px; }
+
+.statsControls{ margin-top:8px; gap:8px; }
+.statsControls select{ min-width: 200px; }
+
+.statsRow{ padding:8px 10px; margin-top:6px; }
+
+.tiles{ gap:8px; margin-top:8px; }
+.tile{ padding:10px; }
+.tile .tVal{ font-size:20px; margin-top:2px; }
 
 
 </style>
