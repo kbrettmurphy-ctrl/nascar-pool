@@ -31,12 +31,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -50,6 +44,12 @@
     },
     {
       "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -80,14 +80,14 @@
     },
     {
       "opponent": "Steven",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Tyler",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     }
   ],
@@ -123,12 +123,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -142,6 +136,12 @@
     },
     {
       "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -172,9 +172,9 @@
     },
     {
       "opponent": "Steven",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Tyler",
@@ -215,12 +215,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -234,6 +228,12 @@
     },
     {
       "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -258,9 +258,9 @@
     },
     {
       "opponent": "Stacy",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Steven",
@@ -307,12 +307,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -331,6 +325,12 @@
       "losses": 0
     },
     {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
       "opponent": "Pat",
       "record": "(0-0)",
       "wins": 0,
@@ -344,9 +344,9 @@
     },
     {
       "opponent": "Russ",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Stacy",
@@ -399,12 +399,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -423,6 +417,12 @@
       "losses": 0
     },
     {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
       "opponent": "Pat",
       "record": "(0-0)",
       "wins": 0,
@@ -430,9 +430,9 @@
     },
     {
       "opponent": "Rob",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Russ",
@@ -491,12 +491,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -515,10 +509,16 @@
       "losses": 0
     },
     {
-      "opponent": "Pat",
-      "record": "(0-1)",
+      "opponent": "Nick",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
+    },
+    {
+      "opponent": "Pat",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
     },
     {
       "opponent": "Rob",
@@ -589,19 +589,19 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
+      "opponent": "Nate C.",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
     },
     {
-      "opponent": "Nate C.",
-      "record": "(0-1)",
+      "opponent": "Nate M.",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
-      "opponent": "Nate M.",
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -681,21 +681,21 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
+      "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
     },
     {
-      "opponent": "Justin",
-      "record": "(1-0)",
-      "wins": 1,
+      "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
-      "opponent": "Nate M.",
-      "record": "(1-0)",
-      "wins": 1,
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -773,12 +773,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -786,9 +780,15 @@
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
     },
     {
       "opponent": "Pat",
@@ -827,7 +827,98 @@
       "losses": 0
     }
   ],
-  "Nick": [],
+  "Nick": [
+    {
+      "opponent": "Beau",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Bob",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Brett",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Chris",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Don",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Jason",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Justin",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nate C.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Pat",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Rob",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Russ",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Stacy",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Steven",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Tyler",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    }
+  ],
   "Pat": [
     {
       "opponent": "Beau",
@@ -861,12 +952,6 @@
     },
     {
       "opponent": "Jason",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
-    },
-    {
-      "opponent": "Jon",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -890,9 +975,15 @@
       "losses": 0
     },
     {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
       "opponent": "Rob",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -947,18 +1038,12 @@
     },
     {
       "opponent": "Don",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
-    },
-    {
-      "opponent": "Jason",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
     },
     {
-      "opponent": "Jon",
+      "opponent": "Jason",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -982,10 +1067,16 @@
       "losses": 0
     },
     {
-      "opponent": "Pat",
-      "record": "(0-1)",
+      "opponent": "Nick",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
+    },
+    {
+      "opponent": "Pat",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
     },
     {
       "opponent": "Russ",
@@ -1033,8 +1124,8 @@
     },
     {
       "opponent": "Chris",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -1045,12 +1136,6 @@
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
-      "opponent": "Jon",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -1074,6 +1159,12 @@
       "losses": 0
     },
     {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
       "opponent": "Pat",
       "record": "(0-0)",
       "wins": 0,
@@ -1087,8 +1178,8 @@
     },
     {
       "opponent": "Stacy",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -1119,8 +1210,8 @@
     },
     {
       "opponent": "Brett",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -1137,12 +1228,6 @@
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
-      "opponent": "Jon",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -1166,6 +1251,12 @@
       "losses": 0
     },
     {
+      "opponent": "Nick",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
       "opponent": "Pat",
       "record": "(0-0)",
       "wins": 0,
@@ -1179,9 +1270,9 @@
     },
     {
       "opponent": "Russ",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Steven",
@@ -1199,14 +1290,14 @@
   "Steven": [
     {
       "opponent": "Beau",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
       "opponent": "Bob",
-      "record": "(1-0)",
-      "wins": 1,
+      "record": "(0-0)",
+      "wins": 0,
       "losses": 0
     },
     {
@@ -1234,12 +1325,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -1253,6 +1338,12 @@
     },
     {
       "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
@@ -1291,9 +1382,9 @@
   "Tyler": [
     {
       "opponent": "Beau",
-      "record": "(0-1)",
+      "record": "(0-0)",
       "wins": 0,
-      "losses": 1
+      "losses": 0
     },
     {
       "opponent": "Bob",
@@ -1326,12 +1417,6 @@
       "losses": 0
     },
     {
-      "opponent": "Jon",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
-    },
-    {
       "opponent": "Justin",
       "record": "(0-0)",
       "wins": 0,
@@ -1345,6 +1430,12 @@
     },
     {
       "opponent": "Nate M.",
+      "record": "(0-0)",
+      "wins": 0,
+      "losses": 0
+    },
+    {
+      "opponent": "Nick",
       "record": "(0-0)",
       "wins": 0,
       "losses": 0
