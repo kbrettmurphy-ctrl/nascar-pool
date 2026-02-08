@@ -648,7 +648,7 @@
 /* Keep buttons compact and prevent them from stretching */
 .statsModes button.secondary{
   flex: 0 0 auto;               /* prevent stretching/wrapping */
-  /* width:auto; */
+  width:auto;
   padding:8px 12px;             /* slightly tighter */
   border-radius:12px;
 }
@@ -763,6 +763,32 @@
 .tile{ padding:10px; }
 .tile .tVal{ font-size:20px; margin-top:2px; }
 
+/* --- HARD FIX: Stats mode bar must stay one row + horizontal scroll (iOS-safe) --- */
+#statsModes.statsModes{
+  display: grid !important;
+  grid-auto-flow: column !important;        /* force one row */
+  grid-auto-columns: max-content !important;/* each button sized to content */
+  gap: 8px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 0 4px !important;
+  max-width: 100% !important;
+}
+
+/* buttons: never wrap internally, never stretch */
+#statsModes.statsModes > button{
+  white-space: nowrap !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+
+/* optional: nicer scrollbar on iOS */
+#statsModes.statsModes::-webkit-scrollbar{ height: 6px; }
+#statsModes.statsModes::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.14);
+  border-radius: 999px;
+}
 
 </style>
 </head>
