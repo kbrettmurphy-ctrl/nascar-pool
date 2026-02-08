@@ -124,8 +124,8 @@
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
+      "record": "(1-0)",
+      "wins": 1,
       "losses": 0
     },
     {
@@ -560,9 +560,9 @@
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
+      "record": "(0-1)",
       "wins": 0,
-      "losses": 0
+      "losses": 1
     },
     {
       "opponent": "Brett",
