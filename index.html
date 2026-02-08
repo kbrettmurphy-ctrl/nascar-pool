@@ -622,70 +622,127 @@
 
 
     /* ---- Stats (UI, not spreadsheet) ---- */
-    .statsModes{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .statsModes button.secondary{ width:auto; padding:10px 12px; border-radius:12px; }
-    .statsModes button.secondary.active{
-      background: rgba(0,122,194,.22);
-      border: 1px solid rgba(0,122,194,.55);
-    }
-    .statsPanel{ margin-top:12px; }
-    .statsRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(0,122,194,.10);
-      margin-top:8px;
-    }
-    .statsLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
-    .rankBadge{
-      flex:0 0 auto;
-      min-width: 34px;
-      height: 26px;
-      border-radius: 999px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-variant-numeric: tabular-nums;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .statsName{ font-weight:900; color: var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .statsBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-    .miniPill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      font-size:11px;
-      font-weight:900;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .miniPill .k{ color: var(--muted); font-weight:800; }
-    .statsControls{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:12px; }
-    .statsControls label{ margin:0; }
-    .statsControls select{ width:auto; min-width: 220px; }
-    .tiles{ display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:10px; margin-top:10px; }
-    .tile{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(0,122,194,.10);
-    }
-    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
-    .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
-    @media (max-width: 520px){
-      .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .statsControls select{ width:100%; }
-    }
+
+/* Make the mode buttons a horizontal row (tabs) with scroll if needed */
+.statsModes{
+  display:flex;
+  flex-wrap:nowrap;              /* <-- no stacking */
+  gap:6px;
+  margin: 8px 0 10px 0;          /* tighter */
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+.statsModes::-webkit-scrollbar{ height:6px; }
+.statsModes::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.14);
+  border-radius: 999px;
+}
+
+/* Keep buttons compact and prevent them from stretching */
+.statsModes button.secondary{
+  flex:0 0 auto;
+  width:auto;
+  padding:8px 12px;              /* tighter */
+  border-radius:12px;
+  line-height: 1;
+}
+.statsModes button.secondary.active{
+  background: rgba(0,122,194,.22);
+  border: 1px solid rgba(0,122,194,.55);
+}
+
+/* Tighten the panel spacing */
+.statsPanel{ margin-top: 6px; }
+
+/* Tighten rows */
+.statsRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 10px;              /* tighter */
+  border-radius: 14px;
+  border:1px solid var(--line);
+  background: rgba(0,122,194,.10);
+  margin-top:6px;                /* tighter */
+}
+
+/* Name + badges */
+.statsLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
+.rankBadge{
+  flex:0 0 auto;
+  min-width: 32px;
+  height: 24px;
+  border-radius: 999px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.12);
+}
+.statsName{
+  font-weight:900;
+  color: var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.statsBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+.miniPill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  font-size:11px;
+  font-weight:900;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.miniPill .k{ color: var(--muted); font-weight:800; }
+
+/* Controls row (label + select) tighter */
+.statsControls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  margin-top: 8px;               /* tighter */
+}
+.statsControls label{ margin:0; }
+.statsControls select{
+  width:auto;
+  min-width: 220px;
+  padding: 10px 12px;            /* tighter */
+}
+
+/* Wins tiles tighter */
+.tiles{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:10px;
+  margin-top: 8px;               /* tighter */
+}
+.tile{
+  border:1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px;                 /* tighter */
+  background: rgba(0,122,194,.10);
+}
+.tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
+.tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
+
+/* Mobile: 2 tiles wide and full-width selects */
+@media (max-width: 520px){
+  .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .statsControls select{ width:100%; }
+}
+
 
 </style>
 </head>
