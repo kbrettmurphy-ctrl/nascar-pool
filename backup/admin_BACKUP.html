@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+
+    <!-- ✅ Correct viewport (prevents iOS weird scaling + supports safe-area) -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  
   <title>NASCAR Pool Admin</title>
 
   <style>
@@ -35,7 +41,7 @@
       background: var(--bg);
       color: var(--text);
     }
-    body::before{content:'';position:fixed;inset:0;background:url('nascar-logo.png') center/ min(78vw,560px) no-repeat;opacity:0.12;pointer-events:none;transform:translate3d(0,var(--wmY,0px),0);z-index:0;filter:none;mix-blend-mode:normal;}
+    body::before{content:'';position:fixed;inset:0;background:url('nascar-logo.png') center/ min(78vw,700px) no-repeat;opacity:0.12;pointer-events:none;transform:translate3d(0,var(--wmY,0px),0);z-index:0;filter:none;mix-blend-mode:normal;}
     body{position:relative;}
     body>*{position:relative;z-index:1;}
 
