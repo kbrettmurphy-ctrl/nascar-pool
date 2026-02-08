@@ -1219,14 +1219,9 @@ async function fetchSnapshotJson(key, bustCache=false){
 
         if (!data) throw new Error("No dues record found for " + name);
 
-        const paid = Number(data.paid || 0);
-        const balance = Number(data.balance || 0);
-        const winnings =
-          data.winnings != null &&
-          data.winnings !== "" &&
-          !Number.isNaN(Number(data.winnings))
-            ? Number(data.winnings)
-            : (180 - balance);
+        const paid = Number(data.paid ?? 0);
+        const winnings = Number(data.winnings ?? 0);
+        const balance = Number(data.balance ?? 0);
 
         const paidLine =
           paid === 180
