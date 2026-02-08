@@ -38,6 +38,7 @@
       --btnPrimary: var(--red);
       --btnSecondary: var(--blue);
       --danger: var(--red);
+      --green: #4DD21D;    
           
       /* Slight overall scale-down (not blurry, just smaller defaults) */
       --pad:12px;
@@ -117,15 +118,16 @@
     }
 
     button{
-      border:0;
+      border: 1px solid var(--line);
       cursor:pointer;
       font-weight:800;
-      border-radius: 12px;
-      padding: 12px 12px;
-      font-size: 15px;
+      border-radius: 25px;
+      padding: 8px 8px;
+      font-size: 14px;
     }
     button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
+    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var (--line); }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
@@ -567,7 +569,7 @@
         --radius2: 16px;
       }
       button{
-        font-size: 16px;
+        font-size: 14px;
         padding: 14px 12px;
         border-radius: 14px;
       }
@@ -634,8 +636,8 @@
   </div>
 
   <div class="topActions">
-    <button class="secondary" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
-    <button class="secondary" onclick="refreshActiveView()">🔄 Refresh</button>
+    <button class="topactions" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
+    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
   </div>
 
   <!-- CURRENT RACE -->
@@ -1172,52 +1174,78 @@ async function fetchSnapshotJson(key, bustCache=false){
     }
 
     async function loadDues() {
-  const sel = document.getElementById("duesName");
-  const out = document.getElementById("duesStatus");
+      const sel = document.getElementById("duesName");
+      const out = document.getElementById("duesStatus");
 
-  const name = sel ? String(sel.value || "").trim() : "";
-  if (!name) { out.textContent = "Pick your name first."; return; }
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) {
+        out.textContent = "Pick your name first.";
+        return;
+      }
 
-  savePlayerName(name);
-  out.textContent = "Loading…";
+      savePlayerName(name);
+      out.textContent = "Loading…";
 
-  try {
-    const all = await getData_("dues", "playerGetDues", { name });
+      try {
+        const all = await getData_("dues", "playerGetDues", { name });
 
-    let data = null;
+        let data = null;
 
-    if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
-      data = all;
-    } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
-      data = all[name];
-    } else if (Array.isArray(all)) {
-      data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-    } else if (all && Array.isArray(all.dues)) {
-      data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        if (
+          all &&
+          typeof all === "object" &&
+          !Array.isArray(all) &&
+          (all.name || all.paid != null || all.balance != null || all.winnings != null)
+        ) {
+          data = all;
+        } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+          data = all[name];
+        } else if (Array.isArray(all)) {
+          data =
+            all.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        } else if (all && Array.isArray(all.dues)) {
+          data =
+            all.dues.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        }
+
+        if (!data) throw new Error("No dues record found for " + name);
+
+        const paid = Number(data.paid ?? 0);
+        const winnings = Number(data.winnings ?? 0);
+        const balance = Number(data.balance ?? 0);
+
+        const paidLine =
+          paid === 180
+            ? `<span style="color: var(--green); opacity: 0.9;">Paid: $${paid.toFixed(2)}</span>`
+            : `Paid: $${paid.toFixed(2)}`;
+
+        const balanceLine =
+          balance > 0
+            ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
+            : `Balance Due: $${balance.toFixed(2)}`;
+
+        out.innerHTML = `
+    ${data.name || name}
+    ${paidLine}
+    Winnings: $${winnings.toFixed(2)}
+    ${balanceLine}
+    `;
+
+      } catch (e) {
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
+      }
     }
 
-    if (!data) throw new Error("No dues record found for " + name);
-
-    const paid = Number(data.paid || 0);
-    const balance = Number(data.balance || 0);
-    const winnings = 180 - balance;
-
-    out.textContent =
-`${data.name || name}
-Paid: $${paid.toFixed(2)}
-Winnings: $${winnings.toFixed(2)}
-Balance Due: $${balance.toFixed(2)}`;
-
-    // OPTIONAL: color just the Balance Due line AFTER render
-    out.innerHTML = out.innerHTML.replace(
-      /Balance Due: \$[0-9\.\-]+/,
-      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
-    );
-
-  } catch (e) {
-    out.textContent = "Error: " + (e && e.message ? e.message : e);
-  }
-}
 
     async function loadStandings() {
       const area = document.getElementById("standingsArea");
