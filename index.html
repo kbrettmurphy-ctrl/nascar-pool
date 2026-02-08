@@ -669,8 +669,7 @@
 
 /* Tighten rows */
 .statsRow{
-  display: grid;
-  grid-template-columns: auto var(--nameW, max-content) 1fr;
+  display:flex;
   align-items:center;
   justify-content:space-between;
   gap:10px;
@@ -682,9 +681,7 @@
 }
 
 /* Name + badges */
-.statsLeft{ 
-  display: contents;}
-  /* display:flex; align-items:center; gap:10px; min-width:0; } */
+.statsLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
 .rankBadge{
   flex:0 0 auto;
   min-width: 32px;
@@ -703,10 +700,8 @@
   font-weight:400;
   color: var(--text);
   white-space:nowrap;
-  overflow:visible;
-  /* overflow:hidden; */
-  text-overflow:clip;
-  /* text-overflow:ellipsis; */
+  overflow:hidden;
+  text-overflow:ellipsis;
   font-size: 14px;
 }
 .statsBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
@@ -817,11 +812,11 @@
   min-width: 0;
 }
 
-/* .statsName{ */
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-/* } */
+.statsName{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* Pills stay on one line and scroll instead of crushing names */
 .statsBadges{
@@ -829,7 +824,8 @@
   display: flex;
   gap: 6px;
   flex-wrap: nowrap;
-  /* max-width: 55%; */
+
+  max-width: 55%;
   overflow-x: auto;
   overflow-y: hidden;
 
@@ -871,21 +867,7 @@
      .statsBadges{
       justify-content: flex-start !important;  /* start on the left */
     }
-
-  /* Pills start immediately after name, and scroll if they don't fit */
-.statsBadges{
-  min-width: 0;
-  justify-self: start;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap;
-}
-.statsBadges .miniPill{ flex: 0 0 auto; }
-    
+   
 </style>
 </head>
 
@@ -1268,33 +1250,6 @@ async function fetchSnapshotJson(key, bustCache=false){
       return "";
     }
 
-    function syncOverallNameColumnWidth_(){
-  const panel = document.getElementById("statsPanel");
-  if(!panel) return;
-
-  // Only target the Overall list names currently rendered
-  const names = panel.querySelectorAll(".statsRow .statsName");
-  if(!names.length) return;
-
-  let max = 0;
-
-  // Measure the actual rendered width needed for each name
-  names.forEach(el => {
-    const prevWhiteSpace = el.style.whiteSpace;
-    el.style.whiteSpace = "nowrap";
-    // scrollWidth gives the full content width even if constrained
-    max = Math.max(max, el.scrollWidth || 0);
-    el.style.whiteSpace = prevWhiteSpace;
-  });
-
-  // A little breathing room so it doesn't look jammed
-  max = Math.ceil(max + 6);
-
-  // Apply to the panel so all rows share it
-  panel.style.setProperty("--nameW", max + "px");
-}
-
-
     /**********************
      * Loaders
      **********************/
@@ -1572,7 +1527,6 @@ Balance Due: $${balance.toFixed(2)}`;
 
       if (!rows.length || !headers.length){
         box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
-        requestAnimationFrame(syncOverallNameColumnWidth_);
         resetStatPillScrollSoon(box);
         return;
       }
@@ -2027,10 +1981,6 @@ function resetStatPillScrollSoon(scope){
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 })();
-  window.addEventListener("resize", () => {
-  if(_statsMode === "overall") syncOverallNameColumnWidth_();
-});
-
 </script>
 </body>
 </html>
