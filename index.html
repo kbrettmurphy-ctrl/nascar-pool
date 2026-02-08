@@ -864,7 +864,10 @@
       overflow-y: hidden !important;
     }
     .statsBadges .miniPill{ flex: 0 0 auto; white-space: nowrap; }
-    
+     .statsBadges{
+      justify-content: flex-start !important;  /* start on the left */
+    }
+   
 </style>
 </head>
 
@@ -1524,7 +1527,7 @@ Balance Due: $${balance.toFixed(2)}`;
 
       if (!rows.length || !headers.length){
         box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
-        requestAnimationFrame(resetStatPillScroll);
+        resetStatPillScrollSoon(box);
         return;
       }
 
@@ -1565,7 +1568,7 @@ Balance Due: $${balance.toFixed(2)}`;
       const headers = Array.isArray(data.tournamentHeaders) ? data.tournamentHeaders : [];
       if (!headers.length){
         box.innerHTML = `<div class="muted">(No tournament rank data yet)</div>`;
-        requestAnimationFrame(resetStatPillScroll);
+        resetStatPillScrollSoon(box);
         return;
       }
 
@@ -1657,7 +1660,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="h2hOut" style="margin-top:10px;">Loading…</div>
       `;
-      requestAnimationFrame(resetStatPillScroll);
+      resetStatPillScrollSoon(box);
 
       // use cached player list if possible
       const players = await getData_("players", "playerGetPlayerList");
@@ -1712,7 +1715,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="winsOut" style="margin-top:10px;">Loading…</div>
       `;
-      requestAnimationFrame(resetStatPillScroll);
+      resetStatPillScrollSoon(box);
 
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("winsPick");
@@ -1764,7 +1767,7 @@ Balance Due: $${balance.toFixed(2)}`;
         </div>
         <div id="drvOut" style="margin-top:10px;">Loading…</div>
       `;
-      requestAnimationFrame(resetStatPillScroll);
+      resetStatPillScrollSoon(box);
 
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("drvPick");
@@ -1931,11 +1934,22 @@ Balance Due: $${balance.toFixed(2)}`;
     }
     window.onload = () => { loadPlayersThenInit(); };
 
-    function resetStatPillScroll(){
-      document.querySelectorAll('.statsBadges').forEach(el => {
+    function resetStatPillScroll(scope){
+      const root = scope || document;
+      root.querySelectorAll('.statsBadges').forEach(el => {
+        // iOS needs a firm hand
         el.scrollLeft = 0;
+        el.scrollTo(0, 0);
       });
     }
+
+function resetStatPillScrollSoon(scope){
+  // double rAF = after layout + after paint (fixes iOS starting scrolled right)
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => resetStatPillScroll(scope));
+  });
+}
+
 
   </script>
 
