@@ -127,6 +127,7 @@
     }
     button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
+    button.topactions{ background: rgba(228, 0, 43, .14. color var(--red); }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
@@ -635,8 +636,8 @@
   </div>
 
   <div class="topActions">
-    <button class="secondary" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
-    <button class="secondary" onclick="refreshActiveView()">🔄 Refresh</button>
+    <button class="topactions" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
+    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
   </div>
 
   <!-- CURRENT RACE -->
