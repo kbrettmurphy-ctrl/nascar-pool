@@ -1,18 +1,506 @@
 {
-  "Beau": [],
-  "Bob": [],
-  "Brett": [],
-  "Chris": [],
-  "Don": [],
-  "Jason": [],
-  "Justin": [],
-  "Nate C.": [],
-  "Nate M.": [],
-  "Nick": [],
-  "Pat": [],
-  "Rob": [],
-  "Russ": [],
-  "Stacy": [],
-  "Steven": [],
-  "Tyler": []
+  "Beau": [
+    {
+      "driver": "Justin Haley",
+      "count": 2
+    },
+    {
+      "driver": "Alex Bowman",
+      "count": 1
+    },
+    {
+      "driver": "Brad Keselowski",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Blaney",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Preece",
+      "count": 1
+    },
+    {
+      "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "William Byron",
+      "count": 1
+    }
+  ],
+  "Bob": [
+    {
+      "driver": "A. J. Allmendinger",
+      "count": 1
+    },
+    {
+      "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
+      "driver": "Denny Hamlin",
+      "count": 1
+    },
+    {
+      "driver": "Michael McDowell",
+      "count": 1
+    },
+    {
+      "driver": "Ricky Stenhouse Jr.",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Preece",
+      "count": 1
+    },
+    {
+      "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "Todd Gilliland",
+      "count": 1
+    }
+  ],
+  "Brett": [
+    {
+      "driver": "Ty Gibbs",
+      "count": 2
+    },
+    {
+      "driver": "Chris Buescher",
+      "count": 1
+    },
+    {
+      "driver": "Daniel Suárez",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Michael McDowell",
+      "count": 1
+    },
+    {
+      "driver": "Tyler Reddick",
+      "count": 1
+    }
+  ],
+  "Chris": [
+    {
+      "driver": "Austin Dillon",
+      "count": 1
+    },
+    {
+      "driver": "Chase Briscoe",
+      "count": 1
+    },
+    {
+      "driver": "Connor Zilisch",
+      "count": 1
+    },
+    {
+      "driver": "Josh Berry",
+      "count": 1
+    },
+    {
+      "driver": "Justin Haley",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Blaney",
+      "count": 1
+    },
+    {
+      "driver": "Tyler Reddick",
+      "count": 1
+    },
+    {
+      "driver": "William Byron",
+      "count": 1
+    }
+  ],
+  "Don": [
+    {
+      "driver": "A. J. Allmendinger",
+      "count": 1
+    },
+    {
+      "driver": "Bubba Wallace",
+      "count": 1
+    },
+    {
+      "driver": "Carson Hocevar",
+      "count": 1
+    },
+    {
+      "driver": "Chase Briscoe",
+      "count": 1
+    },
+    {
+      "driver": "Chase Elliott",
+      "count": 1
+    },
+    {
+      "driver": "Martin Truex Jr.",
+      "count": 1
+    },
+    {
+      "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "Ty Dillon",
+      "count": 1
+    }
+  ],
+  "Jason": [
+    {
+      "driver": "Bubba Wallace",
+      "count": 1
+    },
+    {
+      "driver": "Carson Hocevar",
+      "count": 1
+    },
+    {
+      "driver": "Chase Elliott",
+      "count": 1
+    },
+    {
+      "driver": "John Hunter Nemechek",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Michael McDowell",
+      "count": 1
+    },
+    {
+      "driver": "Ricky Stenhouse Jr.",
+      "count": 1
+    },
+    {
+      "driver": "Tyler Reddick",
+      "count": 1
+    }
+  ],
+  "Justin": [
+    {
+      "driver": "Alex Bowman",
+      "count": 1
+    },
+    {
+      "driver": "Chase Elliott",
+      "count": 1
+    },
+    {
+      "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
+      "driver": "Daniel Suárez",
+      "count": 1
+    },
+    {
+      "driver": "Ricky Stenhouse Jr.",
+      "count": 1
+    },
+    {
+      "driver": "Riley Herbst",
+      "count": 1
+    },
+    {
+      "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "Zane Smith",
+      "count": 1
+    }
+  ],
+  "Nate C.": [
+    {
+      "driver": "Ross Chastain",
+      "count": 2
+    },
+    {
+      "driver": "Erik Jones",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    },
+    {
+      "driver": "Noah Gragson",
+      "count": 1
+    },
+    {
+      "driver": "Riley Herbst",
+      "count": 1
+    },
+    {
+      "driver": "Ty Dillon",
+      "count": 1
+    },
+    {
+      "driver": "William Byron",
+      "count": 1
+    }
+  ],
+  "Nate M.": [
+    {
+      "driver": "Alex Bowman",
+      "count": 1
+    },
+    {
+      "driver": "Brad Keselowski",
+      "count": 1
+    },
+    {
+      "driver": "Chase Briscoe",
+      "count": 1
+    },
+    {
+      "driver": "Chris Buescher",
+      "count": 1
+    },
+    {
+      "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
+      "driver": "Daniel Suárez",
+      "count": 1
+    },
+    {
+      "driver": "Jimmie Johnson",
+      "count": 1
+    },
+    {
+      "driver": "Michael McDowell",
+      "count": 1
+    }
+  ],
+  "Nick": [
+    {
+      "driver": "Zane Smith",
+      "count": 2
+    },
+    {
+      "driver": "Denny Hamlin",
+      "count": 1
+    },
+    {
+      "driver": "Erik Jones",
+      "count": 1
+    },
+    {
+      "driver": "Josh Berry",
+      "count": 1
+    },
+    {
+      "driver": "Riley Herbst",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Blaney",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Preece",
+      "count": 1
+    }
+  ],
+  "Pat": [
+    {
+      "driver": "Austin Dillon",
+      "count": 1
+    },
+    {
+      "driver": "Chase Briscoe",
+      "count": 1
+    },
+    {
+      "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
+      "driver": "Denny Hamlin",
+      "count": 1
+    },
+    {
+      "driver": "Erik Jones",
+      "count": 1
+    },
+    {
+      "driver": "Joey Logano",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    },
+    {
+      "driver": "Ty Gibbs",
+      "count": 1
+    }
+  ],
+  "Rob": [
+    {
+      "driver": "B. J. McLeod",
+      "count": 1
+    },
+    {
+      "driver": "Brad Keselowski",
+      "count": 1
+    },
+    {
+      "driver": "Chris Buescher",
+      "count": 1
+    },
+    {
+      "driver": "Justin Haley",
+      "count": 1
+    },
+    {
+      "driver": "Noah Gragson",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Blaney",
+      "count": 1
+    },
+    {
+      "driver": "William Byron",
+      "count": 1
+    },
+    {
+      "driver": "Zane Smith",
+      "count": 1
+    }
+  ],
+  "Russ": [
+    {
+      "driver": "Austin Cindric",
+      "count": 3
+    },
+    {
+      "driver": "Austin Dillon",
+      "count": 1
+    },
+    {
+      "driver": "Cole Custer",
+      "count": 1
+    },
+    {
+      "driver": "Denny Hamlin",
+      "count": 1
+    },
+    {
+      "driver": "Joey Logano",
+      "count": 1
+    },
+    {
+      "driver": "Ross Chastain",
+      "count": 1
+    }
+  ],
+  "Stacy": [
+    {
+      "driver": "A. J. Allmendinger",
+      "count": 2
+    },
+    {
+      "driver": "Alex Bowman",
+      "count": 1
+    },
+    {
+      "driver": "Austin Dillon",
+      "count": 1
+    },
+    {
+      "driver": "Bubba Wallace",
+      "count": 1
+    },
+    {
+      "driver": "Josh Berry",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Todd Gilliland",
+      "count": 1
+    }
+  ],
+  "Steven": [
+    {
+      "driver": "Cole Custer",
+      "count": 2
+    },
+    {
+      "driver": "Joey Logano",
+      "count": 2
+    },
+    {
+      "driver": "Chris Buescher",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Riley Herbst",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Preece",
+      "count": 1
+    }
+  ],
+  "Tyler": [
+    {
+      "driver": "Todd Gilliland",
+      "count": 2
+    },
+    {
+      "driver": "Bubba Wallace",
+      "count": 1
+    },
+    {
+      "driver": "Carson Hocevar",
+      "count": 1
+    },
+    {
+      "driver": "Chase Elliott",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    },
+    {
+      "driver": "Ty Dillon",
+      "count": 1
+    },
+    {
+      "driver": "Tyler Reddick",
+      "count": 1
+    }
+  ]
 }
