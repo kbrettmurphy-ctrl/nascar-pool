@@ -328,6 +328,7 @@
         </div>
 
         <div class="spacer"></div>
+        <button class="btn" onclick="compileH2H()">🤝 Compile H2H Records</button>
         <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
 
         <div id="pubMsg" class="msg hide"></div>
@@ -713,7 +714,33 @@
     }
   }
 
-  async function publishSnapshot(){
+  
+  async function compileH2H(){
+    const msg = document.getElementById("pubMsg");
+    hideMsg(msg);
+
+    const raw = prompt("Compile H2H for ALL tournaments, or enter a tournament number 1-9:", "ALL");
+    if(raw == null) return;
+    const pick = String(raw || "").trim().toUpperCase();
+    if(pick !== "ALL"){
+      const n = parseInt(pick, 10);
+      if(!Number.isInteger(n) || n < 1 || n > 9){
+        showMsg(msg, "Enter ALL or a tournament number 1-9.", true);
+        return;
+      }
+    }
+
+    try{
+      showMsg(msg, "Compiling H2H…", false);
+      const r = await apiCall("adminCompileHeadToHead", { scope: pick }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "H2H compiled ✅", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+async function publishSnapshot(){
     const msg = document.getElementById("pubMsg");
     hideMsg(msg);
 
