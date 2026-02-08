@@ -1,7 +1,61 @@
 {
-  "tournament": 1,
-  "race": "Daytona",
-  "round": 1,
-  "matchups": [],
-  "eliminated": []
+  "tournament": 2,
+  "race": "Martinsville",
+  "round": 3,
+  "matchups": [
+    {
+      "p1": "Nate M.",
+      "p2": "Bob",
+      "p1Drivers": [
+        "Cole Custer",
+        "Erik Jones"
+      ],
+      "p2Drivers": [
+        "Tyler Reddick",
+        "Justin Haley"
+      ],
+      "p1Nums": [
+        22,
+        31
+      ],
+      "p2Nums": [
+        9,
+        30
+      ]
+    },
+    {
+      "p1": "Jason",
+      "p2": "Chris",
+      "p1Drivers": [
+        "Joey Logano",
+        "Michael McDowell"
+      ],
+      "p2Drivers": [
+        "Chase Briscoe",
+        "Christopher Bell"
+      ],
+      "p1Nums": [
+        7,
+        15
+      ],
+      "p2Nums": [
+        11,
+        1
+      ]
+    }
+  ],
+  "eliminated": [
+    "Beau",
+    "Brett",
+    "Don",
+    "Justin",
+    "Nate C.",
+    "Nick",
+    "Pat",
+    "Rob",
+    "Russ",
+    "Stacy",
+    "Steven",
+    "Tyler"
+  ]
 }
