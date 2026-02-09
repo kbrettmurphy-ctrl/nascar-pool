@@ -127,7 +127,7 @@
     },
     {
       "round": 3,
-      "raceLabel": "Martinsville",
+      "raceLabel": "North Wilkesboro",
       "isCurrent": true,
       "matchups": [
         {
@@ -152,7 +152,7 @@
     },
     {
       "round": 4,
-      "raceLabel": "Watkins Glen",
+      "raceLabel": "Bristol",
       "isCurrent": false,
       "matchups": []
     }
