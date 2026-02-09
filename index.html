@@ -873,7 +873,7 @@
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
     const VIEW_KEY = "nascar_pool_active_view";
-    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : `Round ${n}`);
+    const roundLabel = (n) => (Number(n) === 4 ? "FInal" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -1219,7 +1219,7 @@
         const round = data.currentRound ?? data.round ?? "";
         const roundText =
           round === "" ? "" :
-          (Number(round) === 4 ? "Championship" : `Round ${round}`);
+          (Number(round) === 4 ? "Final" : `Round ${round}`);
 
         sub.textContent =
           `Tournament ${tour}` +
