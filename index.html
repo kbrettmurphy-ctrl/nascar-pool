@@ -1423,7 +1423,8 @@
     // ---------- Stats / Standings (mode switcher) ----------
     let _cache_standings = null;
     let _statsMode = "overall";
-
+    let _nameWTimer = null;
+    
     async function loadStandings() {
       const area = document.getElementById("standingsArea");
       area.innerHTML = "Loading stats...";
@@ -1883,7 +1884,14 @@
       });
     }
 
-    window.addEventListener("resize", () => { if(_statsMode === "overall") syncOverallNameColumnWidth_(); });
+    window.addEventListener("resize", () => {
+      if (_statsMode !== "overall") return;
+
+      clearTimeout(_nameWTimer);
+      _nameWTimer = setTimeout(() => {
+        syncOverallNameColumnWidth_();
+      }, 150);
+    });
 
     window.onload = () => { loadPlayersThenInit(); };
   </script>
