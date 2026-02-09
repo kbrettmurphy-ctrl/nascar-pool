@@ -91,9 +91,11 @@
     }
 
     .pill {
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
+      display: inline-flex; /* Changed from inline-block */
+      align-items: center;  /* Centers text vertically */
+      justify-content: center; /* Centers text horizontally */
+      padding: 6px 10px;
+      border-radius: 999px;
       background: rgba(255,214,89,.14);
       border:1px solid rgba(255,214,89,.40);
       color: var(--yellow);
