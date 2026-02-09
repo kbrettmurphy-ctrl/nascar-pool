@@ -168,6 +168,12 @@
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
     }
+
+    .navInner::before,
+    .navInner::after{
+      content:"";
+      flex: 1 0 auto;
+    }
     .navBtn{
       flex:0 0 auto;
       min-width: 98px;
@@ -328,6 +334,8 @@
         </div>
 
         <div class="spacer"></div>
+        <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button>
+        <div class="spacer"></div>
         <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
 
         <div id="pubMsg" class="msg hide"></div>
@@ -345,7 +353,7 @@
   <!-- Bottom nav -->
   <div class="bottomNav">
     <div class="navInner">
-      <button class="navBtn active" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
+      <button class="navBtn avtive" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
       <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
       <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
       <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
@@ -359,6 +367,7 @@
   // ---------- Storage ----------
   const LS_API = "nascar_api_base";
   const LS_KEY = "nascar_admin_key";
+  const LS_ADMIN_PANEL = "nascar_admin_active_panel";
 
   function getCfg(){
     return {
@@ -485,13 +494,26 @@
   }
 
   function showPanel(name, btn){
+    // hide all panels
     document.querySelectorAll(".panel").forEach(p => p.classList.add("hide"));
     const panel = document.getElementById("panel"+name);
     if(panel) panel.classList.remove("hide");
 
+    // nav active state
     document.querySelectorAll(".navBtn").forEach(b => b.classList.remove("active"));
-    if(btn) btn.classList.add("active");
-  }
+
+    // If caller passed the button, use it. Otherwise find the matching one.
+    let activeBtn = btn;
+    if(!activeBtn){
+      activeBtn = Array.from(document.querySelectorAll(".navBtn"))
+        .find(b => (b.getAttribute("onclick") || "").includes(`showPanel('${name}'`));
+    }
+  if(activeBtn) activeBtn.classList.add("active");
+
+  // ✅ persist
+  try{ localStorage.setItem(LS_ADMIN_PANEL, String(name || "")); }catch(e){}
+}
+
 
   // ---------- API ----------
   async function apiCall(action, params={}, isAdmin=true){
@@ -713,7 +735,33 @@
     }
   }
 
-  async function publishSnapshot(){
+  
+  async function compileH2H(){
+    const msg = document.getElementById("pubMsg");
+    hideMsg(msg);
+
+    const raw = prompt("Compile H2H for ALL tournaments, or enter a tournament number 1-9:", "ALL");
+    if(raw == null) return;
+    const pick = String(raw || "").trim().toUpperCase();
+    if(pick !== "ALL"){
+      const n = parseInt(pick, 10);
+      if(!Number.isInteger(n) || n < 1 || n > 9){
+        showMsg(msg, "Enter ALL or a tournament number 1-9.", true);
+        return;
+      }
+    }
+
+    try{
+      showMsg(msg, "Compiling H2H…", false);
+      const r = await apiCall("adminCompileHeadToHead", { scope: pick }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "H2H compiled ✅", false);
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+async function publishSnapshot(){
     const msg = document.getElementById("pubMsg");
     hideMsg(msg);
 
@@ -732,6 +780,9 @@
     syncConfigUI();
     applyConfigVisibility(false);
 
+    // ✅ restore last panel (default = Numbers)
+    const last = (localStorage.getItem(LS_ADMIN_PANEL) || "Numbers").trim();
+    showPanel(last);
     if(!hasAdminConfig()) return;
 
     await refreshContext();
