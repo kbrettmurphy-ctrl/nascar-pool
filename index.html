@@ -16,6 +16,8 @@
     :root{
       --cardA: 0.78;
       --microA: 0.72;
+      --cardBg: rgba(255,255,255,var(--cardA));
+      --microBg: rgba(255,255,255,var(--microA));
 
       --stroke:#e5e7eb;
       --ink:#0f172a;
@@ -29,11 +31,15 @@
       --nav:#000000;
       --nav2:#111827;
 
-      /* NASCAR theme */
+      /* -- NASCAR Color theme -- */
       --blue:#007AC2;
       --red:#E4002B;
       --yellow:#FFD659;
       --black:#000000;
+
+      --btnPrimary: var(--red);
+      --btnSecondary: var(--blue);
+      --danger: var(--red);
 
       --pad:12px;
       --radius:16px;
@@ -47,13 +53,17 @@
       --micro:8px;
       --nano:6px;
 
-      /* iOS bottom bar fix vars */
-      --vvb: 0px;
-      --navH: 74px;
+      /* My Matchup tight mode */
+      --mmPad:8px;
+      --mmGap:6px;
+      --mmHeaderGap:4px;
 
-      /* Watermark */
-      --wmOpacity: 0.42;
-      --wmShift: 0px;
+      /* iOS bottom bar fix vars */
+      --vvb: 0px;    /* visual viewport bottom gap */
+      --navH: 74px;  /* approximate bottom nav height */
+
+      /* Overall name column width (computed in JS) */
+      --nameW: 120px;
     }
 
     *{ box-sizing:border-box; }
@@ -67,9 +77,7 @@
       background: var(--bg);
       color: var(--text);
 
-      /* ✅ keeps nav visible even with iOS toolbar */
       padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
-
       position: relative;
       overflow-x: hidden;
     }
@@ -125,11 +133,7 @@
     }
     button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
-    button.topactions{
-      background: rgba(228, 0, 43, .4);
-      color: var(--text);
-      border: 1px solid var(--line);
-    }
+    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var(--line); }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
@@ -147,26 +151,9 @@
     .muted { color: var(--muted); font-size: 13px; }
 
     .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
-
-    /* Stats lives inside #standingsArea.status, so undo pre-wrap there */
     #standingsArea{ white-space: normal; }
 
-    /* Watermark background */
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      background-image: url("nascar-logo.png");
-      background-repeat: no-repeat;
-      background-size: min(78vw, 700px);
-      background-position: 50% calc(50% + var(--wmShift));
-      opacity: var(--wmOpacity);
-      pointer-events: none;
-      z-index: 0;
-    }
-    body > *{ position: relative; z-index: 1; }
-
-    /* ---- Current Race cards ---- */
+    /* ---- Current Race ---- */
     .raceHeaderRow{
       display:flex;
       align-items:baseline;
@@ -374,60 +361,13 @@
     }
 
     .bracketWrap{ position: relative; margin-top:10px; }
-    .bracketSticky{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display:none;
-      gap:10px;
-      padding: 6px 10px;
-      margin: 0 0 6px 0;
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-    }
-    .bracketSticky .chip{
-      flex: 0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      font-size:11px;
-      font-weight:900;
-      color: var(--text);
-      scroll-snap-align: start;
-    }
-    .bracketSticky .chip .small{
-      font-size:10px;
-      font-weight:800;
-      color: var(--muted);
-    }
-    .bracketFade{
-      pointer-events:none;
-      position:absolute;
-      top: 42px;
-      bottom: 0;
-      width: 18px;
-      z-index: 15;
-    }
-    .bracketFade.left{
-      left: 0;
-      background: linear-gradient(90deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
-    }
-    .bracketFade.right{
-      right: 0;
-      background: linear-gradient(270deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
-    }
+
+    /* ✅ KEEP BRACKET STICKY OFF (mobile too) */
+    .bracketSticky{ display:none !important; }
+
+    .bracketFade{ display:none !important; }
 
     @media (max-width: 900px){
-      .bracketSticky{ display:flex; }
       .bracketGrid{
         grid-template-columns: repeat(4, 210px);
         gap: 10px;
@@ -439,21 +379,24 @@
       .bracketCol{ scroll-snap-align: start; }
     }
 
-    /* ---- My Matchup tight mode ---- */
+    /* ---- My Matchup ---- */
     .mmWrap{ margin-top: 6px; }
     .mmHeader{
       font-weight: 900;
       font-size: 14px;
-      margin: 0 0 4px 0;
+      margin: 0 0 var(--mmHeaderGap) 0;
       line-height: 1.2;
     }
     .microBox{
       border:1px solid var(--line);
       border-radius: 12px;
-      padding: 8px;
+      padding: var(--mmPad);
       background: rgba(0,122,194,.14);
     }
-    .youBox{ border:2px solid #16a34a; background: rgba(0,122,194,.14); }
+    .youBox{
+      border:2px solid #16a34a;
+      background: rgba(0,122,194,.14);
+    }
     .microTitle{
       font-weight: 900;
       font-size: 14px;
@@ -561,12 +504,32 @@
       .card{ padding: 14px; }
     }
 
-    /* =========================
-       STATS (FIXED + CLEAN)
-       ========================= */
+    /* Watermark background */
+    :root{
+      --wmOpacity: 0.42;
+      --wmShift: 0px;
+    }
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background-image: url("nascar-logo.png");
+      background-repeat: no-repeat;
+      background-size: min(78vw, 700px);
+      background-position: 50% calc(50% + var(--wmShift));
+      opacity: var(--wmOpacity);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > *{
+      position: relative;
+      z-index: 1;
+    }
 
-    /* top mode buttons: single row + scroll */
-    #statsModes.statsModes{
+    /* ---- Stats (UI) ---- */
+
+    /* Mode buttons row */
+    .statsModes{
       display: grid;
       grid-auto-flow: column;
       grid-auto-columns: max-content;
@@ -577,31 +540,35 @@
       padding: 6px 0 4px;
       max-width: 100%;
     }
-    #statsModes.statsModes > button{
+    .statsModes > button{
       white-space: nowrap;
       width: auto;
-      padding: 8px 12px;
-      border-radius: 12px;
-      background: rgba(0,122,194,.22);
-      border: 1px solid var(--line);
-      color: var(--text);
     }
-    #statsModes.statsModes > button.active{
-      background: rgba(0,122,194,.42);
-      border-color: rgba(0,122,194,.55);
-    }
-    #statsModes.statsModes::-webkit-scrollbar{ height:6px; }
-    #statsModes.statsModes::-webkit-scrollbar-thumb{
+    .statsModes::-webkit-scrollbar{ height:6px; }
+    .statsModes::-webkit-scrollbar-thumb{
       background: rgba(255,255,255,.14);
       border-radius: 999px;
     }
+    .statsModes button.secondary{
+      padding:8px 12px;
+      border-radius:12px;
+      background: rgba(0,122,194,.22);
+      flex: 0 0 auto;
+      width:auto;
+    }
+    .statsModes button.secondary.active{
+      background: rgba(0,122,194,.42);
+      border: 1px solid rgba(0,122,194,.55);
+    }
 
     .statsPanel{ margin-top: 8px; }
+    .statsPanel .big{ margin: 6px 0 4px; }
+    .statsPanel .muted{ margin: 0 0 8px; }
 
-    /* ✅ One true row layout: rank | name (fixed to longest) | pills (scrollable) */
-    .statsRow{
+    /* ✅ OVERALL: fixed rank col + fixed name col (based on longest name) + pills */
+    .statsRow.overallRow{
       display: grid;
-      grid-template-columns: auto var(--nameW, max-content) 1fr;
+      grid-template-columns: 42px var(--nameW) 1fr;
       align-items: center;
       gap: 10px;
       padding: 8px 10px;
@@ -609,6 +576,7 @@
       border:1px solid var(--line);
       background: rgba(0,122,194,.10);
       margin-top: 6px;
+      min-width: 0;
     }
 
     .rankBadge{
@@ -625,38 +593,34 @@
       font-size: 14px;
     }
 
-    /* ✅ Names: left aligned, full text visible */
     .statsName{
       font-weight:400;
       color: var(--text);
-      font-size: 14px;
       white-space: nowrap;
-      overflow: visible;
-      text-overflow: clip;
-      justify-self: start;
+      overflow: visible;    /* show full name */
+      text-align: left;     /* no centering */
+      font-size: 14px;
+      min-width: 0;
     }
 
-    /* ✅ Pills: all start same spot, never wrap, scroll horizontally */
     .statsBadges{
       display:flex;
-      flex-wrap: nowrap;
       gap: 8px;
+      flex-wrap: nowrap;
       overflow-x: auto;
       overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       white-space: nowrap;
       justify-content: flex-start;
       min-width: 0;
-      padding-bottom: 2px;
     }
-    .statsBadges::-webkit-scrollbar{ height: 4px; }
+    .statsBadges::-webkit-scrollbar{ height:4px; }
     .statsBadges::-webkit-scrollbar-thumb{
       background: rgba(255,255,255,.18);
       border-radius: 999px;
     }
 
     .miniPill{
-      flex: 0 0 auto;
       display:inline-flex;
       align-items:center;
       gap:6px;
@@ -668,9 +632,24 @@
       font-weight:900;
       color: var(--text);
       font-variant-numeric: tabular-nums;
+      flex: 0 0 auto;
       white-space: nowrap;
     }
     .miniPill .k{ color: var(--muted); font-weight:800; }
+
+    /* Non-overall rows (simple 2-col layout) */
+    .statsRow.simpleRow{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,122,194,.10);
+      margin-top: 6px;
+      min-width: 0;
+    }
 
     .statsControls{
       display:flex;
@@ -734,7 +713,7 @@
   <!-- MY MATCHUP -->
   <div id="view-mymatchup" class="card" style="display:none;">
     <div class="big">My Matchup</div>
-    <div class="muted">Pick your name once, I might remember it.</div>
+    <div class="muted">Pick your name once. I might remember it.</div>
 
     <label>Your name</label>
     <select id="mmName"></select>
@@ -769,8 +748,6 @@
 
     <div class="bracketWrap">
       <div id="bracketSticky" class="bracketSticky"></div>
-      <div class="bracketFade left"></div>
-      <div class="bracketFade right"></div>
       <div id="bracketArea">Loading…</div>
     </div>
   </div>
@@ -826,10 +803,8 @@
       }
     })();
 
-    /**********************
-     * API helpers
-     **********************/
-    const ADMIN_KEY = ""; // public site
+    // Player site uses API_BASE directly.
+    const ADMIN_KEY = "";
 
     async function apiCall(action, params = {}, isAdmin = false){
       const apiBase = API_BASE;
@@ -850,7 +825,7 @@
       return fetch(url, { cache: "no-store" }).then(r => r.json());
     }
 
-    // ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
+    // ---------- Snapshot Loader ----------
     const SNAP_MAP = {
       context:   "./data/context.json",
       players:   "./data/players.json",
@@ -951,7 +926,7 @@
       if (mm) mm.value = "";
       if (dd) dd.value = "";
       setWelcome();
-      showView("current");
+      showView("current"); // ✅ fixed (was showView(which) with undefined var)
     }
 
     function setWelcome() {
@@ -1022,58 +997,6 @@
       return "";
     }
 
-    // Cache for large snapshot maps
-    let _cache_myMatchupsAll = null;
-
-    async function getMyMatchupsAllSnapshot(){
-      if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
-      try{
-        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
-      }catch(e){
-        _cache_myMatchupsAll = null;
-      }
-      return _cache_myMatchupsAll;
-    }
-
-    function extractPicksFromMyEntry(entry){
-      if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
-      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
-      const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
-      return { drivers, nums };
-    }
-
-    function getEntryByName(map, name){
-      if(!map || !name) return null;
-      if(map[name]) return map[name];
-      const target = String(name).trim().toLowerCase();
-      for(const k in map){
-        if(String(k).trim().toLowerCase() === target) return map[k];
-      }
-      return null;
-    }
-
-    /**********************
-     * Stats: name column width sync
-     **********************/
-    function syncOverallNameColumnWidth_(){
-      const panel = document.getElementById("statsPanel");
-      if(!panel) return;
-
-      const names = panel.querySelectorAll(".statsRow .statsName");
-      if(!names.length) return;
-
-      let max = 0;
-      names.forEach(el => {
-        const prev = el.style.whiteSpace;
-        el.style.whiteSpace = "nowrap";
-        max = Math.max(max, el.scrollWidth || 0);
-        el.style.whiteSpace = prev;
-      });
-
-      max = Math.ceil(max + 8); // breathing room
-      panel.style.setProperty("--nameW", max + "px");
-    }
-
     function resetStatPillScroll(scope){
       const root = scope || document;
       root.querySelectorAll('.statsBadges').forEach(el => {
@@ -1081,12 +1004,34 @@
         el.scrollTo(0, 0);
       });
     }
-
     function resetStatPillScrollSoon(scope){
       requestAnimationFrame(() => {
         requestAnimationFrame(() => resetStatPillScroll(scope));
       });
     }
+
+    function syncOverallNameColumnWidth_(){
+      const panel = document.getElementById("statsPanel");
+      if(!panel) return;
+
+      const names = panel.querySelectorAll(".statsRow.overallRow .statsName");
+      if(!names.length) return;
+
+      let max = 0;
+      names.forEach(el => {
+        max = Math.max(max, el.scrollWidth || 0);
+      });
+
+      max = Math.ceil(max + 8); // breathing room
+      panel.style.setProperty("--nameW", max + "px");
+    }
+
+    window.addEventListener("resize", () => {
+      if(_statsMode === "overall") {
+        syncOverallNameColumnWidth_();
+        resetStatPillScrollSoon(document.getElementById("statsPanel"));
+      }
+    });
 
     /**********************
      * Loaders
@@ -1104,7 +1049,6 @@
         else if (hasPlayerName()) showView("mymatchup");
         else showView("current");
       }catch(e){
-        console.log(e);
         setWelcome();
         showView("current");
       }
@@ -1130,7 +1074,6 @@
           (Number(round) === 4 ? "Championship" : `Round ${round}`);
 
         sub.textContent = `Tournament ${tour}` + (roundText ? ` · ${roundText}` : "");
-
         area.innerHTML = "";
 
         (data.matchups || []).forEach(m => {
@@ -1159,15 +1102,9 @@
         const eliminated = data.eliminated || [];
         if (eliminated.length > 0) {
           let html = `<div class="elimTitle">Eliminated</div>`;
-          const myAll = await getMyMatchupsAllSnapshot();
-
           eliminated.forEach(p => {
-            const entry = getEntryByName(myAll, p);
-            const picks = extractPicksFromMyEntry(entry);
-            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+            html += `<div class="elimItem">${escapeHtml(p)}</div>`;
           });
-
           elim.innerHTML = html;
         }
       }catch(e){
@@ -1197,29 +1134,12 @@
         }
 
         if (data.status !== "active") {
-          const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
-          const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
-          const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
-          const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
-
-          const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "It's not the weekend yet!");
-          const youListText  = youDriversArr.length
-            ? youDriversArr.join("<br>")
-            : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
-
-          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
-
           out.innerHTML = `
             <div class="microBox" style="margin-top:6px;">
               <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-              <div class="microMeta" style="color: rgba(255,255,255,.9); font-weight:400;">
-                ${escapeHtml(data.you)}, you're eliminated. Here's your stuff anyway.<br><br>
+              <div class="microMeta" style="color:rgba(255,255,255,.9)">
+                ${escapeHtml(data.you || name)}, you're eliminated.
               </div>
-
-              ${youListText ? `
-                <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                <div class="microMeta">${youListHtml}</div>
-              ` : ``}
             </div>
           `;
           return;
@@ -1262,8 +1182,8 @@
 
       try {
         const all = await getData_("dues", "playerGetDues", { name });
-        let data = null;
 
+        let data = null;
         if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
           data = all;
         } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
@@ -1352,7 +1272,6 @@ Balance Due: $${balance.toFixed(2)}`;
 
       if (!rows.length || !headers.length){
         box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
-        resetStatPillScrollSoon(box);
         return;
       }
 
@@ -1371,7 +1290,7 @@ Balance Due: $${balance.toFixed(2)}`;
         }).filter(Boolean).join("");
 
         html += `
-          <div class="statsRow">
+          <div class="statsRow overallRow">
             <div class="rankBadge">${escapeHtml(rank || "—")}</div>
             <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
@@ -1381,7 +1300,7 @@ Balance Due: $${balance.toFixed(2)}`;
 
       box.innerHTML = html;
 
-      // ✅ Force consistent start position for pills
+      // ✅ measure longest name then lock name column width, then reset pill scroll
       requestAnimationFrame(() => {
         syncOverallNameColumnWidth_();
         resetStatPillScrollSoon(box);
@@ -1400,11 +1319,9 @@ Balance Due: $${balance.toFixed(2)}`;
       box.innerHTML = `
         <div class="big">Tournament Ranks</div>
         <div class="muted">Pick a tournament</div>
-
         <div class="statsControls">
           <select id="tourneyPick">${opts}</select>
         </div>
-
         <div id="tourneyRanksBox" style="margin-top:10px;"></div>
       `;
 
@@ -1420,7 +1337,6 @@ Balance Due: $${balance.toFixed(2)}`;
       const listRaw = t[label] || [];
 
       let html = `<div style="margin-top:6px;font-weight:900;font-size:16px;">${escapeHtml(label)}</div>`;
-
       if (!Array.isArray(listRaw) || listRaw.length === 0) {
         html += `<div class="muted">(No data yet)</div>`;
         box.innerHTML = html;
@@ -1438,12 +1354,6 @@ Balance Due: $${balance.toFixed(2)}`;
         })
         .filter(x => x.player);
 
-      if (items.length === 0) {
-        html += `<div class="muted">(No data yet)</div>`;
-        box.innerHTML = html;
-        return;
-      }
-
       const hasRanks = items.some(x => Number.isFinite(x.rank));
       if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
 
@@ -1451,23 +1361,18 @@ Balance Due: $${balance.toFixed(2)}`;
       if (startRank < 1) startRank = 1;
       if (startRank > 16) startRank = 16;
 
-      html += ``;
+      html += `<div>`;
       items.forEach((it, i) => {
         const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
         html += `
-          <div class="statsRow">
-            <div class="rankBadge">${escapeHtml(r)}</div>
-            <div class="statsName">${escapeHtml(it.player)}</div>
-            <div class="statsBadges"></div>
+          <div class="statsRow simpleRow">
+            <div class="statsName">${escapeHtml(r)}. ${escapeHtml(it.player)}</div>
           </div>
         `;
       });
+      html += `</div>`;
 
       box.innerHTML = html;
-
-      requestAnimationFrame(() => {
-        syncOverallNameColumnWidth_();
-      });
     }
 
     async function renderH2H_(box){
@@ -1494,16 +1399,15 @@ Balance Due: $${balance.toFixed(2)}`;
           const res = await getData_("h2h", "playerGetH2H", { player });
           const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
           if (!rows.length){
-            out.innerHTML = `<div class="muted">(No H2H data yet. Compile H2H in Admin first.)</div>`;
+            out.innerHTML = `<div class="muted">(No H2H data yet)</div>`;
             return;
           }
           let html = ``;
           rows.forEach(r => {
             const rec = r.record || ((r.wins!=null && r.losses!=null) ? `(${r.wins}-${r.losses})` : "");
             html += `
-              <div class="statsRow">
-                <div class="rankBadge">vs</div>
-                <div class="statsName">${escapeHtml(r.opponent || "")}</div>
+              <div class="statsRow simpleRow">
+                <div class="statsName">vs ${escapeHtml(r.opponent || "")}</div>
                 <div class="statsBadges">
                   <span class="miniPill">${escapeHtml(rec || "")}</span>
                 </div>
@@ -1598,11 +1502,11 @@ Balance Due: $${balance.toFixed(2)}`;
             out.innerHTML = `<div class="muted">(No driver usage data yet)</div>`;
             return;
           }
+
           let html = ``;
           rows.forEach(r => {
             html += `
-              <div class="statsRow">
-                <div class="rankBadge">🏎️</div>
+              <div class="statsRow simpleRow">
                 <div class="statsName">${escapeHtml(r.driver || "")}</div>
                 <div class="statsBadges">
                   <span class="miniPill"><span class="k">Times:</span> ${escapeHtml(r.count ?? "")}</span>
@@ -1643,20 +1547,6 @@ Balance Due: $${balance.toFixed(2)}`;
 
         const rounds = data.rounds || [];
         let html = `<div class="bracketGrid">`;
-
-        const sticky = document.getElementById("bracketSticky");
-        if (sticky) {
-          sticky.innerHTML = rounds.map((r, idx) => {
-            const label = r.isCurrent ? "CURRENT" : `ROUND ${r.round}`;
-            const race = r.raceLabel || "";
-            return `
-              <div class="chip" data-idx="${idx}">
-                <span>${escapeHtml(label)}</span>
-                <span class="small">${escapeHtml(race)}</span>
-              </div>
-            `;
-          }).join("");
-        }
 
         rounds.forEach(r => {
           const tag = r.isCurrent
@@ -1709,34 +1599,13 @@ Balance Due: $${balance.toFixed(2)}`;
 
         html += `</div>`;
         area.innerHTML = html;
-
-        const grid = area.querySelector(".bracketGrid");
-        if (grid && sticky) {
-          sticky.querySelectorAll(".chip").forEach(chip => {
-            chip.onclick = () => {
-              const idx = Number(chip.getAttribute("data-idx") || "0");
-              const col = grid.children[idx];
-              if (col) col.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-            };
-          });
-        }
       }catch(e){
         sub.textContent = "Bracket failed to load.";
         area.innerHTML = "Error: " + (e && e.message ? e.message : e);
       }
     }
 
-    window.onload = () => { loadPlayersThenInit(); };
-
-    // keep name column aligned on resize (desktop)
-    window.addEventListener("resize", () => {
-      if(_statsMode === "overall") syncOverallNameColumnWidth_();
-    });
-
-  </script>
-
-  <script>
-    // Subtle parallax watermark drift (single version, not 2 competing ones)
+    // Watermark parallax
     (function(){
       let ticking=false;
       function onScroll(){
@@ -1752,6 +1621,8 @@ Balance Due: $${balance.toFixed(2)}`;
       window.addEventListener('resize', onScroll);
       onScroll();
     })();
+
+    window.onload = () => { loadPlayersThenInit(); };
   </script>
 </body>
 </html>
