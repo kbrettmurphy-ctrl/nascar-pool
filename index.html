@@ -261,6 +261,18 @@
       border: 1px solid vrgba(255,214,89,.14);
       color: var(--yellow);
       line-height:1;
+     }
+    .raceTag{
+      display:inline-block;
+      font-weight:800;
+      font-size:10px;
+      letter-spacing:.5px;
+      padding:3px 7px;
+      border-radius:999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid vrgba(255,214,89,.14);
+      color: var(--muted);
+      line-height:1;
     }
     .title{ display:flex; align-items:center; gap:6px; min-width:0; }
     .race{
@@ -1792,7 +1804,7 @@
             <div class="bracketCol ${isFuture ? "isFuture" : ""}">
               <div class="bracketHdr">
                 <div class="title">${tag}</div>
-                <div class="race">${escapeHtml(r.raceLabel || "")}</div>
+                <div class="raceTag">${escapeHtml(r.raceLabel || "")}</div>
               </div>
           `;
 
