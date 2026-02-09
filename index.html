@@ -1157,10 +1157,10 @@
       const next = Math.ceil(max + 6);
 
       // Stop iOS “creep”: only update if it actually changed meaningfully
-      const prev = parseFloat(panel.style.getPropertyValue("--nameW")) || 0;
+      const prev = parseFloat(panel.style.getPropertyValue("--overallNameW")) || 0;
       if (Math.abs(next - prev) < 1) return;
 
-      panel.style.setProperty("--nameW", next + "px");
+      panel.style.setProperty("--overallNameW", next + "px");
     }
 
 
