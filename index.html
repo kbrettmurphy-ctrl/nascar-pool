@@ -468,16 +468,6 @@
       /* opacity:.75; */
       letter-spacing: .5px;
     }
-    /* .elimBox{ */
-      /* border:1px dashed #cbd5e1; */
-      /* background: repeating-linear-gradient( */
-        /* 45deg, */
-        /* #f8fafc, */
-        /* #f8fafc 10px, */
-        /* #f1f5f9 10px, */
-        /* #f1f5f9 20px */
-      /* ); */
-    /* } */
     .elimTitle{
       font-weight:900;
       font-size:14px;
@@ -513,19 +503,6 @@
       border-top: 1px solid rgba(255,255,255,.10);
       z-index: 9999;
     }
-    /*.bottomNav{*/
-      /*position: fixed;*/
-      /*left: 0;*/
-      /*right: 0;*/
-
-      /* ✅ key fix: sit above iOS bottom toolbar gap */
-      /*bottom: var(--vvb); */
-
-      /*padding-bottom: env(safe-area-inset-bottom);*/
-      /*background: rgba(0,0,0,.92); /*linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%); */
-      /*border-top: 1px solid rgba(255,255,255,0.08);*/
-      /*z-index: 9999;*/
-    /*}*/
     .navInner{
       max-width: 920px;
       margin:0 auto;
@@ -541,7 +518,7 @@
       content:"";
       flex: 1 0 auto;
     }
-     .navBtn{
+    .navBtn{
       flex:0 0 auto;
       min-width: 98px;
       background: rgba(255,255,255,.06);
@@ -559,8 +536,6 @@
       text-align:center;
       white-space:nowrap;
     }
-    
-    /*.navBtn .ico{ font-size: 16px; line-height: 1; }*/
     .navBtn.active{
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
@@ -591,7 +566,7 @@
       .navBtn .ico{ font-size: 16px; }
       .card{ padding: 14px; }
       }
-  
+
     /* Watermark background */
     :root{
       --wmOpacity: 0.42;   /* 10% */
@@ -617,258 +592,177 @@
       position: relative;
       z-index: 1;
     }
-    /* Let the watermark show through cards */
     .card{
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
-    /* @media (prefers-color-scheme: dark){ */
-      /* :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); } */
-    /* } */
-
-    /* option { */
-      /* color: var(--text); /* Sets the text color to black */ */
-      /* background: var(--black); /* Ensures the background of each option is white on desktop */ */
-    /* } */
-
-
 
     /* ---- Stats (UI, not spreadsheet) ---- */
 
-/* Make the mode buttons a horizontal row (tabs) with scroll if needed */
-.statsModes{
-  display:flex;
-  flex-wrap: nowrap;            /* force horizontal */
-  gap:8px;
-  margin-top:8px;
-  overflow-x:auto;              /* if it doesn't fit, scroll */
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-}
-.statsModes::-webkit-scrollbar{ height:6px; }
-.statsModes::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.14);
-  border-radius: 999px;
-}
+    /* Make the mode buttons a horizontal row (tabs) with scroll if needed */
+    .statsModes{
+      display:flex;
+      flex-wrap: nowrap;            /* force horizontal */
+      gap:8px;
+      margin-top:8px;
+      overflow-x:auto;              /* if it doesn't fit, scroll */
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .statsModes::-webkit-scrollbar{ height:6px; }
+    .statsModes::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.14);
+      border-radius: 999px;
+    }
 
-/* Keep buttons compact and prevent them from stretching */
-.statsModes button.secondary{
-  flex: 0 0 auto;               /* prevent stretching/wrapping */
-  width:auto;
-  padding:8px 12px;             /* slightly tighter */
-  border-radius:12px;
-  background: rgba(0,122,194,.22);
-}
-.statsModes button.secondary.active{
-  background: rgba(0,122,194,.42);
-  border: 1px solid rgba(0,122,194,.55);
-}
+    /* Keep buttons compact and prevent them from stretching */
+    .statsModes button.secondary{
+      flex: 0 0 auto;               /* prevent stretching/wrapping */
+      width:auto;
+      padding:8px 12px;             /* slightly tighter */
+      border-radius:12px;
+      background: rgba(0,122,194,.22);
+    }
+    .statsModes button.secondary.active{
+      background: rgba(0,122,194,.42);
+      border: 1px solid rgba(0,122,194,.55);
+    }
 
-/* Tighten the panel spacing */
-.statsPanel{ margin-top: 6px; }
+    /* Tighten the panel spacing */
+    .statsPanel{ margin-top: 6px; }
 
-/* Tighten rows */
-.statsRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 10px;              /* tighter */
-  border-radius: 14px;
-  border:1px solid var(--line);
-  background: rgba(0,122,194,.10);
-  margin-top:6px;                /* tighter */
-}
+    /* Tighten rows */
+    .statsRow{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding:8px 10px;              /* tighter */
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,122,194,.10);
+      margin-top:6px;                /* tighter */
+    }
 
-/* Name + badges */
-.statsLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
-.rankBadge{
-  flex:0 0 auto;
-  min-width: 32px;
-  height: 24px;
-  border-radius: 999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:400;
-  font-variant-numeric: tabular-nums;
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.12);
-  font-size: 14px;
-}
-.statsName{
-  font-weight:400;
-  color: var(--text);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  font-size: 14px;
-}
-.statsBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-.miniPill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:4px 8px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  font-size:11px;
-  font-weight:900;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-.miniPill .k{ color: var(--muted); font-weight:800; }
+    /* Name + badges */
+    .statsLeft{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .rankBadge{
+      flex:0 0 auto;
+      min-width: 32px;
+      height: 24px;
+      border-radius: 999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:400;
+      font-variant-numeric: tabular-nums;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      font-size: 14px;
+    }
+    .statsName{
+      font-weight:400;
+      color: var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      font-size: 14px;
+    }
 
-/* Controls row (label + select) tighter */
-.statsControls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  margin-top: 8px;               /* tighter */
-}
-.statsControls label{ margin:0; }
-.statsControls select{
-  width:auto;
-  min-width: 220px;
-  padding: 10px 12px;            /* tighter */
-}
-
-/* Wins tiles tighter */
-.tiles{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:10px;
-  margin-top: 8px;               /* tighter */
-}
-.tile{
-  border:1px solid var(--line);
-  border-radius: 14px;
-  padding: 10px;                 /* tighter */
-  background: rgba(0,122,194,.10);
-}
-.tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
-.tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
-
-/* Mobile: 2 tiles wide and full-width selects */
-@media (max-width: 520px){
-  .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .statsControls select{ width:100%; }
-  .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
-}
-/* Tighten Stats spacing */
-.statsPanel{ margin-top:8px; }
-
-.statsPanel .big{ margin: 6px 0 4px; }
-.statsPanel .muted{ margin: 0 0 8px; }
-
-.statsControls{ margin-top:8px; gap:8px; }
-.statsControls select{ min-width: 200px; }
-
-.statsRow{ padding:8px 10px; margin-top:6px; }
-
-.tiles{ gap:8px; margin-top:8px; }
-.tile{ padding:10px; }
-.tile .tVal{ font-size:20px; margin-top:2px; }
-
-/* --- HARD FIX: Stats mode bar must stay one row + horizontal scroll (iOS-safe) --- */
-#statsModes.statsModes{
-  display: grid !important;
-  grid-auto-flow: column !important;        /* force one row */
-  grid-auto-columns: max-content !important;/* each button sized to content */
-  gap: 8px !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  padding: 6px 0 4px !important;
-  max-width: 100% !important;
-}
-
-/* buttons: never wrap internally, never stretch */
-#statsModes.statsModes > button{
-  white-space: nowrap !important;
-  width: auto !important;
-  flex: 0 0 auto !important;
-}
-
-/* optional: nicer scrollbar on iOS */
-#statsModes.statsModes::-webkit-scrollbar{ height: 6px; }
-#statsModes.statsModes::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.14);
-  border-radius: 999px;
-}
-/* --- One-row stats with scrollable pills (mobile-safe) --- */
-
-.statsRow{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Name gets priority and can shrink nicely */
-.statsLeft{
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.statsName{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Pills stay on one line and scroll instead of crushing names */
-.statsBadges{
-  flex: 0 0 auto;
-  display: flex;
-  gap: 6px;
-  flex-wrap: nowrap;
-
-  max-width: 55%;
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-/* Optional: subtle scrollbar styling */
-.statsBadges::-webkit-scrollbar{
-  height: 4px;
-}
-.statsBadges::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.18);
-  border-radius: 999px;
-}
-
-/* Stat pills: single row, horizontal scroll, no stacking */
-.statsBadges{
-  display: flex;
-  flex-wrap: nowrap;          /* ⛔ no stacking */
-  gap: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap;
-}
-
-/* Pills themselves must not shrink */
-.statsBadges .miniPill{
-  flex: 0 0 auto;
-}
+    /* Pills row */
     .statsBadges{
-      justify-content: flex-start !important;
-      flex-wrap: nowrap !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
+      flex: 1 1 auto;
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      min-width:0;
     }
-    .statsBadges .miniPill{ flex: 0 0 auto; white-space: nowrap; }
-     .statsBadges{
-      justify-content: flex-start !important;  /* start on the left */
+    .miniPill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      font-size:11px;
+      font-weight:900;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
-   
-</style>
+    .miniPill .k{ color: var(--muted); font-weight:800; }
+
+    /* --- Overall-only layout: fixed name column = widest name --- */
+    .statsRow.overallRow{
+      display: grid;
+      grid-template-columns: auto var(--overallNameW, max-content) 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Keep full names visible and aligned */
+    .statsRow.overallRow .statsName{
+      width: var(--overallNameW, max-content);
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    /* Pills start immediately after the name column and scroll if needed */
+    .statsRow.overallRow .statsBadges{
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+    .statsRow.overallRow .statsBadges .miniPill{ flex: 0 0 auto; }
+
+    /* Controls row (label + select) tighter */
+    .statsControls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      margin-top: 8px;               /* tighter */
+    }
+    .statsControls label{ margin:0; }
+    .statsControls select{
+      width:auto;
+      min-width: 220px;
+      padding: 10px 12px;            /* tighter */
+    }
+
+    /* Wins tiles tighter */
+    .tiles{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+      margin-top: 8px;               /* tighter */
+    }
+    .tile{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;                 /* tighter */
+      background: rgba(0,122,194,.10);
+    }
+    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
+    .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
+
+    /* Mobile: 2 tiles wide and full-width selects */
+    @media (max-width: 520px){
+      .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .statsControls select{ width:100%; }
+      .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
+    }
+  </style>
 </head>
 
 <body>
@@ -1039,53 +933,53 @@
     const ADMIN_KEY = ""; // leave blank on the public site
 
     async function apiCall(action, params = {}, isAdmin = false){
-  // Live GAS fallback (used only if snapshots are missing)
-  const apiBase = API_BASE;
-  const adminKey = ADMIN_KEY;
-  if(!apiBase) throw new Error("Missing API Base URL.");
-  if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+      // Live GAS fallback (used only if snapshots are missing)
+      const apiBase = API_BASE;
+      const adminKey = ADMIN_KEY;
+      if(!apiBase) throw new Error("Missing API Base URL.");
+      if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
 
-  const q = new URLSearchParams();
-  q.set("action", action);
-  if(isAdmin) q.set("key", adminKey);
+      const q = new URLSearchParams();
+      q.set("action", action);
+      if(isAdmin) q.set("key", adminKey);
 
-  Object.keys(params || {}).forEach(k => {
-    const v = params[k];
-    if(v !== undefined && v !== null) q.set(k, v);
-  });
+      Object.keys(params || {}).forEach(k => {
+        const v = params[k];
+        if(v !== undefined && v !== null) q.set(k, v);
+      });
 
-  const url = apiBase + "?" + q.toString();
-  return fetch(url, { cache: "no-store" }).then(r => r.json());
-}
+      const url = apiBase + "?" + q.toString();
+      return fetch(url, { cache: "no-store" }).then(r => r.json());
+    }
 
-// ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
-const SNAP_MAP = {
-  context:   "./data/context.json",
-  players:   "./data/players.json",
-  matchups:  "./data/matchups.json",
-  bracket:   "./data/bracket.json",
-  standings: "./data/standings.json",
-  dues:      "./data/dues.json",
-  my:        "./data/myMatchups.json",
-  h2h:       "./data/h2h.json",
-  wins:      "./data/wins.json",
-  drivers:   "./data/driverUsage.json",
-};
+    // ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
+    const SNAP_MAP = {
+      context:   "./data/context.json",
+      players:   "./data/players.json",
+      matchups:  "./data/matchups.json",
+      bracket:   "./data/bracket.json",
+      standings: "./data/standings.json",
+      dues:      "./data/dues.json",
+      my:        "./data/myMatchups.json",
+      h2h:       "./data/h2h.json",
+      wins:      "./data/wins.json",
+      drivers:   "./data/driverUsage.json",
+    };
 
-async function fetchSnapshotJson(key, bustCache=false){
-  const base = SNAP_MAP[key];
-  if(!base) throw new Error("Unknown snapshot key: " + key);
+    async function fetchSnapshotJson(key, bustCache=false){
+      const base = SNAP_MAP[key];
+      if(!base) throw new Error("Unknown snapshot key: " + key);
 
-  const url = bustCache
-    ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
-    : base;
+      const url = bustCache
+        ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
+        : base;
 
-  const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
-  if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
-  return await res.json();
-}
+      const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
+      if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+      return await res.json();
+    }
 
-/**********************
+    /**********************
      * UI helpers
      **********************/
     function setActiveNav(which){
@@ -1207,6 +1101,28 @@ async function fetchSnapshotJson(key, bustCache=false){
         .replace(/'/g,"&#039;");
     }
 
+    // --- Overall-only: set name column to width of the widest rendered name ---
+    function syncOverallNameColumnWidth_(){
+      const panel = document.getElementById("statsPanel");
+      if(!panel) return;
+
+      // Only when Overall is rendered
+      const names = panel.querySelectorAll(".statsRow.overallRow .statsName");
+      if(!names.length) return;
+
+      let max = 0;
+      names.forEach(el => {
+        const prev = el.style.whiteSpace;
+        el.style.whiteSpace = "nowrap";
+        max = Math.max(max, el.scrollWidth || 0);
+        el.style.whiteSpace = prev;
+      });
+
+      // tiny breathing room
+      max = Math.ceil(max + 6);
+      panel.style.setProperty("--overallNameW", max + "px");
+    }
+
     function populatePlayerDropdowns(playerList) {
       const mm = document.getElementById("mmName");
       const dd = document.getElementById("duesName");
@@ -1294,7 +1210,6 @@ async function fetchSnapshotJson(key, bustCache=false){
 
         sub.textContent =
           `Tournament ${tour}` +
-          // (race ? ` · ${race}` : "") +
           (roundText ? ` · ${roundText}` : "");
 
         area.innerHTML = "";
@@ -1394,7 +1309,6 @@ async function fetchSnapshotJson(key, bustCache=false){
           return;
         }
 
-
         const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
         const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
 
@@ -1421,52 +1335,52 @@ async function fetchSnapshotJson(key, bustCache=false){
     }
 
     async function loadDues() {
-  const sel = document.getElementById("duesName");
-  const out = document.getElementById("duesStatus");
+      const sel = document.getElementById("duesName");
+      const out = document.getElementById("duesStatus");
 
-  const name = sel ? String(sel.value || "").trim() : "";
-  if (!name) { out.textContent = "Pick your name first."; return; }
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) { out.textContent = "Pick your name first."; return; }
 
-  savePlayerName(name);
-  out.textContent = "Loading…";
+      savePlayerName(name);
+      out.textContent = "Loading…";
 
-  try {
-    const all = await getData_("dues", "playerGetDues", { name });
+      try {
+        const all = await getData_("dues", "playerGetDues", { name });
 
-    let data = null;
+        let data = null;
 
-    if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
-      data = all;
-    } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
-      data = all[name];
-    } else if (Array.isArray(all)) {
-      data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-    } else if (all && Array.isArray(all.dues)) {
-      data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-    }
+        if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
+          data = all;
+        } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+          data = all[name];
+        } else if (Array.isArray(all)) {
+          data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        } else if (all && Array.isArray(all.dues)) {
+          data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+        }
 
-    if (!data) throw new Error("No dues record found for " + name);
+        if (!data) throw new Error("No dues record found for " + name);
 
-    const paid = Number(data.paid || 0);
-    const balance = Number(data.balance || 0);
-    const winnings = 180 - balance;
+        const paid = Number(data.paid || 0);
+        const balance = Number(data.balance || 0);
+        const winnings = 180 - balance;
 
-    out.textContent =
+        out.textContent =
 `${data.name || name}
 Paid: $${paid.toFixed(2)}
 Winnings: $${winnings.toFixed(2)}
 Balance Due: $${balance.toFixed(2)}`;
 
-    // OPTIONAL: color just the Balance Due line AFTER render
-    out.innerHTML = out.innerHTML.replace(
-      /Balance Due: \$[0-9\.\-]+/,
-      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
-    );
+        // OPTIONAL: color just the Balance Due line AFTER render
+        out.innerHTML = out.innerHTML.replace(
+          /Balance Due: \$[0-9\.\-]+/,
+          match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
+        );
 
-  } catch (e) {
-    out.textContent = "Error: " + (e && e.message ? e.message : e);
-  }
-}
+      } catch (e) {
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
+      }
+    }
 
     // ---------- Stats / Standings (mode switcher) ----------
     let _cache_standings = null;
@@ -1549,17 +1463,17 @@ Balance Due: $${balance.toFixed(2)}`;
         }).filter(Boolean).join("");
 
         html += `
-          <div class="statsRow">
-            <div class="statsLeft">
-              <div class="rankBadge">${escapeHtml(rank || "—")}</div>
-              <div class="statsName">${escapeHtml(name)}</div>
-            </div>
+          <div class="statsRow overallRow">
+            <div class="rankBadge">${escapeHtml(rank || "—")}</div>
+            <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
         `;
       });
 
       box.innerHTML = html;
+      requestAnimationFrame(syncOverallNameColumnWidth_);
+      resetStatPillScrollSoon(box);
     }
 
     // ---- Tournament ranks (dropdown, one at a time) ----
@@ -1590,7 +1504,6 @@ Balance Due: $${balance.toFixed(2)}`;
       render();
     }
 
-    // Re-used, but now it renders rank rows (not spreadsheet list)
     function showTournamentRanks(label) {
       const box = document.getElementById("tourneyRanksBox");
       const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
@@ -1624,7 +1537,6 @@ Balance Due: $${balance.toFixed(2)}`;
       const hasRanks = items.some(x => Number.isFinite(x.rank));
       if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
 
-      // If ranks are missing, keep your old behavior (ranks end at 16)
       let startRank = 17 - items.length;
       if (startRank < 1) startRank = 1;
       if (startRank > 16) startRank = 16;
@@ -1649,7 +1561,6 @@ Balance Due: $${balance.toFixed(2)}`;
       box.innerHTML = html;
     }
 
-    // ---- H2H (Option A: pick player, list opponents) ----
     async function renderH2H_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1662,7 +1573,6 @@ Balance Due: $${balance.toFixed(2)}`;
       `;
       resetStatPillScrollSoon(box);
 
-      // use cached player list if possible
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("h2hPick");
       sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
@@ -1674,7 +1584,6 @@ Balance Due: $${balance.toFixed(2)}`;
         try{
           const player = String(sel.value || "").trim();
           const res = await getData_("h2h", "playerGetH2H", { player });
-          // snapshot may be keyed by player; live may return { player, rows: [...] }
           const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
           if (!rows.length){
             out.innerHTML = `<div class="muted">(No H2H data yet. If this is new season, compile H2H in Admin first.)</div>`;
@@ -1704,7 +1613,6 @@ Balance Due: $${balance.toFixed(2)}`;
       load();
     }
 
-    // ---- Wins tiles (Main H:J for selected player; default = you) ----
     async function renderWins_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1756,7 +1664,6 @@ Balance Due: $${balance.toFixed(2)}`;
       load();
     }
 
-    // ---- Driver usage (Option C: pick player, list drivers sorted by count) ----
     async function renderDrivers_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1785,7 +1692,6 @@ Balance Due: $${balance.toFixed(2)}`;
             out.innerHTML = `<div class="muted">(No driver usage data yet)</div>`;
             return;
           }
-          // rows expected: [{driver, count}]
           let html = ``;
           rows.forEach(r => {
             html += `
@@ -1807,12 +1713,6 @@ Balance Due: $${balance.toFixed(2)}`;
       sel.onchange = load;
       load();
     }
-
-
-
-
-
-    
 
     async function loadBracket(){
       const sub = document.getElementById("bracketSub");
@@ -1857,7 +1757,6 @@ Balance Due: $${balance.toFixed(2)}`;
           const tag = r.isCurrent
             ? `<span class="roundTag">CURRENT</span>`
             : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
-
 
           const isFuture = !r.isCurrent && (r.round > data.currentRound);
 
@@ -1926,61 +1825,58 @@ Balance Due: $${balance.toFixed(2)}`;
       try{
         return await fetchSnapshotJson(snapKey, false);
       }catch(e){
-        // Snapshot not available yet; fall back to live GAS (slower)
         const resp = await apiCall(action, params || {}, false);
         if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
         return resp.data;
       }
     }
-    window.onload = () => { loadPlayersThenInit(); };
 
     function resetStatPillScroll(scope){
       const root = scope || document;
       root.querySelectorAll('.statsBadges').forEach(el => {
-        // iOS needs a firm hand
         el.scrollLeft = 0;
         el.scrollTo(0, 0);
       });
     }
 
-function resetStatPillScrollSoon(scope){
-  // double rAF = after layout + after paint (fixes iOS starting scrolled right)
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => resetStatPillScroll(scope));
-  });
-}
+    function resetStatPillScrollSoon(scope){
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resetStatPillScroll(scope));
+      });
+    }
 
+    window.addEventListener("resize", () => { if(_statsMode === "overall") syncOverallNameColumnWidth_(); });
 
+    window.onload = () => { loadPlayersThenInit(); };
   </script>
 
-<script>
-  // Subtle parallax watermark drift
-  (function(){
-    function update(){
-      var y = (window.scrollY || 0) * 0.05; // tweak factor if you want
-      document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px');
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
-</script>
+  <script>
+    (function(){
+      function update(){
+        var y = (window.scrollY || 0) * 0.05;
+        document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px');
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
 
-<script>
-(function(){
-  let ticking=false;
-  function onScroll(){
-    if(ticking) return;
-    ticking=true;
-    requestAnimationFrame(()=>{
-      const y=window.scrollY||0;
-      document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
-      ticking=false;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-})();
-</script>
+  <script>
+    (function(){
+      let ticking=false;
+      function onScroll(){
+        if(ticking) return;
+        ticking=true;
+        requestAnimationFrame(()=>{
+          const y=window.scrollY||0;
+          document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
+          ticking=false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
