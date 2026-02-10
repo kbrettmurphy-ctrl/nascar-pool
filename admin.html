@@ -68,8 +68,23 @@
       font-weight: 900;
       font-size: 14px;
     }
-    .pill smallstop{font-size: 10; background: rgba(228, 0, 43, .2); font-weight:800;color:rgba(255,255,255,.88)}
-    .pill smallgo{font-size:10; background: rgba(77, 210, 29, .2); font-weight:800;color:rgba(255,255,255,.88)}
+    .pill.smallgo,
+    .pill.smallstop{
+      width: 64px;                 /* fixed, identical width */
+      justify-content: center;     /* center text inside */
+      font-size: 10px;
+      font-weight: 800;
+      color: rgba(255,255,255,.88);
+    }
+
+    .pill.smallgo{
+      background: rgba(77, 210, 29, .2);
+    }
+
+    .pill.smallstop{
+      background: rgba(228, 0, 43, .2);
+    }
+
 
     .grid{
       display:grid;
