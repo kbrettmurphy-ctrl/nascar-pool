@@ -597,7 +597,7 @@
       background-repeat: no-repeat;
       background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
-      opacity: var(--wmOpacity); !important; /* <- forces your value to win */
+      opacity: var(--wmOpacity) !important; /* <- forces your value to win */
       pointer-events: none;
       z-index: 0;
     }
@@ -766,7 +766,7 @@
       padding: 10px;                 /* tighter */
       background: rgba(0,122,194,.10);
     }
-    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; align-items:center; }
+    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
     .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
 
     /* Mobile: 2 tiles wide and full-width selects */
@@ -1925,17 +1925,17 @@
     window.onload = () => { loadPlayersThenInit(); };
   </script>
 
-  <script>
-    (function(){
-      function update(){
-        var y = (window.scrollY || 0) * 0.05;
-        document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px');
-      }
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
-      update();
-    })();
-  </script>
+  <!-- <script> -->
+    <!-- (function(){ -->
+      <!-- function update(){ -->
+        <!-- var y = (window.scrollY || 0) * 0.05; -->
+        <!-- document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px'); -->
+      <!-- } -->
+      <!-- window.addEventListener('scroll', update, { passive: true }); -->
+      <!-- window.addEventListener('resize', update); -->
+      <!-- update(); -->
+    <!-- })(); -->
+  <!-- </script> -->
 
   <script>
     (function(){
