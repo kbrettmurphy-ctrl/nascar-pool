@@ -582,7 +582,7 @@
 
     /* Watermark background */
     :root{
-      --wmOpacity: 0.75;   /* 10% */
+      --wmOpacity: 0.12;   /* try 0.08-0.18 */
       --wmShift: 0px;      /* parallax shift */
     }
     body{
@@ -593,11 +593,11 @@
       content:"";
       position: fixed;
       inset: 0;
-      background-image: url("nascar-logo1.png");
+      background-image: url("nascar-logo.png");
       background-repeat: no-repeat;
       background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
-      opacity: var(--wmOpacity);
+      opacity: var(--wmOpacity); !important; /* <- forces your value to win */
       pointer-events: none;
       z-index: 0;
     }
