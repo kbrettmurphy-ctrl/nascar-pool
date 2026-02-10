@@ -296,7 +296,31 @@
 
         <div id="ranksMsg" class="msg hide"></div>
         <div class="spacer"></div> <!--added to move to this page -->
-        <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button> <!--added to move to this page -->
+        <button class="btn secondary" onclick="showH2HPicker()">🤝 Compile H2H Records</button> <!--added to move to this page -->
+        <button class="primary" onclick="showH2HPicker()">Compile H2H Records</button>
+
+        <div id="h2hPicker" style="display:none; margin-top:8px;">
+          <div class="muted" style="margin-bottom:6px;">Compile scope</div>
+
+          <select id="h2hScope" style="width:100%; margin-bottom:8px;">
+            <option value="ALL">ALL tournaments (1–9)</option>
+            <option value="UPTO:1">Up to Tournament 1</option>
+            <option value="UPTO:2">Up to Tournament 2</option>
+            <option value="UPTO:3">Up to Tournament 3</option>
+            <option value="UPTO:4">Up to Tournament 4</option>
+            <option value="UPTO:5">Up to Tournament 5</option>
+            <option value="UPTO:6">Up to Tournament 6</option>
+            <option value="UPTO:7">Up to Tournament 7</option>
+            <option value="UPTO:8">Up to Tournament 8</option>
+            <option value="UPTO:9">Up to Tournament 9</option>
+          </select>
+
+          <div style="display:flex; gap:8px;">
+            <button class="secondary" onclick="compileH2HFromPicker()">Go</button>
+            <button class="secondary" onclick="hideH2HPicker()">Cancel</button>
+          </div>
+        </div>
+
         <div class="spacer"></div> <!--added to move to this page -->
         <div id="pubMsg" class="msg hide"></div>
       </div>
@@ -337,8 +361,8 @@
           After you assign numbers, import finishes, or update stats… hit this once.
         </div>
 
-        <div class="spacer"></div>
-        <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button>
+        <!-- <div class="spacer"></div> -->
+        <!-- <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button> -->
         <div class="spacer"></div>
         <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
 
@@ -740,32 +764,39 @@
   }
 
   
-  async function compileH2H(){
+  function showH2HPicker(){
+    const box = document.getElementById("h2hPicker");
+    if (box) box.style.display = "block";
+  }
+
+  function hideH2HPicker(){
+    const box = document.getElementById("h2hPicker");
+    if (box) box.style.display = "none";
+  }
+
+  async function compileH2HFromPicker(){
     const msg = document.getElementById("pubMsg");
     hideMsg(msg);
 
-    const raw = prompt("Compile H2H for ALL tournaments, or enter a tournament number 1-9:", "ALL");
-    if(raw == null) return;
-    const pick = String(raw || "").trim().toUpperCase();
-    if(pick !== "ALL"){
-      const n = parseInt(pick, 10);
-      if(!Number.isInteger(n) || n < 1 || n > 9){
-        showMsg(msg, "Enter ALL or a tournament number 1-9.", true);
-        return;
-      }
-    }
+    const sel = document.getElementById("h2hScope");
+    const pick = sel ? String(sel.value || "ALL").trim().toUpperCase() : "ALL";
 
     try{
       showMsg(msg, "Compiling H2H…", false);
+
+      // Single endpoint call, backend loops as needed (ALL or UPTO:N)
       const r = await apiCall("adminCompileHeadToHead", { scope: pick }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
+
       showMsg(msg, r.data?.message || "H2H compiled ✅", false);
+      hideH2HPicker();
     }catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
-async function publishSnapshot(){
+
+  async function publishSnapshot(){
     const msg = document.getElementById("pubMsg");
     hideMsg(msg);
 
