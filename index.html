@@ -582,7 +582,6 @@
 
     /* Watermark background */
     :root{
-      --wmOpacity: 0.12;   /* try 0.08-0.18 */
       --wmShift: 0px;      /* parallax shift */
     }
     body{
@@ -825,7 +824,7 @@
     <div class="big">Dues</div>
     <div class="muted">Pick your name.</div>
 
-    <label>Your name</label>
+    <!-- <label>Your name</label> -->
     <select id="duesName"></select>
 
     <button class="primary" onclick="loadDues()">Show my dues</button>
@@ -1563,7 +1562,7 @@
           <select id="tourneyPick">${opts}</select>
         </div>
 
-        <div id="tourneyRanksBox" style="margin-top:10px;"></div>
+        // <div id="tourneyRanksBox" style="margin-top:10px;"></div>
       `;
 
       const sel = document.getElementById("tourneyPick");
