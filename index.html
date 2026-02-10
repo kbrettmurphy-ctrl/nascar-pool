@@ -1576,7 +1576,7 @@
       const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
       const listRaw = t[label] || [];
 
-      let html = `<div style="margin-top:6px;font-weight:900;font-size:16px;">${escapeHtml(label)}</div>`;
+      let html = ``;
 
       if (!Array.isArray(listRaw) || listRaw.length === 0) {
         html += `<div class="muted">(No data yet)</div>`;
