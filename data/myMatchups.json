@@ -4,383 +4,239 @@
     "race": "Daytona",
     "round": 1,
     "you": "Beau",
-    "opponent": "Nate M.",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      28,
-      15
-    ],
-    "oppNums": [
-      8,
-      31
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Bob": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Bob",
-    "opponent": "Nick",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      6,
-      11
-    ],
-    "oppNums": [
-      30,
-      17
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Brett": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Brett",
-    "opponent": "Pat",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      9,
-      23
-    ],
-    "oppNums": [
-      3,
-      25
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Chris": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Chris",
-    "opponent": "Rob",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      2,
-      32
-    ],
-    "oppNums": [
-      10,
-      18
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Don": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Don",
-    "opponent": "Russ",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      27,
-      16
-    ],
-    "oppNums": [
-      14,
-      21
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Jason": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Jason",
-    "opponent": "Stacy",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      5,
-      19
-    ],
-    "oppNums": [
-      20,
-      1
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Justin": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Justin",
-    "opponent": "Steven",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      22,
-      4
-    ],
-    "oppNums": [
-      29,
-      13
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Nate C.": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Nate C.",
-    "opponent": "Tyler",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      12,
-      7
-    ],
-    "oppNums": [
-      26,
-      24
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Nate M.": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Nate M.",
-    "opponent": "Beau",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      8,
-      31
-    ],
-    "oppNums": [
-      28,
-      15
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Nick": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Nick",
-    "opponent": "Bob",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      30,
-      17
-    ],
-    "oppNums": [
-      6,
-      11
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Pat": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Pat",
-    "opponent": "Brett",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      3,
-      25
-    ],
-    "oppNums": [
-      9,
-      23
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Rob": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Rob",
-    "opponent": "Chris",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      10,
-      18
-    ],
-    "oppNums": [
-      2,
-      32
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Russ": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Russ",
-    "opponent": "Don",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      14,
-      21
-    ],
-    "oppNums": [
-      27,
-      16
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Stacy": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Stacy",
-    "opponent": "Jason",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      20,
-      1
-    ],
-    "oppNums": [
-      5,
-      19
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Steven": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Steven",
-    "opponent": "Justin",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      29,
-      13
-    ],
-    "oppNums": [
-      22,
-      4
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Tyler": {
     "tournament": 1,
     "race": "Daytona",
     "round": 1,
     "you": "Tyler",
-    "opponent": "Nate C.",
     "youDrivers": [
       "",
       ""
     ],
-    "oppDrivers": [
+    "youNums": [
       "",
       ""
     ],
-    "youNums": [
-      26,
-      24
-    ],
-    "oppNums": [
-      12,
-      7
-    ],
-    "status": "active"
+    "status": "not_in_round"
   }
 }
