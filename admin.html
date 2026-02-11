@@ -390,6 +390,9 @@
           Required once in GAS Script Properties:<br/>
           <span class="mono">GITHUB_TOKEN</span>, <span class="mono">GITHUB_OWNER</span>, <span class="mono">GITHUB_REPO</span>, (optional) <span class="mono">GITHUB_BRANCH</span>
         </div>
+        <div class="spacer"></div>
+        <button class="btn danger" onclick="resetSeason()">🧨 Reset Season</button>
+        <div id="resetMsg" class="msg hide"></div>
       </div>
 
     </div>
@@ -826,6 +829,28 @@
       showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
+
+  async function resetSeason(){
+    const msg = document.getElementById("resetMsg");
+    hideMsg(msg);
+
+    // optional: basic safety latch so you don’t fat-finger it
+    const ok = confirm("Reset the season? This will clear tournament sheets + lineups/finishes + Main/Stats ranges.");
+    if(!ok) return;
+
+    try{
+      showMsg(msg, "Resetting season…", false);
+      const r = await apiCall("adminResetSeason", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Season reset ✅", false);
+
+      // refresh context after reset so pill/panels update
+      try{ await refreshContext(); }catch(e){}
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
 
   // ---------- Bootstrap ----------
   async function bootstrap(){
