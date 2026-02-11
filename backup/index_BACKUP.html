@@ -27,7 +27,7 @@
       --line:rgba(255,255,255,.12);   
 
       /* --nav:#0b1220;   <----- Old from white background*/
-      --nav:#000000       /*New to match admin portal with black background*/ 
+      --nav:#000000;       /*New to match admin portal with black background*/ 
       --nav2:#111827;
 
       /* -- NASCAR Color theme -- */
@@ -38,6 +38,7 @@
       --btnPrimary: var(--red);
       --btnSecondary: var(--blue);
       --danger: var(--red);
+      --green: #4DD21D; 
           
       /* Slight overall scale-down (not blurry, just smaller defaults) */
       --pad:12px;
@@ -59,7 +60,7 @@
 
       /* iOS bottom bar fix vars */
       --vvb: 0px;    /* visual viewport bottom gap */
-      --navH: 74px;  /* approximate bottom nav height */
+      --navH: 56px;  /* verified with devtools bottom nav height */
     }
 
     *{ box-sizing:border-box; }
@@ -90,9 +91,11 @@
     }
 
     .pill {
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
+      display: inline-flex; /* Changed from inline-block */
+      align-items: center;  /* Centers text vertically */
+      justify-content: center; /* Centers text horizontally */
+      padding: 6px 10px;
+      border-radius: 999px;
       background: rgba(255,214,89,.14);
       border:1px solid rgba(255,214,89,.40);
       color: var(--yellow);
@@ -126,7 +129,7 @@
     }
     button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
-    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var (--line); }
+    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var(--line); }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
@@ -144,7 +147,7 @@
     .muted { color: var(--muted); font-size: 13px; }
 
     .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
-    
+    #duesStatus { white-space: normal; }
     /* Stats lives inside #standingsArea.status, so undo pre-wrap there */
     #standingsArea{
       white-space: normal;
@@ -214,7 +217,7 @@
       letter-spacing: 0.4px;
     }
 
-    @media (max-width: 480px){
+    @media (max-width: 600px){
       .matchupRow{ grid-template-columns: 1fr; gap: 6px; text-align:center; }
       .side.right{ text-align:center; align-items:center; }
       .vsBadge{ margin: 2px auto; }
@@ -226,8 +229,11 @@
 
     /* ---- Bracket (your existing styles) ---- */
     .bracketGrid{
+      /* max-width: 700px; */
       display:grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 185px);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       gap: 6px;
       width: 100%;
     }
@@ -238,7 +244,7 @@
       background: var(--card);
       padding: 6px;
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filer: blue(6px);
+      -webkit-backdrop-filter: blue(6px);
     }
     .bracketHdr{
       display:flex;
@@ -255,8 +261,20 @@
       padding:3px 7px;
       border-radius:999px;
       background: rgba(255,214,89,.14);
-      border: 1px solid vrgba(255,214,89,.14);
+      border: 1px solid rgba(255,214,89,.14);
       color: var(--yellow);
+      line-height:1;
+     }
+    .raceTag{
+      display:inline-block;
+      font-weight:800;
+      font-size:10px;
+      letter-spacing:.5px;
+      padding:3px 7px;
+      border-radius:999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid vrgba(255,214,89,.14);
+      color: var(--muted);
       line-height:1;
     }
     .title{ display:flex; align-items:center; gap:6px; min-width:0; }
@@ -416,13 +434,8 @@
     }
 
     @media (max-width: 900px){
-      .bracketSticky{ display:flex; }
-      .bracketGrid{
-        grid-template-columns: repeat(4, 210px);
-        gap: 10px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 6px 10px 10px 10px;
+      /*.bracketSticky{ display:flex; }*/
+      .bracketGrid{ 
         scroll-snap-type: x proximity;
       }
       .bracketCol{ scroll-snap-align: start; }
@@ -468,16 +481,6 @@
       /* opacity:.75; */
       letter-spacing: .5px;
     }
-    /* .elimBox{ */
-      /* border:1px dashed #cbd5e1; */
-      /* background: repeating-linear-gradient( */
-        /* 45deg, */
-        /* #f8fafc, */
-        /* #f8fafc 10px, */
-        /* #f1f5f9 10px, */
-        /* #f1f5f9 20px */
-      /* ); */
-    /* } */
     .elimTitle{
       font-weight:900;
       font-size:14px;
@@ -513,24 +516,11 @@
       border-top: 1px solid rgba(255,255,255,.10);
       z-index: 9999;
     }
-    /*.bottomNav{*/
-      /*position: fixed;*/
-      /*left: 0;*/
-      /*right: 0;*/
-
-      /* ✅ key fix: sit above iOS bottom toolbar gap */
-      /*bottom: var(--vvb); */
-
-      /*padding-bottom: env(safe-area-inset-bottom);*/
-      /*background: rgba(0,0,0,.92); /*linear-gradient(180deg, var(--nav) 0%, var(--nav2) 100%); */
-      /*border-top: 1px solid rgba(255,255,255,0.08);*/
-      /*z-index: 9999;*/
-    /*}*/
     .navInner{
       max-width: 920px;
       margin:0 auto;
       display:flex;
-      gap:10px;
+      gap:8px;
       align-items:center;
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
@@ -541,32 +531,30 @@
       content:"";
       flex: 1 0 auto;
     }
-     .navBtn{
+    .navBtn{
       flex:0 0 auto;
       min-width: 98px;
       background: rgba(255,255,255,.06);
       color:#fff;
       border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 10px 10px;
+      border-radius: 18px;
+      padding: 6px 8px;
       font-weight: 900;
       font-size: 13px;
       cursor:pointer;
       display:flex;
-      gap:8px;
+      gap:6px;
       align-items:center;
       justify-content:center;
       text-align:center;
       white-space:nowrap;
     }
-    
-    /*.navBtn .ico{ font-size: 16px; line-height: 1; }*/
     .navBtn.active{
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
     }
 
-    @media (max-width: 520px){
+    /*@media (max-width: 520px){
       :root{
         --pad: 16px;
         --h2: 30px;
@@ -574,7 +562,7 @@
         --body: 17px;
         --radius: 18px;
         --radius2: 16px;
-      }
+      }*/
       button{
         font-size: 14px;
         padding: 8px 8px;
@@ -591,10 +579,9 @@
       .navBtn .ico{ font-size: 16px; }
       .card{ padding: 14px; }
       }
-  
+
     /* Watermark background */
     :root{
-      --wmOpacity: 0.42;   /* 10% */
       --wmShift: 0px;      /* parallax shift */
     }
     body{
@@ -609,7 +596,7 @@
       background-repeat: no-repeat;
       background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
-      opacity: var(--wmOpacity);
+      opacity: 0.2;
       pointer-events: none;
       z-index: 0;
     }
@@ -617,258 +604,177 @@
       position: relative;
       z-index: 1;
     }
-    /* Let the watermark show through cards */
     .card{
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
-    /* @media (prefers-color-scheme: dark){ */
-      /* :root{ --wmOpacity: 0.14; --cardBg: rgba(18,22,30,0.72); --microBg: rgba(18,22,30,0.68); } */
-    /* } */
-
-    /* option { */
-      /* color: var(--text); /* Sets the text color to black */ */
-      /* background: var(--black); /* Ensures the background of each option is white on desktop */ */
-    /* } */
-
-
 
     /* ---- Stats (UI, not spreadsheet) ---- */
 
-/* Make the mode buttons a horizontal row (tabs) with scroll if needed */
-.statsModes{
-  display:flex;
-  flex-wrap: nowrap;            /* force horizontal */
-  gap:8px;
-  margin-top:8px;
-  overflow-x:auto;              /* if it doesn't fit, scroll */
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
-}
-.statsModes::-webkit-scrollbar{ height:6px; }
-.statsModes::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.14);
-  border-radius: 999px;
-}
+    /* Make the mode buttons a horizontal row (tabs) with scroll if needed */
+    .statsModes{
+      display:flex;
+      flex-wrap: nowrap;            /* force horizontal */
+      gap:8px;
+      margin-top:8px;
+      overflow-x:auto;              /* if it doesn't fit, scroll */
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .statsModes::-webkit-scrollbar{ height:2px; }
+    .statsModes::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.14);
+      border-radius: 999px;
+    }
 
-/* Keep buttons compact and prevent them from stretching */
-.statsModes button.secondary{
-  flex: 0 0 auto;               /* prevent stretching/wrapping */
-  width:auto;
-  padding:8px 12px;             /* slightly tighter */
-  border-radius:12px;
-  background: rgba(0,122,194,.22);
-}
-.statsModes button.secondary.active{
-  background: rgba(0,122,194,.42);
-  border: 1px solid rgba(0,122,194,.55);
-}
+    /* Keep buttons compact and prevent them from stretching */
+    .statsModes button.secondary{
+      flex: 0 0 auto;               /* prevent stretching/wrapping */
+      width:auto;
+      padding:8px 12px;             /* slightly tighter */
+      border-radius:12px;
+      background: rgba(0,122,194,.22);
+    }
+    .statsModes button.secondary.active{
+      background: rgba(0,122,194,.42);
+      border: 1px solid rgba(0,122,194,.55);
+    }
 
-/* Tighten the panel spacing */
-.statsPanel{ margin-top: 6px; }
+    /* Tighten the panel spacing */
+    .statsPanel{ margin-top: 6px; }
 
-/* Tighten rows */
-.statsRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:8px 10px;              /* tighter */
-  border-radius: 14px;
-  border:1px solid var(--line);
-  background: rgba(0,122,194,.10);
-  margin-top:6px;                /* tighter */
-}
+    /* Tighten rows */
+    .statsRow{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding:6px 8px;              /* tighter */
+      border-radius: 18px;
+      border:1px solid var(--line);
+      background: rgba(0,122,194,.20);
+      margin-top:3px;                /* tighter */
+    }
 
-/* Name + badges */
-.statsLeft{ display:flex; align-items:center; gap:10px; min-width:0; }
-.rankBadge{
-  flex:0 0 auto;
-  min-width: 32px;
-  height: 24px;
-  border-radius: 999px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:400;
-  font-variant-numeric: tabular-nums;
-  background: rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.12);
-  font-size: 14px;
-}
-.statsName{
-  font-weight:400;
-  color: var(--text);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  font-size: 14px;
-}
-.statsBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
-.miniPill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:4px 8px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  font-size:11px;
-  font-weight:900;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-.miniPill .k{ color: var(--muted); font-weight:800; }
+    /* Name + badges */
+    .statsLeft{
+      flex: 0 0 auto;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .rankBadge{
+      flex:0 0 auto;
+      min-width: 32px;
+      height: 24px;
+      border-radius: 999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:400;
+      font-variant-numeric: tabular-nums;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      font-size: 14px;
+    }
+    .statsName{
+      font-weight:400;
+      color: var(--text);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      font-size: 14px;
+    }
 
-/* Controls row (label + select) tighter */
-.statsControls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  margin-top: 8px;               /* tighter */
-}
-.statsControls label{ margin:0; }
-.statsControls select{
-  width:auto;
-  min-width: 220px;
-  padding: 10px 12px;            /* tighter */
-}
-
-/* Wins tiles tighter */
-.tiles{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:10px;
-  margin-top: 8px;               /* tighter */
-}
-.tile{
-  border:1px solid var(--line);
-  border-radius: 14px;
-  padding: 10px;                 /* tighter */
-  background: rgba(0,122,194,.10);
-}
-.tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
-.tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
-
-/* Mobile: 2 tiles wide and full-width selects */
-@media (max-width: 520px){
-  .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .statsControls select{ width:100%; }
-  .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
-}
-/* Tighten Stats spacing */
-.statsPanel{ margin-top:8px; }
-
-.statsPanel .big{ margin: 6px 0 4px; }
-.statsPanel .muted{ margin: 0 0 8px; }
-
-.statsControls{ margin-top:8px; gap:8px; }
-.statsControls select{ min-width: 200px; }
-
-.statsRow{ padding:8px 10px; margin-top:6px; }
-
-.tiles{ gap:8px; margin-top:8px; }
-.tile{ padding:10px; }
-.tile .tVal{ font-size:20px; margin-top:2px; }
-
-/* --- HARD FIX: Stats mode bar must stay one row + horizontal scroll (iOS-safe) --- */
-#statsModes.statsModes{
-  display: grid !important;
-  grid-auto-flow: column !important;        /* force one row */
-  grid-auto-columns: max-content !important;/* each button sized to content */
-  gap: 8px !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-  padding: 6px 0 4px !important;
-  max-width: 100% !important;
-}
-
-/* buttons: never wrap internally, never stretch */
-#statsModes.statsModes > button{
-  white-space: nowrap !important;
-  width: auto !important;
-  flex: 0 0 auto !important;
-}
-
-/* optional: nicer scrollbar on iOS */
-#statsModes.statsModes::-webkit-scrollbar{ height: 6px; }
-#statsModes.statsModes::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.14);
-  border-radius: 999px;
-}
-/* --- One-row stats with scrollable pills (mobile-safe) --- */
-
-.statsRow{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Name gets priority and can shrink nicely */
-.statsLeft{
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.statsName{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Pills stay on one line and scroll instead of crushing names */
-.statsBadges{
-  flex: 0 0 auto;
-  display: flex;
-  gap: 6px;
-  flex-wrap: nowrap;
-
-  max-width: 55%;
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-/* Optional: subtle scrollbar styling */
-.statsBadges::-webkit-scrollbar{
-  height: 4px;
-}
-.statsBadges::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.18);
-  border-radius: 999px;
-}
-
-/* Stat pills: single row, horizontal scroll, no stacking */
-.statsBadges{
-  display: flex;
-  flex-wrap: nowrap;          /* ⛔ no stacking */
-  gap: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap;
-}
-
-/* Pills themselves must not shrink */
-.statsBadges .miniPill{
-  flex: 0 0 auto;
-}
+    /* Pills row */
     .statsBadges{
-      justify-content: flex-start !important;
-      flex-wrap: nowrap !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
+      flex: 1 1 auto;
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      min-width:0;
     }
-    .statsBadges .miniPill{ flex: 0 0 auto; white-space: nowrap; }
-     .statsBadges{
-      justify-content: flex-start !important;  /* start on the left */
+    .miniPill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      font-size:11px;
+      font-weight:900;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
     }
-   
-</style>
+    .miniPill .k{ color: var(--muted); font-weight:800; }
+
+    /* --- Overall-only layout: fixed name column = widest name --- */
+    .statsRow.overallRow{
+      display: grid;
+      grid-template-columns: auto var(--overallNameW, max-content) 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Keep full names visible and aligned */
+    .statsRow.overallRow .statsName{
+      width: var(--overallNameW, max-content);
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    /* Pills start immediately after the name column and scroll if needed */
+    .statsRow.overallRow .statsBadges{
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+    .statsRow.overallRow .statsBadges .miniPill{ flex: 0 0 auto; }
+
+    /* Controls row (label + select) tighter */
+    .statsControls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      margin-top: 8px;               /* tighter */
+    }
+    .statsControls label{ margin:0; }
+    .statsControls select{
+      width:auto;
+      min-width: 220px;
+      padding: 10px 12px;            /* tighter */
+    }
+
+    /* Wins tiles tighter */
+    .tiles{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+      margin-top: 8px;               /* tighter */
+    }
+    .tile{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;                 /* tighter */
+      background: rgba(0,122,194,.10);
+    }
+    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
+    .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
+
+    /* Mobile: 2 tiles wide and full-width selects */
+    @media (max-width: 520px){
+      .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .statsControls select{ width:100%; }
+      .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
+    }
+  </style>
 </head>
 
 <body>
@@ -898,9 +804,9 @@
   <div id="view-mymatchup" class="card" style="display:none;">
     <div class="big">My Matchup</div>
     <div class="muted">Pick your name once — I might remember it, might not.</div>
-
-    <label>Your name</label>
-    <select id="mmName"></select>
+    
+    <!-- <label>Your name</label> -->
+    <select id="mmName" style="margin-top:10px;"></select>
 
     <button class="primary" onclick="loadMyMatchup()">Show my matchup</button>
     <div id="mmStatus" class="mmWrap"></div>
@@ -917,12 +823,12 @@
   <div id="view-dues" class="card" style="display:none;">
     <div class="big">Dues</div>
     <div class="muted">Pick your name.</div>
-
-    <label>Your name</label>
-    <select id="duesName"></select>
+    
+    <!-- <label>Your name</label> -->
+    <select id="duesName" style="margin-top:10px;"></select>
 
     <button class="primary" onclick="loadDues()">Show my dues</button>
-    <div class="status" id="duesStatus"></div>
+    <div id="duesStatus" class="mmWrap"></div>
   </div>
 
   <!-- BRACKET -->
@@ -966,7 +872,7 @@
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
     const VIEW_KEY = "nascar_pool_active_view";
-    const roundLabel = (n) => (Number(n) === 4 ? "Championship" : `Round ${n}`);
+    const roundLabel = (n) => (Number(n) === 4 ? "FInal" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -1039,53 +945,53 @@
     const ADMIN_KEY = ""; // leave blank on the public site
 
     async function apiCall(action, params = {}, isAdmin = false){
-  // Live GAS fallback (used only if snapshots are missing)
-  const apiBase = API_BASE;
-  const adminKey = ADMIN_KEY;
-  if(!apiBase) throw new Error("Missing API Base URL.");
-  if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+      // Live GAS fallback (used only if snapshots are missing)
+      const apiBase = API_BASE;
+      const adminKey = ADMIN_KEY;
+      if(!apiBase) throw new Error("Missing API Base URL.");
+      if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
 
-  const q = new URLSearchParams();
-  q.set("action", action);
-  if(isAdmin) q.set("key", adminKey);
+      const q = new URLSearchParams();
+      q.set("action", action);
+      if(isAdmin) q.set("key", adminKey);
 
-  Object.keys(params || {}).forEach(k => {
-    const v = params[k];
-    if(v !== undefined && v !== null) q.set(k, v);
-  });
+      Object.keys(params || {}).forEach(k => {
+        const v = params[k];
+        if(v !== undefined && v !== null) q.set(k, v);
+      });
 
-  const url = apiBase + "?" + q.toString();
-  return fetch(url, { cache: "no-store" }).then(r => r.json());
-}
+      const url = apiBase + "?" + q.toString();
+      return fetch(url, { cache: "no-store" }).then(r => r.json());
+    }
 
-// ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
-const SNAP_MAP = {
-  context:   "./data/context.json",
-  players:   "./data/players.json",
-  matchups:  "./data/matchups.json",
-  bracket:   "./data/bracket.json",
-  standings: "./data/standings.json",
-  dues:      "./data/dues.json",
-  my:        "./data/myMatchups.json",
-  h2h:       "./data/h2h.json",
-  wins:      "./data/wins.json",
-  drivers:   "./data/driverUsage.json",
-};
+    // ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
+    const SNAP_MAP = {
+      context:   "./data/context.json",
+      players:   "./data/players.json",
+      matchups:  "./data/matchups.json",
+      bracket:   "./data/bracket.json",
+      standings: "./data/standings.json",
+      dues:      "./data/dues.json",
+      my:        "./data/myMatchups.json",
+      h2h:       "./data/h2h.json",
+      wins:      "./data/wins.json",
+      drivers:   "./data/driverUsage.json",
+    };
 
-async function fetchSnapshotJson(key, bustCache=false){
-  const base = SNAP_MAP[key];
-  if(!base) throw new Error("Unknown snapshot key: " + key);
+    async function fetchSnapshotJson(key, bustCache=false){
+      const base = SNAP_MAP[key];
+      if(!base) throw new Error("Unknown snapshot key: " + key);
 
-  const url = bustCache
-    ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
-    : base;
+      const url = bustCache
+        ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
+        : base;
 
-  const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
-  if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
-  return await res.json();
-}
+      const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
+      if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+      return await res.json();
+    }
 
-/**********************
+    /**********************
      * UI helpers
      **********************/
     function setActiveNav(which){
@@ -1179,7 +1085,7 @@ async function fetchSnapshotJson(key, bustCache=false){
       if (mm) mm.value = "";
       if (dd) dd.value = "";
       setWelcome();
-      showView(which);
+      showView(activeView);
     }
 
     function setWelcome() {
@@ -1206,6 +1112,56 @@ async function fetchSnapshotJson(key, bustCache=false){
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
     }
+
+    // --- Overall-only: set name column to width of the widest rendered name ---
+    function syncOverallNameColumnWidth_(){
+      const panel = document.getElementById("statsPanel");
+      if(!panel) return;
+
+      // Only the Overall list
+      const names = panel.querySelectorAll(".statsRow .statsName");
+      if(!names.length) return;
+
+      // Build (or reuse) a hidden ruler
+      let ruler = document.getElementById("__nameRuler");
+      if(!ruler){
+        ruler = document.createElement("span");
+        ruler.id = "__nameRuler";
+        ruler.style.position = "fixed";
+        ruler.style.left = "-9999px";
+        ruler.style.top = "-9999px";
+        ruler.style.visibility = "hidden";
+        ruler.style.whiteSpace = "nowrap";
+        ruler.style.padding = "0";
+        ruler.style.margin = "0";
+        ruler.style.border = "0";
+        document.body.appendChild(ruler);
+      }
+
+      // Copy font styles from a real .statsName so measurement matches exactly
+      const cs = window.getComputedStyle(names[0]);
+      ruler.style.fontFamily = cs.fontFamily;
+      ruler.style.fontSize = cs.fontSize;
+      ruler.style.fontWeight = cs.fontWeight;
+      ruler.style.letterSpacing = cs.letterSpacing;
+      ruler.style.textTransform = cs.textTransform;
+
+      let max = 0;
+      names.forEach(el => {
+        ruler.textContent = el.textContent || "";
+        max = Math.max(max, ruler.getBoundingClientRect().width);
+      });
+
+      // Small breathing room
+      const next = Math.ceil(max + 6);
+
+      // Stop iOS “creep”: only update if it actually changed meaningfully
+      const prev = parseFloat(panel.style.getPropertyValue("--overallNameW")) || 0;
+      if (Math.abs(next - prev) < 1) return;
+
+      panel.style.setProperty("--overallNameW", next + "px");
+    }
+
 
     function populatePlayerDropdowns(playerList) {
       const mm = document.getElementById("mmName");
@@ -1290,11 +1246,10 @@ async function fetchSnapshotJson(key, bustCache=false){
         const round = data.currentRound ?? data.round ?? "";
         const roundText =
           round === "" ? "" :
-          (Number(round) === 4 ? "Championship" : `Round ${round}`);
+          (Number(round) === 4 ? "Final" : `Round ${round}`);
 
         sub.textContent =
           `Tournament ${tour}` +
-          // (race ? ` · ${race}` : "") +
           (roundText ? ` · ${roundText}` : "");
 
         area.innerHTML = "";
@@ -1343,86 +1298,24 @@ async function fetchSnapshotJson(key, bustCache=false){
       }
     }
 
-    async function loadMyMatchup() {
-      const sel = document.getElementById("mmName");
-      const out = document.getElementById("mmStatus");
+    const EARLY_MESSAGES = [
+      "Seedings aren’t set yet. Everyone is still technically good at this.",
+      "No matchups yet. Enjoy this moment before it all goes wrong.",
+      "Relax. The bracket hasn’t ruined your weekend yet.",
+      "Nothing’s set yet. Stop refreshing like it’s going to help.",
+      "Bracket pending. The spreadsheet gods demand patience.",
+      "Matchups not set. Go hydrate or something.",
+      "Seedings aren’t ready. Your downfall has been delayed.",
+      "Calm down. NASCAR hasn’t hurt us yet."
+    ];
 
-      const name = sel ? String(sel.value || "").trim() : "";
-      if (!name) { out.textContent = "Pick your name first."; return; }
-
-      savePlayerName(name);
-      out.textContent = "Loading…";
-
-      try{
-        let data = {};
-        try{
-          const all = await fetchSnapshotJson("my", false);
-          data = (all && all[name]) ? all[name] : {};
-        }catch(e){
-          // snapshot missing; fall back to live GAS
-          const res = await apiCall("playerGetMyMatchup", { name });
-          if (!res || !res.ok) throw new Error(res?.error || "API failed");
-          data = res.data || {};
-        }
-
-        if (data.status !== "active") {
-          const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
-          const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
-          const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
-          const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
-
-          const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "It's not the weekend yet!");
-          const youListText  = youDriversArr.length
-            ? youDriversArr.join("<br>")
-            : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
-
-          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
-
-          out.innerHTML = `
-            <div class="microBox" style="margin-top:6px;">
-              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-              <div class="microMeta elimSub">
-                ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
-              </div>
-
-              ${youListText ? `
-                <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                <div class="microMeta">${youListHtml}</div>
-              ` : ``}
-            </div>
-          `;
-          return;
-        }
-
-
-        const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-        const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
-
-        out.innerHTML = `
-          <div class="mmHeader">
-            Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
-          </div>
-
-          <div class="microBox youBox">
-            <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
-            ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
-          </div>
-
-          <div class="centerVS">VS</div>
-
-          <div class="microBox">
-            <div class="microTitle">${escapeHtml(data.opponent)}</div>
-            ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
-          </div>
-        `;
-      }catch(e){
-        out.textContent = "Error: " + (e && e.message ? e.message : e);
-      }
+    function getEarlyMessage(){
+      return EARLY_MESSAGES[Math.floor(Math.random() * EARLY_MESSAGES.length)];
     }
 
-    async function loadDues() {
-  const sel = document.getElementById("duesName");
-  const out = document.getElementById("duesStatus");
+    async function loadMyMatchup() {
+  const sel = document.getElementById("mmName");
+  const out = document.getElementById("mmStatus");
 
   const name = sel ? String(sel.value || "").trim() : "";
   if (!name) { out.textContent = "Pick your name first."; return; }
@@ -1430,48 +1323,198 @@ async function fetchSnapshotJson(key, bustCache=false){
   savePlayerName(name);
   out.textContent = "Loading…";
 
-  try {
-    const all = await getData_("dues", "playerGetDues", { name });
-
-    let data = null;
-
-    if (all && typeof all === "object" && !Array.isArray(all) && (all.name || all.paid != null || all.balance != null)) {
-      data = all;
-    } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
-      data = all[name];
-    } else if (Array.isArray(all)) {
-      data = all.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
-    } else if (all && Array.isArray(all.dues)) {
-      data = all.dues.find(r => String(r?.name || "").trim().toLowerCase() === name.toLowerCase()) || null;
+  try{
+    let data = {};
+    try{
+      const all = await fetchSnapshotJson("my", false);
+      data = (all && all[name]) ? all[name] : {};
+    }catch(e){
+      // snapshot missing; fall back to live GAS
+      const res = await apiCall("playerGetMyMatchup", { name });
+      if (!res || !res.ok) throw new Error(res?.error || "API failed");
+      data = res.data || {};
     }
 
-    if (!data) throw new Error("No dues record found for " + name);
+    const status = String(data.status || "").trim().toLowerCase();
 
-    const paid = Number(data.paid || 0);
-    const balance = Number(data.balance || 0);
-    const winnings = 180 - balance;
+    // --- picks ---
+    const youDriversArr = Array.isArray(data.youDrivers)
+      ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
+      : [];
 
-    out.textContent =
-`${data.name || name}
-Paid: $${paid.toFixed(2)}
-Winnings: $${winnings.toFixed(2)}
-Balance Due: $${balance.toFixed(2)}`;
+    const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+    const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+    const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
 
-    // OPTIONAL: color just the Balance Due line AFTER render
-    out.innerHTML = out.innerHTML.replace(
-      /Balance Due: \$[0-9\.\-]+/,
-      match => `<span style="color: var(--red); opacity: 0.9;">${match}</span>`
-    );
+    // “real opponent” check (treat blanks/TBD/bye as not started)
+    const opp = String(data.opponent || "").trim();
+    const hasRealOpponent =
+      !!opp &&
+      opp !== "-" &&
+      opp.toLowerCase() !== "tbd" &&
+      opp.toLowerCase() !== "bye";
 
-  } catch (e) {
+    // “real context” check (treat missing/0 as not started)
+    const tour = String(data.tournament ?? "").trim();
+    const rnd  = String(data.round ?? "").trim();
+    const hasRealContext =
+      tour !== "" && tour !== "0" &&
+      rnd  !== "" && rnd  !== "0";
+
+    // Build your picks display (reuse for both states)
+    const youListLabel = youDriversArr.length
+      ? "Your drivers:"
+      : ((n1 || n2) ? "Your numbers:" : "");
+
+    const youListText = youDriversArr.length
+      ? youDriversArr.join("<br>")
+      : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+    const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+
+    // 1) NOT STARTED (seedings/matchups not set yet)
+    if (!hasRealOpponent || !hasRealContext) {
+      out.innerHTML = `
+        <div class="microBox" style="margin-top:6px;">
+          <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
+          <div class="microMeta elimSub">
+            ${escapeHtml(getEarlyMessage())}
+          </div>
+
+          ${youListText ? `
+            <div style="margin-top:10px;">
+              <div class="microTitle">${escapeHtml(youListLabel)}</div>
+              <div class="microMeta">${youListHtml}</div>
+            </div>
+          ` : ``}
+        </div>
+      `;
+      return;
+    }
+
+    // 2) ELIMINATED (only after a real matchup/context exists)
+    if (status !== "active") {
+      out.innerHTML = `
+        <div class="microBox" style="margin-top:6px;">
+          <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+          <div class="microMeta elimSub">
+            ${escapeHtml(data.you || name)}, you're eliminated…but here's your stuff anyway. Maybe you can still win $25. Try not to make this a lifestyle.<br><br>
+          </div>
+
+          ${youListText ? `
+            <div class="microTitle">${escapeHtml(youListLabel)}</div>
+            <div class="microMeta">${youListHtml}</div>
+          ` : ``}
+        </div>
+      `;
+      return;
+    }
+
+    // 3) ACTIVE
+    const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
+    const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
+
+    out.innerHTML = `
+      <div class="mmHeader">
+        Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+      </div>
+
+      <div class="microBox youBox">
+        <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+        ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
+      </div>
+
+      <div class="centerVS">VS</div>
+
+      <div class="microBox">
+        <div class="microTitle">${escapeHtml(data.opponent)}</div>
+        ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
+      </div>
+    `;
+  }catch(e){
     out.textContent = "Error: " + (e && e.message ? e.message : e);
   }
 }
 
+
+    async function loadDues() {
+      const sel = document.getElementById("duesName");
+      const out = document.getElementById("duesStatus");
+
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) {
+        out.textContent = "Pick your name first.";
+        return;
+      }
+
+      savePlayerName(name);
+      out.textContent = "Loading…";
+
+      try {
+        const all = await getData_("dues", "playerGetDues", { name });
+
+        let data = null;
+
+        if (
+          all &&
+          typeof all === "object" &&
+          !Array.isArray(all) &&
+          (all.name || all.paid != null || all.balance != null || all.winnings != null)
+        ) {
+          data = all;
+        } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+          data = all[name];
+        } else if (Array.isArray(all)) {
+          data =
+            all.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        } else if (all && Array.isArray(all.dues)) {
+          data =
+            all.dues.find(
+              r =>
+                String(r?.name || "")
+                  .trim()
+                  .toLowerCase() === name.toLowerCase()
+            ) || null;
+        }
+
+        if (!data) throw new Error("No dues record found for " + name);
+
+        const paid = Number(data.paid ?? 0);
+        const winnings = Number(data.winnings ?? 0);
+        const balance = Number(data.balance ?? 0);
+
+        const paidLine =
+          paid === 180
+            ? `<span style="color: var(--green); opacity: 0.9;">Paid: $${paid.toFixed(2)}</span>`
+            : `Paid: $${paid.toFixed(2)}`;
+
+        const balanceLine =
+          balance > 0
+            ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
+            : `Balance Due: $${balance.toFixed(2)}`;
+
+out.innerHTML =
+  `<div class="microBox">
+     <div>${paidLine}</div>
+     <div>Winnings: $${winnings.toFixed(2)}</div>
+     <div>${balanceLine}</div>
+   </div>`;
+
+      } catch (e) {
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
+      }
+    }
+
     // ---------- Stats / Standings (mode switcher) ----------
     let _cache_standings = null;
     let _statsMode = "overall";
-
+    let _nameWTimer = null;
+    
     async function loadStandings() {
       const area = document.getElementById("standingsArea");
       area.innerHTML = "Loading stats...";
@@ -1483,7 +1526,7 @@ Balance Due: $${balance.toFixed(2)}`;
         // Shell
         area.innerHTML = `
           <div class="statsModes" id="statsModes">
-            <button class="secondary" data-mode="overall">Overall</button>
+            <button class="secondary" data-mode="overall">Standings</button>
             <button class="secondary" data-mode="tourney">Tourney Ranks</button>
             <button class="secondary" data-mode="h2h">H2H</button>
             <button class="secondary" data-mode="wins">Wins</button>
@@ -1527,6 +1570,7 @@ Balance Due: $${balance.toFixed(2)}`;
 
       if (!rows.length || !headers.length){
         box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
+        requestAnimationFrame(() => syncOverallNameColumnWidth_());
         resetStatPillScrollSoon(box);
         return;
       }
@@ -1542,24 +1586,27 @@ Balance Due: $${balance.toFixed(2)}`;
       rows.forEach(r => {
         const rank = r[rankKey] ?? "";
         const name = r[nameKey] ?? "";
-        const badges = badgeKeys.map(k => {
-          const v = r[k];
-          if (v == null || String(v).trim() === "") return "";
-          return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
+        const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
+        const badges = badgeKeys
+          .filter(k => !EXCLUDED_KEYS.has(k))
+          .map(k => {
+            const v = r[k];
+            if (v == null || String(v).trim() === "") return "";
+            return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
         }).filter(Boolean).join("");
 
         html += `
-          <div class="statsRow">
-            <div class="statsLeft">
-              <div class="rankBadge">${escapeHtml(rank || "—")}</div>
-              <div class="statsName">${escapeHtml(name)}</div>
-            </div>
+          <div class="statsRow overallRow">
+            <div class="rankBadge">${escapeHtml(rank || "—")}</div>
+            <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
         `;
       });
 
       box.innerHTML = html;
+      requestAnimationFrame(syncOverallNameColumnWidth_);
+      resetStatPillScrollSoon(box);
     }
 
     // ---- Tournament ranks (dropdown, one at a time) ----
@@ -1590,13 +1637,12 @@ Balance Due: $${balance.toFixed(2)}`;
       render();
     }
 
-    // Re-used, but now it renders rank rows (not spreadsheet list)
     function showTournamentRanks(label) {
       const box = document.getElementById("tourneyRanksBox");
       const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
       const listRaw = t[label] || [];
 
-      let html = `<div style="margin-top:6px;font-weight:900;font-size:16px;">${escapeHtml(label)}</div>`;
+      let html = ``;
 
       if (!Array.isArray(listRaw) || listRaw.length === 0) {
         html += `<div class="muted">(No data yet)</div>`;
@@ -1624,7 +1670,6 @@ Balance Due: $${balance.toFixed(2)}`;
       const hasRanks = items.some(x => Number.isFinite(x.rank));
       if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
 
-      // If ranks are missing, keep your old behavior (ranks end at 16)
       let startRank = 17 - items.length;
       if (startRank < 1) startRank = 1;
       if (startRank > 16) startRank = 16;
@@ -1649,7 +1694,6 @@ Balance Due: $${balance.toFixed(2)}`;
       box.innerHTML = html;
     }
 
-    // ---- H2H (Option A: pick player, list opponents) ----
     async function renderH2H_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1662,7 +1706,6 @@ Balance Due: $${balance.toFixed(2)}`;
       `;
       resetStatPillScrollSoon(box);
 
-      // use cached player list if possible
       const players = await getData_("players", "playerGetPlayerList");
       const sel = document.getElementById("h2hPick");
       sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
@@ -1674,7 +1717,6 @@ Balance Due: $${balance.toFixed(2)}`;
         try{
           const player = String(sel.value || "").trim();
           const res = await getData_("h2h", "playerGetH2H", { player });
-          // snapshot may be keyed by player; live may return { player, rows: [...] }
           const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
           if (!rows.length){
             out.innerHTML = `<div class="muted">(No H2H data yet. If this is new season, compile H2H in Admin first.)</div>`;
@@ -1704,7 +1746,6 @@ Balance Due: $${balance.toFixed(2)}`;
       load();
     }
 
-    // ---- Wins tiles (Main H:J for selected player; default = you) ----
     async function renderWins_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1756,7 +1797,6 @@ Balance Due: $${balance.toFixed(2)}`;
       load();
     }
 
-    // ---- Driver usage (Option C: pick player, list drivers sorted by count) ----
     async function renderDrivers_(box){
       const you = loadPlayerName().trim();
       box.innerHTML = `
@@ -1785,7 +1825,6 @@ Balance Due: $${balance.toFixed(2)}`;
             out.innerHTML = `<div class="muted">(No driver usage data yet)</div>`;
             return;
           }
-          // rows expected: [{driver, count}]
           let html = ``;
           rows.forEach(r => {
             html += `
@@ -1807,12 +1846,6 @@ Balance Due: $${balance.toFixed(2)}`;
       sel.onchange = load;
       load();
     }
-
-
-
-
-
-    
 
     async function loadBracket(){
       const sub = document.getElementById("bracketSub");
@@ -1858,14 +1891,13 @@ Balance Due: $${balance.toFixed(2)}`;
             ? `<span class="roundTag">CURRENT</span>`
             : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
 
-
           const isFuture = !r.isCurrent && (r.round > data.currentRound);
 
           html += `
             <div class="bracketCol ${isFuture ? "isFuture" : ""}">
               <div class="bracketHdr">
                 <div class="title">${tag}</div>
-                <div class="race">${escapeHtml(r.raceLabel || "")}</div>
+                <div class="raceTag">${escapeHtml(r.raceLabel || "")}</div>
               </div>
           `;
 
@@ -1926,61 +1958,65 @@ Balance Due: $${balance.toFixed(2)}`;
       try{
         return await fetchSnapshotJson(snapKey, false);
       }catch(e){
-        // Snapshot not available yet; fall back to live GAS (slower)
         const resp = await apiCall(action, params || {}, false);
         if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
         return resp.data;
       }
     }
-    window.onload = () => { loadPlayersThenInit(); };
 
     function resetStatPillScroll(scope){
       const root = scope || document;
       root.querySelectorAll('.statsBadges').forEach(el => {
-        // iOS needs a firm hand
         el.scrollLeft = 0;
         el.scrollTo(0, 0);
       });
     }
 
-function resetStatPillScrollSoon(scope){
-  // double rAF = after layout + after paint (fixes iOS starting scrolled right)
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => resetStatPillScroll(scope));
-  });
-}
+    function resetStatPillScrollSoon(scope){
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resetStatPillScroll(scope));
+      });
+    }
 
+    window.addEventListener("resize", () => {
+      if (_statsMode !== "overall") return;
 
+      clearTimeout(_nameWTimer);
+      _nameWTimer = setTimeout(() => {
+        syncOverallNameColumnWidth_();
+      }, 150);
+    });
+
+    window.onload = () => { loadPlayersThenInit(); };
   </script>
 
-<script>
-  // Subtle parallax watermark drift
-  (function(){
-    function update(){
-      var y = (window.scrollY || 0) * 0.05; // tweak factor if you want
-      document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px');
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
-</script>
+  <!-- <script> -->
+    <!-- (function(){ -->
+      <!-- function update(){ -->
+        <!-- var y = (window.scrollY || 0) * 0.05; -->
+        <!-- document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px'); -->
+      <!-- } -->
+      <!-- window.addEventListener('scroll', update, { passive: true }); -->
+      <!-- window.addEventListener('resize', update); -->
+      <!-- update(); -->
+    <!-- })(); -->
+  <!-- </script> -->
 
-<script>
-(function(){
-  let ticking=false;
-  function onScroll(){
-    if(ticking) return;
-    ticking=true;
-    requestAnimationFrame(()=>{
-      const y=window.scrollY||0;
-      document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
-      ticking=false;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-})();
-</script>
+  <script>
+    (function(){
+      let ticking=false;
+      function onScroll(){
+        if(ticking) return;
+        ticking=true;
+        requestAnimationFrame(()=>{
+          const y=window.scrollY||0;
+          document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
+          ticking=false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
