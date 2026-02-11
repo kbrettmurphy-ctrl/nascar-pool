@@ -147,7 +147,7 @@
     .muted { color: var(--muted); font-size: 13px; }
 
     .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
-    
+    #duesStatus { white-space: normal; }
     /* Stats lives inside #standingsArea.status, so undo pre-wrap there */
     #standingsArea{
       white-space: normal;
@@ -1500,11 +1500,11 @@
 
 out.innerHTML =
   `<div class="microBox">
-    <div>${escapeHtml(data.name || name)}</div>
-    <div>${paidLine}</div>
-    <div>Winnings: $${winnings.toFixed(2)}</div>
-    <div>${balanceLine}</div>
-  </div>`;
+     <div>${escapeHtml(data.name || name)}</div>
+     <div>${paidLine}</div>
+     <div>Winnings: $${winnings.toFixed(2)}</div>
+     <div>${balanceLine}</div>
+   </div>`;
 
       } catch (e) {
         out.textContent = "Error: " + (e && e.message ? e.message : e);
