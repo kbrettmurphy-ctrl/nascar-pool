@@ -1498,12 +1498,11 @@
             ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
             : `Balance Due: $${balance.toFixed(2)}`;
 
-        out.innerHTML = `
-    ${data.name || name}
-    ${paidLine}
-    Winnings: $${winnings.toFixed(2)}
-    ${balanceLine}
-    `;
+        out.innerHTML = `${data.name || name}
+        ${paidLine}
+        Winnings: $${winnings.toFixed(2)}
+        ${balanceLine}
+        `;
 
       } catch (e) {
         out.textContent = "Error: " + (e && e.message ? e.message : e);
