@@ -1525,7 +1525,7 @@
         const name = r[nameKey] ?? "";
         const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
         const badges = badgeKeys
-          .filter(map(k => {!EXCLUDED_KEYS.has(k))
+          .filter(k => !EXCLUDED_KEYS.has(k))
           .map(k => {
             const v = r[k];
             if (v == null || String(v).trim() === "") return "";
