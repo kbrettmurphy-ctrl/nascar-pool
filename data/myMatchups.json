@@ -1,277 +1,241 @@
 {
   "Beau": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Beau",
     "youDrivers": [
-      "Ryan Blaney",
-      "Alex Bowman"
+      "",
+      ""
     ],
     "youNums": [
-      32,
-      3
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Bob": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Bob",
-    "opponent": "Nate M.",
     "youDrivers": [
-      "Tyler Reddick",
-      "Justin Haley"
-    ],
-    "oppDrivers": [
-      "Cole Custer",
-      "Erik Jones"
+      "",
+      ""
     ],
     "youNums": [
-      9,
-      30
+      "",
+      ""
     ],
-    "oppNums": [
-      22,
-      31
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Brett": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Brett",
     "youDrivers": [
-      "John Hunter Nemechek",
-      "Ross Chastain"
+      "",
+      ""
     ],
     "youNums": [
-      16,
-      17
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Chris": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Chris",
-    "opponent": "Jason",
     "youDrivers": [
-      "Chase Briscoe",
-      "Christopher Bell"
-    ],
-    "oppDrivers": [
-      "Joey Logano",
-      "Michael McDowell"
+      "",
+      ""
     ],
     "youNums": [
-      11,
-      1
+      "",
+      ""
     ],
-    "oppNums": [
-      7,
-      15
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Don": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Don",
     "youDrivers": [
-      "Ty Dillon",
-      "Chris Buescher"
+      "",
+      ""
     ],
     "youNums": [
-      28,
-      6
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Jason": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Jason",
-    "opponent": "Chris",
     "youDrivers": [
-      "Joey Logano",
-      "Michael McDowell"
-    ],
-    "oppDrivers": [
-      "Chase Briscoe",
-      "Christopher Bell"
+      "",
+      ""
     ],
     "youNums": [
-      7,
-      15
+      "",
+      ""
     ],
-    "oppNums": [
-      11,
-      1
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Justin": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Justin",
     "youDrivers": [
-      "Carson Hocevar",
-      "Zane Smith"
+      "",
+      ""
     ],
     "youNums": [
-      29,
-      19
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Nate C.": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Nate C.",
     "youDrivers": [
-      "Daniel Suárez",
-      "Ryan Preece"
+      "",
+      ""
     ],
     "youNums": [
-      26,
-      21
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Nate M.": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Nate M.",
-    "opponent": "Bob",
     "youDrivers": [
-      "Cole Custer",
-      "Erik Jones"
-    ],
-    "oppDrivers": [
-      "Tyler Reddick",
-      "Justin Haley"
+      "",
+      ""
     ],
     "youNums": [
-      22,
-      31
+      "",
+      ""
     ],
-    "oppNums": [
-      9,
-      30
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Nick": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Nick",
     "youDrivers": [
-      "Noah Gragson",
-      "Brad Keselowski"
+      "",
+      ""
     ],
     "youNums": [
-      24,
-      27
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Pat": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Pat",
     "youDrivers": [
-      "Bubba Wallace",
-      "Josh Berry"
+      "",
+      ""
     ],
     "youNums": [
-      8,
-      14
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Rob": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Rob",
     "youDrivers": [
-      "Ty Gibbs",
-      "Austin Dillon"
+      "",
+      ""
     ],
     "youNums": [
-      13,
-      18
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Russ": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Russ",
     "youDrivers": [
-      "Kyle Larson",
-      "Kyle Busch"
+      "",
+      ""
     ],
     "youNums": [
-      4,
-      12
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Stacy": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Stacy",
     "youDrivers": [
-      "Chase Elliott",
-      "A. J. Allmendinger"
+      "",
+      ""
     ],
     "youNums": [
-      2,
-      23
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Steven": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Steven",
     "youDrivers": [
-      "William Byron",
-      "Austin Cindric"
+      "",
+      ""
     ],
     "youNums": [
-      10,
-      20
+      "",
+      ""
     ],
     "status": "not_in_round"
   },
   "Tyler": {
-    "tournament": 2,
-    "race": "Martinsville",
-    "round": 3,
+    "tournament": 1,
+    "race": "Daytona",
+    "round": 1,
     "you": "Tyler",
     "youDrivers": [
-      "Denny Hamlin",
-      "Todd Gilliland"
+      "",
+      ""
     ],
     "youNums": [
-      5,
-      25
+      "",
+      ""
     ],
     "status": "not_in_round"
   }
