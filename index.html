@@ -1500,9 +1500,8 @@
 
         out.innerHTML = `${data.name || name}
     ${paidLine}
-    Winnings: $${winnings.toFixed(2)
-    ${balanceLine}
-    `;
+    Winnings: $${winnings.toFixed(2)}
+    ${balanceLine}`;
 
       } catch (e) {
         out.textContent = "Error: " + (e && e.message ? e.message : e);
