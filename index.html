@@ -1320,34 +1320,57 @@
           data = res.data || {};
         }
 
-        if (data.status !== "active") {
-          const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
-          const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
-          const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
-          const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+        const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
+        const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+        const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+        const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
 
-          const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "It's not the weekend yet!");
-          const youListText  = youDriversArr.length
-            ? youDriversArr.join("<br>")
-            : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+        const hasPicks = (youDriversArr.length > 0) || (n1 || n2);
+        const hasMatchup = !!String(data.opponent || "").trim();               // opponent exists
+        const hasContext = (data.tournament != null || data.race != null || data.round != null);
+        const status = String(data.status || "").trim().toLowerCase();
 
-          const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
-
+        // 1) NOT STARTED / NO SEEDINGS YET
+        // If there's no matchup data at all, don't call it eliminated.
+        if (!status || status === "pending" || (!hasMatchup && !hasContext && !hasPicks)) {
           out.innerHTML = `
             <div class="microBox" style="margin-top:6px;">
-              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+              <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
               <div class="microMeta elimSub">
-                ${escapeHtml(data.you)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
+                Calm down, son. It's not the weekend yet, the tourney hasn't started.
               </div>
-
-              ${youListText ? `
-                <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                <div class="microMeta">${youListHtml}</div>
-              ` : ``}
             </div>
           `;
           return;
         }
+
+// 2) ELIMINATED (only if we actually have enough info to mean it)
+if (status !== "active") {
+  const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "");
+  const youListText  = youDriversArr.length
+    ? youDriversArr.join("<br>")
+    : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+  const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+
+  out.innerHTML = `
+    <div class="microBox" style="margin-top:6px;">
+      <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+      <div class="microMeta elimSub">
+        ${escapeHtml(data.you || name)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
+      </div>
+
+      ${youListText ? `
+        <div class="microTitle">${escapeHtml(youListLabel)}</div>
+        <div class="microMeta">${youListHtml}</div>
+      ` : ``}
+    </div>
+  `;
+  return;
+}
+
+// 3) ACTIVE matchup (your existing “active” UI continues below)
+
 
         const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
         const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
