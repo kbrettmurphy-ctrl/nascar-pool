@@ -7,9 +7,9 @@
   },
   "Bob": {
     "name": "Bob",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Brett": {
     "name": "Brett",
@@ -25,9 +25,9 @@
   },
   "Don": {
     "name": "Don",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Jason": {
     "name": "Jason",
@@ -73,9 +73,9 @@
   },
   "Russ": {
     "name": "Russ",
-    "paid": 0,
+    "paid": 60,
     "winnings": 0,
-    "balance": 180
+    "balance": 120
   },
   "Stacy": {
     "name": "Stacy",
@@ -85,9 +85,9 @@
   },
   "Steven": {
     "name": "Steven",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Tyler": {
     "name": "Tyler",
