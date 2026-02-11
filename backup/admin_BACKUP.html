@@ -68,7 +68,25 @@
       font-weight: 900;
       font-size: 14px;
     }
-    .pill small{font-weight:800;color:rgba(255,255,255,.88)}
+    .pill.smallgo,
+    .pill.smallstop{
+      border: none;
+      width: 64px;                 /* fixed, identical width */
+      justify-content: center;     /* center text inside */
+      font-size: 10px;
+      font-weight: 800;
+      color: rgba(255,255,255,.88);
+      padding:8px 8px;
+    }
+
+    .pill.smallgo{
+      background: rgba(77, 210, 29, .2);
+    }
+
+    .pill.smallstop{
+      background: rgba(228, 0, 43, .2);
+    }
+
 
     .grid{
       display:grid;
@@ -295,11 +313,38 @@
         <button class="btn" onclick="runCompileOverallRanks()">Run CompileOverallRanks</button>
 
         <div id="ranksMsg" class="msg hide"></div>
+        <div class="spacer"></div> <!--added to move to this page -->
+        <button class="btn secondary" onclick="showH2HPicker()">Compile H2H Records</button> <!--added to move to this page -->
+        <!-- <button class="primary" onclick="showH2HPicker()">Compile H2H Records</button> -->
+
+        <div id="h2hPicker" style="display:none; margin-top:8px;">
+          
+          <select id="h2hScope" style="width:100%; margin-bottom:8px;">
+            <option value="ALL">ALL tournaments (1–9)</option>
+            <option value="UPTO:1">Up to Tournament 1</option>
+            <option value="UPTO:2">Up to Tournament 2</option>
+            <option value="UPTO:3">Up to Tournament 3</option>
+            <option value="UPTO:4">Up to Tournament 4</option>
+            <option value="UPTO:5">Up to Tournament 5</option>
+            <option value="UPTO:6">Up to Tournament 6</option>
+            <option value="UPTO:7">Up to Tournament 7</option>
+            <option value="UPTO:8">Up to Tournament 8</option>
+            <option value="UPTO:9">Up to Tournament 9</option>
+          </select>
+
+          <div style="display:flex; gap:8px;">
+            <button class="pill smallgo" onclick="compileH2HFromPicker()">Go</button>
+            <button class="pill smallstop" onclick="hideH2HPicker()">Cancel</button>
+          </div>
+        </div>
+
+        <!-- <div class="spacer"></div> <!--added to move to this page -->
+        <div id="h2hMsg" class="msg hide"></div>
       </div>
 
       <div class="card panel hide" id="panelWinnings">
         <h3>Tournament Winnings</h3>
-        <label>Tournament</label>
+        <!-- <label>Tournament</label> -->
         <select id="winTourneySel">
           <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
           <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
@@ -333,8 +378,8 @@
           After you assign numbers, import finishes, or update stats… hit this once.
         </div>
 
-        <div class="spacer"></div>
-        <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button>
+        <!-- <div class="spacer"></div> -->
+        <!-- <button class="btn secondary" onclick="compileH2H()">🤝 Compile H2H Records</button> -->
         <div class="spacer"></div>
         <button class="btn" onclick="publishSnapshot()">🚀 Publish Snapshot</button>
 
@@ -345,6 +390,9 @@
           Required once in GAS Script Properties:<br/>
           <span class="mono">GITHUB_TOKEN</span>, <span class="mono">GITHUB_OWNER</span>, <span class="mono">GITHUB_REPO</span>, (optional) <span class="mono">GITHUB_BRANCH</span>
         </div>
+        <div class="spacer"></div>
+        <button class="btn danger" onclick="resetSeason()">🧨 Reset Season</button>
+        <div id="resetMsg" class="msg hide"></div>
       </div>
 
     </div>
@@ -354,8 +402,8 @@
   <div class="bottomNav">
     <div class="navInner">
       <button class="navBtn avtive" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
-      <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Paste</span></button>
-      <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Ranks</span></button>
+      <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Lineups</span></button>
+      <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Stats</span></button>
       <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
       <button class="navBtn" onclick="showPanel('Funds', this)">💵<span>Add</span></button>
       <button class="navBtn" onclick="showPanel('Publish', this)">🚀<span>Publish</span></button>
@@ -736,32 +784,39 @@
   }
 
   
-  async function compileH2H(){
-    const msg = document.getElementById("pubMsg");
+  function showH2HPicker(){
+    const box = document.getElementById("h2hPicker");
+    if (box) box.style.display = "block";
+  }
+
+  function hideH2HPicker(){
+    const box = document.getElementById("h2hPicker");
+    if (box) box.style.display = "none";
+  }
+
+  async function compileH2HFromPicker(){
+    const msg = document.getElementById("h2hMsg");
     hideMsg(msg);
 
-    const raw = prompt("Compile H2H for ALL tournaments, or enter a tournament number 1-9:", "ALL");
-    if(raw == null) return;
-    const pick = String(raw || "").trim().toUpperCase();
-    if(pick !== "ALL"){
-      const n = parseInt(pick, 10);
-      if(!Number.isInteger(n) || n < 1 || n > 9){
-        showMsg(msg, "Enter ALL or a tournament number 1-9.", true);
-        return;
-      }
-    }
+    const sel = document.getElementById("h2hScope");
+    const pick = sel ? String(sel.value || "ALL").trim().toUpperCase() : "ALL";
 
     try{
       showMsg(msg, "Compiling H2H…", false);
+
+      // Single endpoint call, backend loops as needed (ALL or UPTO:N)
       const r = await apiCall("adminCompileHeadToHead", { scope: pick }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
+
       showMsg(msg, r.data?.message || "H2H compiled ✅", false);
+      hideH2HPicker();
     }catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
 
-async function publishSnapshot(){
+
+  async function publishSnapshot(){
     const msg = document.getElementById("pubMsg");
     hideMsg(msg);
 
@@ -774,6 +829,28 @@ async function publishSnapshot(){
       showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
+
+  async function resetSeason(){
+    const msg = document.getElementById("resetMsg");
+    hideMsg(msg);
+
+    // optional: basic safety latch so you don’t fat-finger it
+    const ok = confirm("Reset the season? This will clear tournament sheets + lineups/finishes + Main/Stats ranges.");
+    if(!ok) return;
+
+    try{
+      showMsg(msg, "Resetting season…", false);
+      const r = await apiCall("adminResetSeason", {}, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+      showMsg(msg, r.data?.message || "Season reset ✅", false);
+
+      // refresh context after reset so pill/panels update
+      try{ await refreshContext(); }catch(e){}
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
 
   // ---------- Bootstrap ----------
   async function bootstrap(){
