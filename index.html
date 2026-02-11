@@ -1523,10 +1523,13 @@
       rows.forEach(r => {
         const rank = r[rankKey] ?? "";
         const name = r[nameKey] ?? "";
-        const badges = badgeKeys.map(k => {
-          const v = r[k];
-          if (v == null || String(v).trim() === "") return "";
-          return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
+        const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
+        const badges = badgeKeys
+          .filter(map(k => {!EXCLUDED_KEYS.has(k))
+          .map(k => {
+            const v = r[k];
+            if (v == null || String(v).trim() === "") return "";
+            return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
         }).filter(Boolean).join("");
 
         html += `
