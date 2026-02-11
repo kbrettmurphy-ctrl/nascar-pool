@@ -1,34 +1,14 @@
 {
   "overallHeaders": [
-    "Rank",
-    "Player",
-    "W",
-    "L",
-    "Matches",
-    "W%",
-    "Avg Finish"
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
   ],
   "overall": [],
-  "tournamentHeaders": [
-    "Tournament 1",
-    "Tournament 2",
-    "Tournament 3",
-    "Tournament 4",
-    "Tournament 5",
-    "Tournament 6",
-    "Tournament 7",
-    "Tournament 8",
-    "Tournament 9"
-  ],
-  "tournaments": {
-    "Tournament 1": [],
-    "Tournament 2": [],
-    "Tournament 3": [],
-    "Tournament 4": [],
-    "Tournament 5": [],
-    "Tournament 6": [],
-    "Tournament 7": [],
-    "Tournament 8": [],
-    "Tournament 9": []
-  }
+  "tournamentHeaders": [],
+  "tournaments": {}
 }
