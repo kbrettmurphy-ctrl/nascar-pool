@@ -1498,14 +1498,13 @@
             ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
             : `Balance Due: $${balance.toFixed(2)}`;
 
-out.innerHTML = `
-  <div class="microBox" style="margin-top:10px;">
-    <div class="microTitle">${escapeHtml(data.name || name)}</div>
-    <div class="microMeta">${paidLine}</div>
-    <div class="microMeta">Winnings: $${winnings.toFixed(2)}</div>
-    <div class="microMeta">${balanceLine}</div>
-  </div>
-`;
+out.innerHTML =
+  `<div class="microBox">
+    <div>${escapeHtml(data.name || name)}</div>
+    <div>${paidLine}</div>
+    <div>Winnings: $${winnings.toFixed(2)}</div>
+    <div>${balanceLine}</div>
+  </div>`;
 
       } catch (e) {
         out.textContent = "Error: " + (e && e.message ? e.message : e);
