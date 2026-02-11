@@ -27,7 +27,7 @@
       --line:rgba(255,255,255,.12);   
 
       /* --nav:#0b1220;   <----- Old from white background*/
-      --nav:#000000       /*New to match admin portal with black background*/ 
+      --nav:#000000;       /*New to match admin portal with black background*/ 
       --nav2:#111827;
 
       /* -- NASCAR Color theme -- */
@@ -129,7 +129,7 @@
     }
     button.primary{ background:#111; color:#fff; margin-top: 3px; }
     button.secondary{ background:#334155; color:#fff; }
-    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var (--line); }
+    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var(--line); }
     button:disabled{ opacity:.55; cursor:not-allowed; }
 
     label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
@@ -261,7 +261,7 @@
       padding:3px 7px;
       border-radius:999px;
       background: rgba(255,214,89,.14);
-      border: 1px solid vrgba(255,214,89,.14);
+      border: 1px solid rgba(255,214,89,.14);
       color: var(--yellow);
       line-height:1;
      }
@@ -1320,56 +1320,79 @@
           data = res.data || {};
         }
 
-        const youDriversArr = Array.isArray(data.youDrivers) ? data.youDrivers.map(x=>String(x||"").trim()).filter(Boolean) : [];
+        const status = String(data.status || "").trim().toLowerCase();
+
+        const youDriversArr = Array.isArray(data.youDrivers)
+          ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
+          : [];
         const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
         const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
         const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
 
         const hasPicks = (youDriversArr.length > 0) || (n1 || n2);
-        const hasMatchup = !!String(data.opponent || "").trim();               // opponent exists
-        const hasContext = (data.tournament != null || data.race != null || data.round != null);
-        const status = String(data.status || "").trim().toLowerCase();
 
-        // 1) NOT STARTED / NO SEEDINGS YET
-        // If there's no matchup data at all, don't call it eliminated.
-        if (!status || status === "pending" || (!hasMatchup && !hasContext && !hasPicks)) {
+        // “real opponent” check (treat blanks/TBD/bye as not started)
+        const opp = String(data.opponent || "").trim();
+        const hasRealOpponent =
+          !!opp &&
+          opp !== "-" &&
+          opp.toLowerCase() !== "tbd" &&
+          opp.toLowerCase() !== "bye";
+
+        // “real context” check (treat missing/0 as not started)
+        const tour = String(data.tournament ?? "").trim();
+        const rnd  = String(data.round ?? "").trim();
+        const hasRealContext =
+          tour !== "" && tour !== "0" &&
+          rnd  !== "" && rnd  !== "0";
+
+        // Build your picks display (reuse for both states)
+        const youListLabel = youDriversArr.length
+          ? "Your drivers:"
+          : ((n1 || n2) ? "Your numbers:" : "");
+         const youListText  = youDriversArr.length
+          ? youDriversArr.join("<br>")
+          : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+
+        const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+
+        // 1) NOT STARTED (seedings/matchups not set yet)
+        if (!hasRealOpponent || !hasRealContext) {
           out.innerHTML = `
             <div class="microBox" style="margin-top:6px;">
               <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
               <div class="microMeta elimSub">
-                Calm down, son. It's not the weekend yet, the tourney hasn't started.
+                Seedings/matchups aren’t set yet.
               </div>
+
+              ${youListText ? `
+                <div style="margin-top:10px;">
+                  <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                  <div class="microMeta">${youListHtml}</div>
+                </div>
+              ` : ``}
             </div>
           `;
           return;
         }
 
-// 2) ELIMINATED (only if we actually have enough info to mean it)
-if (status !== "active") {
-  const youListLabel = youDriversArr.length ? "Your drivers:" : ((n1 || n2) ? "Your numbers:" : "");
-  const youListText  = youDriversArr.length
-    ? youDriversArr.join("<br>")
-    : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+        // 2) ELIMINATED (only after a real matchup/context exists)
+        if (status !== "active") {
+          out.innerHTML = `
+            <div class="microBox" style="margin-top:6px;">
+              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+              <div class="microMeta elimSub">
+                ${escapeHtml(data.you || name)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
+              </div>
 
-  const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
-
-  out.innerHTML = `
-    <div class="microBox" style="margin-top:6px;">
-      <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-      <div class="microMeta elimSub">
-        ${escapeHtml(data.you || name)}, you're eliminated…but here's your shit anyway. Maybe you can still win $25. Don't suck next time.<br><br>
-      </div>
-
-      ${youListText ? `
-        <div class="microTitle">${escapeHtml(youListLabel)}</div>
-        <div class="microMeta">${youListHtml}</div>
-      ` : ``}
-    </div>
-  `;
-  return;
-}
-
-// 3) ACTIVE matchup (your existing “active” UI continues below)
+              ${youListText ? `
+                <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                <div class="microMeta">${youListHtml}</div>
+              ` : ``}
+            </div>
+          `;
+          return;
+        }
 
 
         const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
