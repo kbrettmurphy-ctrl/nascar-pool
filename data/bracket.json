@@ -7,7 +7,80 @@
       "round": 1,
       "raceLabel": "Daytona",
       "isCurrent": true,
-      "matchups": []
+      "matchups": [
+        {
+          "p1": "Jason",
+          "p2": "Don",
+          "s1": "1",
+          "s2": "16",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Chris",
+          "p2": "Nick",
+          "s1": "2",
+          "s2": "15",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Rob",
+          "p2": "Nate C.",
+          "s1": "3",
+          "s2": "14",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Beau",
+          "p2": "Bob",
+          "s1": "4",
+          "s2": "13",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "s1": "5",
+          "s2": "12",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Pat",
+          "p2": "Stacy",
+          "s1": "6",
+          "s2": "11",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Justin",
+          "p2": "Steven",
+          "s1": "7",
+          "s2": "10",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "p1": "Brett",
+          "p2": "Tyler",
+          "s1": "8",
+          "s2": "9",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        }
+      ]
     },
     {
       "round": 2,
