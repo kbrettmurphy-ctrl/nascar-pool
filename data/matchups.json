@@ -2,6 +2,167 @@
   "tournament": 1,
   "race": "Daytona",
   "round": 1,
-  "matchups": [],
+  "matchups": [
+    {
+      "p1": "Jason",
+      "p2": "Don",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Chris",
+      "p2": "Nick",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Rob",
+      "p2": "Nate C.",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Beau",
+      "p2": "Bob",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Russ",
+      "p2": "Nate M.",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Pat",
+      "p2": "Stacy",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Justin",
+      "p2": "Steven",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Brett",
+      "p2": "Tyler",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    }
+  ],
   "eliminated": []
 }
