@@ -2,9 +2,19 @@
   "Beau": [],
   "Bob": [],
   "Brett": [],
-  "Chris": [],
+  "Chris": [
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    }
+  ],
   "Don": [],
-  "Jason": [],
+  "Jason": [
+    {
+      "driver": "Chase Briscoe",
+      "count": 1
+    }
+  ],
   "Justin": [],
   "Nate C.": [],
   "Nate M.": [],
