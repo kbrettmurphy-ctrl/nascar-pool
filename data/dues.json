@@ -61,9 +61,9 @@
   },
   "Pat": {
     "name": "Pat",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Rob": {
     "name": "Rob",
@@ -79,9 +79,9 @@
   },
   "Stacy": {
     "name": "Stacy",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Steven": {
     "name": "Steven",
