@@ -1,386 +1,314 @@
 {
   "Beau": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Beau",
-    "opponent": "Bob",
     "youDrivers": [
-      "Austin Dillon",
-      "Josh Berry"
-    ],
-    "oppDrivers": [
-      "Cole Custer",
-      "Noah Gragson"
+      "",
+      ""
     ],
     "youNums": [
-      7,
-      14
+      "",
+      ""
     ],
-    "oppNums": [
-      23,
-      25
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Bob": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Bob",
-    "opponent": "Beau",
+    "opponent": "Nate C.",
     "youDrivers": [
-      "Cole Custer",
-      "Noah Gragson"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Austin Dillon",
-      "Josh Berry"
+      "",
+      ""
     ],
     "youNums": [
-      23,
-      25
+      "",
+      ""
     ],
     "oppNums": [
-      7,
-      14
+      "",
+      ""
     ],
     "status": "active"
   },
   "Brett": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Brett",
-    "opponent": "Tyler",
+    "opponent": "Justin",
     "youDrivers": [
-      "Riley Herbst",
-      "Ricky Stenhouse Jr."
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Ty Gibbs",
-      "Cody Ware"
+      "",
+      ""
     ],
     "youNums": [
-      28,
-      16
+      "",
+      ""
     ],
     "oppNums": [
-      20,
-      29
+      "",
+      ""
     ],
     "status": "active"
   },
   "Chris": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Chris",
-    "opponent": "Nick",
+    "opponent": "Jason",
     "youDrivers": [
-      "Kyle Busch",
-      "Connor Zilisch"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Carson Hocevar",
-      "Shane van Gisbergen"
+      "",
+      ""
     ],
     "youNums": [
-      1,
-      32
+      "",
+      ""
     ],
     "oppNums": [
-      6,
-      13
+      "",
+      ""
     ],
     "status": "active"
   },
   "Don": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Don",
-    "opponent": "Jason",
     "youDrivers": [
-      "Christopher Bell",
-      "Ryan Blaney"
-    ],
-    "oppDrivers": [
-      "Chase Briscoe",
-      "Brad Keselowski"
+      "",
+      ""
     ],
     "youNums": [
-      12,
-      5
+      "",
+      ""
     ],
-    "oppNums": [
-      2,
-      9
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Jason": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Jason",
-    "opponent": "Don",
+    "opponent": "Chris",
     "youDrivers": [
-      "Chase Briscoe",
-      "Brad Keselowski"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Christopher Bell",
-      "Ryan Blaney"
+      "",
+      ""
     ],
     "youNums": [
-      2,
-      9
+      "",
+      ""
     ],
     "oppNums": [
-      12,
-      5
+      "",
+      ""
     ],
     "status": "active"
   },
   "Justin": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Justin",
-    "opponent": "Steven",
+    "opponent": "Brett",
     "youDrivers": [
-      "Erik Jones",
-      "Michael McDowell"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Alex Bowman",
-      "Zane Smith"
+      "",
+      ""
     ],
     "youNums": [
-      24,
-      10
+      "",
+      ""
     ],
     "oppNums": [
-      21,
-      30
+      "",
+      ""
     ],
     "status": "active"
   },
   "Nate C.": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Nate C.",
-    "opponent": "Rob",
+    "opponent": "Bob",
     "youDrivers": [
-      "Bubba Wallace",
-      "Joey Logano"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Casey Mears",
-      "Daniel Suárez"
+      "",
+      ""
     ],
     "youNums": [
-      27,
-      3
+      "",
+      ""
     ],
     "oppNums": [
-      17,
-      15
+      "",
+      ""
     ],
     "status": "active"
   },
   "Nate M.": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Nate M.",
-    "opponent": "Russ",
+    "opponent": "Stacy",
     "youDrivers": [
-      "Denny Hamlin",
-      "Tyler Reddick"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Kyle Larson",
-      "Todd Gilliland"
+      "",
+      ""
     ],
     "youNums": [
-      22,
-      26
+      "",
+      ""
     ],
     "oppNums": [
-      8,
-      18
+      "",
+      ""
     ],
     "status": "active"
   },
   "Nick": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Nick",
-    "opponent": "Chris",
     "youDrivers": [
-      "Carson Hocevar",
-      "Shane van Gisbergen"
-    ],
-    "oppDrivers": [
-      "Kyle Busch",
-      "Connor Zilisch"
+      "",
+      ""
     ],
     "youNums": [
-      6,
-      13
+      "",
+      ""
     ],
-    "oppNums": [
-      1,
-      32
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Pat": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Pat",
-    "opponent": "Stacy",
     "youDrivers": [
-      "A. J. Allmendinger",
-      "Ryan Preece"
-    ],
-    "oppDrivers": [
-      "Chase Elliott",
-      "John Hunter Nemechek"
+      "",
+      ""
     ],
     "youNums": [
-      31,
-      19
+      "",
+      ""
     ],
-    "oppNums": [
-      4,
-      11
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Rob": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Rob",
-    "opponent": "Nate C.",
     "youDrivers": [
-      "Casey Mears",
-      "Daniel Suárez"
-    ],
-    "oppDrivers": [
-      "Bubba Wallace",
-      "Joey Logano"
+      "",
+      ""
     ],
     "youNums": [
-      17,
-      15
+      "",
+      ""
     ],
-    "oppNums": [
-      27,
-      3
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Russ": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Russ",
-    "opponent": "Nate M.",
     "youDrivers": [
-      "Kyle Larson",
-      "Todd Gilliland"
-    ],
-    "oppDrivers": [
-      "Denny Hamlin",
-      "Tyler Reddick"
+      "",
+      ""
     ],
     "youNums": [
-      8,
-      18
+      "",
+      ""
     ],
-    "oppNums": [
-      22,
-      26
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Stacy": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Stacy",
-    "opponent": "Pat",
+    "opponent": "Nate M.",
     "youDrivers": [
-      "Chase Elliott",
-      "John Hunter Nemechek"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "A. J. Allmendinger",
-      "Ryan Preece"
+      "",
+      ""
     ],
     "youNums": [
-      4,
-      11
+      "",
+      ""
     ],
     "oppNums": [
-      31,
-      19
+      "",
+      ""
     ],
     "status": "active"
   },
   "Steven": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Steven",
-    "opponent": "Justin",
     "youDrivers": [
-      "Alex Bowman",
-      "Zane Smith"
-    ],
-    "oppDrivers": [
-      "Erik Jones",
-      "Michael McDowell"
+      "",
+      ""
     ],
     "youNums": [
-      21,
-      30
+      "",
+      ""
     ],
-    "oppNums": [
-      24,
-      10
-    ],
-    "status": "active"
+    "status": "not_in_round"
   },
   "Tyler": {
     "tournament": 1,
-    "race": "Daytona",
-    "round": 1,
+    "race": "Atlanta",
+    "round": 2,
     "you": "Tyler",
-    "opponent": "Brett",
     "youDrivers": [
-      "Ty Gibbs",
-      "Cody Ware"
-    ],
-    "oppDrivers": [
-      "Riley Herbst",
-      "Ricky Stenhouse Jr."
+      "",
+      ""
     ],
     "youNums": [
-      20,
-      29
+      "",
+      ""
     ],
-    "oppNums": [
-      28,
-      16
-    ],
-    "status": "active"
+    "status": "not_in_round"
   }
 }
