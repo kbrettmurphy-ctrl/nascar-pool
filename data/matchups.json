@@ -4,8 +4,8 @@
   "round": 2,
   "matchups": [
     {
-      "p1": "Jason",
-      "p2": "Chris",
+      "p1": "Brett",
+      "p2": "Nate C.",
       "p1Drivers": [
         "",
         ""
@@ -24,8 +24,8 @@
       ]
     },
     {
-      "p1": "Nate C.",
-      "p2": "Bob",
+      "p1": "Stacy",
+      "p2": "Nate M.",
       "p1Drivers": [
         "",
         ""
@@ -44,8 +44,8 @@
       ]
     },
     {
-      "p1": "Nate M.",
-      "p2": "Stacy",
+      "p1": "Bob",
+      "p2": "Jason",
       "p1Drivers": [
         "",
         ""
@@ -65,7 +65,87 @@
     },
     {
       "p1": "Justin",
-      "p2": "Brett",
+      "p2": "Chris",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Tyler",
+      "p2": "Pat",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Rob",
+      "p2": "Beau",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Steven",
+      "p2": "Nick",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Russ",
+      "p2": "Don",
       "p1Drivers": [
         "",
         ""
@@ -84,14 +164,5 @@
       ]
     }
   ],
-  "eliminated": [
-    "Beau",
-    "Don",
-    "Nick",
-    "Pat",
-    "Rob",
-    "Russ",
-    "Steven",
-    "Tyler"
-  ]
+  "eliminated": []
 }
