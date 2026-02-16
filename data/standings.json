@@ -168,6 +168,38 @@
   "tournaments": {
     "Tournament 1": [
       {
+        "rank": 1,
+        "player": "Brett"
+      },
+      {
+        "rank": 2,
+        "player": "Nate C."
+      },
+      {
+        "rank": 3,
+        "player": "Stacy"
+      },
+      {
+        "rank": 4,
+        "player": "Nate M."
+      },
+      {
+        "rank": 5,
+        "player": "Bob"
+      },
+      {
+        "rank": 6,
+        "player": "Jason"
+      },
+      {
+        "rank": 7,
+        "player": "Justin"
+      },
+      {
+        "rank": 8,
+        "player": "Chris"
+      },
+      {
         "rank": 9,
         "player": "Tyler"
       },
@@ -181,11 +213,11 @@
       },
       {
         "rank": 12,
-        "player": "Steven"
+        "player": "Beau"
       },
       {
         "rank": 13,
-        "player": "Beau"
+        "player": "Steven"
       },
       {
         "rank": 14,
