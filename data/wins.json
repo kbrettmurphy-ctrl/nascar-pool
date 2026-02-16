@@ -38,7 +38,7 @@
   "Justin": {
     "player": "Justin",
     "raceWins": 0,
-    "bracketWins": 0,
+    "bracketWins": 1,
     "tourneyWins": 0
   },
   "Nate C.": {
@@ -49,14 +49,14 @@
   },
   "Nate M.": {
     "player": "Nate M.",
-    "raceWins": 0,
+    "raceWins": 1,
     "bracketWins": 1,
     "tourneyWins": 0
   },
   "Nick": {
     "player": "Nick",
-    "raceWins": 1,
-    "bracketWins": 1,
+    "raceWins": 0,
+    "bracketWins": 0,
     "tourneyWins": 0
   },
   "Pat": {
