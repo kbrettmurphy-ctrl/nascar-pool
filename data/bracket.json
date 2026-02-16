@@ -5,77 +5,77 @@
   "rounds": [
     {
       "round": 1,
-      "raceLabel": "Daytona",
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": [
         {
+          "s1": "",
+          "s2": "",
           "p1": "Jason",
           "p2": "Don",
-          "s1": "1",
-          "s2": "16",
           "a1": 20.5,
           "a2": 31,
           "winner": "Jason"
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Chris",
           "p2": "Nick",
-          "s1": "2",
-          "s2": "15",
           "a1": 24,
           "a2": 24,
           "winner": ""
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Rob",
           "p2": "Nate C.",
-          "s1": "3",
-          "s2": "14",
           "a1": 22.5,
           "a2": 6.5,
           "winner": "Nate C."
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Beau",
           "p2": "Bob",
-          "s1": "4",
-          "s2": "13",
           "a1": 23,
           "a2": 17.5,
           "winner": "Bob"
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Russ",
           "p2": "Nate M.",
-          "s1": "5",
-          "s2": "12",
           "a1": 27.5,
           "a2": 16,
           "winner": "Nate M."
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Pat",
           "p2": "Stacy",
-          "s1": "6",
-          "s2": "11",
           "a1": 22,
           "a2": 15,
           "winner": "Stacy"
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Justin",
           "p2": "Steven",
-          "s1": "7",
-          "s2": "10",
           "a1": 21.5,
           "a2": 23,
           "winner": "Justin"
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Brett",
           "p2": "Tyler",
-          "s1": "8",
-          "s2": "9",
           "a1": 5,
           "a2": 20,
           "winner": "Brett"
@@ -88,52 +88,88 @@
       "isCurrent": true,
       "matchups": [
         {
-          "p1": "Jason",
-          "p2": "Chris",
-          "s1": "1",
-          "s2": "2",
-          "a1": null,
-          "a2": null,
+          "s1": "",
+          "s2": "",
+          "p1": "Brett",
+          "p2": "Nate C.",
+          "a1": 0,
+          "a2": 0,
           "winner": ""
         },
         {
-          "p1": "Nate C.",
-          "p2": "Bob",
-          "s1": "14",
-          "s2": "13",
-          "a1": null,
-          "a2": null,
+          "s1": "",
+          "s2": "",
+          "p1": "Stacy",
+          "p2": "Nate M.",
+          "a1": 0,
+          "a2": 0,
           "winner": ""
         },
         {
-          "p1": "Nate M.",
-          "p2": "Stacy",
-          "s1": "12",
-          "s2": "11",
-          "a1": null,
-          "a2": null,
+          "s1": "",
+          "s2": "",
+          "p1": "Bob",
+          "p2": "Jason",
+          "a1": 0,
+          "a2": 0,
           "winner": ""
         },
         {
+          "s1": "",
+          "s2": "",
           "p1": "Justin",
-          "p2": "Brett",
-          "s1": "7",
-          "s2": "8",
-          "a1": null,
-          "a2": null,
+          "p2": "Chris",
+          "a1": 0,
+          "a2": 0,
+          "winner": ""
+        },
+        {
+          "s1": "",
+          "s2": "",
+          "p1": "Tyler",
+          "p2": "Pat",
+          "a1": 0,
+          "a2": 0,
+          "winner": ""
+        },
+        {
+          "s1": "",
+          "s2": "",
+          "p1": "Rob",
+          "p2": "Beau",
+          "a1": 0,
+          "a2": 0,
+          "winner": ""
+        },
+        {
+          "s1": "",
+          "s2": "",
+          "p1": "Steven",
+          "p2": "Nick",
+          "a1": 0,
+          "a2": 0,
+          "winner": ""
+        },
+        {
+          "s1": "",
+          "s2": "",
+          "p1": "Russ",
+          "p2": "Don",
+          "a1": 0,
+          "a2": 0,
           "winner": ""
         }
       ]
     },
     {
       "round": 3,
-      "raceLabel": "COTA",
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": []
     },
     {
       "round": 4,
-      "raceLabel": "Phoenix",
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": []
     }
