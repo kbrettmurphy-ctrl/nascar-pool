@@ -5,6 +5,7 @@
   "rounds": [
     {
       "round": 1,
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": [
         {
@@ -83,6 +84,7 @@
     },
     {
       "round": 2,
+      "raceLabel": "Atlanta",
       "isCurrent": true,
       "matchups": [
         {
@@ -161,11 +163,13 @@
     },
     {
       "round": 3,
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": []
     },
     {
       "round": 4,
+      "raceLabel": "",
       "isCurrent": false,
       "matchups": []
     }
