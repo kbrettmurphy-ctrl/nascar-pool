@@ -8,20 +8,20 @@
   "Bob": {
     "name": "Bob",
     "paid": 180,
-    "winnings": 10,
-    "balance": -10
+    "winnings": 0,
+    "balance": 0
   },
   "Brett": {
     "name": "Brett",
     "paid": 0,
-    "winnings": 10,
-    "balance": 170
+    "winnings": 0,
+    "balance": 180
   },
   "Chris": {
     "name": "Chris",
     "paid": 0,
-    "winnings": 10,
-    "balance": 170
+    "winnings": 0,
+    "balance": 180
   },
   "Don": {
     "name": "Don",
@@ -32,26 +32,26 @@
   "Jason": {
     "name": "Jason",
     "paid": 0,
-    "winnings": 10,
-    "balance": 170
+    "winnings": 0,
+    "balance": 180
   },
   "Justin": {
     "name": "Justin",
     "paid": 0,
-    "winnings": 10,
-    "balance": 170
+    "winnings": 0,
+    "balance": 180
   },
   "Nate C.": {
     "name": "Nate C.",
     "paid": 0,
-    "winnings": 10,
-    "balance": 170
+    "winnings": 0,
+    "balance": 180
   },
   "Nate M.": {
     "name": "Nate M.",
     "paid": 0,
-    "winnings": 35,
-    "balance": 145
+    "winnings": 25,
+    "balance": 155
   },
   "Nick": {
     "name": "Nick",
@@ -80,8 +80,8 @@
   "Stacy": {
     "name": "Stacy",
     "paid": 180,
-    "winnings": 10,
-    "balance": -10
+    "winnings": 0,
+    "balance": 0
   },
   "Steven": {
     "name": "Steven",
