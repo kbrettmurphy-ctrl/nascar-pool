@@ -6,12 +6,12 @@
     "you": "Beau",
     "opponent": "Rob",
     "youDrivers": [
-      "Joey Logano",
-      "Noah Gragson"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Austin Dillon",
-      "Ty Dillon"
+      "",
+      ""
     ],
     "youNums": [
       4,
@@ -33,12 +33,12 @@
     "you": "Bob",
     "opponent": "Jason",
     "youDrivers": [
-      "Austin Cindric",
-      "A. J. Allmendinger"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Justin Haley",
-      "Tyler Reddick"
+      "",
+      ""
     ],
     "youNums": [
       2,
@@ -60,12 +60,12 @@
     "you": "Brett",
     "opponent": "Nate C.",
     "youDrivers": [
-      "Daniel Suárez",
-      "Erik Jones"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Kyle Larson",
-      "Chase Briscoe"
+      "",
+      ""
     ],
     "youNums": [
       29,
@@ -87,12 +87,12 @@
     "you": "Chris",
     "opponent": "Justin",
     "youDrivers": [
-      "Ryan Preece",
-      "Brad Keselowski"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Riley Herbst",
-      "Carson Hocevar"
+      "",
+      ""
     ],
     "youNums": [
       11,
@@ -114,12 +114,12 @@
     "you": "Don",
     "opponent": "Russ",
     "youDrivers": [
-      "Chris Buescher",
-      "Bubba Wallace"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Zane Smith",
-      "Chase Elliott"
+      "",
+      ""
     ],
     "youNums": [
       8,
@@ -141,12 +141,12 @@
     "you": "Jason",
     "opponent": "Bob",
     "youDrivers": [
-      "Justin Haley",
-      "Tyler Reddick"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Austin Cindric",
-      "A. J. Allmendinger"
+      "",
+      ""
     ],
     "youNums": [
       21,
@@ -168,12 +168,12 @@
     "you": "Justin",
     "opponent": "Chris",
     "youDrivers": [
-      "Riley Herbst",
-      "Carson Hocevar"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Ryan Preece",
-      "Brad Keselowski"
+      "",
+      ""
     ],
     "youNums": [
       27,
@@ -195,12 +195,12 @@
     "you": "Nate C.",
     "opponent": "Brett",
     "youDrivers": [
-      "Kyle Larson",
-      "Chase Briscoe"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Daniel Suárez",
-      "Erik Jones"
+      "",
+      ""
     ],
     "youNums": [
       17,
@@ -222,12 +222,12 @@
     "you": "Nate M.",
     "opponent": "Stacy",
     "youDrivers": [
-      "Cody Ware",
-      "Alex Bowman"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "John Hunter Nemechek",
-      "Josh Berry"
+      "",
+      ""
     ],
     "youNums": [
       31,
@@ -249,12 +249,12 @@
     "you": "Nick",
     "opponent": "Steven",
     "youDrivers": [
-      "Shane van Gisbergen",
-      "Christopher Bell"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Cole Custer",
-      "William Byron"
+      "",
+      ""
     ],
     "youNums": [
       30,
@@ -276,12 +276,12 @@
     "you": "Pat",
     "opponent": "Tyler",
     "youDrivers": [
-      "Kyle Busch",
-      "Michael McDowell"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Ryan Blaney",
-      "Todd Gilliland"
+      "",
+      ""
     ],
     "youNums": [
       6,
@@ -303,12 +303,12 @@
     "you": "Rob",
     "opponent": "Beau",
     "youDrivers": [
-      "Austin Dillon",
-      "Ty Dillon"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Joey Logano",
-      "Noah Gragson"
+      "",
+      ""
     ],
     "youNums": [
       15,
@@ -330,12 +330,12 @@
     "you": "Russ",
     "opponent": "Don",
     "youDrivers": [
-      "Zane Smith",
-      "Chase Elliott"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Chris Buescher",
-      "Bubba Wallace"
+      "",
+      ""
     ],
     "youNums": [
       7,
@@ -357,12 +357,12 @@
     "you": "Stacy",
     "opponent": "Nate M.",
     "youDrivers": [
-      "John Hunter Nemechek",
-      "Josh Berry"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Cody Ware",
-      "Alex Bowman"
+      "",
+      ""
     ],
     "youNums": [
       22,
@@ -384,12 +384,12 @@
     "you": "Steven",
     "opponent": "Nick",
     "youDrivers": [
-      "Cole Custer",
-      "William Byron"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Shane van Gisbergen",
-      "Christopher Bell"
+      "",
+      ""
     ],
     "youNums": [
       23,
@@ -411,12 +411,12 @@
     "you": "Tyler",
     "opponent": "Pat",
     "youDrivers": [
-      "Ryan Blaney",
-      "Todd Gilliland"
+      "",
+      ""
     ],
     "oppDrivers": [
-      "Kyle Busch",
-      "Michael McDowell"
+      "",
+      ""
     ],
     "youNums": [
       1,
