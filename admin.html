@@ -723,69 +723,82 @@
   }
 
   async function importPaste(){
-    const msg = document.getElementById("importMsg");
-    hideMsg(msg);
+  const msg = document.getElementById("importMsg");
+  hideMsg(msg);
 
-    const sheetType = document.getElementById("sheetTypeSel").value;
-    const header    = document.getElementById("raceHeaderSel").value;
-    const rawText   = document.getElementById("rawPaste").value;
+  const sheetType = document.getElementById("sheetTypeSel").value;
+  const header    = document.getElementById("raceHeaderSel").value;
+  const rawText   = document.getElementById("rawPaste").value;
 
-    if(!header){ showMsg(msg, "Pick a race header.", true); return; }
-    if(!rawText.trim()){ showMsg(msg, "Paste the table block first.", true); return; }
+  if(!header){ showMsg(msg, "Pick a race header.", true); return; }
+  if(!rawText.trim()){ showMsg(msg, "Paste the table block first.", true); return; }
 
-    const st = String(sheetType || "").toLowerCase();
-    const isFinishes = st.includes("finish");
-    const isLineups  = st.includes("starting") || st.includes("lineup");
+  const st = String(sheetType || "").toLowerCase();
+  const isFinishes = st.includes("finish");
+  const isLineups  = st.includes("starting") || st.includes("lineup");
 
-    try{
-      showMsg(msg, "Importing…", false);
+  try{
+    showMsg(msg, "Importing…", false);
+    await new Promise(requestAnimationFrame);
+
+    const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
+    if(!r.ok) throw new Error(r.error || "API failed");
+
+    const rowsWritten = r?.data?.rowsWritten ?? "?";
+
+    if(isFinishes){
+      showMsg(msg, `Imported ✅ (${rowsWritten} rows). Updating stats…`, false);
       await new Promise(requestAnimationFrame);
 
-      const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
-      if(!r.ok) throw new Error(r.error || "API failed");
+      const r1 = await apiCall("adminCompileOverallRanks", {}, true);
+      if(!r1.ok) throw new Error(r1.error || "Ranks update failed");
 
-      const rowsWritten = r?.data?.rowsWritten ?? "?";
+      showMsg(msg, "Ranks updated. Updating H2H…", false);
+      await new Promise(requestAnimationFrame);
 
-      if(isFinishes){
-        showMsg(msg, `Imported ✅ (${rowsWritten} rows). Updating stats…`, false);
-        await new Promise(requestAnimationFrame);
+      const r2 = await apiCall("adminCompileHeadToHead", { scope: "ALL" }, true);
+      if(!r2.ok) throw new Error(r2.error || "H2H update failed");
 
-        const r1 = await apiCall("adminCompileOverallRanks", {}, true);
-        if(!r1.ok) throw new Error(r1.error || "Ranks update failed");
+      showMsg(msg, "H2H updated. Publishing JSON…", false);
+      await new Promise(requestAnimationFrame);
 
-        showMsg(msg, "Ranks updated. Updating H2H…", false);
-        await new Promise(requestAnimationFrame);
+      const r3 = await apiCall("adminPublishSnapshot", {}, true);
+      if(!r3.ok) throw new Error(r3.error || "Publish failed");
 
-        const r2 = await apiCall("adminCompileHeadToHead", { scope: "ALL" }, true);
-        if(!r2.ok) throw new Error(r2.error || "H2H update failed");
+      // Final success message
+      showMsg(msg, "Imported FINISHES + Stats updated + Published ✅", false);
 
-        showMsg(msg, "H2H updated. Publishing JSON…", false);
-        await new Promise(requestAnimationFrame);
-
-        const r3 = await apiCall("adminPublishSnapshot", {}, true);
-        if(!r3.ok) throw new Error(r3.error || "Publish failed");
-
-        showMsg(msg, "Imported FINISHES + Stats updated + Published ✅", false);
-
-      } else if(isLineups){
-        showMsg(msg, `Imported ✅ (${rowsWritten} rows). Publishing JSON…`, false);
-        await new Promise(requestAnimationFrame);
-
-        const r3 = await apiCall("adminPublishSnapshot", {}, true);
-        if(!r3.ok) throw new Error(r3.error || "Publish failed");
-
-        showMsg(msg, "Imported LINEUPS + Published ✅", false);
-
-      } else {
-        showMsg(msg, `Imported ✅ (${rowsWritten} rows)`, false);
+      // 🔔 Check for unavoidable rematch
+      try {
+        const warn = await apiCall("adminGetSwissRematchWarning", {}, true);
+        if (warn.ok && warn.data?.warning) {
+          msg.innerHTML += "<br>⚠️ Rematch unavoidable in this round (same record bucket).";
+          msg.style.display = "";
+        }
+      } catch (warnErr) {
+        console.warn("Rematch warning check failed:", warnErr);
       }
 
-      refreshContext();
+    } else if(isLineups){
 
-    } catch(e){
-      showMsg(msg, "Error: " + (e.message || e), true);
+      showMsg(msg, `Imported ✅ (${rowsWritten} rows). Publishing JSON…`, false);
+      await new Promise(requestAnimationFrame);
+
+      const r3 = await apiCall("adminPublishSnapshot", {}, true);
+      if(!r3.ok) throw new Error(r3.error || "Publish failed");
+
+      showMsg(msg, "Imported LINEUPS + Published ✅", false);
+
+    } else {
+      showMsg(msg, `Imported ✅ (${rowsWritten} rows)`, false);
     }
+
+    refreshContext();
+
+  } catch(e){
+    showMsg(msg, "Error: " + (e.message || e), true);
   }
+}
 
   async function runCompileOverallRanks(){
     const msg = document.getElementById("ranksMsg");
