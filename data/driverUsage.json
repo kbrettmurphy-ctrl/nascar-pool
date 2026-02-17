@@ -2,161 +2,161 @@
   "Beau": [
     {
       "driver": "Austin Dillon",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Josh Berry",
-      "uses": 1
+      "count": 1
     }
   ],
   "Bob": [
     {
       "driver": "Cole Custer",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Noah Gragson",
-      "uses": 1
+      "count": 1
     }
   ],
   "Brett": [
     {
       "driver": "Ricky Stenhouse Jr.",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Riley Herbst",
-      "uses": 1
+      "count": 1
     }
   ],
   "Chris": [
     {
       "driver": "Connor Zilisch",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Kyle Busch",
-      "uses": 1
+      "count": 1
     }
   ],
   "Don": [
     {
       "driver": "Christopher Bell",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Ryan Blaney",
-      "uses": 1
+      "count": 1
     }
   ],
   "Jason": [
     {
       "driver": "Brad Keselowski",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Chase Briscoe",
-      "uses": 1
+      "count": 1
     }
   ],
   "Justin": [
     {
       "driver": "Erik Jones",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Michael McDowell",
-      "uses": 1
+      "count": 1
     }
   ],
   "Nate C.": [
     {
       "driver": "Bubba Wallace",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Joey Logano",
-      "uses": 1
+      "count": 1
     }
   ],
   "Nate M.": [
     {
       "driver": "Denny Hamlin",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Tyler Reddick",
-      "uses": 1
+      "count": 1
     }
   ],
   "Nick": [
     {
       "driver": "Carson Hocevar",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Shane van Gisbergen",
-      "uses": 1
+      "count": 1
     }
   ],
   "Pat": [
     {
       "driver": "A. J. Allmendinger",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Ryan Preece",
-      "uses": 1
+      "count": 1
     }
   ],
   "Rob": [
     {
       "driver": "Casey Mears",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Daniel Suárez",
-      "uses": 1
+      "count": 1
     }
   ],
   "Russ": [
     {
       "driver": "Kyle Larson",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Todd Gilliland",
-      "uses": 1
+      "count": 1
     }
   ],
   "Stacy": [
     {
       "driver": "Chase Elliott",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "John Hunter Nemechek",
-      "uses": 1
+      "count": 1
     }
   ],
   "Steven": [
     {
       "driver": "Alex Bowman",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Zane Smith",
-      "uses": 1
+      "count": 1
     }
   ],
   "Tyler": [
     {
       "driver": "Cody Ware",
-      "uses": 1
+      "count": 1
     },
     {
       "driver": "Ty Gibbs",
-      "uses": 1
+      "count": 1
     }
   ]
 }
