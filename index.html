@@ -1614,7 +1614,7 @@ out.innerHTML =
       const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
 
       // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
-      const badgeKeys = headers.filter(h => h !== nameKey && h !== rankKey).slice(0, 4);
+      const badgeKeys = headers.filter(h => h !== nameKey && h !== rankKey).slice(0, 5);
 
       let html = `<div class="big">Overall</div>`;
       rows.forEach(r => {
