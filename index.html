@@ -978,15 +978,46 @@
       drivers:   "./data/driverUsage.json",
     };
 
-    async function fetchSnapshotJson(key, bustCache=false){
+    // --- Snapshot versioning (prevents stale GitHub Pages cache) ---
+    let SNAP_VER = null;          // encoded string
+    let SNAP_CTX = null;          // last context object
+
+    async function refreshSnapshotVersion_(){
+      // Always hard-bust context so we can read the latest publishedAt
+      const url = SNAP_MAP.context + (SNAP_MAP.context.includes("?") ? "&" : "?") + "v=" + Date.now();
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error("Context fetch failed (" + res.status + ")");
+      const ctx = await res.json();
+
+      SNAP_CTX = ctx;
+      SNAP_VER = encodeURIComponent(ctx && ctx.publishedAt ? ctx.publishedAt : String(Date.now()));
+      return ctx;
+    }
+
+    async function fetchSnapshotJson(key, forceRefreshVersion=false){
       const base = SNAP_MAP[key];
       if(!base) throw new Error("Unknown snapshot key: " + key);
 
-      const url = bustCache
-        ? base + (base.includes("?") ? "&" : "?") + "v=" + Date.now()
-        : base;
+      // Context is special: it *creates* the version.
+      if(key === "context"){
+        // Always no-store + always bust
+        const url = base + (base.includes("?") ? "&" : "?") + "v=" + Date.now();
+        const res = await fetch(url, { cache: "no-store" });
+        if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+        return await res.json();
+      }
 
-      const res = await fetch(url, { cache: bustCache ? "no-store" : "default" });
+      // For everything else, ensure we have a version (publishedAt)
+      if(!SNAP_VER || forceRefreshVersion){
+        try { await refreshSnapshotVersion_(); }
+        catch(e){
+          // If context fails for some reason, fall back to time-based bust
+          SNAP_VER = String(Date.now());
+        }
+      }
+
+      const url = base + (base.includes("?") ? "&" : "?") + "v=" + SNAP_VER;
+      const res = await fetch(url, { cache: "no-store" });
       if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
       return await res.json();
     }
@@ -1058,6 +1089,9 @@
     }
 
     function refreshActiveView() {
+      SNAP_VER = null;
+      SNAP_CTX = null;
+      _cache_myMatchupsAll = null;
       if (activeView === "current") loadCurrent();
       else if (activeView === "standings") loadStandings();
       else if (activeView === "dues") loadDues();
