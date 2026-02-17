@@ -2,97 +2,97 @@
   "Beau": {
     "player": "Beau",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Bob": {
     "player": "Bob",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Brett": {
     "player": "Brett",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Chris": {
     "player": "Chris",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Don": {
     "player": "Don",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Jason": {
     "player": "Jason",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Justin": {
     "player": "Justin",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Nate C.": {
     "player": "Nate C.",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Nate M.": {
     "player": "Nate M.",
     "raceWins": 1,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Nick": {
     "player": "Nick",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Pat": {
     "player": "Pat",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Rob": {
     "player": "Rob",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Russ": {
     "player": "Russ",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Stacy": {
     "player": "Stacy",
     "raceWins": 0,
-    "bracketWins": 1,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 1
   },
   "Steven": {
     "player": "Steven",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   },
   "Tyler": {
     "player": "Tyler",
     "raceWins": 0,
-    "bracketWins": 0,
-    "tourneyWins": 0
+    "tourneyWins": 0,
+    "bracketWins": 0
   }
 }
