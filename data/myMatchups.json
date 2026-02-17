@@ -1,58 +1,4 @@
 {
-  "Beau": {
-    "tournament": 1,
-    "race": "Atlanta",
-    "round": 2,
-    "you": "Beau",
-    "opponent": "Rob",
-    "youDrivers": [
-      "",
-      ""
-    ],
-    "oppDrivers": [
-      "",
-      ""
-    ],
-    "youNums": [
-      "",
-      ""
-    ],
-    "oppNums": [
-      "",
-      ""
-    ],
-    "youAvg": 0,
-    "oppAvg": 0,
-    "winner": "",
-    "status": "active"
-  },
-  "Bob": {
-    "tournament": 1,
-    "race": "Atlanta",
-    "round": 2,
-    "you": "Bob",
-    "opponent": "Jason",
-    "youDrivers": [
-      "",
-      ""
-    ],
-    "oppDrivers": [
-      "",
-      ""
-    ],
-    "youNums": [
-      "",
-      ""
-    ],
-    "oppNums": [
-      "",
-      ""
-    ],
-    "youAvg": 0,
-    "oppAvg": 0,
-    "winner": "",
-    "status": "active"
-  },
   "Brett": {
     "tournament": 1,
     "race": "Atlanta",
@@ -80,12 +26,12 @@
     "winner": "",
     "status": "active"
   },
-  "Chris": {
+  "Nate C.": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Chris",
-    "opponent": "Justin",
+    "you": "Nate C.",
+    "opponent": "Brett",
     "youDrivers": [
       "",
       ""
@@ -107,12 +53,66 @@
     "winner": "",
     "status": "active"
   },
-  "Don": {
+  "Stacy": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Don",
-    "opponent": "Russ",
+    "you": "Stacy",
+    "opponent": "Nate M.",
+    "youDrivers": [
+      "",
+      ""
+    ],
+    "oppDrivers": [
+      "",
+      ""
+    ],
+    "youNums": [
+      "",
+      ""
+    ],
+    "oppNums": [
+      "",
+      ""
+    ],
+    "youAvg": 0,
+    "oppAvg": 0,
+    "winner": "",
+    "status": "active"
+  },
+  "Nate M.": {
+    "tournament": 1,
+    "race": "Atlanta",
+    "round": 2,
+    "you": "Nate M.",
+    "opponent": "Stacy",
+    "youDrivers": [
+      "",
+      ""
+    ],
+    "oppDrivers": [
+      "",
+      ""
+    ],
+    "youNums": [
+      "",
+      ""
+    ],
+    "oppNums": [
+      "",
+      ""
+    ],
+    "youAvg": 0,
+    "oppAvg": 0,
+    "winner": "",
+    "status": "active"
+  },
+  "Bob": {
+    "tournament": 1,
+    "race": "Atlanta",
+    "round": 2,
+    "you": "Bob",
+    "opponent": "Jason",
     "youDrivers": [
       "",
       ""
@@ -188,12 +188,12 @@
     "winner": "",
     "status": "active"
   },
-  "Nate C.": {
+  "Chris": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Nate C.",
-    "opponent": "Brett",
+    "you": "Chris",
+    "opponent": "Justin",
     "youDrivers": [
       "",
       ""
@@ -215,39 +215,12 @@
     "winner": "",
     "status": "active"
   },
-  "Nate M.": {
+  "Tyler": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Nate M.",
-    "opponent": "Stacy",
-    "youDrivers": [
-      "",
-      ""
-    ],
-    "oppDrivers": [
-      "",
-      ""
-    ],
-    "youNums": [
-      "",
-      ""
-    ],
-    "oppNums": [
-      "",
-      ""
-    ],
-    "youAvg": 0,
-    "oppAvg": 0,
-    "winner": "",
-    "status": "active"
-  },
-  "Nick": {
-    "tournament": 1,
-    "race": "Atlanta",
-    "round": 2,
-    "you": "Nick",
-    "opponent": "Steven",
+    "you": "Tyler",
+    "opponent": "Pat",
     "youDrivers": [
       "",
       ""
@@ -323,39 +296,12 @@
     "winner": "",
     "status": "active"
   },
-  "Russ": {
+  "Beau": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Russ",
-    "opponent": "Don",
-    "youDrivers": [
-      "",
-      ""
-    ],
-    "oppDrivers": [
-      "",
-      ""
-    ],
-    "youNums": [
-      "",
-      ""
-    ],
-    "oppNums": [
-      "",
-      ""
-    ],
-    "youAvg": 0,
-    "oppAvg": 0,
-    "winner": "",
-    "status": "active"
-  },
-  "Stacy": {
-    "tournament": 1,
-    "race": "Atlanta",
-    "round": 2,
-    "you": "Stacy",
-    "opponent": "Nate M.",
+    "you": "Beau",
+    "opponent": "Rob",
     "youDrivers": [
       "",
       ""
@@ -404,12 +350,66 @@
     "winner": "",
     "status": "active"
   },
-  "Tyler": {
+  "Nick": {
     "tournament": 1,
     "race": "Atlanta",
     "round": 2,
-    "you": "Tyler",
-    "opponent": "Pat",
+    "you": "Nick",
+    "opponent": "Steven",
+    "youDrivers": [
+      "",
+      ""
+    ],
+    "oppDrivers": [
+      "",
+      ""
+    ],
+    "youNums": [
+      "",
+      ""
+    ],
+    "oppNums": [
+      "",
+      ""
+    ],
+    "youAvg": 0,
+    "oppAvg": 0,
+    "winner": "",
+    "status": "active"
+  },
+  "Russ": {
+    "tournament": 1,
+    "race": "Atlanta",
+    "round": 2,
+    "you": "Russ",
+    "opponent": "Don",
+    "youDrivers": [
+      "",
+      ""
+    ],
+    "oppDrivers": [
+      "",
+      ""
+    ],
+    "youNums": [
+      "",
+      ""
+    ],
+    "oppNums": [
+      "",
+      ""
+    ],
+    "youAvg": 0,
+    "oppAvg": 0,
+    "winner": "",
+    "status": "active"
+  },
+  "Don": {
+    "tournament": 1,
+    "race": "Atlanta",
+    "round": 2,
+    "you": "Don",
+    "opponent": "Russ",
     "youDrivers": [
       "",
       ""
