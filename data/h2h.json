@@ -2,1473 +2,993 @@
   "Beau": [
     {
       "opponent": "Bob",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Bob": [
     {
       "opponent": "Beau",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Brett": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     }
   ],
   "Chris": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Don": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Jason": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Justin": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Nate C.": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Nate M.": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Nick": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Pat": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Rob": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Russ": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Stacy": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(1-0)",
-      "wins": 1,
-      "losses": 0
+      "record": "(1-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Steven": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Tyler",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ],
   "Tyler": [
     {
       "opponent": "Beau",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Bob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Brett",
-      "record": "(0-1)",
-      "wins": 0,
-      "losses": 1
+      "record": "(0-1)"
     },
     {
       "opponent": "Chris",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Don",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Jason",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Justin",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate C.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nate M.",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Nick",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Pat",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Rob",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Russ",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Stacy",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     },
     {
       "opponent": "Steven",
-      "record": "(0-0)",
-      "wins": 0,
-      "losses": 0
+      "record": "(0-0)"
     }
   ]
 }
