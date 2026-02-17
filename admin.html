@@ -726,30 +726,62 @@
     const msg = document.getElementById("importMsg");
     hideMsg(msg);
 
-    const sheetType = document.getElementById("sheetTypeSel").value;
-    const header = document.getElementById("raceHeaderSel").value;
-    const rawText = document.getElementById("rawPaste").value;
+    const sheetType = document.getElementById("sheetTypeSel").value;      // "Starting Lineups" or "Finishes"
+    const header    = document.getElementById("raceHeaderSel").value;
+    const rawText   = document.getElementById("rawPaste").value;
 
     if(!header){ showMsg(msg, "Pick a race header.", true); return; }
     if(!rawText.trim()){ showMsg(msg, "Paste the table block first.", true); return; }
 
+    const st = String(sheetType || "").toLowerCase();
+    const isFinishes = st.includes("finish");
+    const isLineups  = st.includes("starting") || st.includes("lineup");
+
     try{
       showMsg(msg, "Importing…", false);
+
+      // 1) Import the pasted block into the selected sheet
       const r = await apiCall("adminImportPastedList", { sheetType, header, rawText }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
 
-      // Auto run ranks after finishes import
-      if(String(sheetType).toLowerCase().includes("finish")){
-        showMsg(msg, "Imported. Now updating ranks…", false);
-        const rr = await apiCall("adminCompileOverallRanks", {}, true);
-        if(!rr.ok) throw new Error(rr.error || "Ranks update failed");
-        showMsg(msg, "Imported + Ranks updated ✅", false);
+      const rowsWritten = (r.data && (r.data.rowsWritten ?? r.data.count)) || "?";
+
+      // 2) Post-import actions
+      if(isFinishes){
+        showMsg(msg, `Imported ✅ (${rowsWritten} rows). Updating stats…`, false);
+
+        // Overall ranks (Swiss)
+        const r1 = await apiCall("adminCompileOverallRanks", {}, true);
+        if(!r1.ok) throw new Error(r1.error || "Ranks update failed");
+
+        // H2H (your admin wrapper takes a scope param)
+        showMsg(msg, "Ranks updated. Updating H2H…", false);
+        const r2 = await apiCall("adminCompileHeadToHead", { scope: "ALL" }, true);
+        if(!r2.ok) throw new Error(r2.error || "H2H update failed");
+
+        // Publish JSON so the site updates
+        showMsg(msg, "H2H updated. Publishing JSON…", false);
+        const r3 = await apiCall("adminPublishSnapshot", {}, true);
+        if(!r3.ok) throw new Error(r3.error || "Publish failed");
+
+        showMsg(msg, "Imported FINISHES + Stats updated + Published ✅", false);
+
+      } else if(isLineups){
+        // Lineups affect assignments/drivers shown on the site, not ranks.
+        showMsg(msg, `Imported ✅ (${rowsWritten} rows). Publishing JSON…`, false);
+
+        const r3 = await apiCall("adminPublishSnapshot", {}, true);
+        if(!r3.ok) throw new Error(r3.error || "Publish failed");
+
+        showMsg(msg, "Imported LINEUPS + Published ✅", false);
+
       } else {
-        showMsg(msg, `Imported ✅ (${r.data?.rowsWritten || "?"} rows)`, false);
+        showMsg(msg, `Imported ✅ (${rowsWritten} rows)`, false);
       }
 
       refreshContext();
-    }catch(e){
+
+    } catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
     }
   }
