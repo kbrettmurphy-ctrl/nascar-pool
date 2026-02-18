@@ -1642,11 +1642,7 @@ out.innerHTML =
       // Guess common header names without breaking if yours differ.
       const nameKey = headers.find(h => /name|player/i.test(h)) || headers[0];
       const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
-      const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
-      const W = r["W"] ?? r["w"] ?? null;
-      const L = r["L"] ?? r["l"] ?? null;
-
-      const record = (W != null && L != null) ? `${W}-${L}` : "";
+      
       // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
       const badgeKeys = headers
         .filter(h => h !== nameKey && h !== rankKey)
@@ -1658,6 +1654,10 @@ out.innerHTML =
         const rank = r[rankKey] ?? "";
         const name = r[nameKey] ?? "";
         const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
+        const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
+        const W = r["W"] ?? r["w"] ?? null;
+        const L = r["L"] ?? r["l"] ?? null;
+        const record = (W != null && L != null) ? `${W}-${L}` : "";
         const badges = [
           record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
           ...badgeKeys.map(k => {
