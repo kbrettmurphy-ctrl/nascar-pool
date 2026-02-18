@@ -784,6 +784,25 @@
       height: 10px;     /* horizontal */
       width: 5px;      /* vertical */
     }
+
+    *::-webkit-scrollbar-track{
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+    }
+
+    *::-webkit-scrollbar-thumb{
+      background: rgba(0,122,194,.40);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,.35); /* makes it look inset */
+    }
+
+    *::-webkit-scrollbar-thumb:hover{
+      background: rgba(0,122,194,.60);
+    }
+
+    *::-webkit-scrollbar-corner{
+      background: transparent;
+    }
     
   </style>
 </head>
