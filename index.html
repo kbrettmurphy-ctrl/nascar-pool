@@ -1664,7 +1664,7 @@ out.innerHTML =
             const v = r[k];
             if (v == null || String(v).trim() === "") return "";
             return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
-        }).filter(Boolean).join("");
+          })].filter(Boolean).join("");
 
         html += `
           <div class="statsRow overallRow">
