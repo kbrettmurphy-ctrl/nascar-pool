@@ -1792,24 +1792,31 @@ out.innerHTML =
 
       const EXCLUDED_KEYS = new Set(["Matches"]); // optional: keep it hidden like Overall does
 
-      items.forEach((it, i) => {
-        const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
-        const isYou = you && (String(it.player).trim().toLowerCase() === you);
+      rows.forEach(r => {
+        const rank = r[rankKey] ?? "";
+        const name = r[nameKey] ?? "";
 
-        const badges = badgeKeys
-          .filter(k => k && !EXCLUDED_KEYS.has(k))
-          .map(k => {
-            const v = it[k];
-            if (v == null || String(v).trim() === "") return "";
-            return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
-          })
-          .filter(Boolean)
-          .join("");
+        const W = r["W"] ?? r["w"] ?? null;
+        const L = r["L"] ?? r["l"] ?? null;
+
+        const record = (W != null && L != null) ? `${W}-${L}` : "";
+
+        const avgKey = headers.find(h => /^avg/i.test(h));
+        const wpKey  = headers.find(h => /^w%/i.test(h));
+
+        const avgVal = avgKey ? r[avgKey] : null;
+        const wpVal  = wpKey  ? r[wpKey]  : null;
+
+        const badges = [
+          record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
+          avgVal != null ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
+          wpVal  != null ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
+        ].filter(Boolean).join("");
 
         html += `
-          <div class="statsRow overallRow ${isYou ? "you" : ""}">
-            <div class="rankBadge">${escapeHtml(r)}</div>
-            <div class="statsName">${escapeHtml(it.player)}</div>
+          <div class="statsRow overallRow">
+            <div class="rankBadge">${escapeHtml(rank || "—")}</div>
+            <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
         `;
