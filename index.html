@@ -1590,7 +1590,6 @@ out.innerHTML =
         // Shell
         area.innerHTML = `
           <div class="statsModes" id="statsModes">
-          persistHScroll("#statsModes", "nascar_stats_tabs_scroll");
             <button class="secondary" data-mode="overall">Standings</button>
             <button class="secondary" data-mode="tourney">Tourney Ranks</button>
             <button class="secondary" data-mode="h2h">H2H</button>
@@ -1599,7 +1598,7 @@ out.innerHTML =
           </div>
           <div class="statsPanel" id="statsPanel"></div>
         `;
-
+        persistHScroll("#statsModes", "nascar_stats_tabs_scroll");
         const modes = area.querySelectorAll("#statsModes button");
         modes.forEach(b => {
           b.onclick = () => setStatsMode_(b.getAttribute("data-mode") || "overall");
