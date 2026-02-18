@@ -1654,6 +1654,7 @@ out.innerHTML =
         const record = (W != null && L != null) ? `${W}-${L}` : "";
         // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
         const badgeKeys = headers
+          .filter(k => !EXCLUDED_KEYS.has(k))
           .filter(h => h !== nameKey && h !== rankKey)
           .filter(h => !/^(w|l)$/i.test(h))     // remove W and L from normal pills
           .slice(0, 5);
