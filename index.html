@@ -1686,7 +1686,7 @@ out.innerHTML =
       // Guess common header names without breaking if yours differ.
       const nameKey = headers.find(h => /name|player/i.test(h)) || headers[0];
       const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
-
+      const you = loadPlayerName().trim().toLowerCase();
       let html = `<div class="big">Overall</div>`;
       rows.forEach(r => {
         const rank = r[rankKey] ?? "";
