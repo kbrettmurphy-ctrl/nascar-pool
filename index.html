@@ -1657,14 +1657,13 @@ out.innerHTML =
         const rank = r[rankKey] ?? "";
         const name = r[nameKey] ?? "";
         const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
-        const badges = [
-          record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
-          // .filter(k => !EXCLUDED_KEYS.has(k))
-          badgeKeys.map(k => {
+        const badges = badgeKeys
+          .filter(k => !EXCLUDED_KEYS.has(k))
+          .map(k => {
             const v = r[k];
             if (v == null || String(v).trim() === "") return "";
             return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
-          })].filter(Boolean).join("");
+        }).filter(Boolean).join("");
 
         html += `
           <div class="statsRow overallRow">
