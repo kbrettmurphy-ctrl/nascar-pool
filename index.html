@@ -1045,6 +1045,32 @@
       if (btn) btn.classList.add("active");
     }
 
+    function persistHScroll(selector, storageKey){
+      const el = document.querySelector(selector);
+      if(!el) return;
+
+      // Restore (after layout paints so widths exist)
+      requestAnimationFrame(() => {
+        const saved = Number(localStorage.getItem(storageKey) || 0);
+        if (Number.isFinite(saved) && saved > 0) el.scrollLeft = saved;
+      });
+
+      // Save (throttled)
+      let t = null;
+      el.addEventListener("scroll", () => {
+        if (t) return;
+        t = requestAnimationFrame(() => {
+          localStorage.setItem(storageKey, String(el.scrollLeft || 0));
+          t = null;
+        });
+      }, { passive:true });
+
+      // Also save on view changes / refreshes just in case
+      window.addEventListener("beforeunload", () => {
+        localStorage.setItem(storageKey, String(el.scrollLeft || 0));
+      });
+    }
+
     // Cache for large snapshot maps so we don't refetch them over and over
     let _cache_myMatchupsAll = null;
 
@@ -1564,6 +1590,7 @@ out.innerHTML =
         // Shell
         area.innerHTML = `
           <div class="statsModes" id="statsModes">
+          persistHScroll("#statsModes", "nascar_stats_tabs_scroll");
             <button class="secondary" data-mode="overall">Standings</button>
             <button class="secondary" data-mode="tourney">Tourney Ranks</button>
             <button class="secondary" data-mode="h2h">H2H</button>
@@ -2054,7 +2081,13 @@ out.innerHTML =
       }, 150);
     });
 
-    window.onload = () => { loadPlayersThenInit(); };
+    window.onload = () => { 
+      loadPlayersThenInit();
+
+      // Persist bottom nav scroll
+      persistHScroll(".navInner", "nascar_nav_scroll");
+    };
+
   </script>
 
   <!-- <script> -->
