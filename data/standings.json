@@ -169,67 +169,147 @@
     "Tournament 1": [
       {
         "rank": 1,
-        "player": "Brett"
+        "player": "Brett",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "5.00",
+        "W%": "1.000"
       },
       {
         "rank": 2,
-        "player": "Nate C."
+        "player": "Nate C.",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "6.50",
+        "W%": "1.000"
       },
       {
         "rank": 3,
-        "player": "Stacy"
+        "player": "Stacy",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "15.00",
+        "W%": "1.000"
       },
       {
         "rank": 4,
-        "player": "Nate M."
+        "player": "Nate M.",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "16.00",
+        "W%": "1.000"
       },
       {
         "rank": 5,
-        "player": "Bob"
+        "player": "Bob",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "17.50",
+        "W%": "1.000"
       },
       {
         "rank": 6,
-        "player": "Jason"
+        "player": "Jason",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "20.50",
+        "W%": "1.000"
       },
       {
         "rank": 7,
-        "player": "Justin"
+        "player": "Justin",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "21.50",
+        "W%": "1.000"
       },
       {
         "rank": 8,
-        "player": "Chris"
+        "player": "Chris",
+        "W": 1,
+        "L": 0,
+        "Matches": 1,
+        "Avg": "24.00",
+        "W%": "1.000"
       },
       {
         "rank": 9,
-        "player": "Tyler"
+        "player": "Tyler",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "20.00",
+        "W%": "0.000"
       },
       {
         "rank": 10,
-        "player": "Pat"
+        "player": "Pat",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "22.00",
+        "W%": "0.000"
       },
       {
         "rank": 11,
-        "player": "Rob"
+        "player": "Rob",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "22.50",
+        "W%": "0.000"
       },
       {
         "rank": 12,
-        "player": "Beau"
+        "player": "Beau",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "23.00",
+        "W%": "0.000"
       },
       {
         "rank": 13,
-        "player": "Steven"
+        "player": "Steven",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "23.00",
+        "W%": "0.000"
       },
       {
         "rank": 14,
-        "player": "Nick"
+        "player": "Nick",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "24.00",
+        "W%": "0.000"
       },
       {
         "rank": 15,
-        "player": "Russ"
+        "player": "Russ",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "27.50",
+        "W%": "0.000"
       },
       {
         "rank": 16,
-        "player": "Don"
+        "player": "Don",
+        "W": 0,
+        "L": 1,
+        "Matches": 1,
+        "Avg": "31.00",
+        "W%": "0.000"
       }
     ],
     "Tournament 2": [],
