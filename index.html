@@ -244,7 +244,7 @@
       background: var(--card);
       padding: 6px;
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blue(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
     .bracketHdr{
       display:flex;
@@ -273,7 +273,7 @@
       padding:3px 7px;
       border-radius:999px;
       background: rgba(255,255,255,.10);
-      border: 1px solid vrgba(255,214,89,.14);
+      border: 1px solid rgba(255,214,89,.14);
       color: var(--muted);
       line-height:1;
     }
@@ -553,8 +553,8 @@
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
     }
-
-    /*@media (max-width: 520px){
+    /*
+    @media (max-width: 520px){
       :root{
         --pad: 16px;
         --h2: 30px;
@@ -562,23 +562,27 @@
         --body: 17px;
         --radius: 18px;
         --radius2: 16px;
-      }*/
+      }
+      
       button{
         font-size: 14px;
         padding: 8px 8px;
         border-radius: 18px;
       }
+      
       select, input{
         font-size: 17px;
         padding: 10px 12px;
         border-radius: 14px;
       }
+      
       .pName{ font-size: 19px; }
       .pMeta{ font-size: 15px; }
       .navBtn{ font-size: 13px; }
       .navBtn .ico{ font-size: 16px; }
       .card{ padding: 14px; }
-      }
+      
+    }*/
 
     /* Watermark background */
     :root{
@@ -872,7 +876,7 @@
     const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
     const STORAGE_KEY = "nascar_pool_player_name";
     const VIEW_KEY = "nascar_pool_active_view";
-    const roundLabel = (n) => (Number(n) === 4 ? "FInal" : `Round ${n}`);
+    const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Round ${n}`);
     const views = ["current","mymatchup","standings","dues","bracket"];
     let activeView = "current";
 
@@ -1689,7 +1693,12 @@ out.innerHTML =
           if (it && typeof it === "object") {
             const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
             const rank = Number(it.rank ?? it.Rank ?? it.RANK);
-            return { rank: Number.isFinite(rank) ? rank : null, player: String(player || "").trim() };
+
+            // keep everything else (W/L/Avg/W% etc)
+            const out = { ...it };
+            out.player = String(player || "").trim();
+            out.rank = Number.isFinite(rank) ? rank : null;
+            return out;
           }
           return { rank: null, player: String(it || "").trim() };
         })
@@ -1711,15 +1720,37 @@ out.innerHTML =
       const you = loadPlayerName().trim().toLowerCase();
 
       html += `<div class="rankList">`;
+      // badge order preference (only show what exists)
+      const preferred = ["W","L","Avg","W%"];
+      const getKey = (obj, want) => Object.keys(obj).find(k => k.toLowerCase() === want.toLowerCase());
+
+      // figure which badges we can show
+      const sample = items[0] || {};
+      const badgeKeys = preferred
+        .map(w => getKey(sample, w))
+        .filter(Boolean);
+
+      const EXCLUDED_KEYS = new Set(["Matches"]); // optional: keep it hidden like Overall does
+
       items.forEach((it, i) => {
         const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
         const isYou = you && (String(it.player).trim().toLowerCase() === you);
+
+        const badges = badgeKeys
+          .filter(k => k && !EXCLUDED_KEYS.has(k))
+          .map(k => {
+            const v = it[k];
+            if (v == null || String(v).trim() === "") return "";
+            return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
+          })
+          .filter(Boolean)
+          .join("");
+
         html += `
           <div class="statsRow ${isYou ? "you" : ""}">
-            <div class="statsLeft">
-              <div class="rankBadge">${escapeHtml(r)}</div>
-              <div class="statsName">${escapeHtml(it.player)}</div>
-            </div>
+            <div class="rankBadge">${escapeHtml(r)}</div>
+            <div class="statsName">${escapeHtml(it.player)}</div>
+            ${badges ? `<div class="statsBadges">${badges}</div>` : ``}
           </div>
         `;
       });
