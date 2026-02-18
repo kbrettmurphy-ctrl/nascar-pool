@@ -1747,16 +1747,18 @@ out.innerHTML =
           .join("");
 
         html += `
-          <div class="statsRow ${isYou ? "you" : ""}">
+          <div class="statsRow overallRow ${isYou ? "you" : ""}">
             <div class="rankBadge">${escapeHtml(r)}</div>
             <div class="statsName">${escapeHtml(it.player)}</div>
-            ${badges ? `<div class="statsBadges">${badges}</div>` : ``}
+            <div class="statsBadges">${badges}</div>
           </div>
         `;
       });
       html += `</div>`;
 
       box.innerHTML = html;
+      requestAnimationFrame(syncOverallNameColumnWidth_);
+      resetStatPillScrollSoon(box);
     }
 
     async function renderH2H_(box){
@@ -2044,7 +2046,7 @@ out.innerHTML =
     }
 
     window.addEventListener("resize", () => {
-      if (_statsMode !== "overall") return;
+      if (_statsMode !== "overall" && _statsMode !== "tourney") return;
 
       clearTimeout(_nameWTimer);
       _nameWTimer = setTimeout(() => {
