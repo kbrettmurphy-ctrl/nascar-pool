@@ -804,15 +804,23 @@
       background: transparent;
     }
 
-    .paidRow .miniPill{
-      border: 1px solid var(--green);
-      box-shadow: 0 0 0 1px rgba(77,210,29,.25);
-    }
+    /* Top 4 payout */
+      .statsRow.paidRow{
+        border: 2px solid var(--green);
+        box-shadow: 0 0 0 1px rgba(77,210,29,.35);
+      }
 
-    .paidRow .rankBadge{
-      border: 1px solid var(--green);
-      box-shadow: 0 0 0 1px rgba(77,210,29,.25);
-    }
+      /* Current viewer highlight (match active stats tab style) */
+      .statsRow.youRow{
+        background: rgba(0,122,194,.42); /* same vibe as button.secondary.active */
+        border-color: rgba(0,122,194,.55);
+      }
+
+      /* If both apply → keep green outline */
+      .statsRow.paidRow.youRow{
+        border: 2px solid var(--green);
+        box-shadow: 0 0 0 1px rgba(77,210,29,.35);
+      }
 
   </style>
 </head>
@@ -1801,11 +1809,12 @@ out.innerHTML =
         .filter(Boolean);
 
       const EXCLUDED_KEYS = new Set(["Matches"]); // optional: keep it hidden like Overall does
-
+      
       items.forEach((it, i) => {
         const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
         const name = it.player || "";
         const isPaid = r <= 4; // TOP 4 visual
+        const isYou  = you && name.trim().toLowerCase() === you;
         const W = it["W"] ?? it["w"] ?? null;
         const L = it["L"] ?? it["l"] ?? null;
         const record = (W != null && L != null) ? `${W}-${L}` : "";
@@ -1827,10 +1836,8 @@ out.innerHTML =
         ].filter(Boolean).join("");
 
         html += `
-          <div class="statsRow overallRow ${isPaid ? "paidRow" : ""}">
-            <div class="rankBadge ${isPaid ? "paidRow" : ""}">
-              ${escapeHtml(r)}
-            </div>
+          <div class="statsRow overallRow ${isPaid ? "paidRow" : ""} ${isYou ? "youRow" : ""}">
+            <div class="rankBadge">${escapeHtml(r)}</div>
             <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
