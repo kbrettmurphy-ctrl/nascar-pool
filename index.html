@@ -1642,12 +1642,6 @@ out.innerHTML =
       // Guess common header names without breaking if yours differ.
       const nameKey = headers.find(h => /name|player/i.test(h)) || headers[0];
       const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
-      
-      // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
-      const badgeKeys = headers
-        .filter(h => h !== nameKey && h !== rankKey)
-        .filter(h => !/^(w|l)$/i.test(h))     // remove W and L from normal pills
-        .slice(0, 5);
 
       let html = `<div class="big">Overall</div>`;
       rows.forEach(r => {
@@ -1658,6 +1652,11 @@ out.innerHTML =
         const W = r["W"] ?? r["w"] ?? null;
         const L = r["L"] ?? r["l"] ?? null;
         const record = (W != null && L != null) ? `${W}-${L}` : "";
+        // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
+        const badgeKeys = headers
+          .filter(h => h !== nameKey && h !== rankKey)
+          .filter(h => !/^(w|l)$/i.test(h))     // remove W and L from normal pills
+          .slice(0, 5);
         const badges = [
           record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
           ...badgeKeys.map(k => {
