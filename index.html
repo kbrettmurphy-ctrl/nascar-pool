@@ -1823,7 +1823,9 @@ out.innerHTML =
 
         html += `
           <div class="statsRow overallRow ${isPaid ? "paidRow" : ""}">
-            <div class="rankBadge">${escapeHtml(r)}</div>
+            <div class="rankBadge ${isPaid ? "paidRow" : ""}">
+              ${escapeHtml(r)}
+            </div>
             <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
