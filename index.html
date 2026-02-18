@@ -1792,35 +1792,39 @@ out.innerHTML =
 
       const EXCLUDED_KEYS = new Set(["Matches"]); // optional: keep it hidden like Overall does
 
-      rows.forEach(r => {
-        const rank = r[rankKey] ?? "";
-        const name = r[nameKey] ?? "";
+      items.forEach((it, i) => {
+        const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
+        const name = it.player || "";
 
-        const W = r["W"] ?? r["w"] ?? null;
-        const L = r["L"] ?? r["l"] ?? null;
-
+        const W = it["W"] ?? it["w"] ?? null;
+        const L = it["L"] ?? it["l"] ?? null;
         const record = (W != null && L != null) ? `${W}-${L}` : "";
 
-        const avgKey = headers.find(h => /^avg/i.test(h));
-        const wpKey  = headers.find(h => /^w%/i.test(h));
+        // Find Avg / W% keys even if your object uses weird casing
+        const keys = Object.keys(it || {});
+        const avgK = keys.find(k => /^avg$/i.test(k));
+        const wpK  = keys.find(k => /^w%$/i.test(k) || /^wpct$/i.test(k) || /^win%$/i.test(k));
 
-        const avgVal = avgKey ? r[avgKey] : null;
-        const wpVal  = wpKey  ? r[wpKey]  : null;
+        const avgVal = avgK ? it[avgK] : null;
+        const wpVal  = wpK  ? it[wpK]  : null;
 
         const badges = [
           record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
-          avgVal != null ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
-          wpVal  != null ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
+          avgVal != null && String(avgVal).trim() !== ""
+            ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
+          wpVal != null && String(wpVal).trim() !== ""
+            ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
         ].filter(Boolean).join("");
 
         html += `
           <div class="statsRow overallRow">
-            <div class="rankBadge">${escapeHtml(rank || "—")}</div>
+            <div class="rankBadge">${escapeHtml(r)}</div>
             <div class="statsName">${escapeHtml(name)}</div>
             <div class="statsBadges">${badges}</div>
           </div>
         `;
       });
+
       html += `</div>`;
 
       box.innerHTML = html;
