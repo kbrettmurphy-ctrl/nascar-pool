@@ -583,7 +583,11 @@
     const q = new URLSearchParams();
     q.set("action", action);
     if(isAdmin) q.set("key", adminKey);
-    Object.keys(params || {}).forEach(k => q.set(k, params[k]));
+    Object.keys(params || {}).forEach(k => {
+      const v = params[k];
+      if (v === undefined || v === null) return;   // ✅ don't send garbage
+      q.set(k, String(v));
+    });
 
     const url = apiBase + "?" + q.toString();
     const res = await fetch(url, { cache: "no-store" });
