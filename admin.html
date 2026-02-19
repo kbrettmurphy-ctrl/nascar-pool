@@ -605,8 +605,14 @@
       pill.innerHTML = `Current: <small>T${c.tournament} · Round ${c.round} · ${escapeHtml(c.raceLabel || "(no label)")}</small>`;
 
       try { await syncNumbersPanelDefaults(); } catch(e) {}
-    }catch(e){
-      pill.innerHTML = `Current: <small>(could not detect)</small>`;
+    } catch(e){
+      let reason = (e && e.message) ? e.message : String(e || "Unknown error");
+
+      if (reason.includes("Failed to fetch")) {
+        reason = "Network blocked or API URL unreachable";
+      }
+
+      pill.innerHTML = `Current: <small style="color:#E4002B;">(error: ${escapeHtml(reason)})</small>`;
       window.__ctx = null;
     }
   }
