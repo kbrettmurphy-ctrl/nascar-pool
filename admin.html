@@ -638,9 +638,18 @@
       const r = await apiCall("adminGetRaceHeaders", { sheetType }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
       const headers = r.data || [];
-      sel.innerHTML = headers.length
-        ? `<option value="">Select…</option>` + headers.map(h => `<option>${escapeHtml(h)}</option>`).join("")
-        : `<option value="">(none)</option>`;
+      if(!headers.length){
+        sel.innerHTML = `<option value="">(none)</option>`;
+        return;
+      }
+      sel.innerHTML =
+        `<option value="">Select…</option>` +
+        headers.map(h => `<option>${escapeHtml(h)}</option>`).join("");
+      // 🔥 Auto-select current race if it exists
+      const ctxLabel = window.__ctx?.raceLabel || "";
+      if(ctxLabel && headers.includes(ctxLabel)){
+        sel.value = ctxLabel;
+      }
     }catch(e){
       sel.innerHTML = `<option value="">(error)</option>`;
     }
