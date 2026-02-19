@@ -299,6 +299,9 @@
         <label>Paste the table block</label>
         <textarea id="rawPaste" placeholder="Paste from Wikipedia (or wherever) here…"></textarea>
 
+        <div class="spacer"></div>
+        <button class="btn" onclick="importPaste()">Import Paste</button>
+        
         <label style="margin-top:12px;">NASCAR Auto Import</label>
         <div class="row">
           <button class="btn secondary" onclick="importNascarQualifying()">Import Qualifying → Lineups</button>
@@ -309,9 +312,6 @@
           <input type="checkbox" id="autoPublishAfterImport" checked style="width:auto; transform:scale(1.1);">
           Auto-publish after import
         </label>
-
-        <div class="spacer"></div>
-        <button class="btn" onclick="importPaste()">Import Paste</button>
 
         <div id="importMsg" class="msg hide"></div>
       </div>
