@@ -299,6 +299,17 @@
         <label>Paste the table block</label>
         <textarea id="rawPaste" placeholder="Paste from Wikipedia (or wherever) here…"></textarea>
 
+        <label style="margin-top:12px;">NASCAR Auto Import</label>
+        <div class="row">
+          <button class="btn secondary" onclick="importNascarQualifying()">Import Qualifying → Lineups</button>
+          <button class="btn secondary" onclick="importNascarResults()">Import Results → Finishes</button>
+        </div>
+
+        <label style="margin-top:10px; display:flex; gap:10px; align-items:center; font-weight:800;">
+          <input type="checkbox" id="autoPublishAfterImport" checked style="width:auto; transform:scale(1.1);">
+          Auto-publish after import
+        </label>
+
         <div class="spacer"></div>
         <button class="btn" onclick="importPaste()">Import Paste</button>
 
@@ -795,10 +806,102 @@
 
     refreshContext();
 
-  } catch(e){
-    showMsg(msg, "Error: " + (e.message || e), true);
+    } catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
   }
-}
+
+  async function importNascarQualifying(){
+    const msg = document.getElementById("importMsg");
+    hideMsg(msg);
+
+    const header = document.getElementById("raceHeaderSel").value;
+    const autoPub = !!document.getElementById("autoPublishAfterImport").checked;
+
+    if(!header){ showMsg(msg, "Pick a race header.", true); return; }
+
+    try{
+      showMsg(msg, "Fetching NASCAR qualifying…", false);
+      await new Promise(requestAnimationFrame);
+
+      const r = await apiCall("adminImportNascarQualifying", { header }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+
+      const rowsWritten = r?.data?.rowsWritten ?? "?";
+
+      if(autoPub){
+        showMsg(msg, `Imported ✅ (${rowsWritten} rows). Publishing JSON…`, false);
+        await new Promise(requestAnimationFrame);
+
+        const r3 = await apiCall("adminPublishSnapshot", {}, true);
+        if(!r3.ok) throw new Error(r3.error || "Publish failed");
+        showMsg(msg, "Imported LINEUPS + Published ✅", false);
+      } else {
+        showMsg(msg, `Imported ✅ (${rowsWritten} rows).`, false);
+      }
+
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
+
+  async function importNascarResults(){
+    const msg = document.getElementById("importMsg");
+    hideMsg(msg);
+
+    const header = document.getElementById("raceHeaderSel").value;
+    const autoPub = !!document.getElementById("autoPublishAfterImport").checked;
+
+    if(!header){ showMsg(msg, "Pick a race header.", true); return; }
+
+    try{
+      showMsg(msg, "Fetching NASCAR results…", false);
+      await new Promise(requestAnimationFrame);
+
+      const r = await apiCall("adminImportNascarResults", { header }, true);
+      if(!r.ok) throw new Error(r.error || "API failed");
+
+      const rowsWritten = r?.data?.rowsWritten ?? "?";
+
+      // Mirror your existing finishes workflow
+      showMsg(msg, `Imported ✅ (${rowsWritten} rows). Updating stats…`, false);
+      await new Promise(requestAnimationFrame);
+
+      const r1 = await apiCall("adminCompileOverallRanks", {}, true);
+      if(!r1.ok) throw new Error(r1.error || "Ranks update failed");
+
+      showMsg(msg, "Ranks updated. Updating H2H…", false);
+      await new Promise(requestAnimationFrame);
+
+      const r2 = await apiCall("adminCompileHeadToHead", { scope: "ALL" }, true);
+      if(!r2.ok) throw new Error(r2.error || "H2H update failed");
+
+      if(autoPub){
+        showMsg(msg, "H2H updated. Publishing JSON…", false);
+        await new Promise(requestAnimationFrame);
+
+        const r3 = await apiCall("adminPublishSnapshot", {}, true);
+        if(!r3.ok) throw new Error(r3.error || "Publish failed");
+
+        showMsg(msg, "Imported FINISHES + Stats updated + Published ✅", false);
+      } else {
+        showMsg(msg, "Imported FINISHES + Stats updated ✅", false);
+      }
+
+      // Keep your rematch warning behavior
+      try {
+        const warn = await apiCall("adminGetSwissRematchWarning", {}, true);
+        if (warn.ok && warn.data?.warning) {
+          msg.innerHTML += "<br>⚠️ Rematch unavoidable in this round (same record bucket).";
+        }
+      } catch (_) {}
+
+      refreshContext();
+    }catch(e){
+      showMsg(msg, "Error: " + (e.message || e), true);
+    }
+  }
 
   async function runCompileOverallRanks(){
     const msg = document.getElementById("ranksMsg");
