@@ -38,7 +38,8 @@
       --btnPrimary: var(--red);
       --btnSecondary: var(--blue);
       --danger: var(--red);
-      --green: #4DD21D; 
+      --green: #4DD21D;
+      --greenfade: #4DD21DBF;
           
       /* Slight overall scale-down (not blurry, just smaller defaults) */
       --pad:12px;
@@ -806,7 +807,7 @@
 
     /* Top 4 payout */
       .statsRow.paidRow{
-        border: 1px solid var(--green);
+        border: 1px solid var(--greenfade);
         /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
       }
 
@@ -818,7 +819,7 @@
 
       /* If both apply → keep green outline */
       .statsRow.paidRow.youRow{
-        border: 1px solid var(--green);
+        border: 1px solid var(--greenfade);
         /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
       }
 
