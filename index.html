@@ -1399,7 +1399,7 @@
       const out = document.getElementById("mmStatus");
 
       const name = sel ? String(sel.value || "").trim() : "";
-      if (!name) { out.textContent = "Pick your name, dumbass."; return; }
+      if (!name) { out.textContent = "Pick your name and click the button, dumbass."; return; }
 
       savePlayerName(name);
       out.textContent = "Loading…";
