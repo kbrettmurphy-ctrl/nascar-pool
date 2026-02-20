@@ -139,7 +139,7 @@
       width:100%;
       font-size: 16px;
       color: var(--text);
-      padding: 10px 12px;
+      padding: var(--mmPad);
       border-radius: 12px;
       border:1px solid var(--line);
       background: rgba(0,122,194,.14);
@@ -1395,127 +1395,127 @@
     }
 
     async function loadMyMatchup() {
-  const sel = document.getElementById("mmName");
-  const out = document.getElementById("mmStatus");
+      const sel = document.getElementById("mmName");
+      const out = document.getElementById("mmStatus");
 
-  const name = sel ? String(sel.value || "").trim() : "";
-  if (!name) { out.textContent = "Pick your name first."; return; }
+      const name = sel ? String(sel.value || "").trim() : "";
+      if (!name) { out.textContent = "Pick your name, dumbass."; return; }
 
-  savePlayerName(name);
-  out.textContent = "Loading…";
+      savePlayerName(name);
+      out.textContent = "Loading…";
 
-  try{
-    let data = {};
-    try{
-      const all = await fetchSnapshotJson("my", false);
-      data = (all && all[name]) ? all[name] : {};
-    }catch(e){
-      // snapshot missing; fall back to live GAS
-      const res = await apiCall("playerGetMyMatchup", { name });
-      if (!res || !res.ok) throw new Error(res?.error || "API failed");
-      data = res.data || {};
-    }
+      try{
+        let data = {};
+        try{
+          const all = await fetchSnapshotJson("my", false);
+          data = (all && all[name]) ? all[name] : {};
+        }catch(e){
+          // snapshot missing; fall back to live GAS
+          const res = await apiCall("playerGetMyMatchup", { name });
+          if (!res || !res.ok) throw new Error(res?.error || "API failed");
+          data = res.data || {};
+        }
 
-    const status = String(data.status || "").trim().toLowerCase();
+        const status = String(data.status || "").trim().toLowerCase();
 
-    // --- picks ---
-    const youDriversArr = Array.isArray(data.youDrivers)
-      ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
-      : [];
+        // --- picks ---
+        const youDriversArr = Array.isArray(data.youDrivers)
+          ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
+          : [];
 
-    const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
-    const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
-    const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+        const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+        const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+        const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
 
-    // “real opponent” check (treat blanks/TBD/bye as not started)
-    const opp = String(data.opponent || "").trim();
-    const hasRealOpponent =
-      !!opp &&
-      opp !== "-" &&
-      opp.toLowerCase() !== "tbd" &&
-      opp.toLowerCase() !== "bye";
+        // “real opponent” check (treat blanks/TBD/bye as not started)
+        const opp = String(data.opponent || "").trim();
+        const hasRealOpponent =
+          !!opp &&
+          opp !== "-" &&
+          opp.toLowerCase() !== "tbd" &&
+          opp.toLowerCase() !== "bye";
 
-    // “real context” check (treat missing/0 as not started)
-    const tour = String(data.tournament ?? "").trim();
-    const rnd  = String(data.round ?? "").trim();
-    const hasRealContext =
-      tour !== "" && tour !== "0" &&
-      rnd  !== "" && rnd  !== "0";
+        // “real context” check (treat missing/0 as not started)
+        const tour = String(data.tournament ?? "").trim();
+        const rnd  = String(data.round ?? "").trim();
+        const hasRealContext =
+          tour !== "" && tour !== "0" &&
+          rnd  !== "" && rnd  !== "0";
 
-    // Build your picks display (reuse for both states)
-    const youListLabel = youDriversArr.length
-      ? "Your drivers:"
-      : ((n1 || n2) ? "Your numbers:" : "");
+        // Build your picks display (reuse for both states)
+        const youListLabel = youDriversArr.length
+          ? "Your drivers:"
+          : ((n1 || n2) ? "Your numbers:" : "");
 
-    const youListText = youDriversArr.length
-      ? youDriversArr.join("<br>")
-      : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+        const youListText = youDriversArr.length
+          ? youDriversArr.join("<br>")
+          : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
-    const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+        const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
 
-    // 1) NOT STARTED (seedings/matchups not set yet)
-    if (!hasRealOpponent || !hasRealContext) {
-      out.innerHTML = `
-        <div class="microBox" style="margin-top:6px;">
-          <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
-          <div class="microMeta elimSub">
-            ${escapeHtml(getEarlyMessage())}
-          </div>
+        // 1) NOT STARTED (seedings/matchups not set yet)
+         if (!hasRealOpponent || !hasRealContext) {
+          out.innerHTML = `
+            <div class="microBox" style="margin-top:6px;">
+              <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
+              <div class="microMeta elimSub">
+                ${escapeHtml(getEarlyMessage())}
+              </div>
 
-          ${youListText ? `
-            <div style="margin-top:10px;">
-              <div class="microTitle">${escapeHtml(youListLabel)}</div>
-              <div class="microMeta">${youListHtml}</div>
+              ${youListText ? `
+                <div style="margin-top:10px;">
+                  <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                  <div class="microMeta">${youListHtml}</div>
+                </div>
+              ` : ``}
             </div>
-          ` : ``}
-        </div>
-      `;
-      return;
-    }
+          `;
+          return;
+        }
 
-    // 2) ELIMINATED (only after a real matchup/context exists)
-    if (status !== "active") {
-      out.innerHTML = `
-        <div class="microBox" style="margin-top:6px;">
-          <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-          <div class="microMeta elimSub">
-            ${escapeHtml(data.you || name)}, you're eliminated…but here's your stuff anyway. Maybe you can still win $25. Try not to make this a lifestyle.<br><br>
+        // 2) ELIMINATED (only after a real matchup/context exists)
+        if (status !== "active") {
+          out.innerHTML = `
+            <div class="microBox" style="margin-top:6px;">
+              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+              <div class="microMeta elimSub">
+                ${escapeHtml(data.you || name)}, you're eliminated…but here's your stuff anyway. Maybe you can still win $25. Try not to make this a lifestyle.<br><br>
+              </div>
+
+              ${youListText ? `
+                <div class="microTitle">${escapeHtml(youListLabel)}</div>
+                <div class="microMeta">${youListHtml}</div>
+              ` : ``}
+            </div>
+          `;
+          return;
+        }
+
+        // 3) ACTIVE
+        const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
+        const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
+
+        out.innerHTML = `
+          <div class="mmHeader">
+            Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
           </div>
 
-          ${youListText ? `
-            <div class="microTitle">${escapeHtml(youListLabel)}</div>
-            <div class="microMeta">${youListHtml}</div>
-          ` : ``}
-        </div>
-      `;
-      return;
+          <div class="microBox youBox">
+            <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+            ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
+          </div>
+
+          <div class="centerVS">VS</div>
+
+          <div class="microBox">
+            <div class="microTitle">${escapeHtml(data.opponent)}</div>
+            ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
+          </div>
+        `;
+      }catch(e){
+        out.textContent = "Error: " + (e && e.message ? e.message : e);
+      }
     }
-
-    // 3) ACTIVE
-    const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-    const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
-
-    out.innerHTML = `
-      <div class="mmHeader">
-        Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
-      </div>
-
-      <div class="microBox youBox">
-        <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
-        ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
-      </div>
-
-      <div class="centerVS">VS</div>
-
-      <div class="microBox">
-        <div class="microTitle">${escapeHtml(data.opponent)}</div>
-        ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
-      </div>
-    `;
-  }catch(e){
-    out.textContent = "Error: " + (e && e.message ? e.message : e);
-  }
-}
 
 
     async function loadDues() {
