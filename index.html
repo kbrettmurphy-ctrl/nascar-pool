@@ -834,7 +834,7 @@
   </div>
 
   <div class="topActions">
-    <button class="topactions" onclick="clearSavedAndReset()">🧼 Clear saved player</button>
+    <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
     <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
   </div>
 
@@ -856,39 +856,39 @@
     <!-- <label>Your name</label> -->
     <select id="mmName" style="margin-top:10px;"></select>
 
-    <button class="primary" onclick="loadMyMatchup()">Show my matchup</button>
+    <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button>
     <div id="mmStatus" class="mmWrap"></div>
   </div>
 
   <!-- STANDINGS -->
   <div id="view-standings" class="card" style="display:none;">
     <div class="big">Stats</div>
-    <div class="muted">Pool standings & stats</div>
-    <div id="standingsArea" class="status">Loading…</div>
+    <div class="muted">Who sucks and who doesn't</div>
+    <div id="standingsArea" class="status">I'm slow...</div>
   </div>
 
   <!-- DUES -->
   <div id="view-dues" class="card" style="display:none;">
     <div class="big">Dues</div>
-    <div class="muted">Pick your name.</div>
+    <div class="muted">Pick your fuckin name.</div>
     
     <!-- <label>Your name</label> -->
     <select id="duesName" style="margin-top:10px;"></select>
 
-    <button class="primary" onclick="loadDues()">Show my dues</button>
+    <button class="primary" onclick="loadDues()">Show me the money</button>
     <div id="duesStatus" class="mmWrap"></div>
   </div>
 
   <!-- BRACKET -->
   <div id="view-bracket" class="card" style="display:none;">
     <div class="big">Bracket</div>
-    <div class="muted" id="bracketSub">Loading…</div>
+    <div class="muted" id="bracketSub">I'm slow...</div>
 
     <div class="bracketWrap">
       <div id="bracketSticky" class="bracketSticky"></div>
       <div class="bracketFade left"></div>
       <div class="bracketFade right"></div>
-      <div id="bracketArea">Loading…</div>
+      <div id="bracketArea">I'm slow...</div>
     </div>
   </div>
 
@@ -908,7 +908,7 @@
         <div class="ico">📊</div><div>Stats</div>
       </button>
       <button class="navBtn" id="nav-dues" onclick="showView('dues')">
-        <div class="ico">💰</div><div>Dues</div>
+        <div class="ico">💰</div><div>$$$</div>
       </button>
     </div>
   </div>
@@ -1739,7 +1739,7 @@ out.innerHTML =
       const opts = headers.map(h => `<option value="${escapeAttr(h)}">${escapeHtml(h)}</option>`).join("");
       box.innerHTML = `
         <div class="big">Tournament Ranks</div>
-        <div class="muted">Pick a tournament</div>
+        <div class="muted">Pick a damn tournament (if you care)</div>
 
         <div class="statsControls">
           <select id="tourneyPick">${opts}</select>
