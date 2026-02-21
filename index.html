@@ -795,40 +795,35 @@
         /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
         
       .sponsor-container {
-        position: fixed;
-        bottom: var(--navH);           /* Right above nav */
-        left: 0;
-        right: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 2;
-        pointer-events: none;
-        backdrop-filter: blur(6px);    /* Frosted effect */
-        -webkit-backdrop-filter: blur(6px);
-        background: rgba(0, 0, 0, 0.3); /* Subtle dark tint */
-        padding: 6px 12px;             /* Smaller padding so container doesn't bloat */
-        border-radius: var(--radius);
-        border: 1px solid rgba(255,255,255,0.08);
-        opacity: 0.7;                  /* Overall fade – adjust 0.5–0.8 */
-      }
+  position: fixed;
+  bottom: var(--navH);           /* Keeps exact position above nav */
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;                    /* Above watermark, below nav */
+  pointer-events: none;
+  padding: 4px 0;                /* Minimal padding – prevents bloat */
+  opacity: 0.75;                 /* Subtle overall fade */
+  /* No backdrop-filter here – cards already blur the area behind */
+}
 
-      .presented-by {
-        font-size: 11px;               /* Smaller text to match subtle vibe */
-        font-weight: bold;
-        color: var(--muted);
-        letter-spacing: 1.2px;
-        margin-bottom: 4px;
-        text-transform: uppercase;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-      }
+.presented-by {
+  font-size: 11px;               /* Smaller text */
+  font-weight: bold;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px #000;   /* Helps readability */
+}
 
-      .sponsor-logo {
-        height: 40px;                  /* ← Key fix: Much smaller (was 80px) – adjust 35–50px */
-        width: auto;
-        max-width: 180px;              /* Prevents stretching on wide screens */
-        filter: brightness(1.1) contrast(1.05); /* Optional pop */
-      }
+.sponsor-logo {
+  height: 38px;                  /* ← This is the key: much smaller than 80px */
+  width: auto;
+  max-width: 180px;              /* Caps width on desktop */
+}
         
   </style>
 </head>
