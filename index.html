@@ -796,28 +796,31 @@
       }
       .sponsor-container {
         position: fixed;
-        bottom: 70px; /* tweak to sit right above your nav */
+        bottom: var(--navH);  /* Sits exactly on top of nav height (56px) – no overlap with nav */
         left: 0;
         right: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        z-index: 10;
+        z-index: 1;           /* ← Change from 10 to 1 (or even 0) – same layer as other content or behind */
+        pointer-events: none; /* Clicks pass through – important so buttons/nav stay clickable */
+        opacity: 0.6;         /* ← Fade it subtly like watermark – adjust 0.4–0.8 based on feel */
       }
 
       .presented-by {
-        font-family: Arial, Helvetica, sans-serif; /* or a bold racing font if you have one */
+        font-family: Arial, Helvetica, sans-serif;
         font-size: 13px;
         font-weight: bold;
-        color: var(--muted); /* or #ccc for subtlety */
+        color: var(--muted);
         letter-spacing: 1.5px;
         margin-bottom: 6px;
         text-transform: uppercase;
       }
 
       .sponsor-logo {
-        height: 80px; /* adjust as needed */
+        height: 80px;         /* Your current size – keep or reduce to 60–70px if too bold */
         width: auto;
+        opacity: 0.8;         /* Extra fade on logo itself if needed */
       }
   </style>
 </head>
