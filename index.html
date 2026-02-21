@@ -106,12 +106,16 @@
     }
 
     .card {
+      position: relative;            /* enables stacking context */
+      z-index: 3;                    /* above sponsor */  
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 12px;
       margin: 12px 0;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     .topActions{
@@ -577,10 +581,10 @@
       pointer-events: none;
       z-index: 0;
     }
-     body > :not(.sponsor-container){
-      position: relative;
-      z-index: 1;
-    }
+     /* body > :not(.sponsor-container){ */
+      /* position: relative; */
+      /* z-index: 1; */
+    /* } */
     .card{
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
@@ -799,14 +803,11 @@
         bottom: var(--navH);
         left: 0;
         right: 0;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        z-index: 0;            /* IMPORTANT: behind your content/cards */
-        pointer-events: none;
-        opacity: 1;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        z-index: 2;            /* behind cards, above body::before */
+        pointer-events:none;
       }
 
       .presented-by {
