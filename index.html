@@ -572,7 +572,7 @@
       background-image: url("IMG_6336.png");
       background-size: 300vw auto;          /* ← start here, crank to 350–450% if still too timid */
       background-repeat: no-repeat;
-      /* background-position: 50% calc(50% + var(--wmShift)); */
+      background-position: 50% calc(50% + var(--wmShift));
       opacity: 1.0;                       /* assuming watermark vibes — 1.0 is psycho territory */
       pointer-events: none;
       z-index: -1;                         /* usually -1 so content sits on top */
@@ -2147,7 +2147,7 @@ out.innerHTML =
         ticking=true;
         requestAnimationFrame(()=>{
           const y=window.scrollY||0;
-          document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
+          document.documentElement.style.setProperty('--wmShift', '0px'); //document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
           ticking=false;
         });
       }
