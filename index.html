@@ -796,37 +796,38 @@
         
       .sponsor-container {
         position: fixed;
-        bottom: var(--navH);           /* Keeps it right above nav (56px) */
+        bottom: var(--navH);           /* Right above nav */
         left: 0;
         right: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        z-index: 2;                    /* Above background layers, below nav if needed — adjust to 1 or 3 */
-        pointer-events: none;          /* Clicks pass through */
-        backdrop-filter: blur(6px);    /* ← Same blur as your cards – creates frosted effect over whatever is behind (NASCAR, page bg, etc.) */
-        -webkit-backdrop-filter: blur(6px); /* Safari support */
-        background: rgba(0, 0, 0, 0.3); /* Semi-transparent dark tint – adjust opacity 0.2–0.5 for strength */
-        padding: 8px 0;                /* Optional: space around logo/text */
-        border-radius: var(--radius);  /* Optional: rounded corners like cards */
-        border: 1px solid rgba(255,255,255,0.08); /* Optional: subtle border for glass look */
+        z-index: 2;
+        pointer-events: none;
+        backdrop-filter: blur(6px);    /* Frosted effect */
+        -webkit-backdrop-filter: blur(6px);
+        background: rgba(0, 0, 0, 0.3); /* Subtle dark tint */
+        padding: 6px 12px;             /* Smaller padding so container doesn't bloat */
+        border-radius: var(--radius);
+        border: 1px solid rgba(255,255,255,0.08);
+        opacity: 0.7;                  /* Overall fade – adjust 0.5–0.8 */
       }
 
       .presented-by {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 13px;
+        font-size: 11px;               /* Smaller text to match subtle vibe */
         font-weight: bold;
         color: var(--muted);
-        letter-spacing: 1.5px;
-        margin-bottom: 6px;
+        letter-spacing: 1.2px;
+        margin-bottom: 4px;
         text-transform: uppercase;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.6); /* Optional: better readability on blur */
+        text-shadow: 0 1px 3px rgba(0,0,0,0.6);
       }
 
       .sponsor-logo {
-        height: 80px;
+        height: 40px;                  /* ← Key fix: Much smaller (was 80px) – adjust 35–50px */
         width: auto;
-        filter: brightness(1.1) contrast(1.05); /* Optional: slight pop if blur mutes it too much */
+        max-width: 180px;              /* Prevents stretching on wide screens */
+        filter: brightness(1.1) contrast(1.05); /* Optional pop */
       }
         
   </style>
