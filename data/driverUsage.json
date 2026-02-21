@@ -5,13 +5,29 @@
       "count": 1
     },
     {
+      "driver": "Cole Custer",
+      "count": 1
+    },
+    {
       "driver": "Josh Berry",
+      "count": 1
+    },
+    {
+      "driver": "Tyler Reddick",
       "count": 1
     }
   ],
   "Bob": [
     {
+      "driver": "Carson Hocevar",
+      "count": 1
+    },
+    {
       "driver": "Cole Custer",
+      "count": 1
+    },
+    {
+      "driver": "Denny Hamlin",
       "count": 1
     },
     {
@@ -20,6 +36,14 @@
     }
   ],
   "Brett": [
+    {
+      "driver": "Chase Elliott",
+      "count": 1
+    },
+    {
+      "driver": "Daniel Suárez",
+      "count": 1
+    },
     {
       "driver": "Ricky Stenhouse Jr.",
       "count": 1
@@ -31,17 +55,29 @@
   ],
   "Chris": [
     {
+      "driver": "Austin Cindric",
+      "count": 1
+    },
+    {
       "driver": "Connor Zilisch",
       "count": 1
     },
     {
       "driver": "Kyle Busch",
       "count": 1
+    },
+    {
+      "driver": "Ross Chastain",
+      "count": 1
     }
   ],
   "Don": [
     {
       "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
+      "driver": "Erik Jones",
       "count": 1
     },
     {
@@ -57,9 +93,25 @@
     {
       "driver": "Chase Briscoe",
       "count": 1
+    },
+    {
+      "driver": "Riley Herbst",
+      "count": 1
+    },
+    {
+      "driver": "Zane Smith",
+      "count": 1
     }
   ],
   "Justin": [
+    {
+      "driver": "Bubba Wallace",
+      "count": 1
+    },
+    {
+      "driver": "Cody Ware",
+      "count": 1
+    },
     {
       "driver": "Erik Jones",
       "count": 1
@@ -77,11 +129,27 @@
     {
       "driver": "Joey Logano",
       "count": 1
+    },
+    {
+      "driver": "Kyle Busch",
+      "count": 1
+    },
+    {
+      "driver": "William Byron",
+      "count": 1
     }
   ],
   "Nate M.": [
     {
       "driver": "Denny Hamlin",
+      "count": 1
+    },
+    {
+      "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Ricky Stenhouse Jr.",
       "count": 1
     },
     {
@@ -95,13 +163,29 @@
       "count": 1
     },
     {
+      "driver": "Michael McDowell",
+      "count": 1
+    },
+    {
       "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "Ty Dillon",
       "count": 1
     }
   ],
   "Pat": [
     {
       "driver": "A. J. Allmendinger",
+      "count": 1
+    },
+    {
+      "driver": "Chris Buescher",
+      "count": 1
+    },
+    {
+      "driver": "Joey Logano",
       "count": 1
     },
     {
@@ -115,13 +199,29 @@
       "count": 1
     },
     {
+      "driver": "Connor Zilisch",
+      "count": 1
+    },
+    {
       "driver": "Daniel Suárez",
+      "count": 1
+    },
+    {
+      "driver": "Noah Gragson",
       "count": 1
     }
   ],
   "Russ": [
     {
+      "driver": "Christopher Bell",
+      "count": 1
+    },
+    {
       "driver": "Kyle Larson",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Blaney",
       "count": 1
     },
     {
@@ -137,11 +237,27 @@
     {
       "driver": "John Hunter Nemechek",
       "count": 1
+    },
+    {
+      "driver": "Shane van Gisbergen",
+      "count": 1
+    },
+    {
+      "driver": "Ty Gibbs",
+      "count": 1
     }
   ],
   "Steven": [
     {
       "driver": "Alex Bowman",
+      "count": 1
+    },
+    {
+      "driver": "Brad Keselowski",
+      "count": 1
+    },
+    {
+      "driver": "Ryan Preece",
       "count": 1
     },
     {
@@ -152,6 +268,10 @@
   "Tyler": [
     {
       "driver": "Cody Ware",
+      "count": 1
+    },
+    {
+      "driver": "Josh Berry",
       "count": 1
     },
     {
