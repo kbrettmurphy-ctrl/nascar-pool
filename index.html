@@ -565,17 +565,17 @@
       position: relative;
       overflow-x: hidden;
     }
-    body::before {
-      content: "";
+    body::before{
+      content:"";
       position: fixed;
       inset: 0;
-      background-image: url("IMG_6336.png");
-      background-size: 300vw auto;          /* ← start here, crank to 350–450% if still too timid */
+      background-image: url("nascar-logo.png");
       background-repeat: no-repeat;
+      background-size: min(78vw, 700px);
       background-position: 50% calc(50% + var(--wmShift));
-      opacity: 1.0;                       /* assuming watermark vibes — 1.0 is psycho territory */
+      opacity: 0.2;
       pointer-events: none;
-      z-index: -1;                         /* usually -1 so content sits on top */
+      z-index: 0;
     }
     body > *{
       position: relative;
@@ -794,7 +794,31 @@
         border: 1px solid var(--greenfade);
         /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
       }
+      .sponsor-container {
+        position: fixed;
+        bottom: 70px; /* tweak to sit right above your nav */
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 10;
+      }
 
+      .presented-by {
+        font-family: Arial, Helvetica, sans-serif; /* or a bold racing font if you have one */
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: var(--muted); /* or #ccc for subtlety */
+        letter-spacing: 1.5px;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+
+      .sponsor-logo {
+        height: 50px; /* adjust as needed */
+        width: auto;
+      }
   </style>
 </head>
 
@@ -866,6 +890,10 @@
   </div>
 
   <!-- Bottom Nav -->
+  <div class="sponsor-container">
+    <div class="presented-by">PRESENTED BY</div>
+    <img src="buschlight.png" alt="Busch Light" class="sponsor-logo">
+  </div>
   <div class="bottomNav">
     <div class="navInner">
       <button class="navBtn" id="nav-race" onclick="showView('current')">
@@ -2147,7 +2175,7 @@ out.innerHTML =
         ticking=true;
         requestAnimationFrame(()=>{
           const y=window.scrollY||0;
-          document.documentElement.style.setProperty('--wmShift', '0px'); //document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
+          document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
           ticking=false;
         });
       }
