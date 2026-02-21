@@ -796,33 +796,31 @@
         
       .sponsor-container {
   position: fixed;
-  bottom: var(--navH);           /* Keeps exact position above nav */
+  bottom: var(--navH);  /* Sits exactly on top of nav height (56px) – no overlap with nav */
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 2;                    /* Above watermark, below nav */
-  pointer-events: none;
-  padding: 4px 0;                /* Minimal padding – prevents bloat */
-  opacity: 0.75;                 /* Subtle overall fade */
-  /* No backdrop-filter here – cards already blur the area behind */
+  z-index: 1;           /* ← Change from 10 to 1 (or even 0) – same layer as other content or behind */
+  pointer-events: none; /* Clicks pass through – important so buttons/nav stay clickable */
+  opacity: 1.0;         /* ← Fade it subtly like watermark – adjust 0.4–0.8 based on feel */
 }
 
 .presented-by {
-  font-size: 11px;               /* Smaller text */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
   font-weight: bold;
   color: var(--muted);
-  letter-spacing: 1.2px;
-  margin-bottom: 4px;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
   text-transform: uppercase;
-  text-shadow: 0 1px 3px #000;   /* Helps readability */
 }
 
 .sponsor-logo {
-  height: 38px;                  /* ← This is the key: much smaller than 80px */
+  height: 80px;         /* Your current size – keep or reduce to 60–70px if too bold */
   width: auto;
-  max-width: 180px;              /* Caps width on desktop */
+  opacity: 0.5;         /* Extra fade on logo itself if needed */
 }
         
   </style>
