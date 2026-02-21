@@ -9,8 +9,6 @@
       "isCurrent": false,
       "matchups": [
         {
-          "s1": "1",
-          "s2": "16",
           "p1": "Jason",
           "p2": "Don",
           "a1": 20.5,
@@ -18,17 +16,13 @@
           "winner": "Jason"
         },
         {
-          "s1": "2",
-          "s2": "15",
           "p1": "Chris",
           "p2": "Nick",
           "a1": 24,
           "a2": 24,
-          "winner": ""
+          "winner": "Chris"
         },
         {
-          "s1": "3",
-          "s2": "14",
           "p1": "Rob",
           "p2": "Nate C.",
           "a1": 22.5,
@@ -36,8 +30,6 @@
           "winner": "Nate C."
         },
         {
-          "s1": "4",
-          "s2": "13",
           "p1": "Beau",
           "p2": "Bob",
           "a1": 23,
@@ -45,8 +37,6 @@
           "winner": "Bob"
         },
         {
-          "s1": "5",
-          "s2": "12",
           "p1": "Russ",
           "p2": "Nate M.",
           "a1": 27.5,
@@ -54,8 +44,6 @@
           "winner": "Nate M."
         },
         {
-          "s1": "6",
-          "s2": "11",
           "p1": "Pat",
           "p2": "Stacy",
           "a1": 22,
@@ -63,8 +51,6 @@
           "winner": "Stacy"
         },
         {
-          "s1": "7",
-          "s2": "10",
           "p1": "Justin",
           "p2": "Steven",
           "a1": 21.5,
@@ -72,8 +58,6 @@
           "winner": "Justin"
         },
         {
-          "s1": "8",
-          "s2": "9",
           "p1": "Brett",
           "p2": "Tyler",
           "a1": 5,
@@ -88,76 +72,60 @@
       "isCurrent": true,
       "matchups": [
         {
-          "s1": "1-0",
-          "s2": "1-0",
           "p1": "Brett",
           "p2": "Nate C.",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Brett"
         },
         {
-          "s1": "1-0",
-          "s2": "1-0",
           "p1": "Stacy",
           "p2": "Nate M.",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Nate M."
         },
         {
-          "s1": "1-0",
-          "s2": "1-0",
           "p1": "Bob",
           "p2": "Jason",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Bob"
         },
         {
-          "s1": "1-0",
-          "s2": "1-0",
           "p1": "Justin",
           "p2": "Chris",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Chris"
         },
         {
-          "s1": "0-1",
-          "s2": "0-1",
           "p1": "Tyler",
           "p2": "Pat",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Pat"
         },
         {
-          "s1": "0-1",
-          "s2": "0-1",
           "p1": "Rob",
           "p2": "Beau",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Beau"
         },
         {
-          "s1": "0-1",
-          "s2": "0-1",
           "p1": "Steven",
           "p2": "Nick",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Nick"
         },
         {
-          "s1": "0-1",
-          "s2": "0-1",
           "p1": "Russ",
           "p2": "Don",
           "a1": 0,
           "a2": 0,
-          "winner": ""
+          "winner": "Don"
         }
       ]
     },
