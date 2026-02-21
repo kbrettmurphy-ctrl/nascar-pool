@@ -2146,8 +2146,38 @@
         `;
 
         (r.matchups || []).forEach(m => {
-          const p1Win = (m.winner && m.p1 && m.winner === m.p1);
-          const p2Win = (m.winner && m.p2 && m.winner === m.p2);
+          const norm = (s) => String(s ?? "").trim().toLowerCase();
+
+          // winner might be "TIE" and the actual winner is stored elsewhere
+          let winnerName = String(m.winner ?? "").trim();
+
+          // If winner is blank or explicitly a tie, fall back to common tiebreak fields
+          if (!winnerName || /^tie$/i.test(winnerName)) {
+            winnerName = String(
+              m.tieBreakerWinner ??
+              m.tiebreakerWinner ??
+              m.tieBreakWinner ??
+              m.tieWinner ??
+              m.advances ??
+              m.advance ??
+              m.winnerName ??
+              ""
+            ).trim();
+          }
+
+          // If your backend stores a side instead of a name (1/2), handle that too
+          const winnerSide = (m.winnerSide ?? m.sideWinner ?? m.winnerIdx ?? null);
+
+          const p1Name = String(m.p1 ?? "").trim();
+          const p2Name = String(m.p2 ?? "").trim();
+
+          const p1Win =
+            (winnerSide === 1) ||
+            (winnerName && p1Name && norm(winnerName) === norm(p1Name));
+
+          const p2Win =
+            (winnerSide === 2) ||
+            (winnerName && p2Name && norm(winnerName) === norm(p2Name));
 
           html += `
             <div class="ticket">
