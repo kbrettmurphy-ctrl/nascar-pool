@@ -1381,9 +1381,15 @@
         (roundText ? ` · ${roundText}` : "");
 
       area.innerHTML = "";
-
+      cont you = loadPlayerName().trim().toLowerCase();
       (data.matchups || []).forEach(m => {
         const card = document.createElement("div");
+        const isYou =
+          you &&
+          (
+            String(m.p1 || "").trim().toLowerCase() === you ||
+            String(m.p2 || "").trim().toLowerCase() === you
+          );
         card.className = "matchupCard";
 
         const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
