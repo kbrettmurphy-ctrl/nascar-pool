@@ -1381,7 +1381,7 @@
         (roundText ? ` · ${roundText}` : "");
 
       area.innerHTML = "";
-      cont you = loadPlayerName().trim().toLowerCase();
+      const you = loadPlayerName().trim().toLowerCase();
       (data.matchups || []).forEach(m => {
         const card = document.createElement("div");
         const isYou =
