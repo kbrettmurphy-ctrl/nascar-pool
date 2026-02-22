@@ -1319,7 +1319,7 @@ async function loadCountdown_(){
   stopCountdown_();
 
   try{
-    const data = await getData_("context", "playerGetCountdown"); // snapshot first, GAS fallback
+    const data = await getData_("countdown", "playerGetCountdown");
     const raceName = String(data?.raceName || data?.raceLabel || "").trim();
     const iso = String(data?.raceStart || "").trim();
 
