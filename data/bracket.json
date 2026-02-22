@@ -74,58 +74,58 @@
         {
           "p1": "Brett",
           "p2": "Nate C.",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Brett"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Stacy",
           "p2": "Nate M.",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Nate M."
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Bob",
           "p2": "Jason",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Bob"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Justin",
           "p2": "Chris",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Chris"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Tyler",
           "p2": "Pat",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Pat"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Rob",
           "p2": "Beau",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Beau"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Steven",
           "p2": "Nick",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Nick"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "p1": "Russ",
           "p2": "Don",
-          "a1": 0,
-          "a2": 0,
-          "winner": "Don"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         }
       ]
     },
