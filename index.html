@@ -1390,7 +1390,7 @@
             String(m.p1 || "").trim().toLowerCase() === you ||
             String(m.p2 || "").trim().toLowerCase() === you
           );
-        card.className = "matchupCard";
+        card.className = "matchupCard" + (isYou ? " youRow" : "");
 
         const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
         const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
