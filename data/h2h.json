@@ -1,18 +1,98 @@
 {
-  "Beau": [],
-  "Bob": [],
-  "Brett": [],
-  "Chris": [],
-  "Don": [],
-  "Jason": [],
-  "Justin": [],
-  "Nate C.": [],
-  "Nate M.": [],
-  "Nick": [],
-  "Pat": [],
-  "Rob": [],
-  "Russ": [],
-  "Stacy": [],
-  "Steven": [],
-  "Tyler": []
+  "Beau": [
+    {
+      "opponent": "Bob",
+      "record": "(0-1)"
+    }
+  ],
+  "Bob": [
+    {
+      "opponent": "Beau",
+      "record": "(1-0)"
+    }
+  ],
+  "Brett": [
+    {
+      "opponent": "Tyler",
+      "record": "(1-0)"
+    }
+  ],
+  "Chris": [
+    {
+      "opponent": "Nick",
+      "record": "(1-0)"
+    }
+  ],
+  "Don": [
+    {
+      "opponent": "Jason",
+      "record": "(0-1)"
+    }
+  ],
+  "Jason": [
+    {
+      "opponent": "Don",
+      "record": "(1-0)"
+    }
+  ],
+  "Justin": [
+    {
+      "opponent": "Steven",
+      "record": "(1-0)"
+    }
+  ],
+  "Nate C.": [
+    {
+      "opponent": "Rob",
+      "record": "(1-0)"
+    }
+  ],
+  "Nate M.": [
+    {
+      "opponent": "Russ",
+      "record": "(1-0)"
+    }
+  ],
+  "Nick": [
+    {
+      "opponent": "Chris",
+      "record": "(0-1)"
+    }
+  ],
+  "Pat": [
+    {
+      "opponent": "Stacy",
+      "record": "(0-1)"
+    }
+  ],
+  "Rob": [
+    {
+      "opponent": "Nate C.",
+      "record": "(0-1)"
+    }
+  ],
+  "Russ": [
+    {
+      "opponent": "Nate M.",
+      "record": "(0-1)"
+    }
+  ],
+  "Stacy": [
+    {
+      "opponent": "Pat",
+      "record": "(1-0)"
+    }
+  ],
+  "Steven": [
+    {
+      "opponent": "Justin",
+      "record": "(0-1)"
+    }
+  ],
+  "Tyler": [
+    {
+      "opponent": "Brett",
+      "record": "(0-1)"
+    }
+  ]
 }
