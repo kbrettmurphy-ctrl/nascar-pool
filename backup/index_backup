@@ -13,815 +13,861 @@
   <title>NASCAR Pool 2026</title>
 
   <style>
-    :root{ --cardA: 0.78; --microA: 0.72; --cardBg: rgba(255,255,255,var(--cardA)); --microBg: rgba(255,255,255,var(--microA)); 
-      /* --bg:#0b0b0b; */
-      /* --card:#111111; */
-      --stroke:#e5e7eb;
-      /* --muted:#6b7280; */
-      --ink:#0f172a;
+  /************************************************************
+   * NASCAR Pool 2026 — Player Portal CSS
+   * Cleaned + structured. No visual/behavior changes.
+   ************************************************************/
 
-      --bg:#020b12;
-      --card:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.72);
-      --line:rgba(255,255,255,.12);   
+  /* =========================
+   * 1) THEME TOKENS (VARS)
+   * ========================= */
+  :root{
+    /* --- legacy/optional (currently unused, kept for future sanity) --- */
+    --cardA: 0.78;
+    --microA: 0.72;
+    --cardBg: rgba(255,255,255,var(--cardA));
+    --microBg: rgba(255,255,255,var(--microA));
+    --stroke:#e5e7eb;
+    --ink:#0f172a;
+    --nav:#000000;
+    --nav2:#111827;
+    --black:#000000;
+    --btnPrimary: var(--red);
+    --btnSecondary: var(--blue);
+    --tight:10px;
+    --nano:6px;
 
-      /* --nav:#0b1220;   <----- Old from white background*/
-      --nav:#000000;       /*New to match admin portal with black background*/ 
-      --nav2:#111827;
+    /* --- core theme --- */
+    --bg:#020b12;
+    --card:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    --text:#ffffff;
+    --muted:rgba(255,255,255,.72);
+    --line:rgba(255,255,255,.12);
 
-      /* -- NASCAR Color theme -- */
-      --blue:#007AC2;     /* Lochmara */
-      --red:#E4002B;      /* Monza */
-      --redfade: #E4002B66;
-      --yellow:#FFD659;   /* Mustard */
-      --black:#000000;   
-      --btnPrimary: var(--red);
-      --btnSecondary: var(--blue);
-      --danger: var(--red);
-      --green: #4DD21D;
-      --greenfade: #4DD21DBF;
-          
-      /* Slight overall scale-down (not blurry, just smaller defaults) */
-      --pad:12px;
-      --radius:16px;
-      --radius2:14px;
+    /* NASCAR colors */
+    --blue:#007AC2;
+    --red:#E4002B;
+    --redfade:#E4002B66;
+    --yellow:#FFD659;
+    --danger: var(--red);
+    --green:#4DD21D;
+    --greenfade:#4DD21DBF;
 
-      --h2:24px;
-      --big:20px;
-      --body:14px;
+    /* sizing */
+    --pad:12px;
+    --radius:16px;
+    --radius2:14px;
 
-      --tight:10px;
-      --micro:8px;
-      --nano:6px;
+    --h2:24px;
+    --big:20px;
+    --body:14px;
 
-      /* My Matchup tight mode */
-      --mmPad:8px;
-      --mmGap:6px;
-      --mmHeaderGap:4px;
+    --micro:8px;
 
-      /* iOS bottom bar fix vars */
-      --vvb: 0px;    /* visual viewport bottom gap */
-      --navH: 75px;  /* verified with devtools bottom nav height */
-    }
+    /* My Matchup tight mode */
+    --mmPad:8px;
+    --mmGap:6px;
+    --mmHeaderGap:4px;
 
-    *{ box-sizing:border-box; }
+    /* iOS bottom bar fix vars */
+    --vvb:0px;
+    --navH:75px;
 
-    body {
-      font-size: var(--body);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
-      padding: var(--pad);
-      max-width: 700px;
-      margin: 0 auto;
-      background: var(--bg);
-      color: var(--text);
+    /* watermark */
+    --wmShift:0px;
 
-      /* ✅ keeps nav visible even with iOS toolbar */
-      padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
-    }
+    /* reusable “glass” colors */
+    --glassBlue14: rgba(0,122,194,.14);
+    --glassBlue20: rgba(0,122,194,.20);
+    --glassBlue22: rgba(0,122,194,.22);
+    --glassBlue42: rgba(0,122,194,.42);
+    --glassBlue55: rgba(0,122,194,.55);
 
-    h2 { margin: 0 0 6px 0; font-size: var(--h2); letter-spacing: -0.3px; }
+    --white06: rgba(255,255,255,.06);
+    --white10: rgba(255,255,255,.10);
+    --white12: rgba(255,255,255,.12);
+    --white14: rgba(255,255,255,.14);
 
-    .sub {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 10px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+    --black75: rgba(0,0,0,.75);
+    --winnerGreen: #16a34a;
+  }
 
-    .pill {
-      display: inline-flex; /* Changed from inline-block */
-      align-items: center;  /* Centers text vertically */
-      justify-content: center; /* Centers text horizontally */
-      padding: 6px 8px;
-      border-radius: 999px;
-      background: rgba(255,214,89,.14);
-      border:1px solid rgba(255,214,89,.40);
-      color: var(--yellow);
-      font-size:12px;
-      font-weight:800;
-    }
+  *{ box-sizing:border-box; }
 
-    .card {
-      position: relative;            /* enables stacking context */
-      z-index: 3;                    /* above sponsor */  
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 12px;
-      margin: 12px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
+  /* =========================
+   * 2) PAGE BASE
+   * ========================= */
+  body{
+    font-size: var(--body);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+    padding: var(--pad);
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--bg);
+    color: var(--text);
 
-    .topActions{
-      display:flex;
-      gap:10px;
-      width:100%;
-      margin: 8px 0 8px 0;
-    }
+    /* keeps nav visible even with iOS toolbar */
+    padding-bottom: calc(var(--navH) + env(safe-area-inset-bottom) + var(--vvb));
 
-    button{
-      border: 1px solid var(--line);
-      cursor: pointer;
-      font-weight:700;
-      border-radius: 12px;
-      padding: 6px 6px;
-      font-size: 12px;
-    }
-    button.primary{ border: 1px solid rgba(255,255,255,.32); background:#020b12; color:#fff; margin-top: 3px; }
-    button.secondary{ background:#334155; color:#fff; }
-    button.topactions{ background: rgba(228, 0, 43, .4); color: var(--text); border: 1px solid var(--line); }
-    button:disabled{ opacity:.55; cursor:not-allowed; }
+    /* watermark layout helpers */
+    position: relative;
+    overflow-x: hidden;
+  }
 
-    label { display:block; font-size: 13px; margin: 10px 0 6px; color:rgba(255,255,255,.9); }
-    select, input {
-      width:100%;
-      font-size: 16px;
-      color: var(--text);
-      padding: var(--mmPad);
-      border-radius: 12px;
-      border:1px solid var(--line);
-      background: rgba(0,122,194,.14);
-    }
+  h2{ margin:0 0 6px 0; font-size: var(--h2); letter-spacing:-0.3px; }
 
-    .big { font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
-    .muted { color: var(--muted); font-size: 13px; }
+  /* watermark background */
+  body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    background-image: url("nascar-logo.png");
+    background-repeat: no-repeat;
+    background-size: 300px;
+    background-position: 50% calc(50% + var(--wmShift));
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    .status { margin-top: 10px; font-size: var(--body); white-space: pre-wrap; }
-    #duesStatus { white-space: normal; }
-    /* Stats lives inside #standingsArea.status, so undo pre-wrap there */
-    #standingsArea{
-      white-space: normal;
-    }
+  /* =========================
+   * 3) COMMON UI ELEMENTS
+   * ========================= */
+  .sub{
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
 
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 8px;
+    border-radius:999px;
+    background: rgba(255,214,89,.14);
+    border:1px solid rgba(255,214,89,.40);
+    color: var(--yellow);
+    font-size:12px;
+    font-weight:800;
+  }
 
-    /* Current Race cards */
-    .raceHeaderRow{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap:10px;
-      /* margin-bottom: 6px; */
-    }
-    #currentHeader{ font-size: var(--big); font-weight: 900; letter-spacing:-0.2px; }
-    #currentSub{ font-size: 13px; color: var(--muted); }
+  .card{
+    position: relative;
+    z-index: 3; /* above sponsor */
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin: 12px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
 
-    .matchupCard{
-      border:1px solid var(--line);
-      border-radius: var(--radius2);
-      background: rgba(0,122,194,.14);
-      padding: var(--micro);
-      margin: 8px 0;
-    }
+  .topActions{
+    display:flex;
+    gap:10px;
+    width:100%;
+    margin: 8px 0;
+  }
 
-    .matchupRow{
-      display:grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 10px;
-      align-items:center;
-    }
+  button{
+    border: 1px solid var(--line);
+    cursor:pointer;
+    font-weight:700;
+    border-radius: 12px;
+    padding: 6px 6px;
+    font-size: 12px;
+  }
+  button.primary{
+    border: 1px solid rgba(255,255,255,.32);
+    background:#020b12;
+    color:#fff;
+    margin-top: 3px;
+  }
+  button.secondary{ background:#334155; color:#fff; }
+  button.topactions{
+    background: rgba(228, 0, 43, .4);
+    color: var(--text);
+    border: 1px solid var(--line);
+  }
+  button:disabled{ opacity:.55; cursor:not-allowed; }
 
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width:0;
-    }
-    .side.right{ text-align:right; align-items:flex-end; }
+  label{
+    display:block;
+    font-size:13px;
+    margin:10px 0 6px;
+    color: rgba(255,255,255,.9);
+  }
+  select, input{
+    width:100%;
+    font-size:16px;
+    color: var(--text);
+    padding: var(--mmPad);
+    border-radius: 12px;
+    border:1px solid var(--line);
+    background: var(--glassBlue14);
+  }
 
-    .pName{
-      font-weight: 900;
-      font-size: 15px;
-      line-height: 1.1;
-      margin: 0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+  .big{ font-size: var(--big); font-weight:900; letter-spacing:-0.2px; }
+  .muted{ color: var(--muted); font-size:13px; }
 
-    .pMeta{
-      font-size: 12px;
-      color: var(--yellow);
-      line-height: 1.2;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+  .status{ margin-top:10px; font-size: var(--body); white-space: pre-wrap; }
+  #duesStatus{ white-space: normal; }
+  #standingsArea{ white-space: normal; }
 
-    .vsBadge{
-      font-weight: 800;
-      font-size: 10px;
-      padding: 2px 2px;
-      border-radius: 5px;
-      background: #e5e7eb;
-      color: #111;
-      letter-spacing: 0.4px;
-    }
+  /* =========================
+   * 4) CURRENT RACE VIEW
+   * ========================= */
+  .raceHeaderRow{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+  }
+  #currentHeader{ font-size: var(--big); font-weight:900; letter-spacing:-0.2px; }
+  #currentSub{ font-size:13px; color: var(--muted); }
 
-    @media (max-width: 600px){
-      .matchupRow{ grid-template-columns: 1fr; gap: 6px; text-align:center; }
-      .side.right{ text-align:center; align-items:center; }
-      .vsBadge{ margin: 2px auto; }
-      .pMeta{ white-space:normal; }
-    }
+  .matchupCard{
+    border:1px solid var(--line);
+    border-radius: var(--radius2);
+    background: var(--glassBlue14);
+    padding: var(--micro);
+    margin: 8px 0;
+  }
 
-    .elimTitle{ margin-top: 10px; font-weight: 900; font-size: 18px; }
-    .elimItem{ font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .matchupCard.youRow{
+    background: var(--glassBlue42);
+    border: 2px solid var(--glassBlue55);
+  }
+  .matchupRow{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items:center;
+  }
 
-    /* ---- Bracket (your existing styles) ---- */
-    .bracketGrid{
-      /* max-width: 700px; */
-      display:grid;
-      grid-template-columns: repeat(4, 185px);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      gap: 6px;
-      width: 100%;
-    }
-    .bracketCol{
-      min-width: 0;
-      border:1px solid var(--line);
-      border-radius: 12px;
-      background: rgba(0,122,194,.14); /*var (--card);*/
-      padding: 6px;
-      /* backdrop-filter: blur(6px); */
-      /* -webkit-backdrop-filter: blur(6px); */
-    }
-    .bracketHdr{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:6px;
-      margin-bottom:6px;
-    }
-    .roundTag{
-      display:inline-block;
-      font-weight:900;
-      font-size:10px;
-      letter-spacing:.5px;
-      padding:3px 7px;
-      border-radius:999px;
-      background: rgba(255,214,89,.14);
-      border: 1px solid rgba(255,214,89,.14);
-      color: var(--yellow);
-      line-height:1;
-     }
-    .raceTag{
-      display:inline-block;
-      font-weight:800;
-      font-size:10px;
-      letter-spacing:.5px;
-      padding:3px 7px;
-      border-radius:999px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,214,89,.14);
-      color: var(--muted);
-      line-height:1;
-    }
-    .title{ display:flex; align-items:center; gap:6px; min-width:0; }
-    .race{
-      font-size:11px;
-      color: var(--muted);
-      font-weight:800;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      min-width:0;
-    }
-    .ticket{
-      border:1px solid var(--line);
-      border-radius: 12px;
-      /* background:rgba(0,122,194,.14); */
-      color:#fff;
-      overflow:hidden;
-      margin: 4px 0;
-    }
-    .ticketRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:6px;
-      padding:5px 7px;
-      min-width:0;
-    }
-    .ticketRow + .ticketRow{
-      border-top:1px solid rgba(255,255,255,0.10);
-    }
-    .sideLeft{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex: 1 1 auto;
-      min-width:0;
-      overflow:hidden;
-      font-weight:900;
-      font-size:11px;
-      line-height:1.1;
-    }
-    .nameText{
-      flex: 1 1 auto;
-      min-width:0;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      display:block;
-    }
-    .seedBadge{
-      flex: 0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width: 18px;
-      height: 16px;
-      padding:0 5px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 10px;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
-    .sideRight{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex: 0 0 auto;
-    }
-    .winSlot{
-      width: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .winDot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:#16a34a;
-      box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
-    }
-    .avgBox{
-      font-variant-numeric: tabular-nums;
-      font-weight:900;
-      font-size:11px;
-      padding:3px 7px;
-      border-radius:10px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.12);
-      line-height:1;
-    }
-    .noAvg{
-      font-weight:900;
-      opacity:.7;
-      font-size:11px;
-      padding:3px 7px;
-      line-height:1;
-    }
+  .side{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-width:0;
+  }
+  .side.right{ text-align:right; align-items:flex-end; }
 
-    .bracketWrap{
-      position: relative;
-      margin-top:10px;
-    }
-    .bracketSticky{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display:none !important;
-      gap:10px;
-      padding: 6px 10px;
-      margin: 0 0 6px 0;
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-    }
-    .bracketSticky .chip{
-      flex: 0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      font-size:11px;
-      font-weight:900;
-      color: var(--text);
-      scroll-snap-align: start;
-    }
-    .bracketSticky .chip .small{
-      font-size:10px;
-      font-weight:800;
-      color: var(--muted);
-    }
-    .bracketFade{
-      pointer-events:none;
-      position:absolute;
-      top: 0px; /*42px;*/
-      bottom: 0;
-      width: 18px;
-      z-index: 15;
-      border-radius: 12px;
-    }
-    .bracketFade.left{
-      left: 0;
-      background: linear-gradient(90deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
-    }
-    .bracketFade.right{
-      right: 0;
-      background: linear-gradient(270deg, rgba(0,122,194,.14) 0%, rgba(0,122,194,0) 100%);
-    }
+  .pName{
+    font-weight:900;
+    font-size:15px;
+    line-height:1.1;
+    margin:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 
-    @media (max-width: 900px){
-      /*.bracketSticky{ display:flex; }*/
-      .bracketGrid{ 
-        scroll-snap-type: x proximity;
-      }
-      .bracketCol{ scroll-snap-align: start; }
-    }
+  .pMeta{
+    font-size:13px;
+    color: var(--yellow);
+    line-height:1.2;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
 
-    /* ---- My Matchup tight mode ---- */
-    .mmWrap{ margin-top: 6px; }
-    .mmHeader{
-      font-weight: 900;
-      font-size: 14px;
-      margin: 0 0 var(--mmHeaderGap) 0;
-      line-height: 1.2;
-    }
-    .microBox{
-      border:1px solid var(--line);
-      border-radius: 12px;
-      padding: var(--mmPad);
-      background: rgba(0,122,194,.14);
-    }
-    .youBox{
-      border:2px solid #16a34a;
-      background: rgba(0,122,194,.14);
-    }
-    .microTitle{
-      font-weight: 900;
-      font-size: 14px;
-      margin: 0 0 2px 0;
-      line-height: 1.15;
-    }
-    .microMeta{
-      font-size: 14px;
-      font-weight: 900;
-      color: var(--yellow);
-      margin: 0;
-      line-height: 1.2;
-    }
-    .centerVS{
-      text-align:center;
-      font-weight:900;
-      font-size: 12px;
-      color: var(--red);
-      margin: var(--mmGap) 0;
-      /* opacity:.75; */
-      letter-spacing: .5px;
-    }
-    .elimTitle{
-      font-weight:900;
-      font-size:14px;
-      margin-bottom:4px;
-      opacity:.85;
-    }
-    .elimSub{
-      font-weight:400;
-      font-size:14px;
-      color: rgba(255,255,255,.9);
-    }
-    .deadBadge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 6px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-      background: rgba(228,0,43,.85);
-      color:#fff;
-      opacity:.9;
-    }
-    .deadBadge .skull{ font-size:12px; line-height:1; }
+  .vsBadge{
+    font-weight:800;
+    font-size:10px;
+    padding:2px 2px;
+    border-radius:5px;
+    background:#e5e7eb;
+    color:#111;
+    letter-spacing:0.4px;
+  }
 
-    /* ---- Bottom Nav ---- */
-    .bottomNav{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(2,11,18,.92);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,.10);
-      z-index: 9999;
-    }
-    .navInner{
-      max-width: 920px;
-      margin:0 auto;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      overflow-x:auto;
-      -webkit-overflow-scrolling: touch;
-    }
+  @media (max-width:600px){
+    .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
+    .side.right{ text-align:center; align-items:center; }
+    .vsBadge{ margin:2px auto; }
+    .pMeta{ white-space:normal; }
+  }
 
-    .navInner::before,
-    .navInner::after{
-      content:"";
-      flex: 1 0 auto;
-    }
-    .navBtn{
-      flex:0 0 auto;
-      min-width: 98px;
-      background: rgba(255,255,255,.06);
-      color:#fff;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding: 6px 8px;
-      font-weight: 800;
-      font-size: 12px;
-      cursor:pointer;
-      display:flex;
-      gap:6px;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      white-space:nowrap;
-    }
-    .navBtn.active{
-      background: rgba(0,122,194,.22);
-      border-color: rgba(0,122,194,.55);
-    }
-    .navBtn .ico{ font-size: 14px; }
+  .elimItem{ font-size:14px; color: var(--muted); margin-top:4px; }
 
-    /* Watermark background */
-    :root{
-      --wmShift: 0px;      /* parallax shift */
-    }
-    body{
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      background-image: url("nascar-logo.png");
-      background-repeat: no-repeat;
-      /* background-size: min(78vw, 700px); */  /*THIS MAKES THE LOGO BIGGER ON BIGGER SCREENS*/
-      background-size: 300px;
-      background-position: 50% calc(50% + var(--wmShift));
-      opacity: 0.2;
-      pointer-events: none;
-      z-index: 0;
-    }
+  /* =========================
+   * 5) BRACKET
+   * ========================= */
+  .bracketGrid{
+    display:grid;
+    grid-template-columns: repeat(4, 185px);
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+    gap:6px;
+    width:100%;
+  }
 
-    /* ---- Stats (UI, not spreadsheet) ---- */
+  .bracketCol{
+    min-width:0;
+    border:1px solid var(--line);
+    border-radius: 12px;
+    background: var(--glassBlue14); /* keep as-is */
+    padding: 6px;
+  }
 
-    /* Make the mode buttons a horizontal row (tabs) with scroll if needed */
-    .statsModes{
-      display:flex;
-      flex-wrap: nowrap;            /* force horizontal */
-      gap:8px;
-      margin-top:8px;
-      overflow-x:auto;              /* if it doesn't fit, scroll */
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 4px;
-    }
-    .statsModes::-webkit-scrollbar{ height:2px; }
-    .statsModes::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.14);
-      border-radius: 999px;
-    }
+  .bracketHdr{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:6px;
+    margin-bottom:6px;
+  }
 
-    /* Keep buttons compact and prevent them from stretching */
-    .statsModes button.secondary{
-      flex: 0 0 auto;               /* prevent stretching/wrapping */
-      width:auto;
-      padding:8px 12px;             /* slightly tighter */
-      border-radius:12px;
-      background: rgba(0,122,194,.22);
-    }
-    .statsModes button.secondary.active{
-      background: rgba(0,122,194,.42);
-      border: 1px solid rgba(0,122,194,.55);
-    }
+  .roundTag{
+    display:inline-block;
+    font-weight:900;
+    font-size:10px;
+    letter-spacing:.5px;
+    padding:3px 7px;
+    border-radius:999px;
+    background: rgba(255,214,89,.14);
+    border:1px solid rgba(255,214,89,.14);
+    color: var(--yellow);
+    line-height:1;
+  }
 
-    /* Tighten the panel spacing */
-    .statsPanel{ margin-top: 6px; }
+  .raceTag{
+    display:inline-block;
+    font-weight:800;
+    font-size:10px;
+    letter-spacing:.5px;
+    padding:3px 7px;
+    border-radius:999px;
+    background: rgba(255,255,255,.10);
+    border:1px solid rgba(255,214,89,.14);
+    color: var(--muted);
+    line-height:1;
+  }
 
-    /* Tighten rows */
-    .statsRow{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding:4px 6px;              /* tighter */
-      border-radius: 12px;
-      border:1px solid var(--line);
-      background: rgba(0,122,194,.20);
-      margin-top:3px;                /* tighter */
-    }
+  .title{ display:flex; align-items:center; gap:6px; min-width:0; }
+  .race{
+    font-size:11px;
+    color: var(--muted);
+    font-weight:800;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    min-width:0;
+  }
 
-    /* Name + badges */
-    .statsLeft{
-      flex: 0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .rankBadge{
-      flex:0 0 auto;
-      min-width: 32px;
-      height: 24px;
-      border-radius: 999px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:400;
-      font-variant-numeric: tabular-nums;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-      font-size: 14px;
-    }
-    .statsName{
-      font-weight:400;
-      color: var(--text);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      font-size: 14px;
-    }
+  .ticket{
+    border:1px solid var(--line);
+    border-radius: 12px;
+    color:#fff;
+    overflow:hidden;
+    margin: 4px 0;
+  }
 
-    /* Pills row */
-    .statsBadges{
-      flex: 1 1 auto;
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      min-width:0;
-    }
-    .miniPill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 8px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      font-size:11px;
-      font-weight:900;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .miniPill .k{ color: var(--muted); font-weight:800; }
+  .ticketRow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px;
+    padding:5px 7px;
+    min-width:0;
+  }
+  .ticketRow + .ticketRow{
+    border-top:1px solid rgba(255,255,255,0.10);
+  }
 
-    /* --- Overall-only layout: fixed name column = widest name --- */
-    .statsRow.overallRow{
-      display: grid;
-      grid-template-columns: auto var(--overallNameW, max-content) 1fr;
-      align-items: center;
-      gap: 10px;
-    }
+  .sideLeft{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex: 1 1 auto;
+    min-width:0;
+    overflow:hidden;
+    font-weight:900;
+    font-size:11px;
+    line-height:1.1;
+  }
 
-    /* Keep full names visible and aligned */
-    .statsRow.overallRow .statsName{
-      width: var(--overallNameW, max-content);
-      white-space: nowrap;
-      overflow: visible;
-      text-overflow: clip;
-    }
+  .nameText{
+    flex: 1 1 auto;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display:block;
+  }
 
-    /* Pills start immediately after the name column and scroll if needed */
-    .statsRow.overallRow .statsBadges{
-      justify-content: flex-start;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap;
-    }
-    .statsRow.overallRow .statsBadges .miniPill{ flex: 0 0 auto; }
+  .seedBadge{
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:18px;
+    height:16px;
+    padding:0 5px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.12);
+    font-size:10px;
+    font-weight:900;
+    font-variant-numeric: tabular-nums;
+  }
 
-    /* Controls row (label + select) tighter */
-    .statsControls{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      margin-top: 8px;               /* tighter */
-    }
-    .statsControls label{ margin:0; }
-    .statsControls select{
-      width:auto;
-      min-width: 220px;
-      padding: 10px 12px;            /* tighter */
-    }
+  .sideRight{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex: 0 0 auto;
+  }
 
-    /* Wins tiles tighter */
-    .tiles{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:10px;
-      margin-top: 8px;               /* tighter */
-    }
-    .tile{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px;                 /* tighter */
-      background: rgba(0,122,194,.10);
-    }
-    .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
-    .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
+  .winSlot{
+    width:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
 
-    /* Mobile: 2 tiles wide and full-width selects */
-    @media (max-width: 520px){
-      .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .statsControls select{ width:100%; }
-      .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
-    }
+  .winDot{
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background: var(--winnerGreen);
+    box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
+  }
 
-    /* Chrome/Edge/Safari */
-    *::-webkit-scrollbar{
-      height: 10px;     /* horizontal */
-      width: 10px;      /* vertical */
-    }
+  .avgBox{
+    font-variant-numeric: tabular-nums;
+    font-weight:900;
+    font-size:11px;
+    padding:3px 7px;
+    border-radius:10px;
+    background: rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.12);
+    line-height:1;
+  }
 
-    *::-webkit-scrollbar-track{
-      background: rgba(255,255,255,.06);
-      border-radius: 999px;
-    }
+  .noAvg{
+    font-weight:900;
+    opacity:.7;
+    font-size:11px;
+    padding:3px 7px;
+    line-height:1;
+  }
 
-    *::-webkit-scrollbar-thumb{
-      background: rgba(0,122,194,.40);
-      border-radius: 999px;
-      border: 2px solid rgba(0,0,0,.35); /* makes it look inset */
-    }
+  .bracketWrap{ position: relative; margin-top:10px; }
 
-    *::-webkit-scrollbar-thumb:hover{
-      background: rgba(0,122,194,.60);
-    }
+  .bracketSticky{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display:none !important;
+    gap:10px;
+    padding: 6px 10px;
+    margin: 0 0 6px 0;
+    background: var(--black75);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
 
-    *::-webkit-scrollbar-corner{
-      background: transparent;
-    }
+  .bracketSticky .chip{
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 8px;
+    border-radius:999px;
+    border:1px solid var(--white12);
+    background: var(--white06);
+    font-size:11px;
+    font-weight:900;
+    color: var(--text);
+    scroll-snap-align: start;
+  }
 
-    /* Top 4 payout */
-      .statsRow.paidRow{
-        border: 1px solid var(--greenfade);
-        /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
-      }
+  .bracketSticky .chip .small{
+    font-size:10px;
+    font-weight:800;
+    color: var(--muted);
+  }
 
-      /* Current viewer highlight (match active stats tab style) */
-      .statsRow.youRow{
-        background: rgba(0,122,194,.42); /* same vibe as button.secondary.active */
-        border-color: rgba(0,122,194,.55);
-      }
+  .bracketFade{
+    pointer-events:none;
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:18px;
+    z-index:15;
+    border-radius: 12px; /* matches .ticket */
+  }
+  .bracketFade.left{
+    left:0;
+    background: linear-gradient(90deg, var(--glassBlue14) 0%, rgba(0,122,194,0) 100%);
+  }
+  .bracketFade.right{
+    right:0;
+    background: linear-gradient(270deg, var(--glassBlue14) 0%, rgba(0,122,194,0) 100%);
+  }
 
-      /* If both apply → keep green outline */
-      .statsRow.paidRow.youRow{
-        border: 1px solid var(--greenfade);
-        /*box-shadow: 0 0 0 1px rgba(77,210,29,.35);*/
-      } 
-      .sponsor-container{
-        position: fixed;
-        bottom: var(--navH);
-        left: 0;
-        right: 0;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        z-index: 2;            /* behind cards, above body::before */
-        pointer-events:none;
-      }
+  @media (max-width:900px){
+    .bracketGrid{ scroll-snap-type: x proximity; }
+    .bracketCol{ scroll-snap-align: start; }
+  }
 
-      .presented-by {
-        /* font-family: Arial, Helvetica, sans-serif; */
-        font-size: 11px;
-        opacity: 0.5;
-        font-weight: bold;
-        color: var(--muted);
-        letter-spacing: .2px;
-        margin-bottom: 6px;
-        text-transform: uppercase;
-      }
+  /* =========================
+   * 6) MY MATCHUP VIEW
+   * ========================= */
+  .mmWrap{ margin-top:6px; }
 
-      .sponsor-logo {
-        height: 80px;         /* Your current size – keep or reduce to 60–70px if too bold */
-        width: auto;
-        opacity: 0.5;         /* Extra fade on logo itself if needed */
-      }
-        
-  </style>
+  .mmHeader{
+    font-weight:900;
+    font-size:14px;
+    margin: 0 0 var(--mmHeaderGap) 0;
+    line-height:1.2;
+  }
+
+  .microBox{
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding: var(--mmPad);
+    background: var(--glassBlue14);
+  }
+
+  .youBox{
+    border:2px solid var(--winnerGreen);
+    background: var(--glassBlue14);
+  }
+
+  .microTitle{
+    font-weight:900;
+    font-size:14px;
+    margin:0 0 2px 0;
+    line-height:1.15;
+  }
+
+  .microMeta{
+    font-size:14px;
+    font-weight:900;
+    color: var(--yellow);
+    margin:0;
+    line-height:1.2;
+  }
+
+  .centerVS{
+    text-align:center;
+    font-weight:900;
+    font-size:12px;
+    color: var(--red);
+    margin: var(--mmGap) 0;
+    letter-spacing:.5px;
+  }
+
+  /* final version of elimTitle (kept only once, matches your current winner override) */
+  .elimTitle{
+    font-weight:900;
+    font-size:14px;
+    margin-bottom:4px;
+    opacity:.85;
+  }
+
+  .elimSub{
+    font-weight:400;
+    font-size:14px;
+    color: rgba(255,255,255,.9);
+  }
+
+  .deadBadge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 6px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:900;
+    background: rgba(228,0,43,.85);
+    color:#fff;
+    opacity:.9;
+  }
+  .deadBadge .skull{ font-size:12px; line-height:1; }
+
+  /* =========================
+   * 7) BOTTOM NAV
+   * ========================= */
+  .bottomNav{
+    position: fixed;
+    left:0; right:0; bottom:0;
+    padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(2,11,18,.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,.10);
+    z-index: 9999;
+  }
+
+  .navInner{
+    max-width: 920px;
+    margin:0 auto;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .navInner::before,
+  .navInner::after{
+    content:"";
+    flex: 1 0 auto;
+  }
+
+  .navBtn{
+    flex:0 0 auto;
+    min-width:98px;
+    background: var(--white06);
+    color:#fff;
+    border:1px solid var(--white10);
+    border-radius:18px;
+    padding:6px 8px;
+    font-weight:800;
+    font-size:12px;
+    cursor:pointer;
+    display:flex;
+    gap:6px;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    white-space:nowrap;
+  }
+
+  .navBtn.active{
+    background: var(--glassBlue22);
+    border-color: var(--glassBlue55);
+  }
+
+  .navBtn .ico{ font-size:14px; }
+
+  /* =========================
+   * 8) STATS (UI)
+   * ========================= */
+  .statsModes{
+    display:flex;
+    flex-wrap: nowrap;
+    gap:8px;
+    margin-top:8px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom:4px;
+  }
+  .statsModes::-webkit-scrollbar{ height:2px; }
+  .statsModes::-webkit-scrollbar-thumb{
+    background: var(--white14);
+    border-radius:999px;
+  }
+
+  .statsModes button.secondary{
+    flex: 0 0 auto;
+    width:auto;
+    padding:8px 12px;
+    border-radius:12px;
+    background: var(--glassBlue22);
+  }
+  .statsModes button.secondary.active{
+    background: var(--glassBlue42);
+    border:1px solid var(--glassBlue55);
+  }
+
+  .statsPanel{ margin-top:6px; }
+
+  .statsRow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:4px 6px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background: var(--glassBlue20);
+    margin-top:3px;
+  }
+
+  .statsLeft{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+  }
+
+  .rankBadge{
+    flex:0 0 auto;
+    min-width:32px;
+    height:24px;
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:400;
+    font-variant-numeric: tabular-nums;
+    background: rgba(255,255,255,.10);
+    border:1px solid var(--white12);
+    font-size:14px;
+  }
+
+  .statsName{
+    font-weight:400;
+    color: var(--text);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:14px;
+  }
+
+  .statsBadges{
+    flex: 1 1 auto;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    min-width:0;
+  }
+
+  .miniPill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 8px;
+    border-radius:999px;
+    border:1px solid var(--white12);
+    background: var(--white06);
+    font-size:11px;
+    font-weight:900;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .miniPill .k{ color: var(--muted); font-weight:800; }
+
+  .statsRow.overallRow{
+    display:grid;
+    grid-template-columns: auto var(--overallNameW, max-content) 1fr;
+    align-items:center;
+    gap:10px;
+  }
+
+  .statsRow.overallRow .statsName{
+    width: var(--overallNameW, max-content);
+    white-space:nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .statsRow.overallRow .statsBadges{
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling: touch;
+    white-space:nowrap;
+  }
+  .statsRow.overallRow .statsBadges .miniPill{ flex:0 0 auto; }
+
+  .statsControls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin-top:8px;
+  }
+  .statsControls label{ margin:0; }
+  .statsControls select{
+    width:auto;
+    min-width:220px;
+    padding:10px 12px;
+  }
+
+  .tiles{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap:10px;
+    margin-top:8px;
+  }
+  .tile{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:10px;
+    background: rgba(0,122,194,.10);
+  }
+  .tile .tLabel{ color: var(--muted); font-weight:800; font-size:12px; }
+  .tile .tVal{ font-weight:900; font-size:22px; margin-top:4px; }
+
+  @media (max-width:520px){
+    .tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .statsControls select{ width:100%; }
+    .statsModes{ flex-wrap: nowrap !important; overflow-x:auto !important; }
+  }
+
+  /* paid + you highlights */
+  .statsRow.paidRow{ border:1px solid var(--greenfade); }
+  .statsRow.youRow{
+    background: var(--glassBlue42);
+    border-color: var(--glassBlue55);
+  }
+  .statsRow.paidRow.youRow{ border:1px solid var(--greenfade); }
+
+  /* =========================
+   * 9) SPONSOR OVERLAY
+   * ========================= */
+  .sponsor-container{
+    position: fixed;
+    bottom: var(--navH);
+    left:0;
+    right:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    z-index: 2; /* behind cards, above watermark */
+    pointer-events:none;
+  }
+
+  .presented-by{
+    font-size:11px;
+    opacity:0.5;
+    font-weight:bold;
+    color: var(--muted);
+    letter-spacing:.2px;
+    margin-bottom:6px;
+    text-transform: uppercase;
+  }
+
+  .sponsor-logo{
+    height:80px;
+    width:auto;
+    opacity:0.5;
+  }
+
+  /* =========================
+   * 10) SCROLLBARS
+   * ========================= */
+  *::-webkit-scrollbar{ height:10px; width:10px; }
+  *::-webkit-scrollbar-track{
+    background: var(--white06);
+    border-radius:999px;
+  }
+  *::-webkit-scrollbar-thumb{
+    background: rgba(0,122,194,.40);
+    border-radius:999px;
+    border:2px solid rgba(0,0,0,.35);
+  }
+  *::-webkit-scrollbar-thumb:hover{ background: rgba(0,122,194,.60); }
+  *::-webkit-scrollbar-corner{ background: transparent; }
+</style>
 </head>
 
 <body>
@@ -917,1273 +963,1296 @@
   </div>
 
   <script>
-    /**********************
-     * CONFIG
-     **********************/
-    const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
-    const STORAGE_KEY = "nascar_pool_player_name";
-    const VIEW_KEY = "nascar_pool_active_view";
-    const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Round ${n}`);
-    const views = ["current","mymatchup","standings","dues","bracket"];
-    let activeView = "current";
+  /************************************************************
+   * NASCAR Pool 2026 — Player Portal JS
+   * Structured only. No behavior changes.
+   ************************************************************/
 
-    /**********************
-     * iOS “loads shifted/zoomed until pinch” fix
-     **********************/
-    (function fixIOSBottomBar(){
-      function update(){
-        const vv = window.visualViewport;
-        if (!vv) return;
+  /* =========================
+   * 1) CONFIG / CONSTANTS
+   * ========================= */
+  const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
+  const STORAGE_KEY = "nascar_pool_player_name";
+  const VIEW_KEY = "nascar_pool_active_view";
 
-        const bottomGap = Math.max(
-          0,
-          window.innerHeight - (vv.height + vv.offsetTop)
-        );
+  const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Round ${n}`);
+  const views = ["current","mymatchup","standings","dues","bracket"];
+  let activeView = "current";
 
-        document.documentElement.style.setProperty("--vvb", bottomGap + "px");
-      }
+  // Player site uses API_BASE directly. (No extra config helper needed.)
+  const ADMIN_KEY = ""; // leave blank on the public site
 
-      update();
-      window.addEventListener("resize", update);
-      window.addEventListener("orientationchange", update);
+  /* =========================
+   * 2) iOS viewport bottom bar fix
+   * (keeps your nav + layout stable on iOS)
+   * ========================= */
+  (function fixIOSBottomBar(){
+    function update(){
+      const vv = window.visualViewport;
+      if (!vv) return;
 
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", update);
-        window.visualViewport.addEventListener("scroll", update);
-      }
-    })();
+      const bottomGap = Math.max(
+        0,
+        window.innerHeight - (vv.height + vv.offsetTop)
+      );
 
-    /**********************
-     * API helpers (Fetch + JSONP fallback)
-     **********************/
-    function apiUrl(params){
-      const u = new URL(API_BASE);
-      Object.keys(params).forEach(k => u.searchParams.set(k, params[k]));
-      return u.toString();
+      document.documentElement.style.setProperty("--vvb", bottomGap + "px");
     }
 
-    function jsonp(url){
-      return new Promise((resolve, reject) => {
-        const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
-        const s = document.createElement("script");
-        const timeout = setTimeout(() => {
-          cleanup();
-          reject(new Error("JSONP timeout"));
-        }, 15000);
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
 
-        function cleanup(){
-          clearTimeout(timeout);
-          delete window[cb];
-          if (s && s.parentNode) s.parentNode.removeChild(s);
-        }
-
-        window[cb] = (data) => {
-          cleanup();
-          resolve(data);
-        };
-
-        const glue = (url.includes("?") ? "&" : "?");
-        s.src = url + glue + "callback=" + encodeURIComponent(cb);
-        s.onerror = () => {
-          cleanup();
-          reject(new Error("JSONP load failed"));
-        };
-        document.head.appendChild(s);
-      });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", update);
+      window.visualViewport.addEventListener("scroll", update);
     }
+  })();
 
-    // Player site uses API_BASE directly. (No extra config helper needed.)
-    const ADMIN_KEY = ""; // leave blank on the public site
+  /* =========================
+   * 3) API helpers (Fetch + optional JSONP fallback)
+   * ========================= */
 
-    async function apiCall(action, params = {}, isAdmin = false){
-      // Live GAS fallback (used only if snapshots are missing)
-      const apiBase = API_BASE;
-      const adminKey = ADMIN_KEY;
-      if(!apiBase) throw new Error("Missing API Base URL.");
-      if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+  // Currently unused but kept for potential future use.
+  function apiUrl(params){
+    const u = new URL(API_BASE);
+    Object.keys(params).forEach(k => u.searchParams.set(k, params[k]));
+    return u.toString();
+  }
 
-      const q = new URLSearchParams();
-      q.set("action", action);
-      if(isAdmin) q.set("key", adminKey);
+  // Currently unused but kept (legacy / fallback option).
+  function jsonp(url){
+    return new Promise((resolve, reject) => {
+      const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
+      const s = document.createElement("script");
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error("JSONP timeout"));
+      }, 15000);
 
-      Object.keys(params || {}).forEach(k => {
-        const v = params[k];
-        if(v !== undefined && v !== null) q.set(k, v);
-      });
-
-      const url = apiBase + "?" + q.toString();
-      return fetch(url, { cache: "no-store" }).then(r => r.json());
-    }
-
-    // ---------- Snapshot Loader (GitHub Pages /data/*.json) ----------
-    const SNAP_MAP = {
-      context:   "./data/context.json",
-      players:   "./data/players.json",
-      matchups:  "./data/matchups.json",
-      bracket:   "./data/bracket.json",
-      standings: "./data/standings.json",
-      dues:      "./data/dues.json",
-      my:        "./data/myMatchups.json",
-      h2h:       "./data/h2h.json",
-      wins:      "./data/wins.json",
-      drivers:   "./data/driverUsage.json",
-    };
-
-    // --- Snapshot versioning (prevents stale GitHub Pages cache) ---
-    let SNAP_VER = null;          // encoded string
-    let SNAP_CTX = null;          // last context object
-
-    async function refreshSnapshotVersion_(){
-      // Always hard-bust context so we can read the latest publishedAt
-      const url = SNAP_MAP.context + (SNAP_MAP.context.includes("?") ? "&" : "?") + "v=" + Date.now();
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error("Context fetch failed (" + res.status + ")");
-      const ctx = await res.json();
-
-      SNAP_CTX = ctx;
-      SNAP_VER = encodeURIComponent(ctx && ctx.publishedAt ? ctx.publishedAt : String(Date.now()));
-      return ctx;
-    }
-
-    async function fetchSnapshotJson(key, forceRefreshVersion=false){
-      const base = SNAP_MAP[key];
-      if(!base) throw new Error("Unknown snapshot key: " + key);
-
-      // Context is special: it *creates* the version.
-      if(key === "context"){
-        // Always no-store + always bust
-        const url = base + (base.includes("?") ? "&" : "?") + "v=" + Date.now();
-        const res = await fetch(url, { cache: "no-store" });
-        if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
-        return await res.json();
+      function cleanup(){
+        clearTimeout(timeout);
+        delete window[cb];
+        if (s && s.parentNode) s.parentNode.removeChild(s);
       }
 
-      // For everything else, ensure we have a version (publishedAt)
-      if(!SNAP_VER || forceRefreshVersion){
-        try { await refreshSnapshotVersion_(); }
-        catch(e){
-          // If context fails for some reason, fall back to time-based bust
-          SNAP_VER = String(Date.now());
-        }
-      }
+      window[cb] = (data) => {
+        cleanup();
+        resolve(data);
+      };
 
-      const url = base + (base.includes("?") ? "&" : "?") + "v=" + SNAP_VER;
+      const glue = (url.includes("?") ? "&" : "?");
+      s.src = url + glue + "callback=" + encodeURIComponent(cb);
+      s.onerror = () => {
+        cleanup();
+        reject(new Error("JSONP load failed"));
+      };
+      document.head.appendChild(s);
+    });
+  }
+
+  async function apiCall(action, params = {}, isAdmin = false){
+    const apiBase = API_BASE;
+    const adminKey = ADMIN_KEY;
+
+    if(!apiBase) throw new Error("Missing API Base URL.");
+    if(isAdmin && !adminKey) throw new Error("Missing Admin Key.");
+
+    const q = new URLSearchParams();
+    q.set("action", action);
+    if(isAdmin) q.set("key", adminKey);
+
+    Object.keys(params || {}).forEach(k => {
+      const v = params[k];
+      if(v !== undefined && v !== null) q.set(k, v);
+    });
+
+    const url = apiBase + "?" + q.toString();
+    return fetch(url, { cache: "no-store" }).then(r => r.json());
+  }
+
+  /* =========================
+   * 4) Snapshot Loader (GitHub Pages /data/*.json)
+   * ========================= */
+  const SNAP_MAP = {
+    context:   "./data/context.json",
+    players:   "./data/players.json",
+    matchups:  "./data/matchups.json",
+    bracket:   "./data/bracket.json",
+    standings: "./data/standings.json",
+    dues:      "./data/dues.json",
+    my:        "./data/myMatchups.json",
+    h2h:       "./data/h2h.json",
+    wins:      "./data/wins.json",
+    drivers:   "./data/driverUsage.json",
+  };
+
+  // Snapshot versioning (prevents stale GitHub Pages cache)
+  let SNAP_VER = null;   // encoded string
+  let SNAP_CTX = null;   // last context object
+
+  async function refreshSnapshotVersion_(){
+    const url = SNAP_MAP.context + (SNAP_MAP.context.includes("?") ? "&" : "?") + "v=" + Date.now();
+    const res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error("Context fetch failed (" + res.status + ")");
+    const ctx = await res.json();
+
+    SNAP_CTX = ctx;
+    SNAP_VER = encodeURIComponent(ctx && ctx.publishedAt ? ctx.publishedAt : String(Date.now()));
+    return ctx;
+  }
+
+  async function fetchSnapshotJson(key, forceRefreshVersion=false){
+    const base = SNAP_MAP[key];
+    if(!base) throw new Error("Unknown snapshot key: " + key);
+
+    if(key === "context"){
+      const url = base + (base.includes("?") ? "&" : "?") + "v=" + Date.now();
       const res = await fetch(url, { cache: "no-store" });
       if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
       return await res.json();
     }
 
-    /**********************
-     * UI helpers
-     **********************/
-    function setActiveNav(which){
-      const map = {
-        current: "nav-race",
-        mymatchup: "nav-me",
-        standings: "nav-stats",
-        dues: "nav-dues",
-        bracket: "nav-bracket"
-      };
-      Object.values(map).forEach(id => {
-        const b = document.getElementById(id);
-        if (b) b.classList.remove("active");
-      });
-      const btn = document.getElementById(map[which]);
-      if (btn) btn.classList.add("active");
+    if(!SNAP_VER || forceRefreshVersion){
+      try { await refreshSnapshotVersion_(); }
+      catch(e){
+        SNAP_VER = String(Date.now());
+      }
     }
 
-    function persistHScroll(selector, storageKey){
-      const el = document.querySelector(selector);
-      if(!el) return;
+    const url = base + (base.includes("?") ? "&" : "?") + "v=" + SNAP_VER;
+    const res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error(`Snapshot fetch failed (${res.status}) for ${key}`);
+    return await res.json();
+  }
 
-      // Restore (after layout paints so widths exist)
-      requestAnimationFrame(() => {
-        const saved = Number(localStorage.getItem(storageKey) || 0);
-        if (Number.isFinite(saved) && saved > 0) el.scrollLeft = saved;
-      });
+  /* =========================
+   * 5) UI helpers
+   * ========================= */
+  function setActiveNav(which){
+    const map = {
+      current: "nav-race",
+      mymatchup: "nav-me",
+      standings: "nav-stats",
+      dues: "nav-dues",
+      bracket: "nav-bracket"
+    };
 
-      // Save (throttled)
-      let t = null;
-      el.addEventListener("scroll", () => {
-        if (t) return;
-        t = requestAnimationFrame(() => {
-          localStorage.setItem(storageKey, String(el.scrollLeft || 0));
-          t = null;
-        });
-      }, { passive:true });
+    Object.values(map).forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.classList.remove("active");
+    });
 
-      // Also save on view changes / refreshes just in case
-      window.addEventListener("beforeunload", () => {
+    const btn = document.getElementById(map[which]);
+    if (btn) btn.classList.add("active");
+  }
+
+  function persistHScroll(selector, storageKey){
+    const el = document.querySelector(selector);
+    if(!el) return;
+
+    requestAnimationFrame(() => {
+      const saved = Number(localStorage.getItem(storageKey) || 0);
+      if (Number.isFinite(saved) && saved > 0) el.scrollLeft = saved;
+    });
+
+    let t = null;
+    el.addEventListener("scroll", () => {
+      if (t) return;
+      t = requestAnimationFrame(() => {
         localStorage.setItem(storageKey, String(el.scrollLeft || 0));
+        t = null;
       });
+    }, { passive:true });
+
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem(storageKey, String(el.scrollLeft || 0));
+    });
+  }
+
+  function showView(which) {
+    activeView = which;
+    setActiveNav(which);
+    localStorage.setItem(VIEW_KEY, which);
+
+    views.forEach(v => {
+      const el = document.getElementById("view-" + v);
+      if (el) el.style.display = (v === which) ? "block" : "none";
+    });
+
+    if (which === "current") loadCurrent();
+    if (which === "standings") loadStandings();
+    if (which === "dues") loadDues();
+    if (which === "mymatchup") loadMyMatchup();
+    if (which === "bracket") loadBracket();
+  }
+
+  function refreshActiveView() {
+    SNAP_VER = null;
+    SNAP_CTX = null;
+    _cache_myMatchupsAll = null;
+
+    if (activeView === "current") loadCurrent();
+    else if (activeView === "standings") loadStandings();
+    else if (activeView === "dues") loadDues();
+    else if (activeView === "mymatchup") loadMyMatchup();
+    else if (activeView === "bracket") loadBracket();
+  }
+
+  function savePlayerName(name) {
+    localStorage.setItem(STORAGE_KEY, String(name || ""));
+    setWelcome();
+  }
+
+  function loadPlayerName() {
+    return String(localStorage.getItem(STORAGE_KEY) || "").trim();
+  }
+
+  function hasPlayerName() {
+    return !!loadPlayerName();
+  }
+
+  function clearSavedAndReset() {
+    localStorage.removeItem(STORAGE_KEY);
+    const mm = document.getElementById("mmName");
+    const dd = document.getElementById("duesName");
+    if (mm) mm.value = "";
+    if (dd) dd.value = "";
+    setWelcome();
+    showView(activeView);
+  }
+
+  function setWelcome() {
+    const w = document.getElementById("welcomeName");
+    const name = loadPlayerName();
+    if (!w) return;
+    w.textContent = name ? `Jesus, you again, ${name}?` : "Who the fuck are you?";
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function escapeAttr(s) {
+    return String(s ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+  }
+
+  function populatePlayerDropdowns(playerList) {
+    const mm = document.getElementById("mmName");
+    const dd = document.getElementById("duesName");
+
+    const options = [`<option value="">Who the fuck are you?</option>`]
+      .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
+      .join("");
+
+    if (mm) mm.innerHTML = options;
+    if (dd) dd.innerHTML = options;
+
+    const saved = loadPlayerName();
+    if (saved) {
+      if (mm) mm.value = saved;
+      if (dd) dd.value = saved;
     }
 
-    // Cache for large snapshot maps so we don't refetch them over and over
-    let _cache_myMatchupsAll = null;
-
-    async function getMyMatchupsAllSnapshot(){
-      if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
-      try{
-        _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
-      }catch(e){
-        _cache_myMatchupsAll = null;
+    if (mm) mm.onchange = () => {
+      if (mm.value) {
+        savePlayerName(mm.value);
+        if (dd) dd.value = mm.value;
       }
-      return _cache_myMatchupsAll;
-    }
+    };
 
-    function extractPicksFromMyEntry(entry){
-      if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
-      const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
-      const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
-      return { drivers, nums };
-    }
-
-    function getEntryByName(map, name){
-      if(!map || !name) return null;
-      if(map[name]) return map[name];
-      const target = String(name).trim().toLowerCase();
-      // Build a one-off lookup without mutating the snapshot structure
-      for(const k in map){
-        if(String(k).trim().toLowerCase() === target) return map[k];
+    if (dd) dd.onchange = () => {
+      if (dd.value) {
+        savePlayerName(dd.value);
+        if (mm) mm.value = dd.value;
       }
-      return null;
-    }
+    };
+  }
 
-    function showView(which) {
-      activeView = which;
-      setActiveNav(which);
-      localStorage.setItem(VIEW_KEY, which);
-      views.forEach(v => {
-        const el = document.getElementById("view-" + v);
-        if (el) el.style.display = (v === which) ? "block" : "none";
-      });
+  function formatDriversOrNumbers(driversArr, numsArr){
+    const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
+    const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
+    if (d1 || d2) return [d1, d2].filter(Boolean).join(", ");
 
-      if (which === "current") loadCurrent();
-      if (which === "standings") loadStandings();
-      if (which === "dues") loadDues();
-      if (which === "mymatchup") loadMyMatchup();
-      if (which === "bracket") loadBracket();
-    }
+    const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
+    const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
+    if (n1 || n2) return `Numbers: ${[n1,n2].filter(Boolean).join(", ")}`;
+    return "";
+  }
 
-    function refreshActiveView() {
-      SNAP_VER = null;
-      SNAP_CTX = null;
+
+  /* =========================
+   * 6) Snapshot caches / helpers
+   * ========================= */
+  let _cache_myMatchupsAll = null;
+
+  async function getMyMatchupsAllSnapshot(){
+    if(_cache_myMatchupsAll) return _cache_myMatchupsAll;
+    try{
+      _cache_myMatchupsAll = await fetchSnapshotJson("my", false);
+    }catch(e){
       _cache_myMatchupsAll = null;
-      if (activeView === "current") loadCurrent();
-      else if (activeView === "standings") loadStandings();
-      else if (activeView === "dues") loadDues();
-      else if (activeView === "mymatchup") loadMyMatchup();
-      else if (activeView === "bracket") loadBracket();
     }
+    return _cache_myMatchupsAll;
+  }
 
-    function savePlayerName(name) {
-      localStorage.setItem(STORAGE_KEY, String(name || ""));
+  function extractPicksFromMyEntry(entry){
+    if(!entry || typeof entry !== "object") return { drivers:null, nums:null };
+    const drivers = entry.youDrivers || entry.drivers || entry.picksDrivers || entry.assignedDrivers || null;
+    const nums    = entry.youNums    || entry.nums    || entry.picksNums    || entry.assignedNums    || null;
+    return { drivers, nums };
+  }
+
+  function getEntryByName(map, name){
+    if(!map || !name) return null;
+    if(map[name]) return map[name];
+
+    const target = String(name).trim().toLowerCase();
+    for(const k in map){
+      if(String(k).trim().toLowerCase() === target) return map[k];
+    }
+    return null;
+  }
+
+  /* =========================
+   * 7) Data access (snapshots first, live GAS fallback)
+   * ========================= */
+  async function getData_(snapKey, action, params){
+    try{
+      return await fetchSnapshotJson(snapKey, false);
+    }catch(e){
+      const resp = await apiCall(action, params || {}, false);
+      if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
+      return resp.data;
+    }
+  }
+
+  /* =========================
+   * 8) Loaders
+   * ========================= */
+  async function loadPlayersThenInit() {
+    try{
+      const players = await getData_("players", "playerGetPlayerList");
+      const safePlayers = Array.isArray(players) ? players : [];
+      populatePlayerDropdowns(safePlayers);
       setWelcome();
-    }
 
-    function loadPlayerName() {
-      return String(localStorage.getItem(STORAGE_KEY) || "").trim();
-    }
+      const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
+      const allowed = views.includes(last) ? last : "";
 
-    function hasPlayerName() {
-      return !!loadPlayerName();
-    }
+      if (allowed) showView(allowed);
+      else if (hasPlayerName()) showView("mymatchup");
+      else showView("current");
 
-    function clearSavedAndReset() {
-      localStorage.removeItem(STORAGE_KEY);
-      const mm = document.getElementById("mmName");
-      const dd = document.getElementById("duesName");
-      if (mm) mm.value = "";
-      if (dd) dd.value = "";
+    }catch(e){
+      console.log(e);
       setWelcome();
-      showView(activeView);
+      showView("current");
     }
+  }
 
-    function setWelcome() {
-      const w = document.getElementById("welcomeName");
-      const name = loadPlayerName();
-      if (!w) return;
-      w.textContent = name ? `Jesus, you again, ${name}?` : "Who the fuck are you?";
-    }
+  async function loadCurrent() {
+    const header = document.getElementById("currentHeader");
+    const sub = document.getElementById("currentSub");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
 
-    function escapeHtml(s) {
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-    }
+    area.innerHTML = "Loading current race...";
+    elim.innerHTML = "";
 
-    function escapeAttr(s) {
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-    }
+    try{
+      const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
 
-    // --- Overall-only: set name column to width of the widest rendered name ---
-    function syncOverallNameColumnWidth_(){
-      const panel = document.getElementById("statsPanel");
-      if(!panel) return;
+      header.textContent = data.race || "Current Race";
+      const tour  = data.tournament ?? "";
+      const round = data.currentRound ?? data.round ?? "";
 
-      // Only the Overall list
-      const names = panel.querySelectorAll(".statsRow .statsName");
-      if(!names.length) return;
+      const roundText =
+        round === "" ? "" :
+        (Number(round) === 4 ? "Final" : `Round ${round}`);
+      sub.textContent =
+        `Tournament ${tour}` +
+        (roundText ? ` · ${roundText}` : "");
+      area.innerHTML = "";
+      const you = loadPlayerName().trim().toLowerCase();
+      (data.matchups || []).forEach(m => {
+        const card = document.createElement("div");
+        const isYou =
+          you &&
+          (
+            String(m.p1 || "").trim().toLowerCase() === you ||
+            String(m.p2 || "").trim().toLowerCase() === you
+          );
+        card.className = "matchupCard" + (isYou ? " youRow" : "");
 
-      // Build (or reuse) a hidden ruler
-      let ruler = document.getElementById("__nameRuler");
-      if(!ruler){
-        ruler = document.createElement("span");
-        ruler.id = "__nameRuler";
-        ruler.style.position = "fixed";
-        ruler.style.left = "-9999px";
-        ruler.style.top = "-9999px";
-        ruler.style.visibility = "hidden";
-        ruler.style.whiteSpace = "nowrap";
-        ruler.style.padding = "0";
-        ruler.style.margin = "0";
-        ruler.style.border = "0";
-        document.body.appendChild(ruler);
-      }
+        const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
+        const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
 
-      // Copy font styles from a real .statsName so measurement matches exactly
-      const cs = window.getComputedStyle(names[0]);
-      ruler.style.fontFamily = cs.fontFamily;
-      ruler.style.fontSize = cs.fontSize;
-      ruler.style.fontWeight = cs.fontWeight;
-      ruler.style.letterSpacing = cs.letterSpacing;
-      ruler.style.textTransform = cs.textTransform;
-
-      let max = 0;
-      names.forEach(el => {
-        ruler.textContent = el.textContent || "";
-        max = Math.max(max, ruler.getBoundingClientRect().width);
+        card.innerHTML = `
+          <div class="matchupRow">
+            <div class="side left">
+              <div class="pName">${escapeHtml(m.p1)}</div>
+              ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
+            </div>
+            <div class="vsBadge">VS</div>
+            <div class="side right">
+              <div class="pName">${escapeHtml(m.p2)}</div>
+              ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
+            </div>
+          </div>
+        `;
+        area.appendChild(card);
       });
 
-      // Small breathing room
-      const next = Math.ceil(max + 6);
+      const eliminated = data.eliminated || [];
+      if (eliminated.length > 0) {
+        let html = `<div class="elimTitle">Eliminated</div>`;
 
-      // Stop iOS “creep”: only update if it actually changed meaningfully
-      const prev = parseFloat(panel.style.getPropertyValue("--overallNameW")) || 0;
-      if (Math.abs(next - prev) < 1) return;
+        const myAll = await getMyMatchupsAllSnapshot();
 
-      panel.style.setProperty("--overallNameW", next + "px");
-    }
-
-
-    function populatePlayerDropdowns(playerList) {
-      const mm = document.getElementById("mmName");
-      const dd = document.getElementById("duesName");
-
-      const options = [`<option value="">Who the fuck are you?</option>`]
-        .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
-        .join("");
-
-      if (mm) mm.innerHTML = options;
-      if (dd) dd.innerHTML = options;
-
-      const saved = loadPlayerName();
-      if (saved) {
-        if (mm) mm.value = saved;
-        if (dd) dd.value = saved;
-      }
-
-      if (mm) mm.onchange = () => {
-        if (mm.value) {
-          savePlayerName(mm.value);
-          if (dd) dd.value = mm.value;
-        }
-      };
-
-      if (dd) dd.onchange = () => {
-        if (dd.value) {
-          savePlayerName(dd.value);
-          if (mm) mm.value = dd.value;
-        }
-      };
-    }
-
-    function formatDriversOrNumbers(driversArr, numsArr){
-      const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
-      const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
-      if (d1 || d2) return [d1, d2].filter(Boolean).join(", ");
-
-      const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
-      const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
-      if (n1 || n2) return `Numbers: ${[n1,n2].filter(Boolean).join(", ")}`;
-      return "";
-    }
-
-    /**********************
-     * Loaders
-     **********************/
-    async function loadPlayersThenInit() {
-      try{
-        const players = await getData_("players", "playerGetPlayerList");
-        const safePlayers = Array.isArray(players) ? players : [];
-        populatePlayerDropdowns(safePlayers);
-        setWelcome();
-        const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
-        const allowed = views.includes(last) ? last : "";
-        if (allowed) showView(allowed);
-        else if (hasPlayerName()) showView("mymatchup");
-        else showView("current");
-
-      }catch(e){
-        console.log(e);
-        setWelcome();
-        showView("current");
-      }
-    }
-
-    async function loadCurrent() {
-      const header = document.getElementById("currentHeader");
-      const sub = document.getElementById("currentSub");
-      const area = document.getElementById("matchupsArea");
-      const elim = document.getElementById("eliminatedArea");
-
-      area.innerHTML = "Loading current race...";
-      elim.innerHTML = "";
-
-      try{
-        const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
-
-        header.textContent = data.race || "Current Race";
-        const tour  = data.tournament ?? "";
-        const race  = data.currentRace ?? data.race ?? "";
-        const round = data.currentRound ?? data.round ?? "";
-        const roundText =
-          round === "" ? "" :
-          (Number(round) === 4 ? "Final" : `Round ${round}`);
-
-        sub.textContent =
-          `Tournament ${tour}` +
-          (roundText ? ` · ${roundText}` : "");
-
-        area.innerHTML = "";
-
-        (data.matchups || []).forEach(m => {
-          const card = document.createElement("div");
-          card.className = "matchupCard";
-
-          const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-          const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
-
-          card.innerHTML = `
-            <div class="matchupRow">
-              <div class="side left">
-                <div class="pName">${escapeHtml(m.p1)}</div>
-                ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
-              </div>
-              <div class="vsBadge">VS</div>
-              <div class="side right">
-                <div class="pName">${escapeHtml(m.p2)}</div>
-                ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
-              </div>
-            </div>
-          `;
-          area.appendChild(card);
+        eliminated.forEach(p => {
+          const entry = getEntryByName(myAll, p);
+          const picks = extractPicksFromMyEntry(entry);
+          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
         });
 
-        const eliminated = data.eliminated || [];
-        if (eliminated.length > 0) {
-          let html = `<div class="elimTitle">Eliminated</div>`;
-
-          // Try to enrich eliminated list with their assigned drivers/numbers
-          const myAll = await getMyMatchupsAllSnapshot();
-
-          eliminated.forEach(p => {
-            const entry = getEntryByName(myAll, p);
-            const picks = extractPicksFromMyEntry(entry);
-            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
-          });
-
-          elim.innerHTML = html;
-        }
-      }catch(e){
-        area.innerHTML = "Error loading matchups.";
+        elim.innerHTML = html;
       }
+    }catch(e){
+      area.innerHTML = "Error loading matchups.";
     }
+  }
 
-    const EARLY_MESSAGES = [
-      "Seedings aren’t set yet. Everyone is still technically good at this.",
-      "No matchups yet. Enjoy this moment before it all goes wrong.",
-      "Relax. The bracket hasn’t ruined your weekend yet.",
-      "Nothing’s set yet. Stop refreshing like it’s going to help.",
-      "Bracket pending. The spreadsheet gods demand patience.",
-      "Matchups not set. Go hydrate or something.",
-      "Seedings aren’t ready. Your downfall has been delayed.",
-      "Calm down. NASCAR hasn’t hurt us yet."
-    ];
+  const EARLY_MESSAGES = [
+    "Seedings aren’t set yet. Everyone is still technically good at this.",
+    "No matchups yet. Enjoy this moment before it all goes wrong.",
+    "Relax. The bracket hasn’t ruined your weekend yet.",
+    "Nothing’s set yet. Stop refreshing like it’s going to help.",
+    "Bracket pending. The spreadsheet gods demand patience.",
+    "Matchups not set. Go hydrate or something.",
+    "Seedings aren’t ready. Your downfall has been delayed.",
+    "Calm down. NASCAR hasn’t hurt us yet."
+  ];
 
-    function getEarlyMessage(){
-      return EARLY_MESSAGES[Math.floor(Math.random() * EARLY_MESSAGES.length)];
-    }
+  function getEarlyMessage(){
+    return EARLY_MESSAGES[Math.floor(Math.random() * EARLY_MESSAGES.length)];
+  }
 
-    async function loadMyMatchup() {
-      const sel = document.getElementById("mmName");
-      const out = document.getElementById("mmStatus");
+  async function loadMyMatchup() {
+    const sel = document.getElementById("mmName");
+    const out = document.getElementById("mmStatus");
 
-      const name = sel ? String(sel.value || "").trim() : "";
-      if (!name) { out.textContent = "Pick your name and click the button, dumbass."; return; }
+    const name = sel ? String(sel.value || "").trim() : "";
+    if (!name) { out.textContent = "Pick your name and click the button, dumbass."; return; }
 
-      savePlayerName(name);
-      out.textContent = "Loading…";
+    savePlayerName(name);
+    out.textContent = "Loading…";
 
+    try{
+      let data = {};
       try{
-        let data = {};
-        try{
-          const all = await fetchSnapshotJson("my", false);
-          data = (all && all[name]) ? all[name] : {};
-        }catch(e){
-          // snapshot missing; fall back to live GAS
-          const res = await apiCall("playerGetMyMatchup", { name });
-          if (!res || !res.ok) throw new Error(res?.error || "API failed");
-          data = res.data || {};
-        }
+        const all = await fetchSnapshotJson("my", false);
+        data = (all && all[name]) ? all[name] : {};
+      }catch(e){
+        const res = await apiCall("playerGetMyMatchup", { name });
+        if (!res || !res.ok) throw new Error(res?.error || "API failed");
+        data = res.data || {};
+      }
 
-        const status = String(data.status || "").trim().toLowerCase();
+      const status = String(data.status || "").trim().toLowerCase();
 
-        // --- picks ---
-        const youDriversArr = Array.isArray(data.youDrivers)
-          ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
-          : [];
+      const youDriversArr = Array.isArray(data.youDrivers)
+        ? data.youDrivers.map(x => String(x || "").trim()).filter(Boolean)
+        : [];
 
-        const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
-        const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
-        const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
+      const youNumsArr = Array.isArray(data.youNums) ? data.youNums : [];
+      const n1 = (youNumsArr.length > 0 && String(youNumsArr[0] ?? "").trim() !== "") ? String(youNumsArr[0]).trim() : "";
+      const n2 = (youNumsArr.length > 1 && String(youNumsArr[1] ?? "").trim() !== "") ? String(youNumsArr[1]).trim() : "";
 
-        // “real opponent” check (treat blanks/TBD/bye as not started)
-        const opp = String(data.opponent || "").trim();
-        const hasRealOpponent =
-          !!opp &&
-          opp !== "-" &&
-          opp.toLowerCase() !== "tbd" &&
-          opp.toLowerCase() !== "bye";
+      const opp = String(data.opponent || "").trim();
+      const hasRealOpponent =
+        !!opp &&
+        opp !== "-" &&
+        opp.toLowerCase() !== "tbd" &&
+        opp.toLowerCase() !== "bye";
 
-        // “real context” check (treat missing/0 as not started)
-        const tour = String(data.tournament ?? "").trim();
-        const rnd  = String(data.round ?? "").trim();
-        const hasRealContext =
-          tour !== "" && tour !== "0" &&
-          rnd  !== "" && rnd  !== "0";
+      const tour = String(data.tournament ?? "").trim();
+      const rnd  = String(data.round ?? "").trim();
+      const hasRealContext =
+        tour !== "" && tour !== "0" &&
+        rnd  !== "" && rnd  !== "0";
 
-        // Build your picks display (reuse for both states)
-        const youListLabel = youDriversArr.length
-          ? "Your drivers:"
-          : ((n1 || n2) ? "Your numbers:" : "");
+      const youListLabel = youDriversArr.length
+        ? "Your drivers:"
+        : ((n1 || n2) ? "Your numbers:" : "");
 
-        const youListText = youDriversArr.length
-          ? youDriversArr.join("<br>")
-          : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
+      const youListText = youDriversArr.length
+        ? youDriversArr.join("<br>")
+        : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
-        const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+      const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
 
-        // 1) NOT STARTED (seedings/matchups not set yet)
-         if (!hasRealOpponent || !hasRealContext) {
-          out.innerHTML = `
-            <div class="microBox" style="margin-top:6px;">
-              <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
-              <div class="microMeta elimSub">
-                ${escapeHtml(getEarlyMessage())}
-              </div>
-
-              ${youListText ? `
-                <div style="margin-top:10px;">
-                  <div class="microTitle">${escapeHtml(youListLabel)}</div>
-                  <div class="microMeta">${youListHtml}</div>
-                </div>
-              ` : ``}
+      if (!hasRealOpponent || !hasRealContext) {
+        out.innerHTML = `
+          <div class="microBox" style="margin-top:6px;">
+            <div class="pill" style="margin-bottom:8px;">⏳ Not started yet</div>
+            <div class="microMeta elimSub">
+              ${escapeHtml(getEarlyMessage())}
             </div>
-          `;
-          return;
-        }
 
-        // 2) ELIMINATED (only after a real matchup/context exists)
-        if (status !== "active") {
-          out.innerHTML = `
-            <div class="microBox" style="margin-top:6px;">
-              <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
-              <div class="microMeta elimSub">
-                ${escapeHtml(data.you || name)}, you're eliminated…but here's your stuff anyway. Maybe you can still win $25. Try not to make this a lifestyle.<br><br>
-              </div>
-
-              ${youListText ? `
+            ${youListText ? `
+              <div style="margin-top:10px;">
                 <div class="microTitle">${escapeHtml(youListLabel)}</div>
                 <div class="microMeta">${youListHtml}</div>
-              ` : ``}
+              </div>
+            ` : ``}
+          </div>
+        `;
+        return;
+      }
+
+      if (status !== "active") {
+        out.innerHTML = `
+          <div class="microBox" style="margin-top:6px;">
+            <div class="deadBadge" style="margin-bottom:8px;"><span class="skull">☠️</span> ELIMINATED</div>
+            <div class="microMeta elimSub">
+              ${escapeHtml(data.you || name)}, you're eliminated…but here's your stuff anyway. Maybe you can still win $25. Try not to make this a lifestyle.<br><br>
             </div>
-          `;
+
+            ${youListText ? `
+              <div class="microTitle">${escapeHtml(youListLabel)}</div>
+              <div class="microMeta">${youListHtml}</div>
+            ` : ``}
+          </div>
+        `;
+        return;
+      }
+
+      const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
+      const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
+
+      out.innerHTML = `
+        <div class="mmHeader">
+          Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+        </div>
+
+        <div class="microBox youBox">
+          <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+          ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
+        </div>
+
+        <div class="centerVS">VS</div>
+
+        <div class="microBox">
+          <div class="microTitle">${escapeHtml(data.opponent)}</div>
+          ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
+        </div>
+      `;
+    }catch(e){
+      out.textContent = "Error: " + (e && e.message ? e.message : e);
+    }
+  }
+
+  async function loadDues() {
+    const sel = document.getElementById("duesName");
+    const out = document.getElementById("duesStatus");
+
+    const name = sel ? String(sel.value || "").trim() : "";
+    if (!name) {
+      out.textContent = "Pick your name first.";
+      return;
+    }
+
+    savePlayerName(name);
+    out.textContent = "Loading…";
+
+    try {
+      const all = await getData_("dues", "playerGetDues", { name });
+
+      let data = null;
+
+      if (
+        all &&
+        typeof all === "object" &&
+        !Array.isArray(all) &&
+        (all.name || all.paid != null || all.balance != null || all.winnings != null)
+      ) {
+        data = all;
+      } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
+        data = all[name];
+      } else if (Array.isArray(all)) {
+        data =
+          all.find(
+            r =>
+              String(r?.name || "")
+                .trim()
+                .toLowerCase() === name.toLowerCase()
+          ) || null;
+      } else if (all && Array.isArray(all.dues)) {
+        data =
+          all.dues.find(
+            r =>
+              String(r?.name || "")
+                .trim()
+                .toLowerCase() === name.toLowerCase()
+          ) || null;
+      }
+
+      if (!data) throw new Error("No dues record found for " + name);
+
+      const paid = Number(data.paid ?? 0);
+      const winnings = Number(data.winnings ?? 0);
+      const balance = Number(data.balance ?? 0);
+
+      const paidLine =
+        paid === 180
+          ? `<span style="color: var(--green); opacity: 0.9;">Paid: $${paid.toFixed(2)}</span>`
+          : `Paid: $${paid.toFixed(2)}`;
+
+      const balanceLine =
+        balance > 0
+          ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
+          : `Balance Due: $${balance.toFixed(2)}`;
+
+      out.innerHTML =
+        `<div class="microBox">
+          <div>${paidLine}</div>
+          <div>Winnings: $${winnings.toFixed(2)}</div>
+          <div>${balanceLine}</div>
+        </div>`;
+
+    } catch (e) {
+      out.textContent = "Error: " + (e && e.message ? e.message : e);
+    }
+  }
+
+  /* =========================
+   * 9) Stats / Standings
+   * ========================= */
+  let _cache_standings = null;
+  let _statsMode = "overall";
+  let _nameWTimer = null;
+
+  function resetStatPillScroll(scope){
+    const root = scope || document;
+    root.querySelectorAll('.statsBadges').forEach(el => {
+      el.scrollLeft = 0;
+      el.scrollTo(0, 0);
+    });
+  }
+
+  function resetStatPillScrollSoon(scope){
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => resetStatPillScroll(scope));
+    });
+  }
+
+  function syncOverallNameColumnWidth_(){
+    const panel = document.getElementById("statsPanel");
+    if(!panel) return;
+
+    const names = panel.querySelectorAll(".statsRow .statsName");
+    if(!names.length) return;
+
+    let ruler = document.getElementById("__nameRuler");
+    if(!ruler){
+      ruler = document.createElement("span");
+      ruler.id = "__nameRuler";
+      ruler.style.position = "fixed";
+      ruler.style.left = "-9999px";
+      ruler.style.top = "-9999px";
+      ruler.style.visibility = "hidden";
+      ruler.style.whiteSpace = "nowrap";
+      ruler.style.padding = "0";
+      ruler.style.margin = "0";
+      ruler.style.border = "0";
+      document.body.appendChild(ruler);
+    }
+
+    const cs = window.getComputedStyle(names[0]);
+    ruler.style.fontFamily = cs.fontFamily;
+    ruler.style.fontSize = cs.fontSize;
+    ruler.style.fontWeight = cs.fontWeight;
+    ruler.style.letterSpacing = cs.letterSpacing;
+    ruler.style.textTransform = cs.textTransform;
+
+    let max = 0;
+    names.forEach(el => {
+      ruler.textContent = el.textContent || "";
+      max = Math.max(max, ruler.getBoundingClientRect().width);
+    });
+
+    const next = Math.ceil(max + 6);
+    const prev = parseFloat(panel.style.getPropertyValue("--overallNameW")) || 0;
+    if (Math.abs(next - prev) < 1) return;
+
+    panel.style.setProperty("--overallNameW", next + "px");
+  }
+
+  async function loadStandings() {
+    const area = document.getElementById("standingsArea");
+    area.innerHTML = "Loading stats...";
+
+    try{
+      const data = await getData_("standings", "playerGetStandings");
+      _cache_standings = data || {};
+
+      area.innerHTML = `
+        <div class="statsModes" id="statsModes">
+          <button class="secondary" data-mode="overall">Standings</button>
+          <button class="secondary" data-mode="tourney">Tourney Ranks</button>
+          <button class="secondary" data-mode="h2h">H2H</button>
+          <button class="secondary" data-mode="wins">Wins</button>
+          <button class="secondary" data-mode="drivers">Driver Usage</button>
+        </div>
+        <div class="statsPanel" id="statsPanel"></div>
+      `;
+
+      persistHScroll("#statsModes", "nascar_stats_tabs_scroll");
+
+      const modes = area.querySelectorAll("#statsModes button");
+      modes.forEach(b => {
+        b.onclick = () => setStatsMode_(b.getAttribute("data-mode") || "overall");
+      });
+
+      setStatsMode_("overall");
+    }catch(e){
+      area.innerHTML = "Error: " + (e && e.message ? e.message : e);
+    }
+  }
+
+  function setStatsMode_(mode){
+    _statsMode = mode || "overall";
+    const box = document.getElementById("statsPanel");
+    const modes = document.querySelectorAll("#statsModes button");
+    modes.forEach(b => b.classList.toggle("active", (b.getAttribute("data-mode") === _statsMode)));
+
+    if (!box) return;
+    if (_statsMode === "overall") return renderOverall_(box);
+    if (_statsMode === "tourney") return renderTourney_(box);
+    if (_statsMode === "h2h") return renderH2H_(box);
+    if (_statsMode === "wins") return renderWins_(box);
+    if (_statsMode === "drivers") return renderDrivers_(box);
+    box.innerHTML = "";
+  }
+
+  function renderOverall_(box){
+    const data = _cache_standings || {};
+    const rows = Array.isArray(data.overall) ? data.overall : [];
+    const headers = Array.isArray(data.overallHeaders) ? data.overallHeaders : [];
+
+    if (!rows.length || !headers.length){
+      box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
+      requestAnimationFrame(() => syncOverallNameColumnWidth_());
+      resetStatPillScrollSoon(box);
+      return;
+    }
+
+    const nameKey = headers.find(h => /name|player/i.test(h)) || headers[0];
+    const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
+    const you = loadPlayerName().trim().toLowerCase();
+
+    let html = `<div class="big">Overall</div>`;
+    rows.forEach(r => {
+      const rank = r[rankKey] ?? "";
+      const name = r[nameKey] ?? "";
+
+      const EXCLUDED_KEYS = new Set(["Matches"]);
+
+      // NOTE: getVal is unused right now. Leaving it for now (safe), but it’s clutter.
+      const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
+
+      const W = r["W"] ?? r["w"] ?? null;
+      const L = r["L"] ?? r["l"] ?? null;
+      const record = (W != null && L != null) ? `${W}-${L}` : "";
+
+      const isYou  = you && name.trim().toLowerCase() === you;
+
+      const badgeKeys = headers
+        .filter(k => !EXCLUDED_KEYS.has(k))
+        .filter(h => h !== nameKey && h !== rankKey)
+        .filter(h => !/^(w|l)$/i.test(h))
+        .slice(0, 5);
+
+      const badges = [
+        record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
+        ...badgeKeys.map(k => {
+          const v = r[k];
+          if (v == null || String(v).trim() === "") return "";
+          return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
+        })
+      ].filter(Boolean).join("");
+
+      html += `
+        <div class="statsRow overallRow ${isYou ? "youRow" : ""}">
+          <div class="rankBadge">${escapeHtml(rank || "—")}</div>
+          <div class="statsName">${escapeHtml(name)}</div>
+          <div class="statsBadges">${badges}</div>
+        </div>
+      `;
+    });
+
+    box.innerHTML = html;
+    requestAnimationFrame(syncOverallNameColumnWidth_);
+    resetStatPillScrollSoon(box);
+  }
+
+  function renderTourney_(box){
+    const data = _cache_standings || {};
+    const headers = Array.isArray(data.tournamentHeaders) ? data.tournamentHeaders : [];
+    if (!headers.length){
+      box.innerHTML = `<div class="muted">(No tournament rank data yet)</div>`;
+      resetStatPillScrollSoon(box);
+      return;
+    }
+
+    const opts = headers.map(h => `<option value="${escapeAttr(h)}">${escapeHtml(h)}</option>`).join("");
+    box.innerHTML = `
+      <div class="big">Tournament Ranks</div>
+      <div class="muted">Pick a damn tournament (if you care)</div>
+
+      <div class="statsControls">
+        <select id="tourneyPick">${opts}</select>
+      </div>
+
+      <div id="tourneyRanksBox" style="margin-top:10px;"></div>
+    `;
+
+    const sel = document.getElementById("tourneyPick");
+    const render = () => showTournamentRanks(sel.value);
+    sel.onchange = render;
+    render();
+  }
+
+  function showTournamentRanks(label) {
+    const box = document.getElementById("tourneyRanksBox");
+    const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
+    const listRaw = t[label] || [];
+
+    let html = ``;
+
+    if (!Array.isArray(listRaw) || listRaw.length === 0) {
+      html += `<div class="muted">(No data yet)</div>`;
+      box.innerHTML = html;
+      return;
+    }
+
+    const items = listRaw
+      .map((it) => {
+        if (it && typeof it === "object") {
+          const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
+          const rank = Number(it.rank ?? it.Rank ?? it.RANK);
+
+          const out = { ...it };
+          out.player = String(player || "").trim();
+          out.rank = Number.isFinite(rank) ? rank : null;
+          return out;
+        }
+        return { rank: null, player: String(it || "").trim() };
+      })
+      .filter(x => x.player);
+
+    if (items.length === 0) {
+      html += `<div class="muted">(No data yet)</div>`;
+      box.innerHTML = html;
+      return;
+    }
+
+    const hasRanks = items.some(x => Number.isFinite(x.rank));
+    if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
+
+    let startRank = 17 - items.length;
+    if (startRank < 1) startRank = 1;
+    if (startRank > 16) startRank = 16;
+
+    const you = loadPlayerName().trim().toLowerCase();
+
+    html += `<div class="rankList">`;
+
+    const preferred = ["W","L","Avg","W%"];
+    const getKey = (obj, want) => Object.keys(obj).find(k => k.toLowerCase() === want.toLowerCase());
+
+    const sample = items[0] || {};
+    const badgeKeys = preferred
+      .map(w => getKey(sample, w))
+      .filter(Boolean);
+
+    const EXCLUDED_KEYS = new Set(["Matches"]);
+
+    items.forEach((it, i) => {
+      const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
+      const name = it.player || "";
+      const isPaid = r <= 4;
+      const isYou  = you && name.trim().toLowerCase() === you;
+
+      const W = it["W"] ?? it["w"] ?? null;
+      const L = it["L"] ?? it["l"] ?? null;
+      const record = (W != null && L != null) ? `${W}-${L}` : "";
+
+      const keys = Object.keys(it || {});
+      const avgK = keys.find(k => /^avg$/i.test(k));
+      const wpK  = keys.find(k => /^w%$/i.test(k) || /^wpct$/i.test(k) || /^win%$/i.test(k));
+
+      const avgVal = avgK ? it[avgK] : null;
+      const wpVal  = wpK  ? it[wpK]  : null;
+
+      const badges = [
+        record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
+        avgVal != null && String(avgVal).trim() !== ""
+          ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
+        wpVal != null && String(wpVal).trim() !== ""
+          ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
+      ].filter(Boolean).join("");
+
+      html += `
+        <div class="statsRow overallRow ${isPaid ? "paidRow" : ""} ${isYou ? "youRow" : ""}">
+          <div class="rankBadge">${escapeHtml(r)}</div>
+          <div class="statsName">${escapeHtml(name)}</div>
+          <div class="statsBadges">${badges}</div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+
+    box.innerHTML = html;
+    requestAnimationFrame(syncOverallNameColumnWidth_);
+    resetStatPillScrollSoon(box);
+  }
+
+  async function renderH2H_(box){
+    const you = loadPlayerName().trim();
+
+    box.innerHTML = `
+      <div class="big">Head-to-Head</div>
+      <div class="muted">Pick a player</div>
+      <div class="statsControls">
+        <select id="h2hPick"></select>
+      </div>
+      <div id="h2hOut" style="margin-top:10px;">Loading…</div>
+    `;
+    resetStatPillScrollSoon(box);
+
+    const players = await getData_("players", "playerGetPlayerList");
+    const sel = document.getElementById("h2hPick");
+    sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
+
+    if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
+
+    const out = document.getElementById("h2hOut");
+    const load = async () => {
+      out.textContent = "Loading…";
+      try{
+        const player = String(sel.value || "").trim();
+        const res = await getData_("h2h", "playerGetH2H", { player });
+        const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
+
+        if (!rows.length){
+          out.innerHTML = `<div class="muted">(No H2H data yet. If this is new season, compile H2H in Admin first.)</div>`;
           return;
         }
 
-        // 3) ACTIVE
-        const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-        const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
-
-        out.innerHTML = `
-          <div class="mmHeader">
-            Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
-          </div>
-
-          <div class="microBox youBox">
-            <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
-            ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
-          </div>
-
-          <div class="centerVS">VS</div>
-
-          <div class="microBox">
-            <div class="microTitle">${escapeHtml(data.opponent)}</div>
-            ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
-          </div>
-        `;
-      }catch(e){
-        out.textContent = "Error: " + (e && e.message ? e.message : e);
-      }
-    }
-
-
-    async function loadDues() {
-      const sel = document.getElementById("duesName");
-      const out = document.getElementById("duesStatus");
-
-      const name = sel ? String(sel.value || "").trim() : "";
-      if (!name) {
-        out.textContent = "Pick your name first.";
-        return;
-      }
-
-      savePlayerName(name);
-      out.textContent = "Loading…";
-
-      try {
-        const all = await getData_("dues", "playerGetDues", { name });
-
-        let data = null;
-
-        if (
-          all &&
-          typeof all === "object" &&
-          !Array.isArray(all) &&
-          (all.name || all.paid != null || all.balance != null || all.winnings != null)
-        ) {
-          data = all;
-        } else if (all && typeof all === "object" && !Array.isArray(all) && all[name]) {
-          data = all[name];
-        } else if (Array.isArray(all)) {
-          data =
-            all.find(
-              r =>
-                String(r?.name || "")
-                  .trim()
-                  .toLowerCase() === name.toLowerCase()
-            ) || null;
-        } else if (all && Array.isArray(all.dues)) {
-          data =
-            all.dues.find(
-              r =>
-                String(r?.name || "")
-                  .trim()
-                  .toLowerCase() === name.toLowerCase()
-            ) || null;
-        }
-
-        if (!data) throw new Error("No dues record found for " + name);
-
-        const paid = Number(data.paid ?? 0);
-        const winnings = Number(data.winnings ?? 0);
-        const balance = Number(data.balance ?? 0);
-
-        const paidLine =
-          paid === 180
-            ? `<span style="color: var(--green); opacity: 0.9;">Paid: $${paid.toFixed(2)}</span>`
-            : `Paid: $${paid.toFixed(2)}`;
-
-        const balanceLine =
-          balance > 0
-            ? `<span style="color: var(--red); opacity: 0.9;">Balance Due: $${balance.toFixed(2)}</span>`
-            : `Balance Due: $${balance.toFixed(2)}`;
-
-out.innerHTML =
-  `<div class="microBox">
-     <div>${paidLine}</div>
-     <div>Winnings: $${winnings.toFixed(2)}</div>
-     <div>${balanceLine}</div>
-   </div>`;
-
-      } catch (e) {
-        out.textContent = "Error: " + (e && e.message ? e.message : e);
-      }
-    }
-
-    // ---------- Stats / Standings (mode switcher) ----------
-    let _cache_standings = null;
-    let _statsMode = "overall";
-    let _nameWTimer = null;
-    
-    async function loadStandings() {
-      const area = document.getElementById("standingsArea");
-      area.innerHTML = "Loading stats...";
-
-      try{
-        const data = await getData_("standings", "playerGetStandings");
-        _cache_standings = data || {};
-
-        // Shell
-        area.innerHTML = `
-          <div class="statsModes" id="statsModes">
-            <button class="secondary" data-mode="overall">Standings</button>
-            <button class="secondary" data-mode="tourney">Tourney Ranks</button>
-            <button class="secondary" data-mode="h2h">H2H</button>
-            <button class="secondary" data-mode="wins">Wins</button>
-            <button class="secondary" data-mode="drivers">Driver Usage</button>
-          </div>
-          <div class="statsPanel" id="statsPanel"></div>
-        `;
-        persistHScroll("#statsModes", "nascar_stats_tabs_scroll");
-        const modes = area.querySelectorAll("#statsModes button");
-        modes.forEach(b => {
-          b.onclick = () => setStatsMode_(b.getAttribute("data-mode") || "overall");
-        });
-
-        // Default mode
-        setStatsMode_("overall");
-      }catch(e){
-        area.innerHTML = "Error: " + (e && e.message ? e.message : e);
-      }
-    }
-
-    function setStatsMode_(mode){
-      _statsMode = mode || "overall";
-      const box = document.getElementById("statsPanel");
-      const modes = document.querySelectorAll("#statsModes button");
-      modes.forEach(b => b.classList.toggle("active", (b.getAttribute("data-mode") === _statsMode)));
-
-      if (!box) return;
-      if (_statsMode === "overall") return renderOverall_(box);
-      if (_statsMode === "tourney") return renderTourney_(box);
-      if (_statsMode === "h2h") return renderH2H_(box);
-      if (_statsMode === "wins") return renderWins_(box);
-      if (_statsMode === "drivers") return renderDrivers_(box);
-      box.innerHTML = "";
-    }
-
-    // ---- Overall (card rows) ----
-    function renderOverall_(box){
-      const data = _cache_standings || {};
-      const rows = Array.isArray(data.overall) ? data.overall : [];
-      const headers = Array.isArray(data.overallHeaders) ? data.overallHeaders : [];
-
-      if (!rows.length || !headers.length){
-        box.innerHTML = `<div class="muted">(No standings data yet)</div>`;
-        requestAnimationFrame(() => syncOverallNameColumnWidth_());
-        resetStatPillScrollSoon(box);
-        return;
-      }
-
-      // Guess common header names without breaking if yours differ.
-      const nameKey = headers.find(h => /name|player/i.test(h)) || headers[0];
-      const rankKey = headers.find(h => /rank/i.test(h)) || headers[0];
-      const you = loadPlayerName().trim().toLowerCase();
-      let html = `<div class="big">Overall</div>`;
-      rows.forEach(r => {
-        const rank = r[rankKey] ?? "";
-        const name = r[nameKey] ?? "";
-        const EXCLUDED_KEYS = new Set(["Matches"]); // ← keep matches out of overall standings
-        const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
-        const W = r["W"] ?? r["w"] ?? null;
-        const L = r["L"] ?? r["l"] ?? null;
-        const record = (W != null && L != null) ? `${W}-${L}` : "";
-        const isYou  = you && name.trim().toLowerCase() === you;
-        // Everything except rank/name becomes badges (keeps your data intact, just presented nicer)
-        const badgeKeys = headers
-          .filter(k => !EXCLUDED_KEYS.has(k))
-          .filter(h => h !== nameKey && h !== rankKey)
-          .filter(h => !/^(w|l)$/i.test(h))     // remove W and L from normal pills
-          .slice(0, 5);
-        const badges = [
-          record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
-          ...badgeKeys.map(k => {
-            const v = r[k];
-            if (v == null || String(v).trim() === "") return "";
-            return `<span class="miniPill"><span class="k">${escapeHtml(k)}:</span> ${escapeHtml(v)}</span>`;
-          })
-        ].filter(Boolean).join("");
-
-        html += `
-         <div class="statsRow overallRow ${isYou ? "youRow" : ""}">
-            <div class="rankBadge">${escapeHtml(rank || "—")}</div>
-            <div class="statsName">${escapeHtml(name)}</div>
-            <div class="statsBadges">${badges}</div>
-          </div>
-        `;
-      });
-
-      box.innerHTML = html;
-      requestAnimationFrame(syncOverallNameColumnWidth_);
-      resetStatPillScrollSoon(box);
-    }
-
-    // ---- Tournament ranks (dropdown, one at a time) ----
-    function renderTourney_(box){
-      const data = _cache_standings || {};
-      const headers = Array.isArray(data.tournamentHeaders) ? data.tournamentHeaders : [];
-      if (!headers.length){
-        box.innerHTML = `<div class="muted">(No tournament rank data yet)</div>`;
-        resetStatPillScrollSoon(box);
-        return;
-      }
-
-      const opts = headers.map(h => `<option value="${escapeAttr(h)}">${escapeHtml(h)}</option>`).join("");
-      box.innerHTML = `
-        <div class="big">Tournament Ranks</div>
-        <div class="muted">Pick a damn tournament (if you care)</div>
-
-        <div class="statsControls">
-          <select id="tourneyPick">${opts}</select>
-        </div>
-
-        <div id="tourneyRanksBox" style="margin-top:10px;"></div>
-      `;
-
-      const sel = document.getElementById("tourneyPick");
-      const render = () => showTournamentRanks(sel.value);
-      sel.onchange = render;
-      render();
-    }
-
-    function showTournamentRanks(label) {
-      const box = document.getElementById("tourneyRanksBox");
-      const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
-      const listRaw = t[label] || [];
-
-      let html = ``;
-
-      if (!Array.isArray(listRaw) || listRaw.length === 0) {
-        html += `<div class="muted">(No data yet)</div>`;
-        box.innerHTML = html;
-        return;
-      }
-
-      const items = listRaw
-        .map((it) => {
-          if (it && typeof it === "object") {
-            const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
-            const rank = Number(it.rank ?? it.Rank ?? it.RANK);
-
-            // keep everything else (W/L/Avg/W% etc)
-            const out = { ...it };
-            out.player = String(player || "").trim();
-            out.rank = Number.isFinite(rank) ? rank : null;
-            return out;
-          }
-          return { rank: null, player: String(it || "").trim() };
-        })
-        .filter(x => x.player);
-
-      if (items.length === 0) {
-        html += `<div class="muted">(No data yet)</div>`;
-        box.innerHTML = html;
-        return;
-      }
-
-      const hasRanks = items.some(x => Number.isFinite(x.rank));
-      if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
-
-      let startRank = 17 - items.length;
-      if (startRank < 1) startRank = 1;
-      if (startRank > 16) startRank = 16;
-
-      const you = loadPlayerName().trim().toLowerCase();
-
-      html += `<div class="rankList">`;
-      // badge order preference (only show what exists)
-      const preferred = ["W","L","Avg","W%"];
-      const getKey = (obj, want) => Object.keys(obj).find(k => k.toLowerCase() === want.toLowerCase());
-
-      // figure which badges we can show
-      const sample = items[0] || {};
-      const badgeKeys = preferred
-        .map(w => getKey(sample, w))
-        .filter(Boolean);
-
-      const EXCLUDED_KEYS = new Set(["Matches"]); // optional: keep it hidden like Overall does
-      
-      items.forEach((it, i) => {
-        const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
-        const name = it.player || "";
-        const isPaid = r <= 4; // TOP 4 visual
-        const isYou  = you && name.trim().toLowerCase() === you;
-        const W = it["W"] ?? it["w"] ?? null;
-        const L = it["L"] ?? it["l"] ?? null;
-        const record = (W != null && L != null) ? `${W}-${L}` : "";
-
-        // Find Avg / W% keys even if your object uses weird casing
-        const keys = Object.keys(it || {});
-        const avgK = keys.find(k => /^avg$/i.test(k));
-        const wpK  = keys.find(k => /^w%$/i.test(k) || /^wpct$/i.test(k) || /^win%$/i.test(k));
-
-        const avgVal = avgK ? it[avgK] : null;
-        const wpVal  = wpK  ? it[wpK]  : null;
-
-        const badges = [
-          record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
-          avgVal != null && String(avgVal).trim() !== ""
-            ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
-          wpVal != null && String(wpVal).trim() !== ""
-            ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
-        ].filter(Boolean).join("");
-
-        html += `
-          <div class="statsRow overallRow ${isPaid ? "paidRow" : ""} ${isYou ? "youRow" : ""}">
-            <div class="rankBadge">${escapeHtml(r)}</div>
-            <div class="statsName">${escapeHtml(name)}</div>
-            <div class="statsBadges">${badges}</div>
-          </div>
-        `;
-      });
-
-      html += `</div>`;
-
-      box.innerHTML = html;
-      requestAnimationFrame(syncOverallNameColumnWidth_);
-      resetStatPillScrollSoon(box);
-    }
-
-    async function renderH2H_(box){
-      const you = loadPlayerName().trim();
-      box.innerHTML = `
-        <div class="big">Head-to-Head</div>
-        <div class="muted">Pick a player</div>
-        <div class="statsControls">
-          <select id="h2hPick"></select>
-        </div>
-        <div id="h2hOut" style="margin-top:10px;">Loading…</div>
-      `;
-      resetStatPillScrollSoon(box);
-
-      const players = await getData_("players", "playerGetPlayerList");
-      const sel = document.getElementById("h2hPick");
-      sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
-      if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
-
-      const out = document.getElementById("h2hOut");
-      const load = async () => {
-        out.textContent = "Loading…";
-        try{
-          const player = String(sel.value || "").trim();
-          const res = await getData_("h2h", "playerGetH2H", { player });
-          const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
-          if (!rows.length){
-            out.innerHTML = `<div class="muted">(No H2H data yet. If this is new season, compile H2H in Admin first.)</div>`;
-            return;
-          }
-          let html = ``;
-          rows.forEach(r => {
-            const rec = r.record || ((r.wins!=null && r.losses!=null) ? `(${r.wins}-${r.losses})` : "");
-            html += `
-              <div class="statsRow">
-                <div class="statsLeft">
-                  <div class="statsName">vs ${escapeHtml(r.opponent || "")}</div>
-                </div>
-                <div class="statsBadges">
-                  <span class="miniPill">${escapeHtml(rec || "")}</span>
-                </div>
+        let html = ``;
+        rows.forEach(r => {
+          const rec = r.record || ((r.wins!=null && r.losses!=null) ? `(${r.wins}-${r.losses})` : "");
+          html += `
+            <div class="statsRow">
+              <div class="statsLeft">
+                <div class="statsName">vs ${escapeHtml(r.opponent || "")}</div>
               </div>
-            `;
-          });
-          out.innerHTML = html;
-        }catch(e){
-          out.innerHTML = `<div class="muted">H2H failed to load. (Likely missing endpoint.)</div>`;
-        }
-      };
-
-      sel.onchange = load;
-      load();
-    }
-
-    async function renderWins_(box){
-      const you = loadPlayerName().trim();
-      box.innerHTML = `
-        <div class="big">Wins</div>
-        <div class="muted">Race wins, bracket wins, and tourney wins</div>
-        <div class="statsControls">
-          <select id="winsPick"></select>
-        </div>
-        <div id="winsOut" style="margin-top:10px;">Loading…</div>
-      `;
-      resetStatPillScrollSoon(box);
-
-      const players = await getData_("players", "playerGetPlayerList");
-      const sel = document.getElementById("winsPick");
-      sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
-      if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
-
-      const out = document.getElementById("winsOut");
-      const load = async () => {
-        out.textContent = "Loading…";
-        try{
-          const player = String(sel.value || "").trim();
-          const res = await getData_("wins", "playerGetWinCounts", { player });
-          const w = (res && (res.raceWins!=null || res.bracketWins!=null || res.tourneyWins!=null)) ? res : (res && res[player] ? res[player] : {});
-          const raceWins = w?.raceWins ?? "—";
-          const bracketWins = w?.bracketWins ?? "—";
-          const tourneyWins = w?.tourneyWins ?? "—";
-          out.innerHTML = `
-            <div class="tiles">
-              <div class="tile">
-                <div class="tLabel">🏁 Race Wins</div>
-                <div class="tVal">${escapeHtml(raceWins)}</div>
-              </div>
-              <div class="tile">
-                <div class="tLabel">🏆 Bracket Wins</div>
-                <div class="tVal">${escapeHtml(bracketWins)}</div>
-              </div>
-              <div class="tile">
-                <div class="tLabel">🎯 Tourney Wins</div>
-                <div class="tVal">${escapeHtml(tourneyWins)}</div>
+              <div class="statsBadges">
+                <span class="miniPill">${escapeHtml(rec || "")}</span>
               </div>
             </div>
           `;
-        }catch(e){
-          out.innerHTML = `<div class="muted">Wins failed to load. (Likely missing endpoint.)</div>`;
-        }
-      };
-      sel.onchange = load;
-      load();
-    }
+        });
+        out.innerHTML = html;
+      }catch(e){
+        out.innerHTML = `<div class="muted">H2H failed to load. (Likely missing endpoint.)</div>`;
+      }
+    };
 
-    async function renderDrivers_(box){
-      const you = loadPlayerName().trim();
-      box.innerHTML = `
-        <div class="big">Driver Usage</div>
-        <div class="muted">How many times a player has been assigned each driver</div>
-        <div class="statsControls">
-          <select id="drvPick"></select>
-        </div>
-        <div id="drvOut" style="margin-top:10px;">Loading…</div>
-      `;
-      resetStatPillScrollSoon(box);
+    sel.onchange = load;
+    load();
+  }
 
-      const players = await getData_("players", "playerGetPlayerList");
-      const sel = document.getElementById("drvPick");
-      sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
-      if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
+  async function renderWins_(box){
+    const you = loadPlayerName().trim();
 
-      const out = document.getElementById("drvOut");
-      const load = async () => {
-        out.textContent = "Loading…";
-        try{
-          const player = String(sel.value || "").trim();
-          const res = await getData_("drivers", "playerGetDriverUsage", { player });
-          const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
-          if (!rows.length){
-            out.innerHTML = `<div class="muted">(No driver usage data yet)</div>`;
-            return;
-          }
-          let html = ``;
-          rows.forEach(r => {
-            html += `
-              <div class="statsRow">
-                <div class="statsLeft">
-                  <div class="statsName">${escapeHtml(r.driver || "")}</div>
-                </div>
-                <div class="statsBadges">
-                  <span class="miniPill"><span class="k">Times:</span> ${escapeHtml(r.count ?? "")}</span>
-                </div>
-              </div>
-            `;
-          });
-          out.innerHTML = html;
-        }catch(e){
-          out.innerHTML = `<div class="muted">Driver usage failed to load. (Likely missing endpoint.)</div>`;
-        }
-      };
-      sel.onchange = load;
-      load();
-    }
+    box.innerHTML = `
+      <div class="big">Wins</div>
+      <div class="muted">Race wins, bracket wins, and tourney wins</div>
+      <div class="statsControls">
+        <select id="winsPick"></select>
+      </div>
+      <div id="winsOut" style="margin-top:10px;">Loading…</div>
+    `;
+    resetStatPillScrollSoon(box);
 
-    async function loadBracket(){
-      const sub = document.getElementById("bracketSub");
-      const area = document.getElementById("bracketArea");
+    const players = await getData_("players", "playerGetPlayerList");
+    const sel = document.getElementById("winsPick");
+    sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
 
-      sub.textContent = "Loading…";
-      area.innerHTML = "Loading…";
+    if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
 
-      const fmtAvg = (n) => (n == null ? "" : Number(n).toFixed(1).replace(/\.0$/,""));
-
+    const out = document.getElementById("winsOut");
+    const load = async () => {
+      out.textContent = "Loading…";
       try{
-        const data = await getData_("bracket", "playerGetBracket");
+        const player = String(sel.value || "").trim();
+        const res = await getData_("wins", "playerGetWinCounts", { player });
+        const w = (res && (res.raceWins!=null || res.bracketWins!=null || res.tourneyWins!=null)) ? res : (res && res[player] ? res[player] : {});
 
-        const tour  = data.tournament ?? "";
-        const race  = data.currentRace ?? data.race ?? "";
-        const round = data.currentRound ?? data.round ?? "";
+        const raceWins = w?.raceWins ?? "—";
+        const bracketWins = w?.bracketWins ?? "—";
+        const tourneyWins = w?.tourneyWins ?? "—";
 
-        sub.textContent =
-          `Tournament ${tour}` +
-          (race ? ` · ${race}` : "") +
-          (round !== "" ? ` · ${roundLabel(round)}` : "");
+        out.innerHTML = `
+          <div class="tiles">
+            <div class="tile">
+              <div class="tLabel">🏁 Race Wins</div>
+              <div class="tVal">${escapeHtml(raceWins)}</div>
+            </div>
+            <div class="tile">
+              <div class="tLabel">🏆 Bracket Wins</div>
+              <div class="tVal">${escapeHtml(bracketWins)}</div>
+            </div>
+            <div class="tile">
+              <div class="tLabel">🎯 Tourney Wins</div>
+              <div class="tVal">${escapeHtml(tourneyWins)}</div>
+            </div>
+          </div>
+        `;
+      }catch(e){
+        out.innerHTML = `<div class="muted">Wins failed to load. (Likely missing endpoint.)</div>`;
+      }
+    };
 
+    sel.onchange = load;
+    load();
+  }
 
-        const rounds = data.rounds || [];
-        let html = `<div class="bracketGrid">`;
+  async function renderDrivers_(box){
+    const you = loadPlayerName().trim();
 
-        const sticky = document.getElementById("bracketSticky");
-        if (sticky) {
-          sticky.innerHTML = rounds.map((r, idx) => {
-            const label = r.isCurrent ? "CURRENT" : `ROUND ${r.round}`;
-            const race = r.raceLabel || "";
-            return `
-              <div class="chip" data-idx="${idx}">
-                <span>${escapeHtml(label)}</span>
-                <span class="small">${escapeHtml(race)}</span>
-              </div>
-            `;
-          }).join("");
+    box.innerHTML = `
+      <div class="big">Driver Usage</div>
+      <div class="muted">How many times a player has been assigned each driver</div>
+      <div class="statsControls">
+        <select id="drvPick"></select>
+      </div>
+      <div id="drvOut" style="margin-top:10px;">Loading…</div>
+    `;
+    resetStatPillScrollSoon(box);
+
+    const players = await getData_("players", "playerGetPlayerList");
+    const sel = document.getElementById("drvPick");
+    sel.innerHTML = (players || []).map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join("");
+
+    if (you && (players || []).some(p => String(p).trim().toLowerCase() === you.toLowerCase())) sel.value = you;
+
+    const out = document.getElementById("drvOut");
+    const load = async () => {
+      out.textContent = "Loading…";
+      try{
+        const player = String(sel.value || "").trim();
+        const res = await getData_("drivers", "playerGetDriverUsage", { player });
+        const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
+
+        if (!rows.length){
+          out.innerHTML = `<div class="muted">(No driver usage data yet)</div>`;
+          return;
         }
 
-        rounds.forEach(r => {
-          const tag = r.isCurrent
-            ? `<span class="roundTag">CURRENT</span>`
-            : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
+        let html = ``;
+        rows.forEach(r => {
+          html += `
+            <div class="statsRow">
+              <div class="statsLeft">
+                <div class="statsName">${escapeHtml(r.driver || "")}</div>
+              </div>
+              <div class="statsBadges">
+                <span class="miniPill"><span class="k">Times:</span> ${escapeHtml(r.count ?? "")}</span>
+              </div>
+            </div>
+          `;
+        });
+        out.innerHTML = html;
+      }catch(e){
+        out.innerHTML = `<div class="muted">Driver usage failed to load. (Likely missing endpoint.)</div>`;
+      }
+    };
 
-          const isFuture = !r.isCurrent && (r.round > data.currentRound);
+    sel.onchange = load;
+    load();
+  }
+
+  /* =========================
+   * 10) Bracket
+   * ========================= */
+  async function loadBracket(){
+    const sub = document.getElementById("bracketSub");
+    const area = document.getElementById("bracketArea");
+
+    sub.textContent = "Loading…";
+    area.innerHTML = "Loading…";
+
+    const fmtAvg = (n) => (n == null ? "" : Number(n).toFixed(1).replace(/\.0$/,""));
+
+    try{
+      const data = await getData_("bracket", "playerGetBracket");
+
+      const tour  = data.tournament ?? "";
+      const race  = data.currentRace ?? data.race ?? "";
+      const round = data.currentRound ?? data.round ?? "";
+
+      sub.textContent =
+        `Tournament ${tour}` +
+        (race ? ` · ${race}` : "") +
+        (round !== "" ? ` · ${roundLabel(round)}` : "");
+
+      const rounds = data.rounds || [];
+      let html = `<div class="bracketGrid">`;
+
+      const sticky = document.getElementById("bracketSticky");
+      if (sticky) {
+        sticky.innerHTML = rounds.map((r, idx) => {
+          const label = r.isCurrent ? "CURRENT" : `ROUND ${r.round}`;
+          const race = r.raceLabel || "";
+          return `
+            <div class="chip" data-idx="${idx}">
+              <span>${escapeHtml(label)}</span>
+              <span class="small">${escapeHtml(race)}</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      rounds.forEach(r => {
+        const tag = r.isCurrent
+          ? `<span class="roundTag">CURRENT</span>`
+          : `<span class="roundTag">${escapeHtml(roundLabel(r.round))}</span>`;
+
+        const isFuture = !r.isCurrent && (r.round > data.currentRound);
+
+        html += `
+          <div class="bracketCol ${isFuture ? "isFuture" : ""}">
+            <div class="bracketHdr">
+              <div class="title">${tag}</div>
+              <div class="raceTag">${escapeHtml(r.raceLabel || "")}</div>
+            </div>
+        `;
+
+        (r.matchups || []).forEach(m => {
+          const norm = (s) => String(s ?? "").trim().toLowerCase();
+
+          // winner might be "TIE" and the actual winner is stored elsewhere
+          let winnerName = String(m.winner ?? "").trim();
+
+          // If winner is blank or explicitly a tie, fall back to common tiebreak fields
+          if (!winnerName || /^tie$/i.test(winnerName)) {
+            winnerName = String(
+              m.tieBreakerWinner ??
+              m.tiebreakerWinner ??
+              m.tieBreakWinner ??
+              m.tieWinner ??
+              m.advances ??
+              m.advance ??
+              m.winnerName ??
+              ""
+            ).trim();
+          }
+
+          // If your backend stores a side instead of a name (1/2), handle that too
+          const winnerSide = (m.winnerSide ?? m.sideWinner ?? m.winnerIdx ?? null);
+
+          const p1Name = String(m.p1 ?? "").trim();
+          const p2Name = String(m.p2 ?? "").trim();
+
+          const p1Win =
+            (winnerSide === 1) ||
+            (winnerName && p1Name && norm(winnerName) === norm(p1Name));
+
+          const p2Win =
+            (winnerSide === 2) ||
+            (winnerName && p2Name && norm(winnerName) === norm(p2Name));
 
           html += `
-            <div class="bracketCol ${isFuture ? "isFuture" : ""}">
-              <div class="bracketHdr">
-                <div class="title">${tag}</div>
-                <div class="raceTag">${escapeHtml(r.raceLabel || "")}</div>
+            <div class="ticket">
+              <div class="ticketRow">
+                <div class="sideLeft">
+                  <span class="seedBadge">${escapeHtml(m.s1 || "—")}</span>
+                  <span class="nameText">${escapeHtml(m.p1 || "")}</span>
+                </div>
+                <div class="sideRight">
+                  <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="avgBox ${m.a1 == null ? "empty" : ""}">${m.a1 == null ? "—" : escapeHtml(fmtAvg(m.a1))}</span>
+                </div>
               </div>
+
+              <div class="ticketRow">
+                <div class="sideLeft">
+                  <span class="seedBadge">${escapeHtml(m.s2 || "—")}</span>
+                  <span class="nameText">${escapeHtml(m.p2 || "")}</span>
+                </div>
+                <div class="sideRight">
+                  <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="avgBox ${m.a2 == null ? "empty" : ""}">${m.a2 == null ? "—" : escapeHtml(fmtAvg(m.a2))}</span>
+                </div>
+              </div>
+            </div>
           `;
-
-          (r.matchups || []).forEach(m => {
-            const p1Win = (m.winner && m.p1 && m.winner === m.p1);
-            const p2Win = (m.winner && m.p2 && m.winner === m.p2);
-
-            html += `
-              <div class="ticket">
-                <div class="ticketRow">
-                  <div class="sideLeft">
-                    <span class="seedBadge">${escapeHtml(m.s1 || "—")}</span>
-                    <span class="nameText">${escapeHtml(m.p1 || "")}</span>
-                  </div>
-                  <div class="sideRight">
-                    <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
-                    ${m.a1 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a1))}</span>`}
-                  </div>
-                </div>
-
-                <div class="ticketRow">
-                  <div class="sideLeft">
-                    <span class="seedBadge">${escapeHtml(m.s2 || "—")}</span>
-                    <span class="nameText">${escapeHtml(m.p2 || "")}</span>
-                  </div>
-                  <div class="sideRight">
-                    <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
-                    ${m.a2 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a2))}</span>`}
-                  </div>
-                </div>
-              </div>
-            `;
-          });
-
-          html += `</div>`;
         });
 
         html += `</div>`;
-        area.innerHTML = html;
-
-        const grid = area.querySelector(".bracketGrid");
-        if (grid && sticky) {
-          sticky.querySelectorAll(".chip").forEach(chip => {
-            chip.onclick = () => {
-              const idx = Number(chip.getAttribute("data-idx") || "0");
-              const col = grid.children[idx];
-              if (col) col.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-            };
-          });
-        }
-      }catch(e){
-        sub.textContent = "Bracket failed to load.";
-        area.innerHTML = "Error: " + (e && e.message ? e.message : e);
-      }
-    }
-
-    async function getData_(snapKey, action, params){
-      try{
-        return await fetchSnapshotJson(snapKey, false);
-      }catch(e){
-        const resp = await apiCall(action, params || {}, false);
-        if(!resp || !resp.ok) throw new Error(resp?.error || ("API failed: " + action));
-        return resp.data;
-      }
-    }
-
-    function resetStatPillScroll(scope){
-      const root = scope || document;
-      root.querySelectorAll('.statsBadges').forEach(el => {
-        el.scrollLeft = 0;
-        el.scrollTo(0, 0);
       });
-    }
 
-    function resetStatPillScrollSoon(scope){
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => resetStatPillScroll(scope));
-      });
-    }
+      html += `</div>`;
+      area.innerHTML = html;
 
-    window.addEventListener("resize", () => {
-      if (_statsMode !== "overall" && _statsMode !== "tourney") return;
-
-      clearTimeout(_nameWTimer);
-      _nameWTimer = setTimeout(() => {
-        syncOverallNameColumnWidth_();
-      }, 150);
-    });
-
-    window.onload = () => { 
-      loadPlayersThenInit();
-
-      // Persist bottom nav scroll
-      persistHScroll(".navInner", "nascar_nav_scroll");
-    };
-
-  </script>
-
-  <!-- <script> -->
-    <!-- (function(){ -->
-      <!-- function update(){ -->
-        <!-- var y = (window.scrollY || 0) * 0.05; -->
-        <!-- document.documentElement.style.setProperty('--wmShift', y.toFixed(1) + 'px'); -->
-      <!-- } -->
-      <!-- window.addEventListener('scroll', update, { passive: true }); -->
-      <!-- window.addEventListener('resize', update); -->
-      <!-- update(); -->
-    <!-- })(); -->
-  <!-- </script> -->
-
-  <script>
-    (function(){
-      let ticking=false;
-      function onScroll(){
-        if(ticking) return;
-        ticking=true;
-        requestAnimationFrame(()=>{
-          const y=window.scrollY||0;
-          document.documentElement.style.setProperty('--wmShift', (y*0.08).toFixed(1)+'px');
-          ticking=false;
+      const grid = area.querySelector(".bracketGrid");
+      if (grid && sticky) {
+        sticky.querySelectorAll(".chip").forEach(chip => {
+          chip.onclick = () => {
+            const idx = Number(chip.getAttribute("data-idx") || "0");
+            const col = grid.children[idx];
+            if (col) col.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+          };
         });
       }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
-  </script>
-</body>
-</html>
+    }catch(e){
+      sub.textContent = "Bracket failed to load.";
+      area.innerHTML = "Error: " + (e && e.message ? e.message : e);
+    }
+  }
+
+  /* =========================
+   * 11) Events / Init
+   * ========================= */
+  window.addEventListener("resize", () => {
+    if (_statsMode !== "overall" && _statsMode !== "tourney") return;
+
+    clearTimeout(_nameWTimer);
+    _nameWTimer = setTimeout(() => {
+      syncOverallNameColumnWidth_();
+    }, 150);
+  });
+
+  window.onload = () => {
+    loadPlayersThenInit();
+
+    // Persist bottom nav scroll
+    persistHScroll(".navInner", "nascar_nav_scroll");
+  };
+</script>
