@@ -881,6 +881,7 @@
   <div class="topActions">
     <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
     <button class="topactions" onclick="refreshActiveView()">🔄 Refresh </button>
+    <span id="raceCountdown" class="pill" style="margin-left:auto; display:none;"></span>
   </div>
 
   <!-- CURRENT RACE -->
@@ -1290,6 +1291,65 @@
     return "";
   }
 
+    let _countdownTimer = null;
+
+function stopCountdown_(){
+  if (_countdownTimer) clearInterval(_countdownTimer);
+  _countdownTimer = null;
+}
+
+function fmtCountdown_(ms){
+  if (!Number.isFinite(ms)) return "—";
+  if (ms <= 0) return "Race time";
+
+  const totalSec = Math.floor(ms / 1000);
+  const days = Math.floor(totalSec / 86400);
+  const hrs  = Math.floor((totalSec % 86400) / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+
+  if (days > 0) return `${days}d ${hrs}h ${mins}m`;
+  if (hrs > 0)  return `${hrs}h ${mins}m`;
+  return `${mins}m`;
+}
+
+async function loadCountdown_(){
+  const el = document.getElementById("raceCountdown");
+  if (!el) return;
+
+  stopCountdown_();
+
+  try{
+    const data = await getData_("context", "playerGetCountdown"); // snapshot first, GAS fallback
+    const raceName = String(data?.raceName || data?.raceLabel || "").trim();
+    const iso = String(data?.raceStart || "").trim();
+
+    if (!iso){
+      el.style.display = "inline-flex";
+      el.textContent = raceName ? `⏳ ${raceName}: TBA` : `⏳ Race: TBA`;
+      return;
+    }
+
+    const target = new Date(iso);
+    if (isNaN(target.getTime())){
+      el.style.display = "inline-flex";
+      el.textContent = raceName ? `⏳ ${raceName}: TBA` : `⏳ Race: TBA`;
+      return;
+    }
+
+    function tick(){
+      const ms = target.getTime() - Date.now();
+      el.style.display = "inline-flex";
+      el.textContent = `⏱ ${fmtCountdown_(ms)}`;
+      if (ms <= 0) stopCountdown_();
+    }
+
+    tick();
+    _countdownTimer = setInterval(tick, 1000);
+
+  }catch(e){
+    el.style.display = "none";
+  }
+}
   /* =========================
    * 6) Snapshot caches / helpers
    * ========================= */
@@ -1379,7 +1439,7 @@
       const roundText =
         round === "" ? "" :
         (Number(round) === 4 ? "Final" : `Round ${round}`);
-
+      loadCountdown_();
       sub.textContent =
         `Tournament ${tour}` +
         (roundText ? ` · ${roundText}` : "");
