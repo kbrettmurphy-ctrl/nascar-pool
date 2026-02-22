@@ -279,6 +279,17 @@
     text-overflow:ellipsis;
   }
 
+  /* Manufacturer logos: sized to text so they don't change layout */
+  .makeLogo{
+    height: 1em;
+    width: auto;
+    vertical-align: -0.15em;
+    opacity: 0.92;
+    display: inline-block;
+  }
+  .makeLogo.left{ margin-right: 6px; }
+  .makeLogo.right{ margin-left: 6px; }
+
   .vsBadge{
     font-weight:800;
     font-size:10px;
@@ -965,7 +976,7 @@
   <script>
   /************************************************************
    * NASCAR Pool 2026 — Player Portal JS
-   * Structured only. No behavior changes.
+   * Structured only. No behavior changes (except make logos).
    ************************************************************/
 
   /* =========================
@@ -1085,6 +1096,7 @@
     h2h:       "./data/h2h.json",
     wins:      "./data/wins.json",
     drivers:   "./data/driverUsage.json",
+    makes:     "./data/driverMakes.json", // optional snapshot (GAS fallback exists)
   };
 
   // Snapshot versioning (prevents stale GitHub Pages cache)
@@ -1191,6 +1203,7 @@
     SNAP_VER = null;
     SNAP_CTX = null;
     _cache_myMatchupsAll = null;
+    _cache_driverMakes = null;
 
     if (activeView === "current") loadCurrent();
     else if (activeView === "standings") loadStandings();
@@ -1290,6 +1303,100 @@
     return "";
   }
 
+  // ============================================================
+  // Manufacturer logos (driver -> make -> logo)
+  // ============================================================
+
+  // Your github image filenames (case sensitive)
+  const MAKE_TO_LOGO = {
+    chevrolet: "chevy.png",
+    ford: "Ford.png",
+    toyota: "gay.png",
+  };
+
+  let _cache_driverMakes = null;
+
+  function normKey_(s){
+    return String(s || "").trim().toLowerCase();
+  }
+
+  function pickMakeFromMap_(map, driverName){
+    if (!map || !driverName) return "";
+    const direct = map[driverName];
+    if (direct) return String(direct);
+
+    const target = normKey_(driverName);
+    for (const k in map){
+      if (normKey_(k) === target) return String(map[k]);
+    }
+    return "";
+  }
+
+  function makeLogoSrc_(makeRaw){
+    const make = normKey_(makeRaw);
+    const file = MAKE_TO_LOGO[make] || "";
+    return file ? file : "";
+  }
+
+  function driverWithLogoHtml_(driverName, makeRaw, side /* "left"|"right" */){
+    const name = String(driverName || "").trim();
+    if (!name) return "";
+
+    const src = makeLogoSrc_(makeRaw);
+    const img = src
+      ? `<img class="makeLogo ${side}" src="${escapeAttr(src)}" alt="${escapeAttr(makeRaw || "")}">`
+      : "";
+
+    // left: logo then name. right: name then logo.
+    return (side === "right")
+      ? `${escapeHtml(name)}${img}`
+      : `${img}${escapeHtml(name)}`;
+  }
+
+  // Returns HTML (NOT escaped) for drivers with make logos.
+  // Falls back to your existing numbers formatting.
+  function formatDriversOrNumbersHtml_(driversArr, numsArr, side, makesMap){
+    const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
+    const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
+
+    if (d1 || d2){
+      const parts = [d1, d2].filter(Boolean).map(d => {
+        const mk = pickMakeFromMap_(makesMap, d);
+        return driverWithLogoHtml_(d, mk, side);
+      });
+      return parts.join(", ");
+    }
+
+    const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
+    const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
+    if (n1 || n2) return `Numbers: ${escapeHtml([n1,n2].filter(Boolean).join(", "))}`;
+    return "";
+  }
+
+  async function getDriverMakes_(){
+    if (_cache_driverMakes) return _cache_driverMakes;
+
+    // 1) Try GitHub snapshot if present
+    try{
+      const m = await fetchSnapshotJson("makes", false);
+      if (m && typeof m === "object") {
+        _cache_driverMakes = m;
+        return _cache_driverMakes;
+      }
+    }catch(e){ /* ignore */ }
+
+    // 2) Live GAS fallback
+    try{
+      const res = await apiCall("playerGetDriverMakes", {}, false);
+      if (res && res.ok && res.data && typeof res.data === "object") {
+        _cache_driverMakes = res.data;
+        return _cache_driverMakes;
+      }
+    }catch(e){ /* ignore */ }
+
+    _cache_driverMakes = {};
+    return _cache_driverMakes;
+  }
 
   /* =========================
    * 6) Snapshot caches / helpers
@@ -1383,6 +1490,9 @@
       sub.textContent =
         `Tournament ${tour}` +
         (roundText ? ` · ${roundText}` : "");
+
+      const makesMap = await getDriverMakes_();
+
       area.innerHTML = "";
       const you = loadPlayerName().trim().toLowerCase();
       (data.matchups || []).forEach(m => {
@@ -1395,19 +1505,19 @@
           );
         card.className = "matchupCard" + (isYou ? " youRow" : "");
 
-        const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-        const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+        const leftMeta  = formatDriversOrNumbersHtml_(m.p1Drivers, m.p1Nums, "left",  makesMap);
+        const rightMeta = formatDriversOrNumbersHtml_(m.p2Drivers, m.p2Nums, "right", makesMap);
 
         card.innerHTML = `
           <div class="matchupRow">
             <div class="side left">
               <div class="pName">${escapeHtml(m.p1)}</div>
-              ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
+              ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
             </div>
             <div class="vsBadge">VS</div>
             <div class="side right">
               <div class="pName">${escapeHtml(m.p2)}</div>
-              ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
+              ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
             </div>
           </div>
         `;
@@ -1423,8 +1533,8 @@
         eliminated.forEach(p => {
           const entry = getEntryByName(myAll, p);
           const picks = extractPicksFromMyEntry(entry);
-          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+          const meta = formatDriversOrNumbersHtml_(picks.drivers, picks.nums, "left", makesMap);
+          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${meta}` : ``}</div>`;
         });
 
         elim.innerHTML = html;
@@ -1470,6 +1580,8 @@
         data = res.data || {};
       }
 
+      const makesMap = await getDriverMakes_();
+
       const status = String(data.status || "").trim().toLowerCase();
 
       const youDriversArr = Array.isArray(data.youDrivers)
@@ -1501,7 +1613,12 @@
         ? youDriversArr.join("<br>")
         : ((n1 || n2) ? [n1,n2].filter(Boolean).join(", ") : "");
 
-      const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
+      const youListHtml = youDriversArr.length
+        ? youDriversArr.map(d => {
+            const mk = pickMakeFromMap_(makesMap, d);
+            return driverWithLogoHtml_(d, mk, "left");
+          }).join("<br>")
+        : escapeHtml(youListText);
 
       if (!hasRealOpponent || !hasRealContext) {
         out.innerHTML = `
@@ -1539,8 +1656,8 @@
         return;
       }
 
-      const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
-      const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
+      const youMeta = formatDriversOrNumbersHtml_(data.youDrivers, data.youNums, "left", makesMap);
+      const oppMeta = formatDriversOrNumbersHtml_(data.oppDrivers, data.oppNums, "left", makesMap);
 
       out.innerHTML = `
         <div class="mmHeader">
@@ -1549,14 +1666,14 @@
 
         <div class="microBox youBox">
           <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
-          ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
+          ${youMeta ? `<div class="microMeta">${youMeta}</div>` : ``}
         </div>
 
         <div class="centerVS">VS</div>
 
         <div class="microBox">
           <div class="microTitle">${escapeHtml(data.opponent)}</div>
-          ${oppMeta ? `<div class="microMeta">${escapeHtml(oppMeta)}</div>` : ``}
+          ${oppMeta ? `<div class="microMeta">${oppMeta}</div>` : ``}
         </div>
       `;
     }catch(e){
@@ -1770,9 +1887,6 @@
 
       const EXCLUDED_KEYS = new Set(["Matches"]);
 
-      // NOTE: getVal is unused right now. Leaving it for now (safe), but it’s clutter.
-      const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
-
       const W = r["W"] ?? r["w"] ?? null;
       const L = r["L"] ?? r["l"] ?? null;
       const record = (W != null && L != null) ? `${W}-${L}` : "";
@@ -1879,16 +1993,6 @@
     const you = loadPlayerName().trim().toLowerCase();
 
     html += `<div class="rankList">`;
-
-    const preferred = ["W","L","Avg","W%"];
-    const getKey = (obj, want) => Object.keys(obj).find(k => k.toLowerCase() === want.toLowerCase());
-
-    const sample = items[0] || {};
-    const badgeKeys = preferred
-      .map(w => getKey(sample, w))
-      .filter(Boolean);
-
-    const EXCLUDED_KEYS = new Set(["Matches"]);
 
     items.forEach((it, i) => {
       const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
@@ -2066,6 +2170,8 @@
     const load = async () => {
       out.textContent = "Loading…";
       try{
+        const makesMap = await getDriverMakes_();
+
         const player = String(sel.value || "").trim();
         const res = await getData_("drivers", "playerGetDriverUsage", { player });
         const rows = Array.isArray(res?.rows) ? res.rows : (Array.isArray(res?.[player]) ? res[player] : []);
@@ -2077,10 +2183,14 @@
 
         let html = ``;
         rows.forEach(r => {
+          const drv = String(r.driver || "").trim();
+          const mk  = pickMakeFromMap_(makesMap, drv);
+          const drvHtml = driverWithLogoHtml_(drv, mk, "right");
+
           html += `
             <div class="statsRow">
               <div class="statsLeft">
-                <div class="statsName">${escapeHtml(r.driver || "")}</div>
+                <div class="statsName">${drvHtml}</div>
               </div>
               <div class="statsBadges">
                 <span class="miniPill"><span class="k">Times:</span> ${escapeHtml(r.count ?? "")}</span>
@@ -2157,10 +2267,8 @@
         (r.matchups || []).forEach(m => {
           const norm = (s) => String(s ?? "").trim().toLowerCase();
 
-          // winner might be "TIE" and the actual winner is stored elsewhere
           let winnerName = String(m.winner ?? "").trim();
 
-          // If winner is blank or explicitly a tie, fall back to common tiebreak fields
           if (!winnerName || /^tie$/i.test(winnerName)) {
             winnerName = String(
               m.tieBreakerWinner ??
@@ -2174,7 +2282,6 @@
             ).trim();
           }
 
-          // If your backend stores a side instead of a name (1/2), handle that too
           const winnerSide = (m.winnerSide ?? m.sideWinner ?? m.winnerIdx ?? null);
 
           const p1Name = String(m.p1 ?? "").trim();
@@ -2256,3 +2363,5 @@
     persistHScroll(".navInner", "nascar_nav_scroll");
   };
 </script>
+</body>
+</html>
