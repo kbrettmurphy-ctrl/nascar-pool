@@ -982,7 +982,7 @@
    * 2) iOS viewport bottom bar fix
    * (keeps your nav + layout stable on iOS)
    * ========================= */
-  function fixIOSBottomBar(){
+  (function fixIOSBottomBar(){
     function update(){
       const vv = window.visualViewport;
       if (!vv) return;
