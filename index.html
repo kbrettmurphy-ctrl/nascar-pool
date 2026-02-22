@@ -982,7 +982,7 @@
    * 2) iOS viewport bottom bar fix
    * (keeps your nav + layout stable on iOS)
    * ========================= */
-  (function fixIOSBottomBar(){
+  function fixIOSBottomBar(){
     function update(){
       const vv = window.visualViewport;
       if (!vv) return;
@@ -2188,7 +2188,7 @@
                 </div>
                 <div class="sideRight">
                   <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
-                  ${m.a1 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a1))}</span>`}
+                  <span class="avgBox ${m.a1 == null ? "empty" : ""}">${m.a1 == null ? "—" : escapeHtml(fmtAvg(m.a1))}</span>
                 </div>
               </div>
 
@@ -2199,7 +2199,7 @@
                 </div>
                 <div class="sideRight">
                   <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
-                  ${m.a2 == null ? `<span class="noAvg">—</span>` : `<span class="avgBox">${escapeHtml(fmtAvg(m.a2))}</span>`}
+                  <span class="avgBox ${m.a1 == null ? "empty" : ""}">${m.a1 == null ? "—" : escapeHtml(fmtAvg(m.a1))}</span>
                 </div>
               </div>
             </div>
