@@ -1,0 +1,912 @@
+/***********************
+ * AutoImportLineups.gs
+ * Stable NASCAR CF "cacher" endpoints (NOT production/live/current-*)
+ *
+ * Uses:
+ *  - race_list_basic.json to get Cup race IDs in date order
+ *  - weekend-feed.json per raceId to extract lineup/results
+ *
+ * Your sheet headers are already:
+ *  - points races only (36)
+ *  - in schedule order
+ ***********************/
+
+const NASCAR_YEAR = 2026;
+const NASCAR_CUP_SERIES_ID = 1; // Cup per common CF usage
+
+const CF_RACE_LIST_URL =
+  `https://cf.nascar.com/cacher/${NASCAR_YEAR}/race_list_basic.json`;
+
+const CF_CACHE_KEY_POINTS = `cf_cup_points_races_${NASCAR_YEAR}_v2`;
+const CF_CACHE_SECONDS = 6 * 60 * 60; // 6 hours
+
+/**
+ * Main: returns driver names in STARTING LINEUP order for the chosen header.
+ * (We’re using StartPos, not “qualifying position”, per your audible.)
+ */
+/**
+ * LINEUPS import:
+ * - Prefer StartPos if NASCAR provides it in the chosen run.
+ * - Otherwise fall back to "finishing_position" from the best qualifying run.
+ */
+function fetchNascarQualifyingNames_(header) {
+  Logger.log(`[AUTO] fetchNascarQualifyingNames_ header="${header}"`);
+  Logger.log(`[AUTO] Daytona-check header="${header}" match=${String(header||"").trim().toLowerCase()==="daytona"}`);
+
+
+  const h = String(header || "").trim().toLowerCase();
+  if (h === "daytona") {
+    try {
+      Logger.log("[AUTO] Daytona-only: attempting TRUE starting lineup build (qual + duels)...");
+      const lineup = buildDaytona500StartingLineup_2026_(); // helper below
+      Logger.log(`[AUTO] Daytona-only lineup built count=${lineup.length}`);
+      if (lineup.length >= 35) return lineup; // sanity check
+      Logger.log("[AUTO] Daytona-only lineup too short, falling back to qualifying list...");
+    } catch (e) {
+      Logger.log("[AUTO] Daytona-only lineup failed, falling back. Err=" + (e?.message || e));
+    }
+  }
+
+  const ctx = resolveCupRaceByHeaderIndex_(header);
+  const feed = fetchJsonStrict_(ctx.weekendUrl);
+
+  const raceName = String(feed?.weekend_race?.[0]?.race_name || ctx.raceName || "").toLowerCase();
+  const runs = Array.isArray(feed?.weekend_runs) ? feed.weekend_runs : [];
+  if (!runs.length) throw new Error("weekend-feed has no weekend_runs.");
+
+  // Pick "best" run for lineup purposes:
+  // 1) Prefer something with StartPos in results (rare but ideal)
+  // 2) Else: prefer qualifying final round
+  // 3) Else: qualifying round 1
+  // 4) Else: biggest results array
+  const chosen = pickLineupRun_(runs, raceName);
+  Logger.log(`[AUTO] LINEUP chosen run="${chosen?.run_name}" resultsLen=${chosen?.results?.length || 0}`);
+
+  const results = Array.isArray(chosen?.results) ? chosen.results : [];
+  if (!results.length) throw new Error("Chosen run has no results.");
+
+  const hasStartPos = results.some(r => Number.isFinite(Number(r?.StartPos ?? r?.start_pos)));
+  Logger.log(`[AUTO] LINEUP hasStartPos=${hasStartPos}`);
+
+  const mapped = results.map(r => {
+    const pos = hasStartPos
+      ? Number(r?.StartPos ?? r?.start_pos)
+      : Number(r?.finishing_position ?? r?.FinishingPosition ?? r?.position ?? r?.Pos);
+
+    return {
+      pos,
+      name: formatNascarDisplayName_(pickDriverNameFromCfRow_(r))
+    };
+  }).filter(x => x.name && Number.isFinite(x.pos) && x.pos > 0);
+
+  Logger.log(`[AUTO] LINEUP mapped count=${mapped.length}`);
+
+  if (!mapped.length) {
+    const sampleKeys = results[0] ? Object.keys(results[0]).slice(0, 60) : [];
+    Logger.log(`[AUTO] LINEUP no usable positions. First row keys=${JSON.stringify(sampleKeys)}`);
+    throw new Error("Starting lineup not available yet (no StartPos and no finishing_position).");
+  }
+
+  mapped.sort((a, b) => a.pos - b.pos);
+  return mapped.map(x => x.name);
+}
+
+/** Choose the best run for lineups */
+function pickLineupRun_(runs, raceNameLower) {
+  const scored = runs.map(run => {
+    const name = String(run?.run_name || "").toLowerCase();
+    const results = Array.isArray(run?.results) ? run.results : [];
+    const len = results.length;
+
+    const hasStartPos = results.some(r => Number.isFinite(Number(r?.StartPos ?? r?.start_pos)));
+    const hasFinishPos = results.some(r => Number.isFinite(Number(r?.finishing_position)));
+
+    let score = 0;
+
+    // Strong preference for actual StartPos if present
+    if (hasStartPos) score += 1000;
+
+    // Prefer qualifying sessions if no StartPos
+    if (name.includes("qualifying")) score += 200;
+    if (name.includes("final round")) score += 60;     // Daytona output shows this exact phrase
+    if (name.includes("round 1")) score += 40;
+
+    // De-prioritize practices
+    if (name.includes("practice")) score -= 50;
+
+    // Slight bias if it's clearly tied to the race name
+    if (raceNameLower && name.includes(raceNameLower)) score += 20;
+
+    // Must have something position-like
+    if (hasFinishPos) score += 10;
+
+    // Bigger tables usually better
+    score += Math.min(len, 60);
+
+    return { score, run };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  Logger.log(`[AUTO] pickLineupRun top5=${JSON.stringify(scored.slice(0,5).map(x => ({
+    score: x.score,
+    name: x.run?.run_name,
+    len: Array.isArray(x.run?.results) ? x.run.results.length : 0
+  })))}`);
+
+  return scored[0]?.run || null;
+}
+
+/**
+ * Main: returns driver names in RESULTS order for the chosen header.
+ * Prefers FinishPos/FinPos; falls back to RunningPos if that’s all we have.
+ */
+function fetchNascarResultsNames_(header) {
+  Logger.log(`[AUTO] fetchNascarResultsNames_ header="${header}"`);
+
+  const ctx = resolveCupRaceByHeaderIndex_(header);
+  Logger.log(`[AUTO] header index=${ctx.index} -> raceId=${ctx.raceId} raceName="${ctx.raceName}" weekendUrl=${ctx.weekendUrl}`);
+
+  const feed = fetchJsonStrict_(ctx.weekendUrl);
+
+  const rows = getRaceResultsRows_(feed);
+  if (!rows.length) throw new Error("Could not locate a race results table in weekend-feed.");
+
+  const mapped = rows.map(r => ({
+    pos: toNum_(r?.finishing_position ?? r?.finish_position ?? r?.FinishPos ?? r?.FinPos),
+    name: formatNascarDisplayName_(pickDriverNameFromCfRow_(r))
+  })).filter(x => x.name && Number.isFinite(x.pos) && x.pos > 0);
+
+  Logger.log(`[AUTO] results mapped count=${mapped.length}`);
+
+  if (!mapped.length) {
+    const sampleKeys = rows[0] ? Object.keys(rows[0]).slice(0, 60) : [];
+    Logger.log(`[AUTO] No usable finishing positions. First row keys=${JSON.stringify(sampleKeys)}`);
+    throw new Error("Results not available (no finishing_position fields found).");
+  }
+
+  mapped.sort((a, b) => a.pos - b.pos);
+  return mapped.map(x => x.name);
+}
+
+/**
+ * Resolve your header -> index in your sheet header list -> Cup points raceId by index.
+ */
+function resolveCupRaceByHeaderIndex_(header) {
+  const h = String(header || "").trim();
+  if (!h || h.toLowerCase() === "undefined") {
+    throw new Error("Missing header. Pick a race header in the dropdown first.");
+  }
+
+  // Use YOUR existing header list from the sheet, because you already curated it.
+  const headers = (typeof adminGetRaceHeaders === "function")
+    ? adminGetRaceHeaders("Finishes")
+    : getRaceHeaders("Finishes");
+
+  const idx = headers.indexOf(h);
+  if (idx === -1) throw new Error(`Header not found: "${h}"`);
+
+  const races = getCupPointsRaces_();
+  if (idx >= races.length) {
+    throw new Error(`Header index ${idx} exceeds Cup points race list length ${races.length}.`);
+  }
+
+  const r = races[idx];
+
+  // ✅ Try hard to find a usable ISO date-time from CF
+  const startIso =
+    r?.date_scheduled ??
+    r?.race_date ??
+    r?.start_time ??
+    r?.start_date ??
+    r?.race_start_time ??
+    r?.scheduled_start_time ??
+    "";
+
+  return {
+    index: idx,
+    header: h,
+    raceId: r.race_id,
+    raceName: r.race_name,
+    raceStartIso: String(startIso || "").trim(),
+    weekendUrl: `https://cf.nascar.com/cacher/${NASCAR_YEAR}/${NASCAR_CUP_SERIES_ID}/${r.race_id}/weekend-feed.json`
+  };
+}
+
+/**
+ * Pull Cup points races (36) in date order.
+ * We filter out obvious non-points by name since your header list already excludes them.
+ */
+function getCupPointsRaces_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(CF_CACHE_KEY_POINTS);
+  if (cached) return JSON.parse(cached);
+
+  const list = fetchJsonStrict_(CF_RACE_LIST_URL);
+
+  // ✅ race_list_basic.json is grouped by series, Cup is series_1
+  const cupBlock =
+    list?.series_1 ??
+    list?.Series_1 ??
+    list?.SERIES_1 ??
+    list?.series1 ??
+    null;
+
+  const cupRaces = Array.isArray(cupBlock) ? cupBlock
+    : Array.isArray(cupBlock?.races) ? cupBlock.races
+    : Array.isArray(cupBlock?.Races) ? cupBlock.Races
+    : Array.isArray(cupBlock?.RaceList) ? cupBlock.RaceList
+    : [];
+
+  if (!cupRaces.length) {
+    const topKeys = list && typeof list === "object" ? Object.keys(list).slice(0, 40) : null;
+    const cupKeys = cupBlock && typeof cupBlock === "object" ? Object.keys(cupBlock).slice(0, 40) : null;
+    Logger.log(`[AUTO] race_list_basic topKeys=${JSON.stringify(topKeys)}`);
+    Logger.log(`[AUTO] series_1 keys=${JSON.stringify(cupKeys)}`);
+    throw new Error("race_list_basic.json: could not locate Cup list at series_1.* (layout changed).");
+  }
+
+  Logger.log(`[AUTO] Cup races from series_1 = ${cupRaces.length}`);
+
+  // Sort by date if present (keeps your “header index maps to schedule order” promise)
+  cupRaces.sort((a, b) => {
+    const da = Date.parse(a?.race_date ?? a?.date_scheduled ?? a?.start_time ?? a?.start_date ?? "") || 0;
+    const db = Date.parse(b?.race_date ?? b?.date_scheduled ?? b?.start_time ?? b?.start_date ?? "") || 0;
+    return da - db;
+  });
+
+  // Filter out non-points using race_type-ish fields if present,
+  // otherwise fall back to name heuristics.
+  const points = cupRaces.filter(r => {
+    const typeId = Number(r?.race_type_id ?? r?.RaceTypeId ?? r?.raceTypeId);
+    const typeName = String(r?.race_type_name ?? r?.RaceTypeName ?? r?.raceTypeName ?? "").toLowerCase();
+    const name = String(r?.race_name ?? r?.name ?? "").toLowerCase();
+
+    // If typeId exists, prefer it:
+    // (Commonly points = 1; if NASCAR uses a different value, typeName/name fallback saves us)
+    if (Number.isFinite(typeId)) {
+      if (typeId === 1) return true;
+      // allow if clearly points by name
+      if (!name) return false;
+    }
+
+    if (typeName.includes("exhibition")) return false;
+    if (name.includes("clash")) return false;
+    if (name.includes("duel")) return false;
+    if (name.includes("all-star")) return false;
+    if (name.includes("shootout")) return false;
+    if (name.includes("exhibition")) return false;
+
+    return true;
+  });
+
+  Logger.log(`[AUTO] Cup after points-filter = ${points.length}`);
+
+  if (points.length !== 36) {
+    Logger.log(`[AUTO] Expected 36 points races, got ${points.length}`);
+    Logger.log(`[AUTO] First 15 race names=${JSON.stringify(points.slice(0, 15).map(r => r.race_name ?? r.name))}`);
+    throw new Error(`Expected 36 Cup points races after filtering; found ${points.length}. Filter rules need adjustment.`);
+  }
+
+  cache.put(CF_CACHE_KEY_POINTS, JSON.stringify(points), CF_CACHE_SECONDS);
+  return points;
+}
+
+/**
+ * Find the “best” driver rows array inside weekend-feed:
+ * - array of objects
+ * - has driver-ish fields and position-ish fields
+ */
+function findBestDriverRows_(root) {
+  const candidates = [];
+
+  (function walk(node) {
+    if (!node || typeof node !== "object") return;
+
+    for (const k in node) {
+      if (!Object.prototype.hasOwnProperty.call(node, k)) continue;
+      const v = node[k];
+
+      if (Array.isArray(v) && v.length >= 10 && v.every(x => x && typeof x === "object")) {
+        const score = scoreDriverArray_(v);
+        if (score > 0) candidates.push({ score, len: v.length, path: k, arr: v });
+      } else if (v && typeof v === "object") {
+        walk(v);
+      }
+    }
+  })(root);
+
+  candidates.sort((a, b) => (b.score - a.score) || (b.len - a.len));
+  if (!candidates.length) return [];
+
+  Logger.log(`[AUTO] driver array candidates top5=${JSON.stringify(candidates.slice(0,5).map(c => ({score:c.score,len:c.len,path:c.path})))}`);
+  return candidates[0].arr || [];
+}
+
+function scoreDriverArray_(arr) {
+  // Look at the first few rows for key hints
+  const sample = arr.slice(0, 5);
+  const keyset = new Set();
+  sample.forEach(r => Object.keys(r || {}).forEach(k => keyset.add(k)));
+
+  let score = 0;
+
+  // Driver name hints
+  const nameKeys = ["DriverNameTag","DriverFirstName","DriverLastName","driver_name","driverName","name","full_name"];
+  nameKeys.forEach(k => { if (keyset.has(k)) score += 3; });
+
+  // Position hints (start/finish)
+  const posKeys = ["StartPos","FinishPos","FinPos","RunningPos","Pos","Position","starting_position","finish_position"];
+  posKeys.forEach(k => { if (keyset.has(k)) score += 2; });
+
+  // If it looks like pit crew data etc, score stays low.
+  return score;
+}
+
+/** Simple helper requested: hasAnyStartPos */
+function hasAnyStartPos_(mapped) {
+  return Array.isArray(mapped) && mapped.some(x => Number.isFinite(x?.pos) && x.pos > 0);
+}
+
+/** Prefer clean, stable name fields from CF rows */
+function pickDriverNameFromCfRow_(r) {
+  if (r?.DriverNameTag) return String(r.DriverNameTag).trim();
+
+  const first = String(r?.DriverFirstName || "").trim();
+  const last  = String(r?.DriverLastName || "").trim();
+  const full = (first + " " + last).trim();
+  if (full) return full;
+
+  // other common variants
+  if (r?.driver_name) return String(r.driver_name).trim();
+  if (r?.driverName) return String(r.driverName).trim();
+
+  return "";
+}
+
+function toNum_(v) {
+  // Treat blank/null/undefined/0 as "missing"
+  if (v === "" || v == null) return NaN;
+
+  const n = Number(v);
+
+  // NASCAR sometimes gives blanks that coerce to 0. Reject those.
+  if (!Number.isFinite(n) || n <= 0) return NaN;
+
+  return n;
+}
+
+function buildDaytona500StartingLineup_2026_() {
+  // 1) Daytona 500 main raceId (you already observed 5596 in your logs)
+  const daytonaRaceId = 5596;
+
+  // 2) Get pole (and outside pole) from Busch Pole Qualifying
+  const qualFeed = fetchJsonStrict_(
+    `https://cf.nascar.com/cacher/${NASCAR_YEAR}/1/${daytonaRaceId}/weekend-feed.json`
+  );
+  const qualRun = pickQualifyingFinalRun_(qualFeed);
+  const qualResults = extractRunResults_(qualRun);
+
+  // Sort qualifying by finishing_position (1 = best)
+  const qualSorted = qualResults
+    .map(r => ({ pos: toNum_(r?.finishing_position), name: formatNascarDisplayName_(pickDriverNameFromCfRow_(r)) }))
+    .filter(x => x.name && Number.isFinite(x.pos) && x.pos > 0)
+    .sort((a, b) => a.pos - b.pos)
+    .map(x => x.name);
+
+  const pole = qualSorted[0];
+  const outsidePole = qualSorted[1];
+
+  if (!pole || !outsidePole) {
+    throw new Error("Daytona: could not determine front row from qualifying.");
+  }
+
+  // 3) Get Duel raceIds dynamically
+  const [duel1Id, duel2Id] = getDaytonaDuelRaceIds_2026_();
+  Logger.log(`[AUTO] Daytona: duel raceIds = ${duel1Id}, ${duel2Id}`);
+
+  const duel1Feed = fetchJsonStrict_(`https://cf.nascar.com/cacher/${NASCAR_YEAR}/1/${duel1Id}/weekend-feed.json`);
+  const duel2Feed = fetchJsonStrict_(`https://cf.nascar.com/cacher/${NASCAR_YEAR}/1/${duel2Id}/weekend-feed.json`);
+
+  const duel1Results = getWeekendRaceResults_(duel1Feed);
+  const duel2Results = getWeekendRaceResults_(duel2Feed);
+
+  if (!duel1Results.length || !duel2Results.length) {
+    throw new Error("Daytona: duel results missing (weekend_race[0].results empty).");
+  }
+
+  // Duel finishing order (1 = winner)
+  const duel1Order = duel1Results
+    .map(r => ({ pos: toNum_(r?.finishing_position), name: formatNascarDisplayName_(pickDriverNameFromWeekendRaceResult_(r)) }))
+    .filter(x => x.name && Number.isFinite(x.pos) && x.pos > 0)
+    .sort((a, b) => a.pos - b.pos)
+    .map(x => x.name);
+
+  const duel2Order = duel2Results
+    .map(r => ({ pos: toNum_(r?.finishing_position), name: formatNascarDisplayName_(pickDriverNameFromWeekendRaceResult_(r)) }))
+    .filter(x => x.name && Number.isFinite(x.pos) && x.pos > 0)
+    .sort((a, b) => a.pos - b.pos)
+    .map(x => x.name);
+
+  Logger.log(`[AUTO] Daytona duel1Order top5=${JSON.stringify(duel1Order.slice(0, 5))}`);
+  Logger.log(`[AUTO] Daytona duel2Order top5=${JSON.stringify(duel2Order.slice(0, 5))}`);
+
+  // 4) Assemble: P1/P2 from qualifying, then alternate duel1/duel2 order
+  const lineup = [pole, outsidePole];
+
+  // Remove pole/outsidePole if they appear in duel orders (avoid dupes)
+  const d1 = duel1Order.filter(n => n !== pole && n !== outsidePole);
+  const d2 = duel2Order.filter(n => n !== pole && n !== outsidePole);
+
+  const max = Math.max(d1.length, d2.length);
+  for (let i = 0; i < max; i++) {
+    if (d1[i]) lineup.push(d1[i]); // odd positions (3,5,7...)
+    if (d2[i]) lineup.push(d2[i]); // even positions (4,6,8...)
+  }
+
+  // De-dupe while preserving order
+  const seen = new Set();
+  const uniq = [];
+  for (const n of lineup) {
+    if (!n || seen.has(n)) continue;
+    seen.add(n);
+    uniq.push(n);
+  }
+
+  return uniq;
+}
+
+/**
+ * FULL Cup list (40-ish) without your points-only filter.
+ * Uses the same series_1 feed you already got working.
+ */
+function getCupRacesAllCup_() {
+  const cacheKey = `cf_cup_allraces_${NASCAR_YEAR}_v1`;
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(cacheKey);
+  if (cached) return JSON.parse(cached);
+
+  const resp = fetchCupRaceListAny_();
+  Logger.log(`[AUTO] race list source used: ${resp.url}`);
+
+  const races = resp.races || [];
+  if (!races.length) throw new Error("Race list returned zero races.");
+
+  // Cup only (series_id=1). Your logs confirm this exists.
+  const cup = races.filter(r => {
+    const sid = Number(r?.series_id ?? r?.SeriesId ?? r?.series ?? r?.seriesID);
+    return sid === NASCAR_CUP_SERIES_ID;
+  });
+
+  Logger.log(`[AUTO] Cup races from series_1 = ${cup.length}`);
+
+  if (!cup.length) {
+    const sampleKeys = races[0] ? Object.keys(races[0]).slice(0, 50) : [];
+    throw new Error(`No Cup races found in race list. First row keys: ${JSON.stringify(sampleKeys)}`);
+  }
+
+  // Sort by date if present
+  cup.sort((a, b) => {
+    const da = Date.parse(a?.race_date ?? a?.date_scheduled ?? a?.start_time ?? "") || 0;
+    const db = Date.parse(b?.race_date ?? b?.date_scheduled ?? b?.start_time ?? "") || 0;
+    return da - db;
+  });
+
+  cache.put(cacheKey, JSON.stringify(cup), 6 * 60 * 60);
+  return cup;
+}
+
+function pickQualifyingFinalRun_(feed) {
+  // Reuse your existing run picker idea, but bias “Final Round”
+  const runs = extractWeekendRuns_(feed);
+  if (!runs.length) throw new Error("No weekend_runs found for Daytona qualifying feed.");
+
+  const scored = runs.map(run => {
+    const name = String(run?.run_name || "").toLowerCase();
+    const results = extractRunResults_(run);
+    let score = 0;
+    if (name.includes("qualifying")) score += 20;
+    if (name.includes("final")) score += 25;
+    if (name.includes("round 2")) score += 25;
+    score += Math.min(50, results.length);
+    return { score, run, name: run?.run_name, len: results.length };
+  }).sort((a,b) => b.score - a.score);
+
+  Logger.log(`[AUTO] Daytona: pickQualifyingFinalRun top3=${JSON.stringify(scored.slice(0,3).map(x=>({score:x.score,name:x.name,len:x.len})))}`);
+  return scored[0].run;
+}
+
+function pickRaceRun_(feed) {
+  const runs = extractWeekendRuns_(feed);
+  if (!runs.length) throw new Error("No weekend_runs found for duel feed.");
+
+  const scored = runs.map(run => {
+    const name = String(run?.run_name || "").toLowerCase();
+    const results = extractRunResults_(run);
+    let score = 0;
+    // Duels are races, but naming varies, so just weight “duel” + large results arrays
+    if (name.includes("duel")) score += 30;
+    score += Math.min(50, results.length);
+    return { score, run, name: run?.run_name, len: results.length };
+  }).sort((a,b) => b.score - a.score);
+
+  Logger.log(`[AUTO] Daytona: pickRaceRun top3=${JSON.stringify(scored.slice(0,3).map(x=>({score:x.score,name:x.name,len:x.len})))}`);
+  return scored[0].run;
+}
+
+function extractWeekendRuns_(feed) {
+  return Array.isArray(feed?.weekend_runs) ? feed.weekend_runs : [];
+}
+
+function extractRunResults_(run) {
+  // Your logs show each weekend_run has `results` arrays
+  return Array.isArray(run?.results) ? run.results : [];
+}
+/** Fetch JSON or throw a useful error */
+function fetchJsonStrict_(url) {
+  const resp = UrlFetchApp.fetch(url, {
+    method: "get",
+    muteHttpExceptions: true,
+    followRedirects: true,
+    headers: {
+      "Accept": "application/json",
+      "User-Agent": "Mozilla/5.0 (GAS)",
+      "Referer": "https://www.nascar.com/"
+    }
+  });
+
+  const code = resp.getResponseCode();
+  const text = resp.getContentText();
+
+  if (code < 200 || code >= 300) {
+    throw new Error(`Fetch failed (${code}) for ${url}: ${text.slice(0, 250)}`);
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error(`Non-JSON response from ${url}: ${text.slice(0, 200)}`);
+  }
+}
+
+function pickRun_(feed, want /* "LINEUP" | "QUAL_LAST" | "RACE" */) {
+  const runs = Array.isArray(feed?.weekend_runs) ? feed.weekend_runs : [];
+  if (!runs.length) throw new Error("weekend-feed has no weekend_runs.");
+
+  // Each run typically has: run_name, run_type, run_id, results, etc.
+  // We'll score runs based on what we want.
+  const scored = runs.map(r => {
+    const name = String(r?.run_name ?? r?.name ?? "").toLowerCase();
+    const type = String(r?.run_type ?? r?.type ?? "").toLowerCase();
+    const results = Array.isArray(r?.results) ? r.results : [];
+    const keys = results[0] ? Object.keys(results[0]) : [];
+
+    const maxLapsCompleted = results.reduce((m, row) => {
+      const n = Number(row?.laps_completed ?? row?.LapsCompleted ?? row?.laps ?? 0);
+      return Number.isFinite(n) ? Math.max(m, n) : m;
+    }, 0);
+
+    let score = 0;
+
+    // universal: must have results rows + driver name
+    if (results.length >= 10) score += 5;
+    if (keys.includes("driver_name") || keys.includes("DriverNameTag")) score += 5;
+
+    // lineup hints
+    const hasStartPos = keys.includes("starting_position") || keys.includes("start_pos") || keys.includes("StartPos");
+    if (hasStartPos) score += 10;
+
+    // race/finish hints
+    const hasFinish = keys.includes("finishing_position") || keys.includes("FinishPos") || keys.includes("FinPos");
+    if (hasFinish) score += 6;
+
+    // name-based hints
+    if (name.includes("starting lineup") || name.includes("starting")) score += 12;
+    if (name.includes("qualifying")) score += 8;
+    if (name.includes("race")) score += 8;
+
+    // Now bias depending on what we want
+    if (want === "LINEUP") {
+      // Prefer explicit start pos, else “starting” labeled run, else fallback to last qualifying
+      if (hasStartPos) score += 30;
+      if (name.includes("starting")) score += 20;
+    }
+
+    if (want === "QUAL_LAST") {
+      if (name.includes("qualifying")) score += 20;
+      // prefer runs with best_lap_time or laps_completed (typical quali)
+      if (keys.includes("best_lap_time") || keys.includes("best_lap_speed")) score += 10;
+    }
+
+    if (want === "RACE") {
+      const isQual = name.includes("qualifying");
+      const isPrac = name.includes("practice");
+
+      if (isQual) score -= 200;
+      if (isPrac) score -= 150;
+
+      if (!isQual && !isPrac) score += 80;
+
+      if (maxLapsCompleted >= 5) score += 80; // <-- use it here
+
+      if (hasFinish) score += 20;
+    }
+
+    return { score, run: r, name, resultsLen: results.length, keys };
+  });
+
+  scored.sort((a,b) => b.score - a.score);
+
+  Logger.log(`[AUTO] pickRun want=${want} top5=` + JSON.stringify(
+    scored.slice(0,5).map(s => ({
+      score: s.score,
+      name: s.run?.run_name ?? s.run?.name ?? "",
+      resultsLen: s.resultsLen,
+      hasStartPos: s.keys.includes("starting_position") || s.keys.includes("start_pos") || s.keys.includes("StartPos"),
+      hasFinish: s.keys.includes("finishing_position") || s.keys.includes("FinishPos") || s.keys.includes("FinPos"),
+    }))
+  ));
+
+  const best = scored[0]?.run;
+  if (!best) throw new Error("Could not pick a run from weekend_runs.");
+  return best;
+}
+
+function getRunResults_(run) {
+  return Array.isArray(run?.results) ? run.results : [];
+}
+
+function fetchCupRaceListAny_() {
+  const urls = [
+    `https://cf.nascar.com/cacher/${NASCAR_YEAR}/race_list_basic.json`,
+    `https://cf.nascar.com/cacher/${NASCAR_YEAR}/1/race_list_basic.json`,
+    `https://cf.nascar.com/cacher/${NASCAR_YEAR}/series_1/race_list_basic.json`,
+  ];
+
+  let lastErr = null;
+
+  for (const u of urls) {
+    try {
+      Logger.log(`[AUTO] Trying race list: ${u}`);
+      const json = fetchJsonStrict_(u);
+
+      const races = extractRaceArray_(json);
+
+      Logger.log(`[AUTO] race list keys=${json && typeof json === "object" ? Object.keys(json).slice(0, 25).join(",") : "(non-object)"}`);
+      Logger.log(`[AUTO] race list extracted count=${races.length} from ${u}`);
+
+      if (races.length) return { url: u, races };
+
+      lastErr = new Error(`Could not extract races array from ${u}`);
+    } catch (e) {
+      lastErr = e;
+      Logger.log(`[AUTO] race list failed: ${u} :: ${e.message}`);
+    }
+  }
+
+  throw new Error("All race list endpoints failed or had no extractable races. Last: " + (lastErr?.message || lastErr));
+}
+
+function extractRaceArray_(json) {
+  // ✅ NASCAR race_list_basic.json shape (what your logs show):
+  // { series_3: [...], series_2: [...], series_1: [...] }
+  // We want Cup = series_1.
+  if (json && typeof json === "object") {
+    if (Array.isArray(json.series_1)) return json.series_1; // ✅ Cup first
+    if (Array.isArray(json.series_2)) return json.series_2;
+    if (Array.isArray(json.series_3)) return json.series_3;
+
+    // Common alternative shapes
+    if (Array.isArray(json.races)) return json.races;
+    if (Array.isArray(json.RaceList)) return json.RaceList;
+    if (Array.isArray(json.response)) return json.response;
+  }
+
+  // If the whole thing is already an array, take it
+  if (Array.isArray(json)) return json;
+
+  // Fallback: try to find an array-of-objects one level down
+  if (json && typeof json === "object") {
+    for (const k of Object.keys(json)) {
+      const v = json[k];
+      if (Array.isArray(v) && v.length && typeof v[0] === "object") return v;
+      if (v && typeof v === "object") {
+        for (const k2 of Object.keys(v)) {
+          const v2 = v[k2];
+          if (Array.isArray(v2) && v2.length && typeof v2[0] === "object") return v2;
+        }
+      }
+    }
+  }
+
+  return [];
+}
+
+function getDaytonaDuelRaceIds_2026_() {
+  const allCup = getCupRacesAllCupFromMultiSeries_(); // uses cf.../cacher/2026/race_list_basic.json
+  const duels = allCup.filter(r => {
+    const n = String(r?.race_name ?? r?.name ?? "").toLowerCase();
+    return n.includes("duel") && n.includes("daytona");
+  });
+
+  if (duels.length < 2) {
+    throw new Error(`Daytona: could not find 2 Duel races (found ${duels.length}).`);
+  }
+
+  // Sort by scheduled time so Duel #1 comes first
+  duels.sort((a, b) => {
+    const da = Date.parse(a?.date_scheduled ?? a?.race_date ?? "") || 0;
+    const db = Date.parse(b?.date_scheduled ?? b?.race_date ?? "") || 0;
+    return da - db;
+  });
+
+  return [duels[0].race_id, duels[1].race_id];
+}
+
+function getCupRacesAllCupFromMultiSeries_() {
+  const url = `https://cf.nascar.com/cacher/${NASCAR_YEAR}/race_list_basic.json`;
+  Logger.log(`[AUTO] Daytona builder: fetching race list from ${url}`);
+
+  const json = fetchJsonStrict_(url);
+
+  // This file is shaped like: { series_1: [...], series_2: [...], series_3: [...] }
+  const cup = Array.isArray(json?.series_1) ? json.series_1 : [];
+
+  if (!cup.length) {
+    Logger.log(`[AUTO] Daytona builder: race list top keys=${JSON.stringify(Object.keys(json||{}))}`);
+    throw new Error("Daytona builder: could not read series_1 races from race_list_basic.json");
+  }
+
+  Logger.log(`[AUTO] Daytona builder: cup races count=${cup.length}`);
+  return cup;
+}
+
+function pickDuelRaceRun_(feed, duelNo) {
+  const runs = Array.isArray(feed?.weekend_runs) ? feed.weekend_runs : [];
+  if (!runs.length) throw new Error("Duel feed has no weekend_runs.");
+
+  const want = String(duelNo || "").trim(); // "1" or "2"
+
+  const scored = runs.map(r => {
+    const name = String(r?.run_name || "").toLowerCase();
+    const results = Array.isArray(r?.results) ? r.results : [];
+    const len = results.length;
+
+    let score = 0;
+
+    // reject the lineup-only run
+    if (name.includes("qual run")) score -= 1000;
+
+    // prefer real race runs if they exist
+    if (name.includes("qualifying race")) score += 200;
+    if (name.includes("duel")) score += 200;
+    if (name.includes("race")) score += 80;
+
+    if (want && name.includes(want)) score += 50;
+
+    score += Math.min(len, 60);
+
+    const hasFinish = results.some(x =>
+      Number.isFinite(Number(x?.finishing_position ?? x?.finish_position ?? x?.FinishPos))
+    );
+    if (hasFinish) score += 100;
+
+    return { score, name: r?.run_name, len, run: r };
+  });
+
+  scored.sort((a,b) => b.score - a.score);
+
+  Logger.log(`[AUTO] Daytona: pickDuelRaceRun duel=${duelNo} top5=` +
+    JSON.stringify(scored.slice(0,5).map(x => ({score:x.score,name:x.name,len:x.len}))));
+
+  const chosen = scored[0]?.run;
+  if (!chosen) return null;
+
+  const chosenName = String(chosen?.run_name || "").toLowerCase();
+
+  // If the best available is still Qual Run, there is no usable duel race result in this feed.
+  if (chosenName.includes("qual run")) {
+    Logger.log(`[AUTO] Daytona: duel ${duelNo} has only Qual Run (no duel race results in weekend-feed).`);
+    return null;
+  }
+
+  return chosen;
+}
+
+function getWeekendRaceResults_(feed) {
+  const wr0 = feed?.weekend_race?.[0];
+  const res = Array.isArray(wr0?.results) ? wr0.results : [];
+  return res;
+}
+
+function pickDriverNameFromWeekendRaceResult_(r) {
+  // Duel feeds use driver_fullname (per the JSON you linked)
+  if (r?.driver_fullname) return String(r.driver_fullname).trim();
+  if (r?.driver_name) return String(r.driver_name).trim();
+  return pickDriverNameFromCfRow_(r); // fallback to your existing helper
+}
+
+const NASCAR_DISPLAY_OVERRIDES = {
+  "jj yeley": "JJ Yeley",
+  "bj mcleod": "BJ McLeod",
+  "aj allmendinger": "AJ Allmendinger",
+  "john h nemechek": "John H. Nemechek"
+};
+
+function formatNascarDisplayName_(name) {
+  if (!name) return "";
+
+  const key = normalizeName_(name);
+
+  // Hard overrides first
+  if (NASCAR_DISPLAY_OVERRIDES[key]) {
+    return NASCAR_DISPLAY_OVERRIDES[key];
+  }
+
+  // Default: Title Case
+  return key
+    .split(" ")
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function getRaceResultsRows_(feed) {
+  // 1) BEST CASE: weekend_race[0].results is the final results table
+  const wr0 = feed?.weekend_race?.[0];
+  const wrRes = Array.isArray(wr0?.results) ? wr0.results : [];
+  if (wrRes.length && wrRes.some(r => Number.isFinite(Number(r?.finishing_position ?? r?.FinishPos ?? r?.FinPos)))) {
+    Logger.log(`[AUTO] Results: using weekend_race[0].results rows=${wrRes.length}`);
+    return wrRes;
+  }
+
+  // 2) Otherwise pick the weekend_run with the strongest “final results” signals
+  const runs = Array.isArray(feed?.weekend_runs) ? feed.weekend_runs : [];
+  if (!runs.length) return [];
+
+  const scored = runs.map(run => {
+    const name = String(run?.run_name || "").toLowerCase();
+    const rows = Array.isArray(run?.results) ? run.results : [];
+
+    // count how many rows actually have finishing_position
+    const finishCount = rows.reduce((c, r) => {
+      const p = Number(r?.finishing_position ?? r?.finish_position ?? r?.FinishPos ?? r?.FinPos);
+      return c + (Number.isFinite(p) ? 1 : 0);
+    }, 0);
+
+    // max laps is a nice “this was a real race run” hint
+    const maxLaps = rows.reduce((m, r) => {
+      const n = Number(r?.laps_completed ?? r?.LapsCompleted ?? r?.laps ?? 0);
+      return Number.isFinite(n) ? Math.max(m, n) : m;
+    }, 0);
+
+    let score = 0;
+
+    // Want actual finish positions more than anything
+    score += finishCount * 10;
+
+    // Prefer things that look like the actual race
+    if (name.includes("race")) score += 200;
+    if (name.includes("results")) score += 120;
+
+    // Avoid traps
+    if (name.includes("starting")) score -= 500;
+    if (name.includes("lineup")) score -= 500;
+    if (name.includes("qual")) score -= 800;
+    if (name.includes("practice")) score -= 800;
+    if (name.includes("stage")) score -= 200; // stage results are real but not final
+
+    // Real race runs have laps
+    if (maxLaps >= 50) score += 200;
+    if (maxLaps >= 150) score += 300;
+
+    // Bigger tables usually better
+    score += Math.min(rows.length, 60);
+
+    return { score, name: run?.run_name, rows };
+  }).sort((a, b) => b.score - a.score);
+
+  Logger.log(`[AUTO] Results: pick run top5=` + JSON.stringify(scored.slice(0,5).map(x => ({
+    score: x.score, name: x.name, rows: x.rows.length
+  }))));
+
+  return scored[0]?.rows || [];
+}
