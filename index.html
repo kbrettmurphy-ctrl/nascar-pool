@@ -1318,18 +1318,17 @@ async function loadCountdown_(){
 
   stopCountdown_();
 
-  // Always show something so it doesn't "disappear"
-  el.style.display = "inline-flex";
-  el.textContent = "⏳ Loading…";
-
   try{
-    // FORCE live GAS call (bypasses snapshot logic inside getData_)
+    // ✅ BYPASS getData_() so we DO NOT hit GitHub snapshot.
+    // This forces a live call to Apps Script every time.
     const resp = await apiCall("playerGetCountdown", {}, false);
     if (!resp || !resp.ok) throw new Error(resp?.error || "Countdown API failed");
 
     const data = resp.data || {};
     const raceName = String(data?.raceName || data?.raceLabel || "Race").trim();
     const iso = String(data?.raceStart || "").trim();
+
+    el.style.display = "inline-flex";
 
     if (!iso){
       el.textContent = `⏳ ${raceName}: TBA`;
@@ -1352,7 +1351,8 @@ async function loadCountdown_(){
     _countdownTimer = setInterval(tick, 1000);
 
   }catch(e){
-    // Don't hide it. Show a sane fallback.
+    // Don’t hide it, just degrade gracefully
+    el.style.display = "inline-flex";
     el.textContent = "⏳ Race: TBA";
   }
 }
@@ -1449,7 +1449,7 @@ async function loadCountdown_(){
       sub.textContent =
         `Tournament ${tour}` +
         (roundText ? ` · ${roundText}` : "");
-
+      loadCountdown_();
       area.innerHTML = "";
       const you = loadPlayerName().trim().toLowerCase();
       (data.matchups || []).forEach(m => {
