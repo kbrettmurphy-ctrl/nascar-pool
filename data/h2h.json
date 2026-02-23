@@ -3,6 +3,10 @@
     {
       "opponent": "Bob",
       "record": "(0-1)"
+    },
+    {
+      "opponent": "Rob",
+      "record": "(1-0)"
     }
   ],
   "Bob": [
@@ -11,13 +15,13 @@
       "record": "(1-0)"
     },
     {
-      "opponent": "Nate C.",
+      "opponent": "Jason",
       "record": "(1-0)"
     }
   ],
   "Brett": [
     {
-      "opponent": "Justin",
+      "opponent": "Nate C.",
       "record": "(1-0)"
     },
     {
@@ -27,7 +31,7 @@
   ],
   "Chris": [
     {
-      "opponent": "Jason",
+      "opponent": "Justin",
       "record": "(1-0)"
     },
     {
@@ -39,11 +43,15 @@
     {
       "opponent": "Jason",
       "record": "(0-1)"
+    },
+    {
+      "opponent": "Russ",
+      "record": "(0-1)"
     }
   ],
   "Jason": [
     {
-      "opponent": "Chris",
+      "opponent": "Bob",
       "record": "(0-1)"
     },
     {
@@ -53,7 +61,7 @@
   ],
   "Justin": [
     {
-      "opponent": "Brett",
+      "opponent": "Chris",
       "record": "(0-1)"
     },
     {
@@ -63,7 +71,7 @@
   ],
   "Nate C.": [
     {
-      "opponent": "Bob",
+      "opponent": "Brett",
       "record": "(0-1)"
     },
     {
@@ -85,21 +93,37 @@
     {
       "opponent": "Chris",
       "record": "(0-1)"
+    },
+    {
+      "opponent": "Steven",
+      "record": "(0-1)"
     }
   ],
   "Pat": [
     {
       "opponent": "Stacy",
       "record": "(0-1)"
+    },
+    {
+      "opponent": "Tyler",
+      "record": "(1-0)"
     }
   ],
   "Rob": [
+    {
+      "opponent": "Beau",
+      "record": "(0-1)"
+    },
     {
       "opponent": "Nate C.",
       "record": "(0-1)"
     }
   ],
   "Russ": [
+    {
+      "opponent": "Don",
+      "record": "(1-0)"
+    },
     {
       "opponent": "Nate M.",
       "record": "(0-1)"
@@ -119,11 +143,19 @@
     {
       "opponent": "Justin",
       "record": "(0-1)"
+    },
+    {
+      "opponent": "Nick",
+      "record": "(1-0)"
     }
   ],
   "Tyler": [
     {
       "opponent": "Brett",
+      "record": "(0-1)"
+    },
+    {
+      "opponent": "Pat",
       "record": "(0-1)"
     }
   ]
