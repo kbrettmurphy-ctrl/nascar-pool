@@ -13,7 +13,7 @@
 
   <style>
     :root{
-      --bg:#020b12;0
+      --bg:#020b12;
       --card:#111111;
       --text:#ffffff;
       --muted:rgba(255,255,255,.72);
@@ -177,11 +177,12 @@
       border-top: 1px solid rgba(255,255,255,.10);
       z-index: 9999;
     }
+
     .navInner{
       max-width: 920px;
       margin:0 auto;
       display:flex;
-      gap:10px;
+      gap:8px;
       align-items:center;
       overflow-x:auto;
       -webkit-overflow-scrolling: touch;
@@ -192,61 +193,65 @@
       content:"";
       flex: 1 0 auto;
     }
+
     .navBtn{
       flex:0 0 auto;
-      min-width: 98px;
-      background: rgba(255,255,255,.06);
+      min-width:98px;
+      background: var(--white06);
       color:#fff;
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 10px 10px;
-      font-weight: 900;
-      font-size: 13px;
+      border:1px solid var(--white10);
+      border-radius:18px;
+      padding:6px 8px;
+      font-weight:800;
+      font-size:12px;
       cursor:pointer;
       display:flex;
-      gap:8px;
+      gap:6px;
       align-items:center;
       justify-content:center;
       text-align:center;
       white-space:nowrap;
     }
+
     .navBtn.active{
-      background: rgba(0,122,194,.22);
-      border-color: rgba(0,122,194,.55);
+      background: var(--glassBlue22);
+      border-color: var(--glassBlue55);
     }
 
+    .navBtn .ico{ font-size:14px; }
+
     /* =========================
-   * 9) SPONSOR OVERLAY
-   * ========================= */
-  .sponsor-container{
-    position: fixed;
-    bottom: var(--navH);
-    left:0;
-    right:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    z-index: 2; /* behind cards, above watermark */
-    pointer-events:none;
-  }
+     * 9) SPONSOR OVERLAY
+     * ========================= */
+    .sponsor-container{
+      position: fixed;
+      bottom: var(--navH);
+      left:0;
+      right:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      z-index: 2; /* behind cards, above watermark */
+      pointer-events:none;
+    }
 
-  .presented-by{
-    font-size:11px;
-    opacity:0.5;
-    font-weight:bold;
-    color: var(--muted);
-    letter-spacing:.2px;
-    margin-bottom:6px;
-    text-transform: uppercase;
-  }
+    .presented-by{
+      font-size:11px;
+      opacity:0.5;
+      font-weight:bold;
+      color: var(--muted);
+      letter-spacing:.2px;
+      margin-bottom:6px;
+      text-transform: uppercase;
+    }
 
-  .sponsor-logo{
-    height:80px;
-    width:auto;
-    opacity:0.5;
-  }
-  </style>
-</head>
+    .sponsor-logo{
+      height:80px;
+      width:auto;
+      opacity:0.5;
+    }
+    </style>
+  </head>
 
 <body>
   <div class="wrap">
