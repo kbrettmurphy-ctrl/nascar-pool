@@ -1,7 +1,7 @@
 {
   "tournament": 1,
-  "currentRound": 3,
-  "currentRace": "COTA",
+  "currentRound": 2,
+  "currentRace": "Atlanta",
   "rounds": [
     {
       "round": 1,
@@ -85,7 +85,7 @@
     {
       "round": 2,
       "raceLabel": "Atlanta",
-      "isCurrent": false,
+      "isCurrent": true,
       "matchups": [
         {
           "s1": "1-0",
@@ -164,7 +164,7 @@
     {
       "round": 3,
       "raceLabel": "COTA",
-      "isCurrent": true,
+      "isCurrent": false,
       "matchups": []
     },
     {
