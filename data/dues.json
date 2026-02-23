@@ -2,8 +2,8 @@
   "Beau": {
     "name": "Beau",
     "paid": 0,
-    "winnings": 0,
-    "balance": 180
+    "winnings": 25,
+    "balance": 155
   },
   "Bob": {
     "name": "Bob",
