@@ -353,20 +353,20 @@
         <div id="h2hMsg" class="msg hide"></div>
       </div>
 
-      <div class="card panel hide" id="panelWinnings">
-        <h3>Tournament Winnings</h3>
+      <!-- <div class="card panel hide" id="panelWinnings"> -->
+        <!-- <h3>Tournament Winnings</h3> -->
         <!-- <label>Tournament</label> -->
-        <select id="winTourneySel">
-          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
-          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
-          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
-        </select>
+        <!-- <select id="winTourneySel"> -->
+          <!-- <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option> -->
+          <!-- <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option> -->
+          <!-- <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option> -->
+        <!-- </select> -->
 
-        <div class="spacer"></div>
-        <button class="btn secondary" onclick="showWinnings()">Show Winnings</button>
+        <!-- <div class="spacer"></div> -->
+        <!-- <button class="btn secondary" onclick="showWinnings()">Show Winnings</button> -->
 
-        <div id="winningsMsg" class="msg hide"></div>
-      </div>
+        <!-- <div id="winningsMsg" class="msg hide"></div> -->
+      <!-- </div> -->
 
       <div class="card panel hide" id="panelFunds">
         <h3>Add Funds</h3>
@@ -380,6 +380,19 @@
         <button class="btn" onclick="addFunds()">Add Funds</button>
 
         <div id="fundsMsg" class="msg hide"></div>
+
+        <h3>Tournament Winnings</h3>
+        <!-- <label>Tournament</label> -->
+        <select id="winTourneySel">
+          <option value="1">Tournament 1</option><option value="2">Tournament 2</option><option value="3">Tournament 3</option>
+          <option value="4">Tournament 4</option><option value="5">Tournament 5</option><option value="6">Tournament 6</option>
+          <option value="7">Tournament 7</option><option value="8">Tournament 8</option><option value="9">Tournament 9</option>
+        </select>
+
+        <div class="spacer"></div>
+        <button class="btn secondary" onclick="showWinnings()">Show Winnings</button>
+
+        <div id="winningsMsg" class="msg hide"></div>
       </div>
 
       <div class="card panel hide" id="panelPublish">
@@ -415,7 +428,7 @@
       <button class="navBtn avtive" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
       <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Lineups</span></button>
       <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Stats</span></button>
-      <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button>
+      <!-- <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button> -->
       <button class="navBtn" onclick="showPanel('Funds', this)">💵<span>Add</span></button>
       <button class="navBtn" onclick="showPanel('Publish', this)">🚀<span>Publish</span></button>
       <button class="navBtn" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
