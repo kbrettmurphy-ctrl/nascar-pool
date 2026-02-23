@@ -1,7 +1,7 @@
 {
   "tournament": 1,
-  "currentRound": 3,
-  "currentRace": "COTA",
+  "currentRound": 2,
+  "currentRace": "Atlanta",
   "rounds": [
     {
       "round": 1,
@@ -85,7 +85,7 @@
     {
       "round": 2,
       "raceLabel": "Atlanta",
-      "isCurrent": false,
+      "isCurrent": true,
       "matchups": [
         {
           "s1": "1-0",
@@ -93,79 +93,152 @@
           "p1": "Brett",
           "p2": "Nate C.",
           "a1": null,
-          "a2": null,
+          "a2": 31,
           "winner": ""
         },
         {
           "s1": "1-0",
-          "s2": "1-0",
+          "s2": "0-1",
           "p1": "Stacy",
           "p2": "Nate M.",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 21.5,
+          "a2": 34,
+          "winner": "Stacy"
         },
         {
           "s1": "1-0",
-          "s2": "1-0",
+          "s2": "0-1",
           "p1": "Bob",
           "p2": "Jason",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 8.5,
+          "a2": 20,
+          "winner": "Bob"
         },
         {
-          "s1": "1-0",
+          "s1": "0-1",
           "s2": "1-0",
           "p1": "Justin",
           "p2": "Chris",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 17.5,
+          "a2": 14.5,
+          "winner": "Chris"
         },
         {
           "s1": "0-1",
-          "s2": "0-1",
+          "s2": "1-0",
           "p1": "Tyler",
           "p2": "Pat",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 25,
+          "a2": 16.5,
+          "winner": "Pat"
         },
         {
           "s1": "0-1",
-          "s2": "0-1",
+          "s2": "1-0",
           "p1": "Rob",
           "p2": "Beau",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 22,
+          "a2": 11.5,
+          "winner": "Beau"
         },
         {
-          "s1": "0-1",
+          "s1": "1-0",
           "s2": "0-1",
           "p1": "Steven",
           "p2": "Nick",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 13,
+          "a2": 18,
+          "winner": "Steven"
         },
         {
           "s1": "0-1",
           "s2": "0-1",
           "p1": "Russ",
           "p2": "Don",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 15.5,
+          "a2": 21.5,
+          "winner": "Russ"
         }
       ]
     },
     {
       "round": 3,
       "raceLabel": "COTA",
-      "isCurrent": true,
-      "matchups": []
+      "isCurrent": false,
+      "matchups": [
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Brett",
+          "p2": "Bob",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Stacy",
+          "p2": "Chris",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Beau",
+          "p2": "Steven",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Nate C.",
+          "p2": "Pat",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Justin",
+          "p2": "Jason",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Nick",
+          "p2": "Rob",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Tyler",
+          "p2": "Don",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        }
+      ]
     },
     {
       "round": 4,
