@@ -9,15 +9,27 @@
     {
       "opponent": "Beau",
       "record": "(1-0)"
+    },
+    {
+      "opponent": "Nate C.",
+      "record": "(1-0)"
     }
   ],
   "Brett": [
+    {
+      "opponent": "Justin",
+      "record": "(1-0)"
+    },
     {
       "opponent": "Tyler",
       "record": "(1-0)"
     }
   ],
   "Chris": [
+    {
+      "opponent": "Jason",
+      "record": "(1-0)"
+    },
     {
       "opponent": "Nick",
       "record": "(1-0)"
@@ -31,17 +43,29 @@
   ],
   "Jason": [
     {
+      "opponent": "Chris",
+      "record": "(0-1)"
+    },
+    {
       "opponent": "Don",
       "record": "(1-0)"
     }
   ],
   "Justin": [
     {
+      "opponent": "Brett",
+      "record": "(0-1)"
+    },
+    {
       "opponent": "Steven",
       "record": "(1-0)"
     }
   ],
   "Nate C.": [
+    {
+      "opponent": "Bob",
+      "record": "(0-1)"
+    },
     {
       "opponent": "Rob",
       "record": "(1-0)"
@@ -51,6 +75,10 @@
     {
       "opponent": "Russ",
       "record": "(1-0)"
+    },
+    {
+      "opponent": "Stacy",
+      "record": "(0-1)"
     }
   ],
   "Nick": [
@@ -78,6 +106,10 @@
     }
   ],
   "Stacy": [
+    {
+      "opponent": "Nate M.",
+      "record": "(1-0)"
+    },
     {
       "opponent": "Pat",
       "record": "(1-0)"
