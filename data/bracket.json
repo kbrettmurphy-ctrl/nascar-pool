@@ -92,9 +92,9 @@
           "s2": "1-0",
           "p1": "Brett",
           "p2": "Nate C.",
-          "a1": 8,
-          "a2": 31,
-          "winner": "Brett"
+          "a1": null,
+          "a2": null,
+          "winner": ""
         },
         {
           "s1": "1-0",
