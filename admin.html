@@ -214,6 +214,37 @@
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
     }
+
+    /* =========================
+   * 9) SPONSOR OVERLAY
+   * ========================= */
+  .sponsor-container{
+    position: fixed;
+    bottom: var(--navH);
+    left:0;
+    right:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    z-index: 2; /* behind cards, above watermark */
+    pointer-events:none;
+  }
+
+  .presented-by{
+    font-size:11px;
+    opacity:0.5;
+    font-weight:bold;
+    color: var(--muted);
+    letter-spacing:.2px;
+    margin-bottom:6px;
+    text-transform: uppercase;
+  }
+
+  .sponsor-logo{
+    height:80px;
+    width:auto;
+    opacity:0.5;
+  }
   </style>
 </head>
 
@@ -428,6 +459,10 @@
   </div>
 
   <!-- Bottom nav -->
+  <div class="sponsor-container">
+    <div class="presented-by">PRESENTED BY</div>
+    <img src="buschlight.png" alt="Busch Light" class="sponsor-logo">
+  </div>
   <div class="bottomNav">
     <div class="navInner">
       <button class="navBtn avtive" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
