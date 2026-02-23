@@ -1,166 +1,166 @@
 {
   "tournament": 1,
-  "race": "Atlanta",
-  "round": 2,
+  "race": "COTA",
+  "round": 3,
   "matchups": [
     {
       "p1": "Brett",
-      "p2": "Nate C.",
+      "p2": "Bob",
       "p1Drivers": [
-        "Chase Elliott",
-        "Daniel Suárez"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Kyle Busch",
-        "William Byron"
+        "",
+        ""
       ],
       "p1Nums": [
-        4,
-        12
+        "",
+        ""
       ],
       "p2Nums": [
-        14,
-        13
+        "",
+        ""
       ]
     },
     {
       "p1": "Stacy",
-      "p2": "Nate M.",
+      "p2": "Chris",
       "p1Drivers": [
-        "Ty Gibbs",
-        "Shane van Gisbergen"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Kyle Larson",
-        "Ricky Stenhouse Jr."
+        "",
+        ""
       ],
       "p1Nums": [
-        25,
-        28
+        "",
+        ""
       ],
       "p2Nums": [
-        16,
-        3
+        "",
+        ""
       ]
     },
     {
-      "p1": "Bob",
-      "p2": "Jason",
+      "p1": "Beau",
+      "p2": "Steven",
       "p1Drivers": [
-        "Denny Hamlin",
-        "Carson Hocevar"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Zane Smith",
-        "Riley Herbst"
+        "",
+        ""
       ],
       "p1Nums": [
-        29,
-        15
+        "",
+        ""
       ],
       "p2Nums": [
-        6,
-        8
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Nate C.",
+      "p2": "Pat",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
       ]
     },
     {
       "p1": "Justin",
-      "p2": "Chris",
+      "p2": "Jason",
       "p1Drivers": [
-        "Bubba Wallace",
-        "Cody Ware"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Ross Chastain",
-        "Austin Cindric"
+        "",
+        ""
       ],
       "p1Nums": [
-        9,
-        18
+        "",
+        ""
       ],
       "p2Nums": [
-        21,
-        30
-      ]
-    },
-    {
-      "p1": "Tyler",
-      "p2": "Pat",
-      "p1Drivers": [
-        "AJ Allmendinger",
-        "Josh Berry"
-      ],
-      "p2Drivers": [
-        "Joey Logano",
-        "Chris Buescher"
-      ],
-      "p1Nums": [
-        19,
-        10
-      ],
-      "p2Nums": [
-        2,
-        7
-      ]
-    },
-    {
-      "p1": "Rob",
-      "p2": "Beau",
-      "p1Drivers": [
-        "Noah Gragson",
-        "Connor Zilisch"
-      ],
-      "p2Drivers": [
-        "Tyler Reddick",
-        "Cole Custer"
-      ],
-      "p1Nums": [
-        11,
-        31
-      ],
-      "p2Nums": [
-        1,
-        27
-      ]
-    },
-    {
-      "p1": "Steven",
-      "p2": "Nick",
-      "p1Drivers": [
-        "Brad Keselowski",
-        "Ryan Preece"
-      ],
-      "p2Drivers": [
-        "Michael McDowell",
-        "Ty Dillon"
-      ],
-      "p1Nums": [
-        5,
-        26
-      ],
-      "p2Nums": [
-        20,
-        17
+        "",
+        ""
       ]
     },
     {
       "p1": "Russ",
-      "p2": "Don",
+      "p2": "Nate M.",
       "p1Drivers": [
-        "Christopher Bell",
-        "Ryan Blaney"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Erik Jones",
-        "John H. Nemechek"
+        "",
+        ""
       ],
       "p1Nums": [
-        32,
-        22
+        "",
+        ""
       ],
       "p2Nums": [
-        23,
-        24
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Nick",
+      "p2": "Rob",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Tyler",
+      "p2": "Don",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
       ]
     }
   ],
