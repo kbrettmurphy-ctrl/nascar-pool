@@ -214,6 +214,7 @@
       background: rgba(0,122,194,.22);
       border-color: rgba(0,122,194,.55);
     }
+    .navBtn .ico{ font-size:14px; }
     /* =========================
      * 9) SPONSOR OVERLAY
      * ========================= */
@@ -464,13 +465,19 @@
   </div>
   <div class="bottomNav">
     <div class="navInner">
-      <button class="navBtn avtive" onclick="showPanel('Numbers', this)">🎲<span>Numbers</span></button>
-      <button class="navBtn" onclick="showPanel('Import', this)">📋<span>Lineups</span></button>
-      <button class="navBtn" onclick="showPanel('Ranks', this)">📊<span>Stats</span></button>
+      <button class="navBtn avtive" onclick="showPanel('Numbers', this)">
+        <div class="ico">🎲</div><div>>Numbers</div></button>
+      <button class="navBtn" onclick="showPanel('Import', this)">
+        <div class="ico">📋</div><div>Lineups</div></button>
+      <button class="navBtn" onclick="showPanel('Ranks', this)">
+        <div class="ico">📊</div><div>Stats</div></button>
       <!-- <button class="navBtn" onclick="showPanel('Winnings', this)">🏆<span>Winnings</span></button> -->
-      <button class="navBtn" onclick="showPanel('Funds', this)">💵<span>$$$</span></button>
-      <button class="navBtn" onclick="showPanel('Publish', this)">🚀<span>Publish</span></button>
-      <button class="navBtn" onclick="toggleConfigCard()">⚙️<span>Config</span></button>
+      <button class="navBtn" onclick="showPanel('Funds', this)">
+        <div class="ico">💵</div><div>$$$</div></button>
+      <button class="navBtn" onclick="showPanel('Publish', this)">
+        <div class="ico">🚀</div><div>Publish</div></button>
+      <button class="navBtn" onclick="toggleConfigCard()">
+        <div class="ico">⚙️</div><div>Config</div></button>
     </div>
   </div>
 
