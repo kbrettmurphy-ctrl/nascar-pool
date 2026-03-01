@@ -6,20 +6,20 @@
     "you": "Brett",
     "opponent": "Bob",
     "youDrivers": [
-      "",
-      ""
+      "Brad Keselowski",
+      "Josh Berry"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Ross Chastain",
+      "Chase Briscoe"
     ],
     "youNums": [
-      "",
-      ""
+      26,
+      22
     ],
     "oppNums": [
-      "",
-      ""
+      2,
+      3
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -33,20 +33,20 @@
     "you": "Bob",
     "opponent": "Brett",
     "youDrivers": [
-      "",
-      ""
+      "Ross Chastain",
+      "Chase Briscoe"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Brad Keselowski",
+      "Josh Berry"
     ],
     "youNums": [
-      "",
-      ""
+      2,
+      3
     ],
     "oppNums": [
-      "",
-      ""
+      26,
+      22
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -60,20 +60,20 @@
     "you": "Stacy",
     "opponent": "Chris",
     "youDrivers": [
-      "",
-      ""
+      "Ty Dillon",
+      "Zane Smith"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Daniel Suárez",
+      "Ryan Preece"
     ],
     "youNums": [
-      "",
-      ""
+      21,
+      11
     ],
     "oppNums": [
-      "",
-      ""
+      23,
+      29
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -87,20 +87,20 @@
     "you": "Chris",
     "opponent": "Stacy",
     "youDrivers": [
-      "",
-      ""
+      "Daniel Suárez",
+      "Ryan Preece"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Ty Dillon",
+      "Zane Smith"
     ],
     "youNums": [
-      "",
-      ""
+      23,
+      29
     ],
     "oppNums": [
-      "",
-      ""
+      21,
+      11
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -114,20 +114,20 @@
     "you": "Beau",
     "opponent": "Steven",
     "youDrivers": [
-      "",
-      ""
+      "Alex Bowman",
+      "Denny Hamlin"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Carson Hocevar",
+      "Bubba Wallace"
     ],
     "youNums": [
-      "",
-      ""
+      16,
+      19
     ],
     "oppNums": [
-      "",
-      ""
+      12,
+      24
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -141,20 +141,20 @@
     "you": "Steven",
     "opponent": "Beau",
     "youDrivers": [
-      "",
-      ""
+      "Carson Hocevar",
+      "Bubba Wallace"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Alex Bowman",
+      "Denny Hamlin"
     ],
     "youNums": [
-      "",
-      ""
+      12,
+      24
     ],
     "oppNums": [
-      "",
-      ""
+      16,
+      19
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -168,20 +168,20 @@
     "you": "Nate C.",
     "opponent": "Pat",
     "youDrivers": [
-      "",
-      ""
+      "Michael McDowell",
+      "Ty Gibbs"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Connor Zilisch",
+      "Todd Gilliland"
     ],
     "youNums": [
-      "",
-      ""
+      6,
+      9
     ],
     "oppNums": [
-      "",
-      ""
+      25,
+      17
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -195,20 +195,20 @@
     "you": "Pat",
     "opponent": "Nate C.",
     "youDrivers": [
-      "",
-      ""
+      "Connor Zilisch",
+      "Todd Gilliland"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Michael McDowell",
+      "Ty Gibbs"
     ],
     "youNums": [
-      "",
-      ""
+      25,
+      17
     ],
     "oppNums": [
-      "",
-      ""
+      6,
+      9
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -222,20 +222,20 @@
     "you": "Justin",
     "opponent": "Jason",
     "youDrivers": [
-      "",
-      ""
+      "Cole Custer",
+      "Christopher Bell"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Chris Buescher",
+      "Kyle Larson"
     ],
     "youNums": [
-      "",
-      ""
+      18,
+      8
     ],
     "oppNums": [
-      "",
-      ""
+      14,
+      15
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -249,20 +249,20 @@
     "you": "Jason",
     "opponent": "Justin",
     "youDrivers": [
-      "",
-      ""
+      "Chris Buescher",
+      "Kyle Larson"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Cole Custer",
+      "Christopher Bell"
     ],
     "youNums": [
-      "",
-      ""
+      14,
+      15
     ],
     "oppNums": [
-      "",
-      ""
+      18,
+      8
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -276,20 +276,20 @@
     "you": "Russ",
     "opponent": "Nate M.",
     "youDrivers": [
-      "",
-      ""
+      "Ryan Blaney",
+      "Kyle Busch"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Joey Logano",
+      "John H. Nemechek"
     ],
     "youNums": [
-      "",
-      ""
+      4,
+      30
     ],
     "oppNums": [
-      "",
-      ""
+      20,
+      31
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -303,20 +303,20 @@
     "you": "Nate M.",
     "opponent": "Russ",
     "youDrivers": [
-      "",
-      ""
+      "Joey Logano",
+      "John H. Nemechek"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Ryan Blaney",
+      "Kyle Busch"
     ],
     "youNums": [
-      "",
-      ""
+      20,
+      31
     ],
     "oppNums": [
-      "",
-      ""
+      4,
+      30
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -330,20 +330,20 @@
     "you": "Nick",
     "opponent": "Rob",
     "youDrivers": [
-      "",
-      ""
+      "Austin Cindric",
+      "Jesse Love"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "AJ Allmendinger",
+      "William Byron"
     ],
     "youNums": [
-      "",
-      ""
+      28,
+      27
     ],
     "oppNums": [
-      "",
-      ""
+      7,
+      10
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -357,20 +357,20 @@
     "you": "Rob",
     "opponent": "Nick",
     "youDrivers": [
-      "",
-      ""
+      "AJ Allmendinger",
+      "William Byron"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Austin Cindric",
+      "Jesse Love"
     ],
     "youNums": [
-      "",
-      ""
+      7,
+      10
     ],
     "oppNums": [
-      "",
-      ""
+      28,
+      27
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -384,20 +384,20 @@
     "you": "Tyler",
     "opponent": "Don",
     "youDrivers": [
-      "",
-      ""
+      "Riley Herbst",
+      "Chase Elliott"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Tyler Reddick",
+      "Shane van Gisbergen"
     ],
     "youNums": [
-      "",
-      ""
+      32,
+      5
     ],
     "oppNums": [
-      "",
-      ""
+      1,
+      13
     ],
     "youAvg": 0,
     "oppAvg": 0,
@@ -411,20 +411,20 @@
     "you": "Don",
     "opponent": "Tyler",
     "youDrivers": [
-      "",
-      ""
+      "Tyler Reddick",
+      "Shane van Gisbergen"
     ],
     "oppDrivers": [
-      "",
-      ""
+      "Riley Herbst",
+      "Chase Elliott"
     ],
     "youNums": [
-      "",
-      ""
+      1,
+      13
     ],
     "oppNums": [
-      "",
-      ""
+      32,
+      5
     ],
     "youAvg": 0,
     "oppAvg": 0,
