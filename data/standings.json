@@ -12,145 +12,145 @@
     {
       "Rank": "1",
       "Player": "Brett",
-      "W": "2",
+      "W": "3",
       "L": "0",
-      "Matches": "2",
-      "Avg": "6.50",
+      "Matches": "3",
+      "Avg": "12.00",
       "W%": "1.000"
     },
     {
       "Rank": "2",
-      "Player": "Bob",
-      "W": "2",
+      "Player": "Chris",
+      "W": "3",
       "L": "0",
-      "Matches": "2",
-      "Avg": "13.00",
+      "Matches": "3",
+      "Avg": "20.00",
       "W%": "1.000"
     },
     {
       "Rank": "3",
-      "Player": "Stacy",
+      "Player": "Nate C.",
       "W": "2",
-      "L": "0",
-      "Matches": "2",
-      "Avg": "18.25",
-      "W%": "1.000"
+      "L": "1",
+      "Matches": "3",
+      "Avg": "14.00",
+      "W%": ".667"
     },
     {
       "Rank": "4",
-      "Player": "Chris",
+      "Player": "Russ",
       "W": "2",
-      "L": "0",
-      "Matches": "2",
-      "Avg": "19.25",
-      "W%": "1.000"
+      "L": "1",
+      "Matches": "3",
+      "Avg": "17.67",
+      "W%": ".667"
     },
     {
       "Rank": "5",
-      "Player": "Beau",
-      "W": "1",
+      "Player": "Jason",
+      "W": "2",
       "L": "1",
-      "Matches": "2",
-      "Avg": "17.25",
-      "W%": ".500"
+      "Matches": "3",
+      "Avg": "18.50",
+      "W%": ".667"
     },
     {
       "Rank": "6",
       "Player": "Steven",
-      "W": "1",
+      "W": "2",
       "L": "1",
-      "Matches": "2",
-      "Avg": "18.00",
-      "W%": ".500"
+      "Matches": "3",
+      "Avg": "19.00",
+      "W%": ".667"
     },
     {
       "Rank": "7",
-      "Player": "Nate C.",
-      "W": "1",
+      "Player": "Stacy",
+      "W": "2",
       "L": "1",
-      "Matches": "2",
-      "Avg": "18.75",
-      "W%": ".500"
+      "Matches": "3",
+      "Avg": "20.33",
+      "W%": ".667"
     },
     {
       "Rank": "8",
-      "Player": "Pat",
-      "W": "1",
+      "Player": "Bob",
+      "W": "2",
       "L": "1",
-      "Matches": "2",
-      "Avg": "19.25",
-      "W%": ".500"
+      "Matches": "3",
+      "Avg": "20.67",
+      "W%": ".667"
     },
     {
       "Rank": "9",
-      "Player": "Justin",
+      "Player": "Don",
       "W": "1",
-      "L": "1",
-      "Matches": "2",
-      "Avg": "19.50",
-      "W%": ".500"
+      "L": "2",
+      "Matches": "3",
+      "Avg": "18.00",
+      "W%": ".333"
     },
     {
       "Rank": "10",
-      "Player": "Jason",
+      "Player": "Justin",
       "W": "1",
-      "L": "1",
-      "Matches": "2",
-      "Avg": "20.25",
-      "W%": ".500"
+      "L": "2",
+      "Matches": "3",
+      "Avg": "18.33",
+      "W%": ".333"
     },
     {
       "Rank": "11",
-      "Player": "Russ",
+      "Player": "Rob",
       "W": "1",
-      "L": "1",
-      "Matches": "2",
-      "Avg": "21.50",
-      "W%": ".500"
+      "L": "2",
+      "Matches": "3",
+      "Avg": "18.50",
+      "W%": ".333"
     },
     {
       "Rank": "12",
-      "Player": "Nate M.",
+      "Player": "Pat",
       "W": "1",
-      "L": "1",
-      "Matches": "2",
-      "Avg": "25.00",
-      "W%": ".500"
+      "L": "2",
+      "Matches": "3",
+      "Avg": "18.67",
+      "W%": ".333"
     },
     {
       "Rank": "13",
-      "Player": "Nick",
-      "W": "0",
+      "Player": "Beau",
+      "W": "1",
       "L": "2",
-      "Matches": "2",
-      "Avg": "21.00",
-      "W%": ".000"
+      "Matches": "3",
+      "Avg": "19.17",
+      "W%": ".333"
     },
     {
       "Rank": "14",
-      "Player": "Rob",
-      "W": "0",
+      "Player": "Nate M.",
+      "W": "1",
       "L": "2",
-      "Matches": "2",
-      "Avg": "22.25",
-      "W%": ".000"
+      "Matches": "3",
+      "Avg": "22.00",
+      "W%": ".333"
     },
     {
       "Rank": "15",
       "Player": "Tyler",
       "W": "0",
-      "L": "2",
-      "Matches": "2",
-      "Avg": "22.50",
+      "L": "3",
+      "Matches": "3",
+      "Avg": "20.00",
       "W%": ".000"
     },
     {
       "Rank": "16",
-      "Player": "Don",
+      "Player": "Nick",
       "W": "0",
-      "L": "2",
-      "Matches": "2",
-      "Avg": "26.25",
+      "L": "3",
+      "Matches": "3",
+      "Avg": "23.83",
       "W%": ".000"
     }
   ],
@@ -170,145 +170,145 @@
       {
         "rank": 1,
         "player": "Brett",
-        "W": 2,
+        "W": 3,
         "L": 0,
-        "Matches": 2,
-        "Avg": "6.50",
+        "Matches": 3,
+        "Avg": "12.00",
         "W%": "1.000"
       },
       {
         "rank": 2,
-        "player": "Bob",
-        "W": 2,
+        "player": "Chris",
+        "W": 3,
         "L": 0,
-        "Matches": 2,
-        "Avg": "13.00",
+        "Matches": 3,
+        "Avg": "20.00",
         "W%": "1.000"
       },
       {
         "rank": 3,
-        "player": "Stacy",
+        "player": "Nate C.",
         "W": 2,
-        "L": 0,
-        "Matches": 2,
-        "Avg": "18.25",
-        "W%": "1.000"
+        "L": 1,
+        "Matches": 3,
+        "Avg": "14.00",
+        "W%": "0.667"
       },
       {
         "rank": 4,
-        "player": "Chris",
+        "player": "Russ",
         "W": 2,
-        "L": 0,
-        "Matches": 2,
-        "Avg": "19.25",
-        "W%": "1.000"
+        "L": 1,
+        "Matches": 3,
+        "Avg": "17.67",
+        "W%": "0.667"
       },
       {
         "rank": 5,
-        "player": "Beau",
-        "W": 1,
+        "player": "Jason",
+        "W": 2,
         "L": 1,
-        "Matches": 2,
-        "Avg": "17.25",
-        "W%": "0.500"
+        "Matches": 3,
+        "Avg": "18.50",
+        "W%": "0.667"
       },
       {
         "rank": 6,
         "player": "Steven",
-        "W": 1,
+        "W": 2,
         "L": 1,
-        "Matches": 2,
-        "Avg": "18.00",
-        "W%": "0.500"
+        "Matches": 3,
+        "Avg": "19.00",
+        "W%": "0.667"
       },
       {
         "rank": 7,
-        "player": "Nate C.",
-        "W": 1,
+        "player": "Stacy",
+        "W": 2,
         "L": 1,
-        "Matches": 2,
-        "Avg": "18.75",
-        "W%": "0.500"
+        "Matches": 3,
+        "Avg": "20.33",
+        "W%": "0.667"
       },
       {
         "rank": 8,
-        "player": "Pat",
-        "W": 1,
+        "player": "Bob",
+        "W": 2,
         "L": 1,
-        "Matches": 2,
-        "Avg": "19.25",
-        "W%": "0.500"
+        "Matches": 3,
+        "Avg": "20.67",
+        "W%": "0.667"
       },
       {
         "rank": 9,
-        "player": "Justin",
+        "player": "Don",
         "W": 1,
-        "L": 1,
-        "Matches": 2,
-        "Avg": "19.50",
-        "W%": "0.500"
+        "L": 2,
+        "Matches": 3,
+        "Avg": "18.00",
+        "W%": "0.333"
       },
       {
         "rank": 10,
-        "player": "Jason",
+        "player": "Justin",
         "W": 1,
-        "L": 1,
-        "Matches": 2,
-        "Avg": "20.25",
-        "W%": "0.500"
+        "L": 2,
+        "Matches": 3,
+        "Avg": "18.33",
+        "W%": "0.333"
       },
       {
         "rank": 11,
-        "player": "Russ",
+        "player": "Rob",
         "W": 1,
-        "L": 1,
-        "Matches": 2,
-        "Avg": "21.50",
-        "W%": "0.500"
+        "L": 2,
+        "Matches": 3,
+        "Avg": "18.50",
+        "W%": "0.333"
       },
       {
         "rank": 12,
-        "player": "Nate M.",
+        "player": "Pat",
         "W": 1,
-        "L": 1,
-        "Matches": 2,
-        "Avg": "25.00",
-        "W%": "0.500"
+        "L": 2,
+        "Matches": 3,
+        "Avg": "18.67",
+        "W%": "0.333"
       },
       {
         "rank": 13,
-        "player": "Nick",
-        "W": 0,
+        "player": "Beau",
+        "W": 1,
         "L": 2,
-        "Matches": 2,
-        "Avg": "21.00",
-        "W%": "0.000"
+        "Matches": 3,
+        "Avg": "19.17",
+        "W%": "0.333"
       },
       {
         "rank": 14,
-        "player": "Rob",
-        "W": 0,
+        "player": "Nate M.",
+        "W": 1,
         "L": 2,
-        "Matches": 2,
-        "Avg": "22.25",
-        "W%": "0.000"
+        "Matches": 3,
+        "Avg": "22.00",
+        "W%": "0.333"
       },
       {
         "rank": 15,
         "player": "Tyler",
         "W": 0,
-        "L": 2,
-        "Matches": 2,
-        "Avg": "22.50",
+        "L": 3,
+        "Matches": 3,
+        "Avg": "20.00",
         "W%": "0.000"
       },
       {
         "rank": 16,
-        "player": "Don",
+        "player": "Nick",
         "W": 0,
-        "L": 2,
-        "Matches": 2,
-        "Avg": "26.25",
+        "L": 3,
+        "Matches": 3,
+        "Avg": "23.83",
         "W%": "0.000"
       }
     ],

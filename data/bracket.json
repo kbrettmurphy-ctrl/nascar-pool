@@ -1,7 +1,7 @@
 {
   "tournament": 1,
-  "currentRound": 3,
-  "currentRace": "COTA",
+  "currentRound": 4,
+  "currentRace": "Phoenix",
   "rounds": [
     {
       "round": 1,
@@ -164,87 +164,160 @@
     {
       "round": 3,
       "raceLabel": "COTA",
-      "isCurrent": true,
+      "isCurrent": false,
       "matchups": [
         {
           "s1": "2-0",
           "s2": "2-0",
           "p1": "Brett",
           "p2": "Bob",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 23,
+          "a2": 36,
+          "winner": "Brett"
         },
         {
           "s1": "2-0",
           "s2": "2-0",
           "p1": "Stacy",
           "p2": "Chris",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 24.5,
+          "a2": 21.5,
+          "winner": "Chris"
         },
         {
           "s1": "1-1",
           "s2": "1-1",
           "p1": "Beau",
           "p2": "Steven",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 23,
+          "a2": 21,
+          "winner": "Steven"
         },
         {
           "s1": "1-1",
           "s2": "1-1",
           "p1": "Nate C.",
           "p2": "Pat",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 4.5,
+          "a2": 17.5,
+          "winner": "Nate C."
         },
         {
           "s1": "1-1",
           "s2": "1-1",
           "p1": "Justin",
           "p2": "Jason",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 16,
+          "a2": 15,
+          "winner": "Jason"
         },
         {
           "s1": "1-1",
           "s2": "1-1",
           "p1": "Russ",
           "p2": "Nate M.",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 10,
+          "a2": 16,
+          "winner": "Russ"
         },
         {
           "s1": "0-2",
           "s2": "0-2",
           "p1": "Nick",
           "p2": "Rob",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 29.5,
+          "a2": 11,
+          "winner": "Rob"
         },
         {
           "s1": "0-2",
           "s2": "0-2",
           "p1": "Tyler",
           "p2": "Don",
-          "a1": null,
-          "a2": null,
-          "winner": ""
+          "a1": 15,
+          "a2": 1.5,
+          "winner": "Don"
         }
       ]
     },
     {
       "round": 4,
       "raceLabel": "Phoenix",
-      "isCurrent": false,
-      "matchups": []
+      "isCurrent": true,
+      "matchups": [
+        {
+          "s1": "3-0",
+          "s2": "3-0",
+          "p1": "Brett",
+          "p2": "Chris",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Nate C.",
+          "p2": "Russ",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Jason",
+          "p2": "Steven",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Stacy",
+          "p2": "Bob",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Don",
+          "p2": "Justin",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Rob",
+          "p2": "Pat",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Beau",
+          "p2": "Nate M.",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        },
+        {
+          "s1": "0-3",
+          "s2": "0-3",
+          "p1": "Tyler",
+          "p2": "Nick",
+          "a1": null,
+          "a2": null,
+          "winner": ""
+        }
+      ]
     }
   ]
 }

@@ -26,8 +26,8 @@
   "Don": {
     "name": "Don",
     "paid": 180,
-    "winnings": 0,
-    "balance": 0
+    "winnings": 25,
+    "balance": -25
   },
   "Jason": {
     "name": "Jason",

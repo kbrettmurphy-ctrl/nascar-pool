@@ -15,25 +15,25 @@
     "player": "Brett",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 2
+    "bracketWins": 3
   },
   "Chris": {
     "player": "Chris",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 2
+    "bracketWins": 3
   },
   "Don": {
     "player": "Don",
-    "raceWins": 0,
+    "raceWins": 1,
     "tourneyWins": 0,
-    "bracketWins": 0
+    "bracketWins": 1
   },
   "Jason": {
     "player": "Jason",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 1
+    "bracketWins": 2
   },
   "Justin": {
     "player": "Justin",
@@ -45,7 +45,7 @@
     "player": "Nate C.",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 1
+    "bracketWins": 2
   },
   "Nate M.": {
     "player": "Nate M.",
@@ -69,13 +69,13 @@
     "player": "Rob",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 0
+    "bracketWins": 1
   },
   "Russ": {
     "player": "Russ",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 1
+    "bracketWins": 2
   },
   "Stacy": {
     "player": "Stacy",
@@ -87,7 +87,7 @@
     "player": "Steven",
     "raceWins": 0,
     "tourneyWins": 0,
-    "bracketWins": 1
+    "bracketWins": 2
   },
   "Tyler": {
     "player": "Tyler",

@@ -1,166 +1,166 @@
 {
   "tournament": 1,
-  "race": "COTA",
-  "round": 3,
+  "race": "Phoenix",
+  "round": 4,
   "matchups": [
     {
       "p1": "Brett",
-      "p2": "Bob",
-      "p1Drivers": [
-        "Brad Keselowski",
-        "Josh Berry"
-      ],
-      "p2Drivers": [
-        "Ross Chastain",
-        "Chase Briscoe"
-      ],
-      "p1Nums": [
-        26,
-        22
-      ],
-      "p2Nums": [
-        2,
-        3
-      ]
-    },
-    {
-      "p1": "Stacy",
       "p2": "Chris",
       "p1Drivers": [
-        "Ty Dillon",
-        "Zane Smith"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Daniel Suárez",
-        "Ryan Preece"
+        "",
+        ""
       ],
       "p1Nums": [
-        21,
-        11
+        "",
+        ""
       ],
       "p2Nums": [
-        23,
-        29
-      ]
-    },
-    {
-      "p1": "Beau",
-      "p2": "Steven",
-      "p1Drivers": [
-        "Alex Bowman",
-        "Denny Hamlin"
-      ],
-      "p2Drivers": [
-        "Carson Hocevar",
-        "Bubba Wallace"
-      ],
-      "p1Nums": [
-        16,
-        19
-      ],
-      "p2Nums": [
-        12,
-        24
+        "",
+        ""
       ]
     },
     {
       "p1": "Nate C.",
+      "p2": "Russ",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Jason",
+      "p2": "Steven",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Stacy",
+      "p2": "Bob",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Don",
+      "p2": "Justin",
+      "p1Drivers": [
+        "",
+        ""
+      ],
+      "p2Drivers": [
+        "",
+        ""
+      ],
+      "p1Nums": [
+        "",
+        ""
+      ],
+      "p2Nums": [
+        "",
+        ""
+      ]
+    },
+    {
+      "p1": "Rob",
       "p2": "Pat",
       "p1Drivers": [
-        "Michael McDowell",
-        "Ty Gibbs"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Connor Zilisch",
-        "Todd Gilliland"
+        "",
+        ""
       ],
       "p1Nums": [
-        6,
-        9
+        "",
+        ""
       ],
       "p2Nums": [
-        25,
-        17
+        "",
+        ""
       ]
     },
     {
-      "p1": "Justin",
-      "p2": "Jason",
-      "p1Drivers": [
-        "Cole Custer",
-        "Christopher Bell"
-      ],
-      "p2Drivers": [
-        "Chris Buescher",
-        "Kyle Larson"
-      ],
-      "p1Nums": [
-        18,
-        8
-      ],
-      "p2Nums": [
-        14,
-        15
-      ]
-    },
-    {
-      "p1": "Russ",
+      "p1": "Beau",
       "p2": "Nate M.",
       "p1Drivers": [
-        "Ryan Blaney",
-        "Kyle Busch"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Joey Logano",
-        "John H. Nemechek"
+        "",
+        ""
       ],
       "p1Nums": [
-        4,
-        30
+        "",
+        ""
       ],
       "p2Nums": [
-        20,
-        31
-      ]
-    },
-    {
-      "p1": "Nick",
-      "p2": "Rob",
-      "p1Drivers": [
-        "Austin Cindric",
-        "Jesse Love"
-      ],
-      "p2Drivers": [
-        "AJ Allmendinger",
-        "William Byron"
-      ],
-      "p1Nums": [
-        28,
-        27
-      ],
-      "p2Nums": [
-        7,
-        10
+        "",
+        ""
       ]
     },
     {
       "p1": "Tyler",
-      "p2": "Don",
+      "p2": "Nick",
       "p1Drivers": [
-        "Riley Herbst",
-        "Chase Elliott"
+        "",
+        ""
       ],
       "p2Drivers": [
-        "Tyler Reddick",
-        "Shane van Gisbergen"
+        "",
+        ""
       ],
       "p1Nums": [
-        32,
-        5
+        "",
+        ""
       ],
       "p2Nums": [
-        1,
-        13
+        "",
+        ""
       ]
     }
   ],
