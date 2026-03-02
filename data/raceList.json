@@ -1,0 +1,182 @@
+[
+  {
+    "tournament": 1,
+    "round": 1,
+    "race": "Daytona"
+  },
+  {
+    "tournament": 1,
+    "round": 2,
+    "race": "Atlanta"
+  },
+  {
+    "tournament": 1,
+    "round": 3,
+    "race": "COTA"
+  },
+  {
+    "tournament": 1,
+    "round": 4,
+    "race": "Phoenix"
+  },
+  {
+    "tournament": 2,
+    "round": 1,
+    "race": "Las Vegas"
+  },
+  {
+    "tournament": 2,
+    "round": 2,
+    "race": "Darlington"
+  },
+  {
+    "tournament": 2,
+    "round": 3,
+    "race": "Martinsville"
+  },
+  {
+    "tournament": 2,
+    "round": 4,
+    "race": "Bristol"
+  },
+  {
+    "tournament": 3,
+    "round": 1,
+    "race": "Kansas"
+  },
+  {
+    "tournament": 3,
+    "round": 2,
+    "race": "Talladega"
+  },
+  {
+    "tournament": 3,
+    "round": 3,
+    "race": "Texas"
+  },
+  {
+    "tournament": 3,
+    "round": 4,
+    "race": "Watkins Glen"
+  },
+  {
+    "tournament": 4,
+    "round": 1,
+    "race": "Charlotte"
+  },
+  {
+    "tournament": 4,
+    "round": 2,
+    "race": "Nashville"
+  },
+  {
+    "tournament": 4,
+    "round": 3,
+    "race": "Michigan"
+  },
+  {
+    "tournament": 4,
+    "round": 4,
+    "race": "Pocono"
+  },
+  {
+    "tournament": 5,
+    "round": 1,
+    "race": "San Diego"
+  },
+  {
+    "tournament": 5,
+    "round": 2,
+    "race": "Sonoma"
+  },
+  {
+    "tournament": 5,
+    "round": 3,
+    "race": "Chicago"
+  },
+  {
+    "tournament": 5,
+    "round": 4,
+    "race": "Atlanta 2"
+  },
+  {
+    "tournament": 6,
+    "round": 1,
+    "race": "N. Wilksboro"
+  },
+  {
+    "tournament": 6,
+    "round": 2,
+    "race": "Indianapolis"
+  },
+  {
+    "tournament": 6,
+    "round": 3,
+    "race": "Iowa"
+  },
+  {
+    "tournament": 6,
+    "round": 4,
+    "race": "Richmond"
+  },
+  {
+    "tournament": 7,
+    "round": 1,
+    "race": "New Hampshire"
+  },
+  {
+    "tournament": 7,
+    "round": 2,
+    "race": "Daytona 2"
+  },
+  {
+    "tournament": 7,
+    "round": 3,
+    "race": "Darlington 2"
+  },
+  {
+    "tournament": 7,
+    "round": 4,
+    "race": "WWTR"
+  },
+  {
+    "tournament": 8,
+    "round": 1,
+    "race": "Bristol 2"
+  },
+  {
+    "tournament": 8,
+    "round": 2,
+    "race": "Kansas 2"
+  },
+  {
+    "tournament": 8,
+    "round": 3,
+    "race": "Las Vegas 2"
+  },
+  {
+    "tournament": 8,
+    "round": 4,
+    "race": "Charlotte 2"
+  },
+  {
+    "tournament": 9,
+    "round": 1,
+    "race": "Phoenix 2"
+  },
+  {
+    "tournament": 9,
+    "round": 2,
+    "race": "Talladega 2"
+  },
+  {
+    "tournament": 9,
+    "round": 3,
+    "race": "Martinsville 2"
+  },
+  {
+    "tournament": 9,
+    "round": 4,
+    "race": "Homestead"
+  }
+]
