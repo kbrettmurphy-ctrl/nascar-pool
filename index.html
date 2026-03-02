@@ -442,6 +442,41 @@
     box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
   }
 
+  .raceDot{
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background: var(--blue);
+    box-shadow: 0 0 0 2px rgba(0,122,194,0.18);
+  }
+
+  .legendRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+
+  .bracketLegend{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:800;
+    color: var(--muted);
+    white-space:nowrap;
+  }
+
+  .legendItem{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .legendSep{
+    opacity:.5;
+  }
+
   .avgBox{
     font-variant-numeric: tabular-nums;
     font-weight:900;
@@ -2290,10 +2325,21 @@
       const race  = data.currentRace ?? data.race ?? "";
       const round = data.currentRound ?? data.round ?? "";
 
-      sub.textContent =
+      const leftText =
         `Tournament ${tour}` +
         (race ? ` · ${race}` : "") +
         (round !== "" ? ` · ${roundLabel(round)}` : "");
+
+      sub.innerHTML = `
+        <div class="legendRow">
+          <div>${escapeHtml(leftText)}</div>
+          <div class="bracketLegend" aria-label="Legend">
+            <span class="legendItem"><span class="winDot"></span> Matchup Winner</span>
+            <span class="legendSep">·</span>
+            <span class="legendItem"><span class="raceDot"></span> Race Winner</span>
+          </div>
+        </div>
+      `;
 
       const rounds = data.rounds || [];
       let html = `<div class="bracketGrid">`;
@@ -2369,7 +2415,8 @@
                   <span class="nameText">${escapeHtml(m.p1 || "")}</span>
                 </div>
                 <div class="sideRight">
-                  <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="winSlot">${p1Win ? `<span class="winDot" title="Matchup Winner"></span>` : ``}</span>
+                  <span class="winSlot">${m.p1RaceWinner ? `<span class="raceDot" title="Race Winner Driver"></span>` : ``}</span>
                   <span class="avgBox ${m.a1 == null ? "empty" : ""}">${m.a1 == null ? "—" : escapeHtml(fmtAvg(m.a1))}</span>
                 </div>
               </div>
@@ -2380,7 +2427,8 @@
                   <span class="nameText">${escapeHtml(m.p2 || "")}</span>
                 </div>
                 <div class="sideRight">
-                  <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="winSlot">${p2Win ? `<span class="winDot" title="Matchup Winner"></span>` : ``}</span>
+                  <span class="winSlot">${m.p2RaceWinner ? `<span class="raceDot" title="Race Winner Driver"></span>` : ``}</span>
                   <span class="avgBox ${m.a2 == null ? "empty" : ""}">${m.a2 == null ? "—" : escapeHtml(fmtAvg(m.a2))}</span>
                 </div>
               </div>
