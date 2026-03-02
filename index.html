@@ -1343,10 +1343,11 @@
    * 8) Loaders
    * ========================= */
 
+  let ALL_MATCHUPS = null;
   let RACE_LIST = [];              // [{tournament, race, round}]
   let _raceSelectWiringDone = false;
   let _raceSelectIsProgrammatic = false;
-
+  
   function raceKey_(tournament, race){
     return String(tournament || "").trim() + "||" + String(race || "").trim();
   }
@@ -1469,9 +1470,20 @@
     elim.innerHTML = "";
 
     try{
-      const res = await apiCall("playerGetRaceMatchups", { tournament, race });
-      if(!res || !res.ok) throw new Error(res?.error || "API failed");
-      renderMatchupsInto_(res.data || {});
+      const key = String(tournament).trim() + "||" + String(race).trim();
+
+      if (!ALL_MATCHUPS) {
+        // if somehow not loaded yet, load current which loads the blob
+        await loadCurrent();
+      }
+
+      if (!ALL_MATCHUPS || !ALL_MATCHUPS.races || !ALL_MATCHUPS.races[key]) {
+        area.innerHTML = "Race data not found.";
+        elim.innerHTML = "";
+        return;
+      }
+
+      renderMatchupsInto_(ALL_MATCHUPS.races[key]);
     }catch(e){
       area.innerHTML = "Error loading that race.";
     }
@@ -1509,10 +1521,14 @@
     elim.innerHTML = "";
 
     try{
-      const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
+      const data = (await getData_("matchups", "playerGetAllRaceMatchups")) || {};
+      ALL_MATCHUPS = data;
       await initRaceSelect_();
-      setRaceSelectValue_(data.tournament, data.race);
-      renderMatchupsInto_(data);
+      const currentKey =
+        String(ALL_MATCHUPS.current.tournament).trim() + "||" +
+        String(ALL_MATCHUPS.current.race).trim();
+      setRaceSelectValue_(ALL_MATCHUPS.current.tournament, ALL_MATCHUPS.current.race);
+      renderMatchupsInto_(ALL_MATCHUPS.races[currentKey]);
 
       header.textContent = data.race || "Current Race";
       const tour  = data.tournament ?? "";
