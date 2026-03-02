@@ -15,7 +15,9 @@
           "p2": "Don",
           "a1": 20.5,
           "a2": 31,
-          "winner": "Jason"
+          "winner": "Jason",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "2",
@@ -24,7 +26,9 @@
           "p2": "Nick",
           "a1": 24,
           "a2": 24,
-          "winner": "Chris"
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "3",
@@ -33,7 +37,9 @@
           "p2": "Nate C.",
           "a1": 22.5,
           "a2": 6.5,
-          "winner": "Nate C."
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "4",
@@ -42,7 +48,9 @@
           "p2": "Bob",
           "a1": 23,
           "a2": 17.5,
-          "winner": "Bob"
+          "winner": "Bob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "5",
@@ -51,7 +59,9 @@
           "p2": "Nate M.",
           "a1": 27.5,
           "a2": 16,
-          "winner": "Nate M."
+          "winner": "Nate M.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
         },
         {
           "s1": "6",
@@ -60,7 +70,9 @@
           "p2": "Stacy",
           "a1": 22,
           "a2": 15,
-          "winner": "Stacy"
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "7",
@@ -69,7 +81,9 @@
           "p2": "Steven",
           "a1": 21.5,
           "a2": 23,
-          "winner": "Justin"
+          "winner": "Justin",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "8",
@@ -78,7 +92,9 @@
           "p2": "Tyler",
           "a1": 5,
           "a2": 20,
-          "winner": "Brett"
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         }
       ]
     },
@@ -94,7 +110,9 @@
           "p2": "Nate C.",
           "a1": 8,
           "a2": 31,
-          "winner": "Brett"
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-0",
@@ -103,7 +121,9 @@
           "p2": "Nate M.",
           "a1": 21.5,
           "a2": 34,
-          "winner": "Stacy"
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-0",
@@ -112,7 +132,9 @@
           "p2": "Jason",
           "a1": 8.5,
           "a2": 20,
-          "winner": "Bob"
+          "winner": "Bob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-0",
@@ -121,7 +143,9 @@
           "p2": "Chris",
           "a1": 17.5,
           "a2": 14.5,
-          "winner": "Chris"
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-1",
@@ -130,7 +154,9 @@
           "p2": "Pat",
           "a1": 25,
           "a2": 16.5,
-          "winner": "Pat"
+          "winner": "Pat",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-1",
@@ -139,7 +165,9 @@
           "p2": "Beau",
           "a1": 22,
           "a2": 11.5,
-          "winner": "Beau"
+          "winner": "Beau",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
         },
         {
           "s1": "0-1",
@@ -148,7 +176,9 @@
           "p2": "Nick",
           "a1": 13,
           "a2": 18,
-          "winner": "Steven"
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-1",
@@ -157,7 +187,9 @@
           "p2": "Don",
           "a1": 15.5,
           "a2": 21.5,
-          "winner": "Russ"
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         }
       ]
     },
@@ -173,7 +205,9 @@
           "p2": "Bob",
           "a1": 23,
           "a2": 36,
-          "winner": "Brett"
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "2-0",
@@ -182,7 +216,9 @@
           "p2": "Chris",
           "a1": 24.5,
           "a2": 21.5,
-          "winner": "Chris"
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-1",
@@ -191,7 +227,9 @@
           "p2": "Steven",
           "a1": 23,
           "a2": 21,
-          "winner": "Steven"
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-1",
@@ -200,7 +238,9 @@
           "p2": "Pat",
           "a1": 4.5,
           "a2": 17.5,
-          "winner": "Nate C."
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-1",
@@ -209,7 +249,9 @@
           "p2": "Jason",
           "a1": 16,
           "a2": 15,
-          "winner": "Jason"
+          "winner": "Jason",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-1",
@@ -218,7 +260,9 @@
           "p2": "Nate M.",
           "a1": 10,
           "a2": 16,
-          "winner": "Russ"
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-2",
@@ -227,7 +271,9 @@
           "p2": "Rob",
           "a1": 29.5,
           "a2": 11,
-          "winner": "Rob"
+          "winner": "Rob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-2",
@@ -236,7 +282,9 @@
           "p2": "Don",
           "a1": 15,
           "a2": 1.5,
-          "winner": "Don"
+          "winner": "Don",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
         }
       ]
     },
@@ -252,7 +300,9 @@
           "p2": "Chris",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "2-1",
@@ -261,7 +311,9 @@
           "p2": "Russ",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "2-1",
@@ -270,7 +322,9 @@
           "p2": "Steven",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "2-1",
@@ -279,7 +333,9 @@
           "p2": "Bob",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-2",
@@ -288,7 +344,9 @@
           "p2": "Justin",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-2",
@@ -297,7 +355,9 @@
           "p2": "Pat",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "1-2",
@@ -306,7 +366,9 @@
           "p2": "Nate M.",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         },
         {
           "s1": "0-3",
@@ -315,7 +377,9 @@
           "p2": "Nick",
           "a1": null,
           "a2": null,
-          "winner": ""
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
         }
       ]
     }
