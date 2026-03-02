@@ -1455,37 +1455,43 @@
       return;
     }
 
-    const [tournament, race] = v.split("||");
-    const ctx = SNAP_CTX || {};
-    const isCurrent =
-      String(ctx.tournament || "").trim() === String(tournament || "").trim() &&
-      String(ctx.raceLabel || ctx.race || "").trim() === String(race || "").trim();
-
-    if(isCurrent){
-      loadCurrent();
-      return;
-    }
-
     area.innerHTML = "Loading race...";
     elim.innerHTML = "";
 
     try{
-      const key = String(tournament).trim() + "||" + String(race).trim();
+      if (!ALL_MATCHUPS) await loadCurrent();
 
-      if (!ALL_MATCHUPS) {
-        // if somehow not loaded yet, load current which loads the blob
-        await loadCurrent();
-      }
+      const key = String(v).trim();
+      const raceData = ALL_MATCHUPS?.races?.[key];
 
-      if (!ALL_MATCHUPS || !ALL_MATCHUPS.races || !ALL_MATCHUPS.races[key]) {
+      if (!raceData) {
         area.innerHTML = "Race data not found.";
-        elim.innerHTML = "";
         return;
       }
 
-      renderMatchupsInto_(ALL_MATCHUPS.races[key]);
+      renderMatchupsInto_(raceData);
+
+      const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
+      if (eliminated.length > 0) {
+        let html = `<div class="elimTitle">Eliminated</div>`;
+      const myAll = await getMyMatchupsAllSnapshot();
+
+        eliminated.forEach(p => {
+          const entry = getEntryByName(myAll, p);
+          const picks = extractPicksFromMyEntry(entry);
+          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+        });
+
+        elim.innerHTML = html;
+      } else {
+        elim.innerHTML = "";
+      }
+
     }catch(e){
       area.innerHTML = "Error loading that race.";
+      elim.innerHTML = "";
+      console.log(e);
     }
   }
     
@@ -1521,57 +1527,42 @@
     elim.innerHTML = "";
 
     try{
-      const data = (await getData_("matchups", "playerGetAllRaceMatchups")) || {};
-      ALL_MATCHUPS = data;
+      // Load the ALL-RACES blob from matchups.json (or fallback to API)
+      const blob = (await getData_("matchups", "playerGetAllRaceMatchups")) || {};
+      ALL_MATCHUPS = blob;
+
       await initRaceSelect_();
-      const currentKey =
-        String(ALL_MATCHUPS.current.tournament).trim() + "||" +
-        String(ALL_MATCHUPS.current.race).trim();
-      setRaceSelectValue_(ALL_MATCHUPS.current.tournament, ALL_MATCHUPS.current.race);
-      renderMatchupsInto_(ALL_MATCHUPS.races[currentKey]);
 
-      header.textContent = data.race || "Current Race";
-      const tour  = data.tournament ?? "";
-      const round = data.currentRound ?? data.round ?? "";
+      // Guard rails because humans and spreadsheets are unreliable
+      if (!ALL_MATCHUPS || !ALL_MATCHUPS.current || !ALL_MATCHUPS.races) {
+        area.innerHTML = "Matchups data malformed.";
+        return;
+      }
 
-      const roundText =
-        round === "" ? "" :
-        (Number(round) === 4 ? "Final" : `Round ${round}`);
-      sub.textContent =
-        `Tournament ${tour}` +
-        (roundText ? ` · ${roundText}` : "");
-      area.innerHTML = "";
-      const you = loadPlayerName().trim().toLowerCase();
-      (data.matchups || []).forEach(m => {
-        const card = document.createElement("div");
-        const isYou =
-          you &&
-          (
-            String(m.p1 || "").trim().toLowerCase() === you ||
-            String(m.p2 || "").trim().toLowerCase() === you
-          );
-        card.className = "matchupCard" + (isYou ? " youRow" : "");
+      const curT = ALL_MATCHUPS.current.tournament;
+      const curR = ALL_MATCHUPS.current.race;
 
-        const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-        const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+      if (!curT || !curR) {
+        area.innerHTML = "Current race not set yet.";
+        return;
+      }
 
-        card.innerHTML = `
-          <div class="matchupRow">
-            <div class="side left">
-              <div class="pName">${escapeHtml(m.p1)}</div>
-              ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
-            </div>
-            <div class="vsBadge">VS</div>
-            <div class="side right">
-              <div class="pName">${escapeHtml(m.p2)}</div>
-              ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
-            </div>
-          </div>
-        `;
-        area.appendChild(card);
-      });
+      const currentKey = raceKey_(curT, curR);
+      const currentRaceData = ALL_MATCHUPS.races[currentKey];
 
-      const eliminated = data.eliminated || [];
+      if (!currentRaceData) {
+        area.innerHTML = "Current race data not found.";
+        return;
+      }
+
+      // Select dropdown to current
+      setRaceSelectValue_(curT, curR);
+
+      // Render the race payload (single-race object)
+      renderMatchupsInto_(currentRaceData);
+
+      // Eliminated list (if any) for THIS race payload
+      const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
       if (eliminated.length > 0) {
         let html = `<div class="elimTitle">Eliminated</div>`;
 
@@ -1585,9 +1576,14 @@
         });
 
         elim.innerHTML = html;
+      } else {
+        elim.innerHTML = "";
       }
+
     }catch(e){
       area.innerHTML = "Error loading matchups.";
+      elim.innerHTML = "";
+      console.log(e);
     }
   }
 
