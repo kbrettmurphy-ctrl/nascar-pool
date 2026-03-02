@@ -1079,6 +1079,7 @@
     context:   "./data/context.json",
     players:   "./data/players.json",
     matchups:  "./data/matchups.json",
+    matchups:  "./data/matchups.json",
     bracket:   "./data/bracket.json",
     standings: "./data/standings.json",
     dues:      "./data/dues.json",
@@ -1341,6 +1342,141 @@
   /* =========================
    * 8) Loaders
    * ========================= */
+
+  let RACE_LIST = [];              // [{tournament, race, round}]
+  let _raceSelectWiringDone = false;
+  let _raceSelectIsProgrammatic = false;
+
+  function raceKey_(tournament, race){
+    return String(tournament || "").trim() + "||" + String(race || "").trim();
+  }
+
+  function setRaceSelectValue_(tournament, race){
+    const sel = document.getElementById("raceSelect");
+    if(!sel) return;
+    const key = raceKey_(tournament, race);
+    _raceSelectIsProgrammatic = true;
+    try{ sel.value = key; } finally { _raceSelectIsProgrammatic = false; }
+  }
+
+  async function initRaceSelect_(){
+    if(_raceSelectWiringDone) return;
+    _raceSelectWiringDone = true;
+
+    const sel = document.getElementById("raceSelect");
+    if(!sel) return;
+
+    sel.innerHTML = `<option value="">Loading races...</option>`;
+
+    try{
+      const list = await getData_("raceList", "playerGetRaceList");
+      RACE_LIST = Array.isArray(list) ? list : [];
+
+      sel.innerHTML = RACE_LIST.map(r => {
+        const t = r.tournament;
+        const race = r.race;
+        const round = r.round;
+        const label = `T${t} · ${roundLabel(round)} · ${race}`;
+        return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
+      }).join("") || `<option value="">No races</option>`;
+
+      sel.addEventListener("change", () => {
+        if(_raceSelectIsProgrammatic) return;
+        loadSelectedRace_();
+      });
+    }catch(e){
+      sel.innerHTML = `<option value="">Races unavailable</option>`;
+      sel.disabled = true;
+    }
+  }
+
+  function renderMatchupsInto_(data){
+    const header = document.getElementById("currentHeader");
+    const sub = document.getElementById("currentSub");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
+
+    header.textContent = data.race || "Race";
+    const tour  = data.tournament ?? "";
+    const round = data.currentRound ?? data.round ?? "";
+    const roundText =
+      round === "" ? "" :
+      (Number(round) === 4 ? "Final" : `Round ${round}`);
+
+    sub.textContent =
+      `Tournament ${tour}` +
+      (roundText ? ` · ${roundText}` : "");
+
+    area.innerHTML = "";
+    elim.innerHTML = "";
+
+    const you = loadPlayerName().trim().toLowerCase();
+    (data.matchups || []).forEach(m => {
+      const card = document.createElement("div");
+      const isYou =
+        you &&
+        (
+          String(m.p1 || "").trim().toLowerCase() === you ||
+          String(m.p2 || "").trim().toLowerCase() === you
+        );
+
+      card.className = "matchupCard" + (isYou ? " youRow" : "");
+
+      const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
+      const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+
+      card.innerHTML = `
+        <div class="matchupRow">
+          <div class="side left">
+            <div class="pName">${escapeHtml(m.p1)}</div>
+            ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
+          </div>
+          <div class="vsBadge">VS</div>
+          <div class="side right">
+            <div class="pName">${escapeHtml(m.p2)}</div>
+            ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
+          </div>
+        </div>
+      `;
+      area.appendChild(card);
+    });
+  }
+
+  async function loadSelectedRace_(){
+    const sel = document.getElementById("raceSelect");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
+    if(!sel) return;
+
+    const v = String(sel.value || "");
+    if(!v){
+      loadCurrent();
+      return;
+    }
+
+    const [tournament, race] = v.split("||");
+    const ctx = SNAP_CTX || {};
+    const isCurrent =
+      String(ctx.tournament || "").trim() === String(tournament || "").trim() &&
+      String(ctx.raceLabel || ctx.race || "").trim() === String(race || "").trim();
+
+    if(isCurrent){
+      loadCurrent();
+      return;
+    }
+
+    area.innerHTML = "Loading race...";
+    elim.innerHTML = "";
+
+    try{
+      const res = await apiCall("playerGetRaceMatchups", { tournament, race });
+      if(!res || !res.ok) throw new Error(res?.error || "API failed");
+      renderMatchupsInto_(res.data || {});
+    }catch(e){
+      area.innerHTML = "Error loading that race.";
+    }
+  }
+    
   async function loadPlayersThenInit() {
     try{
       const players = await getData_("players", "playerGetPlayerList");
@@ -1358,6 +1494,7 @@
     }catch(e){
       console.log(e);
       setWelcome();
+      await initRaceSelect_();
       showView("current");
     }
   }
@@ -1373,6 +1510,9 @@
 
     try{
       const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
+      await initRaceSelect_();
+      setRaceSelectValue_(data.tournament, data.race);
+      renderMatchupsInto_(data);
 
       header.textContent = data.race || "Current Race";
       const tour  = data.tournament ?? "";
