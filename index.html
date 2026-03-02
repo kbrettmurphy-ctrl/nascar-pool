@@ -1483,7 +1483,7 @@
       const safePlayers = Array.isArray(players) ? players : [];
       populatePlayerDropdowns(safePlayers);
       setWelcome();
-
+      await initRaceSelect_();   // <-- add this
       const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
       const allowed = views.includes(last) ? last : "";
 
