@@ -1282,16 +1282,36 @@
   }
 
   function formatDriversOrNumbers(driversArr, numsArr){
-    const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
-    const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
-    if (d1 || d2) return [d1, d2].filter(Boolean).join(", ");
+    const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+    const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
 
-    const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
-    const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
-    if (n1 || n2) return `Numbers: ${[n1,n2].filter(Boolean).join(", ")}`;
-    return "";
+    const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+    const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
+
+    const hasDrivers = !!(d1 || d2);
+    const hasNums = !!(n1 || n2);
+
+    // Case 1: no drivers, no numbers -> show nothing
+    if (!hasDrivers && !hasNums) return "";
+  
+    // Case 2: numbers only -> keep current behavior
+    if (!hasDrivers && hasNums){
+      return `Numbers: ${[n1, n2].filter(Boolean).join(", ")}`;
+    }
+
+    // Case 3: drivers exist -> show numbers + drivers (per driver)
+    // Format: (number) driver, (number) driver
+    function fmtPair(num, drv){
+      const numClean = String(num || "").trim();
+      const drvClean = String(drv || "").trim();
+      if (!numClean && !drvClean) return "";
+      if (numClean && drvClean) return `(${numClean}) ${drvClean}`;
+      if (drvClean) return drvClean;          // if number missing, still show driver
+      return `(${numClean})`;                 // if driver missing, still show number
+    }
+
+    return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
   }
-
 
   /* =========================
    * 6) Snapshot caches / helpers
