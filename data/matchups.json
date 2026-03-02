@@ -1,168 +1,681 @@
 {
-  "tournament": 1,
-  "race": "Phoenix",
-  "round": 4,
-  "matchups": [
-    {
-      "p1": "Brett",
-      "p2": "Chris",
-      "p1Drivers": [
-        "",
-        ""
+  "current": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4
+  },
+  "races": {
+    "1||Daytona": {
+      "tournament": 1,
+      "race": "Daytona",
+      "round": 1,
+      "matchups": [
+        {
+          "p1": "Jason",
+          "p2": "Don",
+          "p1Drivers": [
+            "Chase Briscoe",
+            "Brad Keselowski"
+          ],
+          "p2Drivers": [
+            "Christopher Bell",
+            "Ryan Blaney"
+          ],
+          "p1Nums": [
+            2,
+            9
+          ],
+          "p2Nums": [
+            12,
+            5
+          ]
+        },
+        {
+          "p1": "Chris",
+          "p2": "Nick",
+          "p1Drivers": [
+            "Kyle Busch",
+            "Connor Zilisch"
+          ],
+          "p2Drivers": [
+            "Carson Hocevar",
+            "Shane van Gisbergen"
+          ],
+          "p1Nums": [
+            1,
+            32
+          ],
+          "p2Nums": [
+            6,
+            13
+          ]
+        },
+        {
+          "p1": "Rob",
+          "p2": "Nate C.",
+          "p1Drivers": [
+            "Casey Mears",
+            "Daniel Suárez"
+          ],
+          "p2Drivers": [
+            "Bubba Wallace",
+            "Joey Logano"
+          ],
+          "p1Nums": [
+            17,
+            15
+          ],
+          "p2Nums": [
+            27,
+            3
+          ]
+        },
+        {
+          "p1": "Beau",
+          "p2": "Bob",
+          "p1Drivers": [
+            "Austin Dillon",
+            "Josh Berry"
+          ],
+          "p2Drivers": [
+            "Cole Custer",
+            "Noah Gragson"
+          ],
+          "p1Nums": [
+            7,
+            14
+          ],
+          "p2Nums": [
+            23,
+            25
+          ]
+        },
+        {
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "p1Drivers": [
+            "Kyle Larson",
+            "Todd Gilliland"
+          ],
+          "p2Drivers": [
+            "Denny Hamlin",
+            "Tyler Reddick"
+          ],
+          "p1Nums": [
+            8,
+            18
+          ],
+          "p2Nums": [
+            22,
+            26
+          ]
+        },
+        {
+          "p1": "Pat",
+          "p2": "Stacy",
+          "p1Drivers": [
+            "AJ Allmendinger",
+            "Ryan Preece"
+          ],
+          "p2Drivers": [
+            "Chase Elliott",
+            "John H. Nemechek"
+          ],
+          "p1Nums": [
+            31,
+            19
+          ],
+          "p2Nums": [
+            4,
+            11
+          ]
+        },
+        {
+          "p1": "Justin",
+          "p2": "Steven",
+          "p1Drivers": [
+            "Erik Jones",
+            "Michael McDowell"
+          ],
+          "p2Drivers": [
+            "Alex Bowman",
+            "Zane Smith"
+          ],
+          "p1Nums": [
+            24,
+            10
+          ],
+          "p2Nums": [
+            21,
+            30
+          ]
+        },
+        {
+          "p1": "Brett",
+          "p2": "Tyler",
+          "p1Drivers": [
+            "Riley Herbst",
+            "Ricky Stenhouse Jr."
+          ],
+          "p2Drivers": [
+            "Ty Gibbs",
+            "Cody Ware"
+          ],
+          "p1Nums": [
+            28,
+            16
+          ],
+          "p2Nums": [
+            20,
+            29
+          ]
+        }
       ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
+      "eliminated": []
     },
-    {
-      "p1": "Nate C.",
-      "p2": "Russ",
-      "p1Drivers": [
-        "",
-        ""
+    "1||Atlanta": {
+      "tournament": 1,
+      "race": "Atlanta",
+      "round": 2,
+      "matchups": [
+        {
+          "p1": "Brett",
+          "p2": "Nate C.",
+          "p1Drivers": [
+            "Chase Elliott",
+            "Daniel Suárez"
+          ],
+          "p2Drivers": [
+            "Kyle Busch",
+            "William Byron"
+          ],
+          "p1Nums": [
+            4,
+            12
+          ],
+          "p2Nums": [
+            14,
+            13
+          ]
+        },
+        {
+          "p1": "Stacy",
+          "p2": "Nate M.",
+          "p1Drivers": [
+            "Ty Gibbs",
+            "Shane van Gisbergen"
+          ],
+          "p2Drivers": [
+            "Kyle Larson",
+            "Ricky Stenhouse Jr."
+          ],
+          "p1Nums": [
+            25,
+            28
+          ],
+          "p2Nums": [
+            16,
+            3
+          ]
+        },
+        {
+          "p1": "Bob",
+          "p2": "Jason",
+          "p1Drivers": [
+            "Denny Hamlin",
+            "Carson Hocevar"
+          ],
+          "p2Drivers": [
+            "Zane Smith",
+            "Riley Herbst"
+          ],
+          "p1Nums": [
+            29,
+            15
+          ],
+          "p2Nums": [
+            6,
+            8
+          ]
+        },
+        {
+          "p1": "Justin",
+          "p2": "Chris",
+          "p1Drivers": [
+            "Bubba Wallace",
+            "Cody Ware"
+          ],
+          "p2Drivers": [
+            "Ross Chastain",
+            "Austin Cindric"
+          ],
+          "p1Nums": [
+            9,
+            18
+          ],
+          "p2Nums": [
+            21,
+            30
+          ]
+        },
+        {
+          "p1": "Tyler",
+          "p2": "Pat",
+          "p1Drivers": [
+            "AJ Allmendinger",
+            "Josh Berry"
+          ],
+          "p2Drivers": [
+            "Joey Logano",
+            "Chris Buescher"
+          ],
+          "p1Nums": [
+            19,
+            10
+          ],
+          "p2Nums": [
+            2,
+            7
+          ]
+        },
+        {
+          "p1": "Rob",
+          "p2": "Beau",
+          "p1Drivers": [
+            "Noah Gragson",
+            "Connor Zilisch"
+          ],
+          "p2Drivers": [
+            "Tyler Reddick",
+            "Cole Custer"
+          ],
+          "p1Nums": [
+            11,
+            31
+          ],
+          "p2Nums": [
+            1,
+            27
+          ]
+        },
+        {
+          "p1": "Steven",
+          "p2": "Nick",
+          "p1Drivers": [
+            "Brad Keselowski",
+            "Ryan Preece"
+          ],
+          "p2Drivers": [
+            "Michael McDowell",
+            "Ty Dillon"
+          ],
+          "p1Nums": [
+            5,
+            26
+          ],
+          "p2Nums": [
+            20,
+            17
+          ]
+        },
+        {
+          "p1": "Russ",
+          "p2": "Don",
+          "p1Drivers": [
+            "Christopher Bell",
+            "Ryan Blaney"
+          ],
+          "p2Drivers": [
+            "Erik Jones",
+            "John H. Nemechek"
+          ],
+          "p1Nums": [
+            32,
+            22
+          ],
+          "p2Nums": [
+            23,
+            24
+          ]
+        }
       ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
+      "eliminated": []
     },
-    {
-      "p1": "Jason",
-      "p2": "Steven",
-      "p1Drivers": [
-        "",
-        ""
+    "1||COTA": {
+      "tournament": 1,
+      "race": "COTA",
+      "round": 3,
+      "matchups": [
+        {
+          "p1": "Brett",
+          "p2": "Bob",
+          "p1Drivers": [
+            "Brad Keselowski",
+            "Josh Berry"
+          ],
+          "p2Drivers": [
+            "Ross Chastain",
+            "Chase Briscoe"
+          ],
+          "p1Nums": [
+            26,
+            22
+          ],
+          "p2Nums": [
+            2,
+            3
+          ]
+        },
+        {
+          "p1": "Stacy",
+          "p2": "Chris",
+          "p1Drivers": [
+            "Ty Dillon",
+            "Zane Smith"
+          ],
+          "p2Drivers": [
+            "Daniel Suárez",
+            "Ryan Preece"
+          ],
+          "p1Nums": [
+            21,
+            11
+          ],
+          "p2Nums": [
+            23,
+            29
+          ]
+        },
+        {
+          "p1": "Beau",
+          "p2": "Steven",
+          "p1Drivers": [
+            "Alex Bowman",
+            "Denny Hamlin"
+          ],
+          "p2Drivers": [
+            "Carson Hocevar",
+            "Bubba Wallace"
+          ],
+          "p1Nums": [
+            16,
+            19
+          ],
+          "p2Nums": [
+            12,
+            24
+          ]
+        },
+        {
+          "p1": "Nate C.",
+          "p2": "Pat",
+          "p1Drivers": [
+            "Michael McDowell",
+            "Ty Gibbs"
+          ],
+          "p2Drivers": [
+            "Connor Zilisch",
+            "Todd Gilliland"
+          ],
+          "p1Nums": [
+            6,
+            9
+          ],
+          "p2Nums": [
+            25,
+            17
+          ]
+        },
+        {
+          "p1": "Justin",
+          "p2": "Jason",
+          "p1Drivers": [
+            "Cole Custer",
+            "Christopher Bell"
+          ],
+          "p2Drivers": [
+            "Chris Buescher",
+            "Kyle Larson"
+          ],
+          "p1Nums": [
+            18,
+            8
+          ],
+          "p2Nums": [
+            14,
+            15
+          ]
+        },
+        {
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "p1Drivers": [
+            "Ryan Blaney",
+            "Kyle Busch"
+          ],
+          "p2Drivers": [
+            "Joey Logano",
+            "John H. Nemechek"
+          ],
+          "p1Nums": [
+            4,
+            30
+          ],
+          "p2Nums": [
+            20,
+            31
+          ]
+        },
+        {
+          "p1": "Nick",
+          "p2": "Rob",
+          "p1Drivers": [
+            "Austin Cindric",
+            "Jesse Love"
+          ],
+          "p2Drivers": [
+            "AJ Allmendinger",
+            "William Byron"
+          ],
+          "p1Nums": [
+            28,
+            27
+          ],
+          "p2Nums": [
+            7,
+            10
+          ]
+        },
+        {
+          "p1": "Tyler",
+          "p2": "Don",
+          "p1Drivers": [
+            "Riley Herbst",
+            "Chase Elliott"
+          ],
+          "p2Drivers": [
+            "Tyler Reddick",
+            "Shane van Gisbergen"
+          ],
+          "p1Nums": [
+            32,
+            5
+          ],
+          "p2Nums": [
+            1,
+            13
+          ]
+        }
       ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
+      "eliminated": []
     },
-    {
-      "p1": "Stacy",
-      "p2": "Bob",
-      "p1Drivers": [
-        "",
-        ""
+    "1||Phoenix": {
+      "tournament": 1,
+      "race": "Phoenix",
+      "round": 4,
+      "matchups": [
+        {
+          "p1": "Brett",
+          "p2": "Chris",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Nate C.",
+          "p2": "Russ",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Jason",
+          "p2": "Steven",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Stacy",
+          "p2": "Bob",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Don",
+          "p2": "Justin",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Rob",
+          "p2": "Pat",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Beau",
+          "p2": "Nate M.",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        },
+        {
+          "p1": "Tyler",
+          "p2": "Nick",
+          "p1Drivers": [
+            "",
+            ""
+          ],
+          "p2Drivers": [
+            "",
+            ""
+          ],
+          "p1Nums": [
+            "",
+            ""
+          ],
+          "p2Nums": [
+            "",
+            ""
+          ]
+        }
       ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
-    },
-    {
-      "p1": "Don",
-      "p2": "Justin",
-      "p1Drivers": [
-        "",
-        ""
-      ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
-    },
-    {
-      "p1": "Rob",
-      "p2": "Pat",
-      "p1Drivers": [
-        "",
-        ""
-      ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
-    },
-    {
-      "p1": "Beau",
-      "p2": "Nate M.",
-      "p1Drivers": [
-        "",
-        ""
-      ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
-    },
-    {
-      "p1": "Tyler",
-      "p2": "Nick",
-      "p1Drivers": [
-        "",
-        ""
-      ],
-      "p2Drivers": [
-        "",
-        ""
-      ],
-      "p1Nums": [
-        "",
-        ""
-      ],
-      "p2Nums": [
-        "",
-        ""
-      ]
+      "eliminated": []
     }
-  ],
-  "eliminated": []
+  }
 }
