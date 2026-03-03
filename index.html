@@ -1519,20 +1519,27 @@
 
           const isWinner = winner && drvClean && drvClean.toLowerCase() === winner;
 
-          // Build "(num) Driver" (or best effort if one side missing)
-          let text = "";
-          if (numClean && drvClean) text = `(${numClean}) ${drvClean}`;
-          else if (drvClean) text = drvClean;
-          else text = `(${numClean})`;
+          // Escape pieces separately
+          const safeNum = escapeHtml(numClean);
+          const safeDrv = escapeHtml(drvClean);
 
-          // Escape the human-provided text
-          const safe = escapeHtml(text);
-
-          // Highlight only if the DRIVER matches the winner
-          if (isWinner) {
-            return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safe}</span>`;
+          // Build output carefully so flag sits next to DRIVER only
+          if (numClean && drvClean){
+            if (isWinner){
+              return `(${safeNum}) <span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return `(${safeNum}) ${safeDrv}`;
           }
-          return safe;
+
+          if (drvClean){
+            if (isWinner){
+              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return safeDrv;
+          }
+
+          // number only case
+          return `(${safeNum})`;
         }
 
         return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
