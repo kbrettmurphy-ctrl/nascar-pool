@@ -965,22 +965,23 @@
     <h2 class="siteTitle">NASCAR Pool 2026<span style="opacity:0.03; font-size:5px; color: var(--muted); margin-left: 50px;">🖕🏼 Fuck you, Russ. 🖕🏼</span></h2>
     <div id="welcomeName" class="welcomeRight"></div>
   </div>
-
   <div class="sub">
     <span class="pill">Player Portal</span>
+    <!-- Toggle moved to where the selector used to be -->
     <div class="subRight">
       <button id="spoilerToggle" class="toggleBtn" onclick="toggleSpoilers()" aria-pressed="true">
         <span class="toggleKnob"></span>
         <span class="toggleLabel">Spoilers: ON</span>
       </button>
-      <select id="topName" class="topSel"></select>
     </div>
   </div>
 
-  <div class="topActions">
-    <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
-    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh </button>
-  </div>
+<!-- Selector moved next to Forget/Refresh -->
+<div class="topActions">
+  <select id="topName" class="topSel"></select>
+  <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
+  <button class="topactions" onclick="refreshActiveView()">🔄 Refresh </button>
+</div>
 
   <!-- CURRENT RACE -->
   <div id="view-current" class="card" style="display:none;">
