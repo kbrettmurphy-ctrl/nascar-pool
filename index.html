@@ -1600,6 +1600,11 @@
 
     // helper for winner lookup
     const norm = (s) => String(s ?? "").trim().toLowerCase();
+    const isCurrentRace =
+      ALL_MATCHUPS?.current &&
+      norm(ALL_MATCHUPS.current.race) === norm(data.race) &&
+      String(ALL_MATCHUPS.current.tournament || "").trim() === String(data.tournament || "").trim();
+    const showPastAvgs = !isCurrentRace;
     const fmtAvg = (n) => {
       const x = Number(n);
       if (!Number.isFinite(x)) return "";
@@ -1672,12 +1677,12 @@
 
       const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
       const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
-      const info = matchupBracketInfo_(m);
+      const info = showPastAvgs ? matchupBracketInfo_(m) : { winner:"", a1:null, a2:null };
       const w = info.winner;
       const p1Win = w && w === norm(m.p1);
       const p2Win = w && w === norm(m.p2);
-      const p1AvgTxt = fmtAvg(info.a1);
-      const p2AvgTxt = fmtAvg(info.a2);
+      const p1AvgTxt = showPastAvgs ? fmtAvg(info.a1) : "";
+      const p2AvgTxt = showPastAvgs ? fmtAvg(info.a2) : "";
       const p1Label = `${String(m.p1 || "").trim()}${p1AvgTxt ? ` (${p1AvgTxt})` : ""}`;
       const p2Label = `${String(m.p2 || "").trim()}${p2AvgTxt ? ` (${p2AvgTxt})` : ""}`;
 
