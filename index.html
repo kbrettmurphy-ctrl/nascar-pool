@@ -300,25 +300,33 @@
   }
   
   /* matchup winner pill */
-.winPill{
-  position:absolute;
-  right:0;
-  top:50%;
-  transform:translateY(-50%);
-
+  .winPill{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-
   padding:2px 6px;
   border-radius:999px;
   font-size:10px;
   font-weight:900;
   letter-spacing:.4px;
-
   color: var(--winnerGreen);
   border:1px solid rgba(22,163,74,.35);
   background: rgba(22,163,74,.12);
+}
+
+/* name stays centered, pill doesn't push it */
+.nameWrap{
+  position: relative;
+  display: inline-block;  /* width = name only */
+}
+
+/* pill sits next to name without affecting centering */
+.nameWrap .winPill{
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(6px, -50%);
+  margin: 0;              /* kill any margin-left you had */
 }
 
   @media (max-width:600px){
@@ -1635,12 +1643,12 @@
     card.innerHTML = `
       <div class="matchupRow">
         <div class="side left">
-          <div class="pName">${escapeHtml(m.p1)}${p1Win ? ` <span class="winPill">WIN</span>` : ``}</div>
+          <div class="pName"><span class="nameWrap">${escapeHtml(m.p1)}${p1Win ? ` <span class="winPill">WIN</span>` : ``}</span></div>
           ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
         </div>
         <div class="vsBadge">VS</div>
         <div class="side right">
-          <div class="pName">${escapeHtml(m.p2)}${p2Win ? ` <span class="winPill">WIN</span>` : ``}</div>
+          <div class="pName"><span class="nameWrap">${escapeHtml(m.p2)}${p2Win ? ` <span class="winPill">WIN</span>` : ``}</span></div>
           ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
         </div>
       </div>
