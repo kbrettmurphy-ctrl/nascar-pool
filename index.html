@@ -1302,23 +1302,27 @@
 
   function populatePlayerDropdowns(playerList) {
     const gp = document.getElementById("globalPlayer");
-    if (!gp) return;
 
     const options = [`<option value="">Who the fuck are you?</option>`]
       .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
       .join("");
-
-    gp.innerHTML = options;
+    if (gp) gp.innerHTML = options;
   
     const saved = loadPlayerName();
-    if (saved) gp.value = saved;
+    if (saved && gp) gp.value = saved;
 
-    gp.onchange = () => {
-      const name = gp.value;
+    // When global player changes:
+    if (gp) gp.onchange = () => {
+      const name = String(gp.value || "").trim();
       if (!name) return;
 
-      savePlayerName(name);
+      savePlayerName(name);   // updates localStorage + welcome
+      setWelcome();
 
+      // Re-apply highlights immediately without fetching anything
+      applyYouRowsNow_();
+
+      // If you're sitting on Me or Dues, you probably want the content to update too:
       if (activeView === "mymatchup") loadMyMatchup();
       if (activeView === "dues") loadDues();
     };
@@ -1354,6 +1358,28 @@
     }
 
     return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
+  }
+  
+  function applyYouRowsNow_(){
+    const you = loadPlayerName().trim().toLowerCase();
+
+    // Current race matchup cards
+    document.querySelectorAll("#matchupsArea .matchupCard").forEach(card => {
+      const names = Array.from(card.querySelectorAll(".pName"))
+        .map(el => String(el.textContent || "").trim().toLowerCase())
+        .filter(Boolean);
+
+      const isYou = !!you && names.includes(you);
+      card.classList.toggle("youRow", isYou);
+    });
+
+    // Standings rows (overall + tourney ranks use same layout)
+    document.querySelectorAll("#standingsArea .statsRow").forEach(row => {
+      const nameEl = row.querySelector(".statsName");
+      const nm = String(nameEl?.textContent || "").trim().toLowerCase();
+      const isYou = !!you && nm === you;
+      row.classList.toggle("youRow", isYou);
+    });
   }
 
   /* =========================
@@ -1557,6 +1583,7 @@
       `;
       area.appendChild(card);
     });
+    applyYouRowsNow_();
   }
 
   function autoSizeRaceSelect_(sel){
