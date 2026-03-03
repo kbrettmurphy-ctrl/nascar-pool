@@ -1412,7 +1412,12 @@
     if(!sel) return;
     const key = raceKey_(tournament, race);
     _raceSelectIsProgrammatic = true;
-    try{ sel.value = key; } finally { _raceSelectIsProgrammatic = false; }
+    try{
+      sel.value = key;
+      autoSizeRaceSelect_(sel);     // <-- ADD THIS
+    } finally {
+      _raceSelectIsProgrammatic = false;
+    }
   }
 
   async function initRaceSelect_(){
@@ -1441,6 +1446,7 @@
 
       sel.addEventListener("change", () => {
         if(_raceSelectIsProgrammatic) return;
+        autoSizeRaceSelect_(sel);
         loadSelectedRace_();
       });
     }catch(e){
@@ -1653,7 +1659,6 @@
 
       // Select dropdown to current
       setRaceSelectValue_(curT, curR);
-      autoSizeRaceSelect_(document.getElementById("raceSelect"));
 
       // Render the race payload (single-race object)
       renderMatchupsInto_(currentRaceData);
