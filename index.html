@@ -279,8 +279,14 @@
   position:relative;         /* pill anchor */
   display:inline-block;
   max-width:100%;
+  overflow:visible;          /* IMPORTANT: do NOT clip the pill */
+  vertical-align:middle;
+}
 
-  /* ellipsis belongs on the TEXT wrapper, not the pill container */
+/* ellipsis belongs on the TEXT only */
+.nameText{
+  display:inline-block;
+  max-width:100%;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -1557,127 +1563,127 @@
   }
 
   async function renderMatchupsInto_(data){
-  const header = document.getElementById("currentHeader");
-  const sub = document.getElementById("currentSub");
-  const area = document.getElementById("matchupsArea");
-  const elim = document.getElementById("eliminatedArea");
+    const header = document.getElementById("currentHeader");
+    const sub = document.getElementById("currentSub");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
 
-  header.textContent = data.race || "Race";
-  const tour  = data.tournament ?? "";
-  const round = data.currentRound ?? data.round ?? "";
-  const roundText =
-    round === "" ? "" :
-    (Number(round) === 4 ? "Final" : `Rnd ${round}`);
+    header.textContent = data.race || "Race";
+    const tour  = data.tournament ?? "";
+    const round = data.currentRound ?? data.round ?? "";
+    const roundText =
+      round === "" ? "" :
+      (Number(round) === 4 ? "Final" : `Rnd ${round}`);
 
-  sub.textContent =
-    `Tourney ${tour}` +
-    (roundText ? ` · ${roundText}` : "");
+    sub.textContent =
+      `Tourney ${tour}` +
+      (roundText ? ` · ${roundText}` : "");
 
-  area.innerHTML = "";
-  elim.innerHTML = "";
+    area.innerHTML = "";
+    elim.innerHTML = "";
 
-  const you = loadPlayerName().trim().toLowerCase();
+    const you = loadPlayerName().trim().toLowerCase();
 
-  // --- winner pills (past races) pulled from bracket.json ---
-  let roundObj = null;
-  try{
-    const b = await getBracket_();
-    const raceLabel = String(data?.race || "").trim().toLowerCase();
-    const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
+    // --- winner pills (past races) pulled from bracket.json ---
+    let roundObj = null;
+    try{
+      const b = await getBracket_();
+      const raceLabel = String(data?.race || "").trim().toLowerCase();
+      const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
 
-    roundObj = b?.rounds?.find(r =>
-      String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
-      Number(r?.round) === roundNum
-    ) || null;
-  }catch(e){
-    roundObj = null;
-  }
-
-  // helper for winner lookup
-  const norm = (s) => String(s ?? "").trim().toLowerCase();
-  function matchupWinnerLower_(m){
-    if(!roundObj?.matchups?.length) return "";
-    const bm = roundObj.matchups.find(x =>
-      norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
-    );
-    return norm(bm?.winner);
-  }
-
-  for (const m of (data.matchups || [])) {
-    const card = document.createElement("div");
-    const isYou =
-      you &&
-      (
-        norm(m.p1) === you ||
-        norm(m.p2) === you
-      );
-
-    card.className = "matchupCard" + (isYou ? " youRow" : "");
-
-    function metaHtml_(driversArr, numsArr){
-      const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
-      const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
-
-      const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
-      const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
-
-      const raceWinner = norm(data.raceWinnerDriver);
-
-      function renderOne(num, drv){
-        const numClean = String(num || "").trim();
-        const drvClean = String(drv || "").trim();
-        if (!numClean && !drvClean) return "";
-
-        const isWinner = raceWinner && drvClean && norm(drvClean) === raceWinner;
-
-        const safeNum = escapeHtml(numClean);
-        const safeDrv = escapeHtml(drvClean);
-
-        if (numClean && drvClean){
-          if (isWinner){
-            return `(${safeNum}) <span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
-          }
-          return `(${safeNum}) ${safeDrv}`;
-        }
-
-        if (drvClean){
-          if (isWinner){
-            return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
-          }
-          return safeDrv;
-        }
-
-        return `(${safeNum})`;
-      }
-
-      return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
+      roundObj = b?.rounds?.find(r =>
+        String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
+        Number(r?.round) === roundNum
+      ) || null;
+    }catch(e){
+      roundObj = null;
     }
 
-    const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
-    const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+    // helper for winner lookup
+    const norm = (s) => String(s ?? "").trim().toLowerCase();
+    function matchupWinnerLower_(m){
+      if(!roundObj?.matchups?.length) return "";
+      const bm = roundObj.matchups.find(x =>
+        norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
+      );
+      return norm(bm?.winner);
+    }
 
-    const w = matchupWinnerLower_(m);
-    const p1Win = w && w === norm(m.p1);
-    const p2Win = w && w === norm(m.p2);
+    for (const m of (data.matchups || [])) {
+      const card = document.createElement("div");
+      const isYou =
+        you &&
+        (
+          norm(m.p1) === you ||
+          norm(m.p2) === you
+        );
 
-    card.innerHTML = `
-      <div class="matchupRow">
-        <div class="side left">
-          <div class="pName"><span class="nameWrap">${escapeHtml(m.p1)}${p1Win ? ` <span class="winPill">WIN</span>` : ``}</span></div>
-          ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
+      card.className = "matchupCard" + (isYou ? " youRow" : "");
+
+      function metaHtml_(driversArr, numsArr){
+        const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+        const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
+
+        const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+        const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
+
+        const raceWinner = norm(data.raceWinnerDriver);
+
+        function renderOne(num, drv){
+          const numClean = String(num || "").trim();
+          const drvClean = String(drv || "").trim();
+          if (!numClean && !drvClean) return "";
+
+          const isWinner = raceWinner && drvClean && norm(drvClean) === raceWinner;
+
+          const safeNum = escapeHtml(numClean);
+          const safeDrv = escapeHtml(drvClean);
+
+          if (numClean && drvClean){
+            if (isWinner){
+              return `(${safeNum}) <span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return `(${safeNum}) ${safeDrv}`;
+          }
+
+          if (drvClean){
+            if (isWinner){
+              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return safeDrv;
+          }
+
+          return `(${safeNum})`;
+        }
+
+        return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
+      }
+
+      const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
+      const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+
+      const w = matchupWinnerLower_(m);
+      const p1Win = w && w === norm(m.p1);
+      const p2Win = w && w === norm(m.p2);
+
+      card.innerHTML = `
+        <div class="matchupRow">
+          <div class="side left">
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(m.p1)}</span>${p1Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
+          </div>
+          <div class="vsBadge">VS</div>
+          <div class="side right">
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(m.p2)}</span>${p2Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
+          </div>
         </div>
-        <div class="vsBadge">VS</div>
-        <div class="side right">
-          <div class="pName"><span class="nameWrap">${escapeHtml(m.p2)}${p2Win ? ` <span class="winPill">WIN</span>` : ``}</span></div>
-          ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
-        </div>
-      </div>
-    `;
-    area.appendChild(card);
+      `;
+      area.appendChild(card);
+    }
+
+    applyYouRowsNow_();
   }
-
-  applyYouRowsNow_();
-}
 
   function autoSizeRaceSelect_(sel){
     if(!sel) return;
