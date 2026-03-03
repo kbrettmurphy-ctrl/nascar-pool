@@ -1504,26 +1504,38 @@
       const winner = String(data.raceWinnerDriver || "").trim().toLowerCase();
 
       function metaHtml_(driversArr, numsArr){
-        const d1 = driversArr && driversArr[0] ? String(driversArr[0]).trim() : "";
-        const d2 = driversArr && driversArr[1] ? String(driversArr[1]).trim() : "";
+        const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+        const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
 
-        // If we have driver names, render them and highlight ONLY the race winner
-        if (d1 || d2) {
-          return [d1, d2].filter(Boolean).map(d => {
-            const isWinner = winner && d.toLowerCase() === winner;
+        const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+        const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
 
-            if (isWinner) {
-              // 🏁 Flag + green name (driver text still escaped)
-              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${escapeHtml(d)}</span>`;
-            }
+        const winner = String(data.raceWinnerDriver || "").trim().toLowerCase();
 
-            return escapeHtml(d);
-          }).join(", ");
+        function renderOne(num, drv){
+          const numClean = String(num || "").trim();
+          const drvClean = String(drv || "").trim();
+          if (!numClean && !drvClean) return "";
+
+          const isWinner = winner && drvClean && drvClean.toLowerCase() === winner;
+
+          // Build "(num) Driver" (or best effort if one side missing)
+          let text = "";
+          if (numClean && drvClean) text = `(${numClean}) ${drvClean}`;
+          else if (drvClean) text = drvClean;
+          else text = `(${numClean})`;
+
+          // Escape the human-provided text
+          const safe = escapeHtml(text);
+
+          // Highlight only if the DRIVER matches the winner
+          if (isWinner) {
+            return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safe}</span>`;
+          }
+          return safe;
         }
 
-        // Fallback to your existing formatting for numbers-only
-        const plain = formatDriversOrNumbers(driversArr, numsArr);
-        return plain ? escapeHtml(plain) : "";
+        return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
       }
 
       const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
