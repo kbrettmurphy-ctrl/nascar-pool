@@ -1045,6 +1045,7 @@
   const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Rnd ${n}`);
   const views = ["current","mymatchup","standings","dues","bracket"];
   let activeView = "current";
+  let _bracketBlob = null;
 
   // Player site uses API_BASE directly. (No extra config helper needed.)
   const ADMIN_KEY = ""; // leave blank on the public site
@@ -1468,7 +1469,14 @@
   function raceKey_(tournament, race){
     return String(tournament || "").trim() + "||" + String(race || "").trim();
   }
-
+  
+  async function getBracket_(){
+  if (_bracketBlob) return _bracketBlob;
+  try { _bracketBlob = await fetchSnapshotJson("bracket", false); }
+  catch(e){ _bracketBlob = null; }
+  return _bracketBlob;
+}
+  
   function setRaceSelectValue_(tournament, race){
     const sel = document.getElementById("raceSelect");
     if(!sel) return;
@@ -1517,7 +1525,7 @@
     }
   }
 
-  function renderMatchupsInto_(data){
+  async function renderMatchupsInto_(data){
     const header = document.getElementById("currentHeader");
     const sub = document.getElementById("currentSub");
     const area = document.getElementById("matchupsArea");
@@ -1595,16 +1603,36 @@
 
       const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
       const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+            // winner pill (past races) pulled from bracket.json
+      let p1Win = false, p2Win = false;
+      try{
+        const b = await getBracket_();
+        const raceLabel = String(data?.race || "").trim().toLowerCase();
+        const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
 
+        const roundObj = b?.rounds?.find(r =>
+          String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
+          Number(r?.round) === roundNum
+        );
+
+        const bm = roundObj?.matchups?.find(x =>
+          String(x?.p1 || "").trim().toLowerCase() === String(m.p1 || "").trim().toLowerCase() &&
+          String(x?.p2 || "").trim().toLowerCase() === String(m.p2 || "").trim().toLowerCase()
+        );
+
+        const w = String(bm?.winner || "").trim().toLowerCase();
+        p1Win = w && w === String(m.p1 || "").trim().toLowerCase();
+        p2Win = w && w === String(m.p2 || "").trim().toLowerCase();
+      }catch(e){}
       card.innerHTML = `
         <div class="matchupRow">
           <div class="side left">
-            <div class="pName">${escapeHtml(m.p1)}</div>
+            <div class="pName">${escapeHtml(m.p1)}${p1Win ? ` <span class="winPill">WIN</span>` : ``}</div>
             ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
           </div>
           <div class="vsBadge">VS</div>
           <div class="side right">
-            <div class="pName">${escapeHtml(m.p2)}</div>
+            <div class="pName">${escapeHtml(m.p2)}${p2Win ? ` <span class="winPill">WIN</span>` : ``}</div>
             ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
           </div>
         </div>
@@ -1686,7 +1714,7 @@
         return;
       }
 
-      renderMatchupsInto_(raceData);
+      await renderMatchupsInto_(raceData);
 
       const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
       if (eliminated.length > 0) {
@@ -1734,7 +1762,7 @@
     }
   }
 
-  async function loadCurrent() {
+  async function loadCurrent(){
     const header = document.getElementById("currentHeader");
     const sub = document.getElementById("currentSub");
     const area = document.getElementById("matchupsArea");
@@ -1776,7 +1804,7 @@
       setRaceSelectValue_(curT, curR);
 
       // Render the race payload (single-race object)
-      renderMatchupsInto_(currentRaceData);
+      await renderMatchupsInto_(currentRaceData);
 
       // Eliminated list (if any) for THIS race payload
       const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
