@@ -284,6 +284,15 @@
     font-weight: 800;
   }
 
+  .driverWinner .winFlag(
+    display:inline-block;
+    margin-right: 4px;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
+
   .vsBadge{
     font-weight:800;
     font-size:10px;
@@ -1502,9 +1511,13 @@
         if (d1 || d2) {
           return [d1, d2].filter(Boolean).map(d => {
             const isWinner = winner && d.toLowerCase() === winner;
-            return isWinner
-              ? `<span class="driverWinner">${escapeHtml(d)}</span>`
-              : escapeHtml(d);
+
+            if (isWinner) {
+              // 🏁 Flag + green name (driver text still escaped)
+              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${escapeHtml(d)}</span>`;
+            }
+
+            return escapeHtml(d);
           }).join(", ");
         }
 
