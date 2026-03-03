@@ -205,7 +205,7 @@
     color: rgba(255,255,255,.9);
   }
   select, input{
-    width:100%;
+    width:fit-content;
     font-size:14px;
     color: var(--text);
     padding: var(--mmPad);
@@ -260,23 +260,59 @@
   }
   .side.right{ text-align:right; align-items:flex-end; }
 
-  .pName{
-    font-weight:900;
-    font-size:15px;
-    line-height:1.1;
-    margin:0;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
+  /* --- Player name: keep original styling + allow absolute pill anchoring --- */
+.pName{
+  font-weight:900;
+  font-size:15px;
+  line-height:1.1;
+  margin:0;
 
+  /* keep centering behavior */
+  position:relative;
+  display:inline-block;
+
+  /* KEY FIX: do NOT clip the pill */
+  overflow:visible;
+}
+
+.nameWrap{
+  position:relative;         /* pill anchor */
+  display:inline-block;
+  max-width:100%;
+  overflow:visible;          /* IMPORTANT: do NOT clip the pill */
+  vertical-align:middle;
+}
+
+/* ellipsis belongs on the TEXT only */
+.nameText{
+  display:inline-block;
+  max-width:100%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  vertical-align:middle;
+}
   .pMeta{
-    font-size:13px;
+    font-size:12px;
     color: var(--yellow);
     line-height:1.2;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+  }
+
+  .driverWinner{
+    color: var(--winnerGreen);
+    font-weight: 800;
+  }
+
+  .driverWinner .winFlag{
+    display:inline-block;
+    margin-right: 4px;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateY(-1px);
+    opacity: 0.95;
   }
 
   .vsBadge{
@@ -288,13 +324,40 @@
     color:#111;
     letter-spacing:0.4px;
   }
+  
+  /* --- WIN pill: absolutely positioned so it NEVER pushes name --- */
+.winPill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:2px 6px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.4px;
+  color: var(--winnerGreen);
+  border:1px solid rgba(22,163,74,.35);
+  background: rgba(22,163,74,.12);
 
-  @media (max-width:600px){
-    .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
-    .side.right{ text-align:center; align-items:center; }
-    .vsBadge{ margin:2px auto; }
-    .pMeta{ white-space:normal; }
+  position:absolute;
+  top:50%;
+  left:100%;
+  transform: translate(6px, -50%);
+  white-space:nowrap;
+  margin:0;
+}
+
+@media (max-width:700px){
+  .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
+  .side.right{ text-align:center; align-items:center; }
+  .vsBadge{ margin:2px auto; }
+  .pMeta{ white-space:normal; }
+  .side.right .nameWrap .winPill{
+    left:auto;
+    right:100%;
+    transform: translate(-6px, -50%);
   }
+}
 
   .elimItem{ font-size:14px; color: var(--muted); margin-top:4px; }
 
@@ -423,12 +486,12 @@
   .sideRight{
     display:flex;
     align-items:center;
-    gap:6px;
+    gap:4px;
     flex: 0 0 auto;
   }
 
   .winSlot{
-    width:10px;
+    width:8px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -462,7 +525,7 @@
     align-items:center;
     gap:8px;
     font-size:11px;
-    font-weight:600;
+    font-weight:400;
     color: var(--muted);
     white-space:nowrap;
   }
@@ -470,7 +533,7 @@
   .legendItem{
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:4px;
   }
 
   .legendSep{
@@ -913,16 +976,18 @@
     <span id="welcomeName"></span>
   </div>
 
-  <div class="topActions">
-    <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
-    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh </button>
+  <div class="topBar">
+    <select id="globalPlayer"></select>
+
+    <button class="topactions" onclick="clearSavedAndReset()">🚫 Forget me</button>
+    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
   </div>
 
   <!-- CURRENT RACE -->
   <div id="view-current" class="card" style="display:none;">
     <div class="raceHeaderRow">
       <div id="currentHeader">Current Race</div>
-      <select id="raceSelect" style="width:auto; min-width:220px; max-width:340px;"></select>
+      <select id="raceSelect" style="width:auto";></select>
     </div>
     <div class="muted" id="currentSub"></div>
     <div id="matchupsArea" style="margin-top:10px;"></div>
@@ -935,9 +1000,9 @@
     <div class="muted">Pick your name once — I might remember it, might not.</div>
     
     <!-- <label>Your name</label> -->
-    <select id="mmName" style="margin-top:10px;"></select>
+    <!-- <select id="mmName" style="margin-top:10px;"></select> -->
 
-    <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button>
+    <!-- <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button> -->
     <div id="mmStatus" class="mmWrap"></div>
   </div>
 
@@ -951,12 +1016,12 @@
   <!-- DUES -->
   <div id="view-dues" class="card" style="display:none;">
     <div class="big">Dues</div>
-    <div class="muted">Pick your fuckin name.</div>
-    
+    <!-- <div class="muted">Pick your fuckin name.</div>       THIS IS FROM WHEN THE SELECTOR WAS IN THE DUES CARD. KEPT FOR HISTORICAL FALLBACK PURPOSES--> 
+    <div class="muted">Here's how much you owe me.</div>
     <!-- <label>Your name</label> -->
-    <select id="duesName" style="margin-top:10px;"></select>
+    <!-- <select id="duesName" style="margin-top:10px;"></select> -->
 
-    <button class="primary" onclick="loadDues()">Show me the money</button>
+    <!-- <button class="primary" onclick="loadDues()">Show me the money</button> -->
     <div id="duesStatus" class="mmWrap"></div>
   </div>
 
@@ -1011,9 +1076,10 @@
   const STORAGE_KEY = "nascar_pool_player_name";
   const VIEW_KEY = "nascar_pool_active_view";
 
-  const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Round ${n}`);
+  const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Rnd ${n}`);
   const views = ["current","mymatchup","standings","dues","bracket"];
   let activeView = "current";
+  let _bracketBlob = null;
 
   // Player site uses API_BASE directly. (No extra config helper needed.)
   const ADMIN_KEY = ""; // leave blank on the public site
@@ -1251,12 +1317,25 @@
 
   function clearSavedAndReset() {
     localStorage.removeItem(STORAGE_KEY);
-    const mm = document.getElementById("mmName");
-    const dd = document.getElementById("duesName");
-    if (mm) mm.value = "";
-    if (dd) dd.value = "";
+
+    const gp = document.getElementById("globalPlayer");
+    if (gp) gp.value = "";
+
     setWelcome();
-    showView(activeView);
+
+    // Immediately remove any youRow highlights
+    applyYouRowsNow_();
+
+    // If currently on Me or Dues, clear their content
+    if (activeView === "mymatchup") {
+      const out = document.getElementById("mmStatus");
+      if (out) out.textContent = "";
+    }
+
+    if (activeView === "dues") {
+      const out = document.getElementById("duesStatus");
+      if (out) out.textContent = "";
+    }
   }
 
   function setWelcome() {
@@ -1285,34 +1364,30 @@
   }
 
   function populatePlayerDropdowns(playerList) {
-    const mm = document.getElementById("mmName");
-    const dd = document.getElementById("duesName");
+    const gp = document.getElementById("globalPlayer");
 
     const options = [`<option value="">Who the fuck are you?</option>`]
       .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
       .join("");
-
-    if (mm) mm.innerHTML = options;
-    if (dd) dd.innerHTML = options;
-
+    if (gp) gp.innerHTML = options;
+  
     const saved = loadPlayerName();
-    if (saved) {
-      if (mm) mm.value = saved;
-      if (dd) dd.value = saved;
-    }
+    if (saved && gp) gp.value = saved;
 
-    if (mm) mm.onchange = () => {
-      if (mm.value) {
-        savePlayerName(mm.value);
-        if (dd) dd.value = mm.value;
-      }
-    };
+    // When global player changes:
+    if (gp) gp.onchange = () => {
+      const name = String(gp.value || "").trim();
+      if (!name) return;
 
-    if (dd) dd.onchange = () => {
-      if (dd.value) {
-        savePlayerName(dd.value);
-        if (mm) mm.value = dd.value;
-      }
+      savePlayerName(name);   // updates localStorage + welcome
+      setWelcome();
+
+      // Re-apply highlights immediately without fetching anything
+      applyYouRowsNow_();
+
+      // If you're sitting on Me or Dues, you probably want the content to update too:
+      if (activeView === "mymatchup") loadMyMatchup();
+      if (activeView === "dues") loadDues();
     };
   }
 
@@ -1346,6 +1421,27 @@
     }
 
     return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
+  }
+  
+  function applyYouRowsNow_(){
+    const you = loadPlayerName().trim().toLowerCase();
+
+    // Current race matchup cards (uses dataset so WIN pill can't break it)
+    document.querySelectorAll("#matchupsArea .matchupCard").forEach(card => {
+      const isYou = !!you && (
+        (card.dataset.p1 || "") === you ||
+        (card.dataset.p2 || "") === you
+      );
+      card.classList.toggle("youRow", isYou);
+    });
+
+    // Standings rows
+    document.querySelectorAll("#standingsArea .statsRow").forEach(row => {
+      const nameEl = row.querySelector(".statsName");
+      const nm = String(nameEl?.textContent || "").trim().toLowerCase();
+      const isYou = !!you && nm === you;
+      row.classList.toggle("youRow", isYou);
+    });
   }
 
   /* =========================
@@ -1406,13 +1502,25 @@
   function raceKey_(tournament, race){
     return String(tournament || "").trim() + "||" + String(race || "").trim();
   }
-
+  
+  async function getBracket_(){
+  if (_bracketBlob) return _bracketBlob;
+  try { _bracketBlob = await fetchSnapshotJson("bracket", false); }
+  catch(e){ _bracketBlob = null; }
+  return _bracketBlob;
+}
+  
   function setRaceSelectValue_(tournament, race){
     const sel = document.getElementById("raceSelect");
     if(!sel) return;
     const key = raceKey_(tournament, race);
     _raceSelectIsProgrammatic = true;
-    try{ sel.value = key; } finally { _raceSelectIsProgrammatic = false; }
+    try{
+      sel.value = key;
+      autoSizeRaceSelect_(sel);     // <-- ADD THIS
+    } finally {
+      _raceSelectIsProgrammatic = false;
+    }
   }
 
   async function initRaceSelect_(){
@@ -1423,6 +1531,7 @@
     if(!sel) return;
 
     sel.innerHTML = `<option value="">Loading races...</option>`;
+    autoSizeRaceSelect_(sel);
 
     try{
       const list = await getData_("raceList", "playerGetRaceList");
@@ -1432,12 +1541,15 @@
         const t = r.tournament;
         const race = r.race;
         const round = r.round;
-        const label = `T${t} · ${roundLabel(round)} · ${race}`;
+        const label = `${race}`;
         return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
       }).join("") || `<option value="">No races</option>`;
 
+      autoSizeRaceSelect_(sel);
+
       sel.addEventListener("change", () => {
         if(_raceSelectIsProgrammatic) return;
+        autoSizeRaceSelect_(sel);
         loadSelectedRace_();
       });
     }catch(e){
@@ -1446,7 +1558,7 @@
     }
   }
 
-  function renderMatchupsInto_(data){
+  async function renderMatchupsInto_(data){
     const header = document.getElementById("currentHeader");
     const sub = document.getElementById("currentSub");
     const area = document.getElementById("matchupsArea");
@@ -1457,47 +1569,177 @@
     const round = data.currentRound ?? data.round ?? "";
     const roundText =
       round === "" ? "" :
-      (Number(round) === 4 ? "Final" : `Round ${round}`);
+      (Number(round) === 4 ? "Final" : `Rnd ${round}`);
 
     sub.textContent =
-      `Tournament ${tour}` +
+      `Tourney ${tour}` +
       (roundText ? ` · ${roundText}` : "");
 
     area.innerHTML = "";
     elim.innerHTML = "";
 
     const you = loadPlayerName().trim().toLowerCase();
-    (data.matchups || []).forEach(m => {
+
+    // --- winner pills (past races) pulled from bracket.json ---
+    let roundObj = null;
+    try{
+      const b = await getBracket_();
+      const raceLabel = String(data?.race || "").trim().toLowerCase();
+      const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
+
+      roundObj = b?.rounds?.find(r =>
+        String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
+        Number(r?.round) === roundNum
+      ) || null;
+    }catch(e){
+      roundObj = null;
+    }
+
+    // helper for winner lookup
+    const norm = (s) => String(s ?? "").trim().toLowerCase();
+    const isCurrentRace =
+      ALL_MATCHUPS?.current &&
+      norm(ALL_MATCHUPS.current.race) === norm(data.race) &&
+      String(ALL_MATCHUPS.current.tournament || "").trim() === String(data.tournament || "").trim();
+    const showPastAvgs = !isCurrentRace;
+    const fmtAvg = (n) => {
+      const x = Number(n);
+      if (!Number.isFinite(x)) return "";
+      return x.toFixed(1).replace(/\.0$/, "");
+    };
+    
+    function matchupBracketInfo_(m){
+      if(!roundObj?.matchups?.length) return { winner:"", a1:null, a2:null };
+      const bm = roundObj.matchups.find(x =>
+        norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
+      );
+      return {
+        winner: norm(bm?.winner),
+        a1: (bm?.a1 ?? null),
+        a2: (bm?.a2 ?? null),
+      };
+    }
+
+    for (const m of (data.matchups || [])) {
       const card = document.createElement("div");
       const isYou =
         you &&
         (
-          String(m.p1 || "").trim().toLowerCase() === you ||
-          String(m.p2 || "").trim().toLowerCase() === you
+          norm(m.p1) === you ||
+          norm(m.p2) === you
         );
 
       card.className = "matchupCard" + (isYou ? " youRow" : "");
+      card.dataset.p1 = norm(m.p1);
+      card.dataset.p2 = norm(m.p2);
 
-      const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-      const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+      function metaHtml_(driversArr, numsArr){
+        const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+        const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
+
+        const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+        const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
+
+        const raceWinner = norm(data.raceWinnerDriver);
+
+        function renderOne(num, drv){
+          const numClean = String(num || "").trim();
+          const drvClean = String(drv || "").trim();
+          if (!numClean && !drvClean) return "";
+
+          const isWinner = raceWinner && drvClean && norm(drvClean) === raceWinner;
+
+          const safeNum = escapeHtml(numClean);
+          const safeDrv = escapeHtml(drvClean);
+
+          if (numClean && drvClean){
+            if (isWinner){
+              return `(${safeNum}) <span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return `(${safeNum}) ${safeDrv}`;
+          }
+
+          if (drvClean){
+            if (isWinner){
+              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return safeDrv;
+          }
+
+          return `(${safeNum})`;
+        }
+
+        return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
+      }
+
+      const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
+      const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+      const info = showPastAvgs ? matchupBracketInfo_(m) : { winner:"", a1:null, a2:null };
+      const w = info.winner;
+      const p1Win = w && w === norm(m.p1);
+      const p2Win = w && w === norm(m.p2);
+      const p1AvgTxt = showPastAvgs ? fmtAvg(info.a1) : "";
+      const p2AvgTxt = showPastAvgs ? fmtAvg(info.a2) : "";
+      const p1Label = `${String(m.p1 || "").trim()}${p1AvgTxt ? ` (${p1AvgTxt})` : ""}`;
+      const p2Label = `${String(m.p2 || "").trim()}${p2AvgTxt ? ` (${p2AvgTxt})` : ""}`;
 
       card.innerHTML = `
         <div class="matchupRow">
           <div class="side left">
-            <div class="pName">${escapeHtml(m.p1)}</div>
-            ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(p1Label)}</span>${p1Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
           </div>
           <div class="vsBadge">VS</div>
           <div class="side right">
-            <div class="pName">${escapeHtml(m.p2)}</div>
-            ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(p2Label)}</span>${p2Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
           </div>
         </div>
       `;
       area.appendChild(card);
-    });
+    }
+
+    applyYouRowsNow_();
   }
 
+  function autoSizeRaceSelect_(sel){
+    if(!sel) return;
+
+    // Create a hidden measurer once
+    if(!autoSizeRaceSelect_._measurer){
+      const s = document.createElement("span");
+      s.style.position = "absolute";
+      s.style.top = "-9999px";
+      s.style.left = "-9999px";
+      s.style.whiteSpace = "pre";
+      document.body.appendChild(s);
+      autoSizeRaceSelect_._measurer = s;
+    }
+
+    const measurer = autoSizeRaceSelect_._measurer;
+
+    const cs = getComputedStyle(sel);
+    measurer.style.font = cs.font;
+    measurer.style.letterSpacing = cs.letterSpacing;
+
+    const text = sel.options[sel.selectedIndex]?.text || "";
+    measurer.textContent = text;
+
+    const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
+    const paddingRight = parseFloat(cs.paddingRight) || 0;
+
+    const arrowSpace = 34; // space for dropdown arrow
+
+    const width = Math.ceil(
+      measurer.getBoundingClientRect().width +
+      paddingLeft +
+      paddingRight +
+      arrowSpace
+    );
+
+    sel.style.width = width + "px";
+  }
+    
   async function loadSelectedRace_(){
     const sel = document.getElementById("raceSelect");
     const area = document.getElementById("matchupsArea");
@@ -1520,11 +1762,19 @@
       const raceData = ALL_MATCHUPS?.races?.[key];
 
       if (!raceData) {
-        area.innerHTML = "Race data not found.";
+        area.innerHTML = `
+          <div style="padding:20px; font-weight:600; font-size:14px;">
+            THAT FUCKING RACE HASN’T HAPPENED YET, YOU IMPATIENT COCKSUCKER.<br><br>
+            The cars haven’t even rolled off the goddamn haulers — engines still cold as a dead hooker’s cunt — and you’re already in here screaming for results like a meth-riddled fanboy who bet his rent money on the wrong redneck.<br><br>
+            Calm the fuck down, you pathetic little bitch. Time is linear, not your personal fucktoy. Sit your ass down, crack a beer, and wait like the rest of us miserable bastards. You’ll survive…
+            probably. The weak ones usually eat the wall by lap 47 anyway.<br><br>
+            Raise Hell, Praise Dale.
+          </div>
+        `;
         return;
       }
 
-      renderMatchupsInto_(raceData);
+      await renderMatchupsInto_(raceData);
 
       const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
       if (eliminated.length > 0) {
@@ -1572,7 +1822,7 @@
     }
   }
 
-  async function loadCurrent() {
+  async function loadCurrent(){
     const header = document.getElementById("currentHeader");
     const sub = document.getElementById("currentSub");
     const area = document.getElementById("matchupsArea");
@@ -1614,7 +1864,7 @@
       setRaceSelectValue_(curT, curR);
 
       // Render the race payload (single-race object)
-      renderMatchupsInto_(currentRaceData);
+      await renderMatchupsInto_(currentRaceData);
 
       // Eliminated list (if any) for THIS race payload
       const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
@@ -1658,7 +1908,7 @@
   }
 
   async function loadMyMatchup() {
-    const sel = document.getElementById("mmName");
+    const sel = document.getElementById("globalPlayer");
     const out = document.getElementById("mmStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
@@ -1752,11 +2002,11 @@
 
       out.innerHTML = `
         <div class="mmHeader">
-          Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+          Tourney ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
         </div>
 
         <div class="microBox youBox">
-          <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+          <div class="microTitle">${escapeHtml(data.you)}</div>
           ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
         </div>
 
@@ -1773,7 +2023,7 @@
   }
 
   async function loadDues() {
-    const sel = document.getElementById("duesName");
+    const sel = document.getElementById("globalPlayer");
     const out = document.getElementById("duesStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
@@ -2326,7 +2576,7 @@
       const round = data.currentRound ?? data.round ?? "";
 
       const leftText =
-        `Tournament ${tour}` +
+        `Tourney ${tour}` +
         (race ? ` · ${race}` : "") +
         (round !== "" ? ` · ${roundLabel(round)}` : "");
 
@@ -2334,9 +2584,9 @@
         <div class="legendRow">
           <div>${escapeHtml(leftText)}</div>
           <div class="bracketLegend" aria-label="Legend">
-            <span class="legendItem"><span class="raceDot"></span> Race Winner</span>
+            <span class="legendItem"><span class="raceDot"></span> Race W</span>
             <span class="legendSep">·</span>
-            <span class="legendItem"><span class="winDot"></span> H2H Winner</span>
+            <span class="legendItem"><span class="winDot"></span> H2H W</span>
           </div>
         </div>
       `;
