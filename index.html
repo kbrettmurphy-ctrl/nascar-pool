@@ -1267,12 +1267,25 @@
 
   function clearSavedAndReset() {
     localStorage.removeItem(STORAGE_KEY);
+
     const gp = document.getElementById("globalPlayer");
     if (gp) gp.value = "";
-    if (mm) mm.value = "";
-    if (dd) dd.value = "";
+
     setWelcome();
-    showView(activeView);
+
+    // Immediately remove any youRow highlights
+    applyYouRowsNow_();
+
+    // If currently on Me or Dues, clear their content
+    if (activeView === "mymatchup") {
+      const out = document.getElementById("mmStatus");
+      if (out) out.textContent = "";
+    }
+
+    if (activeView === "dues") {
+      const out = document.getElementById("duesStatus");
+      if (out) out.textContent = "";
+    }
   }
 
   function setWelcome() {
