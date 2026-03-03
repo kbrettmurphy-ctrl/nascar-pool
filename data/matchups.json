@@ -9,6 +9,7 @@
       "tournament": 1,
       "race": "Daytona",
       "round": 1,
+      "raceWinnerDriver": "Tyler Reddick",
       "matchups": [
         {
           "p1": "Jason",
@@ -177,6 +178,7 @@
       "tournament": 1,
       "race": "Atlanta",
       "round": 2,
+      "raceWinnerDriver": "Tyler Reddick",
       "matchups": [
         {
           "p1": "Brett",
@@ -345,6 +347,7 @@
       "tournament": 1,
       "race": "COTA",
       "round": 3,
+      "raceWinnerDriver": "Tyler Reddick",
       "matchups": [
         {
           "p1": "Brett",
@@ -513,6 +516,7 @@
       "tournament": 1,
       "race": "Phoenix",
       "round": 4,
+      "raceWinnerDriver": "",
       "matchups": [
         {
           "p1": "Brett",
