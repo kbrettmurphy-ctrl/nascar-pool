@@ -65,7 +65,7 @@
     --micro:8px;
 
     /* My Matchup tight mode */
-    --mmPad:8px;
+    --mmPad:6px;
     --mmGap:6px;
     --mmHeaderGap:4px;
 
@@ -205,8 +205,8 @@
     color: rgba(255,255,255,.9);
   }
   select, input{
-    width:100%;
-    font-size:16px;
+    width:fit-content;
+    font-size:14px;
     color: var(--text);
     padding: var(--mmPad);
     border-radius: 12px;
@@ -271,12 +271,26 @@
   }
 
   .pMeta{
-    font-size:13px;
+    font-size:12px;
     color: var(--yellow);
     line-height:1.2;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+  }
+
+  .driverWinner{
+    color: var(--winnerGreen);
+    font-weight: 800;
+  }
+
+  .driverWinner .winFlag{
+    display:inline-block;
+    margin-right: 4px;
+    font-size: 12px;
+    line-height: 1;
+    transform: translateY(-1px);
+    opacity: 0.95;
   }
 
   .vsBadge{
@@ -423,12 +437,12 @@
   .sideRight{
     display:flex;
     align-items:center;
-    gap:6px;
+    gap:4px;
     flex: 0 0 auto;
   }
 
   .winSlot{
-    width:10px;
+    width:8px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -440,6 +454,41 @@
     border-radius:999px;
     background: var(--winnerGreen);
     box-shadow: 0 0 0 2px rgba(22,163,74,0.18);
+  }
+
+  .raceDot{
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background: var(--blue);
+    box-shadow: 0 0 0 2px rgba(0,122,194,0.18);
+  }
+
+  .legendRow{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+
+  .bracketLegend{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:400;
+    color: var(--muted);
+    white-space:nowrap;
+  }
+
+  .legendItem{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+
+  .legendSep{
+    opacity:.5;
   }
 
   .avgBox{
@@ -789,7 +838,7 @@
   .statsControls select{
     width:auto;
     min-width:220px;
-    padding:10px 12px;
+    padding: var(--mmPad);
   }
 
   .tiles{
@@ -887,6 +936,7 @@
   <div id="view-current" class="card" style="display:none;">
     <div class="raceHeaderRow">
       <div id="currentHeader">Current Race</div>
+      <select id="raceSelect" style="width:auto";></select>
     </div>
     <div class="muted" id="currentSub"></div>
     <div id="matchupsArea" style="margin-top:10px;"></div>
@@ -975,7 +1025,7 @@
   const STORAGE_KEY = "nascar_pool_player_name";
   const VIEW_KEY = "nascar_pool_active_view";
 
-  const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Round ${n}`);
+  const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Rnd ${n}`);
   const views = ["current","mymatchup","standings","dues","bracket"];
   let activeView = "current";
 
@@ -1078,6 +1128,7 @@
     context:   "./data/context.json",
     players:   "./data/players.json",
     matchups:  "./data/matchups.json",
+    raceList:  "./data/raceList.json",
     bracket:   "./data/bracket.json",
     standings: "./data/standings.json",
     dues:      "./data/dues.json",
@@ -1280,16 +1331,36 @@
   }
 
   function formatDriversOrNumbers(driversArr, numsArr){
-    const d1 = (driversArr && driversArr[0]) ? String(driversArr[0]).trim() : "";
-    const d2 = (driversArr && driversArr[1]) ? String(driversArr[1]).trim() : "";
-    if (d1 || d2) return [d1, d2].filter(Boolean).join(", ");
+    const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+    const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
 
-    const n1 = (numsArr && numsArr[0] != null && String(numsArr[0]).trim() !== "") ? String(numsArr[0]).trim() : "";
-    const n2 = (numsArr && numsArr[1] != null && String(numsArr[1]).trim() !== "") ? String(numsArr[1]).trim() : "";
-    if (n1 || n2) return `Numbers: ${[n1,n2].filter(Boolean).join(", ")}`;
-    return "";
+    const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+    const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
+
+    const hasDrivers = !!(d1 || d2);
+    const hasNums = !!(n1 || n2);
+
+    // Case 1: no drivers, no numbers -> show nothing
+    if (!hasDrivers && !hasNums) return "";
+  
+    // Case 2: numbers only -> keep current behavior
+    if (!hasDrivers && hasNums){
+      return `Numbers: ${[n1, n2].filter(Boolean).join(", ")}`;
+    }
+
+    // Case 3: drivers exist -> show numbers + drivers (per driver)
+    // Format: (number) driver, (number) driver
+    function fmtPair(num, drv){
+      const numClean = String(num || "").trim();
+      const drvClean = String(drv || "").trim();
+      if (!numClean && !drvClean) return "";
+      if (numClean && drvClean) return `(${numClean}) ${drvClean}`;
+      if (drvClean) return drvClean;          // if number missing, still show driver
+      return `(${numClean})`;                 // if driver missing, still show number
+    }
+
+    return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
   }
-
 
   /* =========================
    * 6) Snapshot caches / helpers
@@ -1340,13 +1411,265 @@
   /* =========================
    * 8) Loaders
    * ========================= */
+
+  let ALL_MATCHUPS = null;
+  let RACE_LIST = [];              // [{tournament, race, round}]
+  let _raceSelectWiringDone = false;
+  let _raceSelectIsProgrammatic = false;
+  
+  function raceKey_(tournament, race){
+    return String(tournament || "").trim() + "||" + String(race || "").trim();
+  }
+
+  function setRaceSelectValue_(tournament, race){
+    const sel = document.getElementById("raceSelect");
+    if(!sel) return;
+    const key = raceKey_(tournament, race);
+    _raceSelectIsProgrammatic = true;
+    try{
+      sel.value = key;
+      autoSizeRaceSelect_(sel);     // <-- ADD THIS
+    } finally {
+      _raceSelectIsProgrammatic = false;
+    }
+  }
+
+  async function initRaceSelect_(){
+    if(_raceSelectWiringDone) return;
+    _raceSelectWiringDone = true;
+
+    const sel = document.getElementById("raceSelect");
+    if(!sel) return;
+
+    sel.innerHTML = `<option value="">Loading races...</option>`;
+    autoSizeRaceSelect_(sel);
+
+    try{
+      const list = await getData_("raceList", "playerGetRaceList");
+      RACE_LIST = Array.isArray(list) ? list : [];
+
+      sel.innerHTML = RACE_LIST.map(r => {
+        const t = r.tournament;
+        const race = r.race;
+        const round = r.round;
+        const label = `${race}`;
+        return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
+      }).join("") || `<option value="">No races</option>`;
+
+      autoSizeRaceSelect_(sel);
+
+      sel.addEventListener("change", () => {
+        if(_raceSelectIsProgrammatic) return;
+        autoSizeRaceSelect_(sel);
+        loadSelectedRace_();
+      });
+    }catch(e){
+      sel.innerHTML = `<option value="">Races unavailable</option>`;
+      sel.disabled = true;
+    }
+  }
+
+  function renderMatchupsInto_(data){
+    const header = document.getElementById("currentHeader");
+    const sub = document.getElementById("currentSub");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
+
+    header.textContent = data.race || "Race";
+    const tour  = data.tournament ?? "";
+    const round = data.currentRound ?? data.round ?? "";
+    const roundText =
+      round === "" ? "" :
+      (Number(round) === 4 ? "Final" : `Rnd ${round}`);
+
+    sub.textContent =
+      `Tourney ${tour}` +
+      (roundText ? ` · ${roundText}` : "");
+
+    area.innerHTML = "";
+    elim.innerHTML = "";
+
+    const you = loadPlayerName().trim().toLowerCase();
+    (data.matchups || []).forEach(m => {
+      const card = document.createElement("div");
+      const isYou =
+        you &&
+        (
+          String(m.p1 || "").trim().toLowerCase() === you ||
+          String(m.p2 || "").trim().toLowerCase() === you
+        );
+
+      card.className = "matchupCard" + (isYou ? " youRow" : "");
+
+      const winner = String(data.raceWinnerDriver || "").trim().toLowerCase();
+
+      function metaHtml_(driversArr, numsArr){
+        const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
+        const d2 = (driversArr && driversArr[1] != null) ? String(driversArr[1]).trim() : "";
+
+        const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
+        const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
+
+        const winner = String(data.raceWinnerDriver || "").trim().toLowerCase();
+
+        function renderOne(num, drv){
+          const numClean = String(num || "").trim();
+          const drvClean = String(drv || "").trim();
+          if (!numClean && !drvClean) return "";
+
+          const isWinner = winner && drvClean && drvClean.toLowerCase() === winner;
+
+          // Escape pieces separately
+          const safeNum = escapeHtml(numClean);
+          const safeDrv = escapeHtml(drvClean);
+
+          // Build output carefully so flag sits next to DRIVER only
+          if (numClean && drvClean){
+            if (isWinner){
+              return `(${safeNum}) <span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return `(${safeNum}) ${safeDrv}`;
+          }
+
+          if (drvClean){
+            if (isWinner){
+              return `<span class="driverWinner"><span class="winFlag" aria-hidden="true">🏁</span>${safeDrv}</span>`;
+            }
+            return safeDrv;
+          }
+
+          // number only case
+          return `(${safeNum})`;
+        }
+
+        return [renderOne(n1, d1), renderOne(n2, d2)].filter(Boolean).join(", ");
+      }
+
+      const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
+      const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+
+      card.innerHTML = `
+        <div class="matchupRow">
+          <div class="side left">
+            <div class="pName">${escapeHtml(m.p1)}</div>
+            ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
+          </div>
+          <div class="vsBadge">VS</div>
+          <div class="side right">
+            <div class="pName">${escapeHtml(m.p2)}</div>
+            ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
+          </div>
+        </div>
+      `;
+      area.appendChild(card);
+    });
+  }
+
+  function autoSizeRaceSelect_(sel){
+    if(!sel) return;
+
+    // Create a hidden measurer once
+    if(!autoSizeRaceSelect_._measurer){
+      const s = document.createElement("span");
+      s.style.position = "absolute";
+      s.style.top = "-9999px";
+      s.style.left = "-9999px";
+      s.style.whiteSpace = "pre";
+      document.body.appendChild(s);
+      autoSizeRaceSelect_._measurer = s;
+    }
+
+    const measurer = autoSizeRaceSelect_._measurer;
+
+    const cs = getComputedStyle(sel);
+    measurer.style.font = cs.font;
+    measurer.style.letterSpacing = cs.letterSpacing;
+
+    const text = sel.options[sel.selectedIndex]?.text || "";
+    measurer.textContent = text;
+
+    const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
+    const paddingRight = parseFloat(cs.paddingRight) || 0;
+
+    const arrowSpace = 34; // space for dropdown arrow
+
+    const width = Math.ceil(
+      measurer.getBoundingClientRect().width +
+      paddingLeft +
+      paddingRight +
+      arrowSpace
+    );
+
+    sel.style.width = width + "px";
+  }
+    
+  async function loadSelectedRace_(){
+    const sel = document.getElementById("raceSelect");
+    const area = document.getElementById("matchupsArea");
+    const elim = document.getElementById("eliminatedArea");
+    if(!sel) return;
+
+    const v = String(sel.value || "");
+    if(!v){
+      loadCurrent();
+      return;
+    }
+
+    area.innerHTML = "Loading race...";
+    elim.innerHTML = "";
+
+    try{
+      if (!ALL_MATCHUPS) await loadCurrent();
+
+      const key = String(v).trim();
+      const raceData = ALL_MATCHUPS?.races?.[key];
+
+      if (!raceData) {
+        area.innerHTML = `
+          <div style="padding:20px; font-weight:600; font-size:14px;">
+            THAT FUCKING RACE HASN’T HAPPENED YET, YOU IMPATIENT COCKSUCKER.<br><br>
+            The cars haven’t even rolled off the goddamn haulers — engines still cold as a dead hooker’s cunt — and you’re already in here screaming for results like a meth-riddled fanboy who bet his rent money on the wrong redneck.<br><br>
+            Calm the fuck down, you pathetic little bitch. Time is linear, not your personal fucktoy. Sit your ass down, crack a beer, and wait like the rest of us miserable bastards. You’ll survive…
+            probably. The weak ones usually eat the wall by lap 47 anyway.<br><br>
+            Raise Hell, Praise Dale.
+          </div>
+        `;
+        return;
+      }
+
+      renderMatchupsInto_(raceData);
+
+      const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
+      if (eliminated.length > 0) {
+        let html = `<div class="elimTitle">Eliminated</div>`;
+      const myAll = await getMyMatchupsAllSnapshot();
+
+        eliminated.forEach(p => {
+          const entry = getEntryByName(myAll, p);
+          const picks = extractPicksFromMyEntry(entry);
+          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+        });
+
+        elim.innerHTML = html;
+      } else {
+        elim.innerHTML = "";
+      }
+
+    }catch(e){
+      area.innerHTML = "Error loading that race.";
+      elim.innerHTML = "";
+      console.log(e);
+    }
+  }
+    
   async function loadPlayersThenInit() {
     try{
       const players = await getData_("players", "playerGetPlayerList");
       const safePlayers = Array.isArray(players) ? players : [];
       populatePlayerDropdowns(safePlayers);
       setWelcome();
-
+      await initRaceSelect_();   // <-- add this
       const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
       const allowed = views.includes(last) ? last : "";
 
@@ -1357,6 +1680,7 @@
     }catch(e){
       console.log(e);
       setWelcome();
+      await initRaceSelect_();
       showView("current");
     }
   }
@@ -1371,50 +1695,42 @@
     elim.innerHTML = "";
 
     try{
-      const data = (await getData_("matchups", "playerGetCurrentRaceMatchups")) || {};
+      // Load the ALL-RACES blob from matchups.json (or fallback to API)
+      const blob = (await getData_("matchups", "playerGetAllRaceMatchups")) || {};
+      ALL_MATCHUPS = blob;
 
-      header.textContent = data.race || "Current Race";
-      const tour  = data.tournament ?? "";
-      const round = data.currentRound ?? data.round ?? "";
+      await initRaceSelect_();
 
-      const roundText =
-        round === "" ? "" :
-        (Number(round) === 4 ? "Final" : `Round ${round}`);
-      sub.textContent =
-        `Tournament ${tour}` +
-        (roundText ? ` · ${roundText}` : "");
-      area.innerHTML = "";
-      const you = loadPlayerName().trim().toLowerCase();
-      (data.matchups || []).forEach(m => {
-        const card = document.createElement("div");
-        const isYou =
-          you &&
-          (
-            String(m.p1 || "").trim().toLowerCase() === you ||
-            String(m.p2 || "").trim().toLowerCase() === you
-          );
-        card.className = "matchupCard" + (isYou ? " youRow" : "");
+      // Guard rails because humans and spreadsheets are unreliable
+      if (!ALL_MATCHUPS || !ALL_MATCHUPS.current || !ALL_MATCHUPS.races) {
+        area.innerHTML = "Matchups data malformed.";
+        return;
+      }
 
-        const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-        const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+      const curT = ALL_MATCHUPS.current.tournament;
+      const curR = ALL_MATCHUPS.current.race;
 
-        card.innerHTML = `
-          <div class="matchupRow">
-            <div class="side left">
-              <div class="pName">${escapeHtml(m.p1)}</div>
-              ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
-            </div>
-            <div class="vsBadge">VS</div>
-            <div class="side right">
-              <div class="pName">${escapeHtml(m.p2)}</div>
-              ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
-            </div>
-          </div>
-        `;
-        area.appendChild(card);
-      });
+      if (!curT || !curR) {
+        area.innerHTML = "Current race not set yet.";
+        return;
+      }
 
-      const eliminated = data.eliminated || [];
+      const currentKey = raceKey_(curT, curR);
+      const currentRaceData = ALL_MATCHUPS.races[currentKey];
+
+      if (!currentRaceData) {
+        area.innerHTML = "Current race data not found.";
+        return;
+      }
+
+      // Select dropdown to current
+      setRaceSelectValue_(curT, curR);
+
+      // Render the race payload (single-race object)
+      renderMatchupsInto_(currentRaceData);
+
+      // Eliminated list (if any) for THIS race payload
+      const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
       if (eliminated.length > 0) {
         let html = `<div class="elimTitle">Eliminated</div>`;
 
@@ -1428,9 +1744,14 @@
         });
 
         elim.innerHTML = html;
+      } else {
+        elim.innerHTML = "";
       }
+
     }catch(e){
       area.innerHTML = "Error loading matchups.";
+      elim.innerHTML = "";
+      console.log(e);
     }
   }
 
@@ -1544,11 +1865,11 @@
 
       out.innerHTML = `
         <div class="mmHeader">
-          Tournament ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+          Tourney ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
         </div>
 
         <div class="microBox youBox">
-          <div class="microTitle">YOU: ${escapeHtml(data.you)}</div>
+          <div class="microTitle">${escapeHtml(data.you)}</div>
           ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
         </div>
 
@@ -2117,10 +2438,21 @@
       const race  = data.currentRace ?? data.race ?? "";
       const round = data.currentRound ?? data.round ?? "";
 
-      sub.textContent =
-        `Tournament ${tour}` +
+      const leftText =
+        `Tourney ${tour}` +
         (race ? ` · ${race}` : "") +
         (round !== "" ? ` · ${roundLabel(round)}` : "");
+
+      sub.innerHTML = `
+        <div class="legendRow">
+          <div>${escapeHtml(leftText)}</div>
+          <div class="bracketLegend" aria-label="Legend">
+            <span class="legendItem"><span class="raceDot"></span> Race W</span>
+            <span class="legendSep">·</span>
+            <span class="legendItem"><span class="winDot"></span> H2H W</span>
+          </div>
+        </div>
+      `;
 
       const rounds = data.rounds || [];
       let html = `<div class="bracketGrid">`;
@@ -2196,7 +2528,8 @@
                   <span class="nameText">${escapeHtml(m.p1 || "")}</span>
                 </div>
                 <div class="sideRight">
-                  <span class="winSlot">${p1Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="winSlot">${m.p1RaceWinner ? `<span class="raceDot" title="Race Winner Driver"></span>` : ``}</span>
+                  <span class="winSlot">${p1Win ? `<span class="winDot" title="Matchup Winner"></span>` : ``}</span>
                   <span class="avgBox ${m.a1 == null ? "empty" : ""}">${m.a1 == null ? "—" : escapeHtml(fmtAvg(m.a1))}</span>
                 </div>
               </div>
@@ -2207,7 +2540,8 @@
                   <span class="nameText">${escapeHtml(m.p2 || "")}</span>
                 </div>
                 <div class="sideRight">
-                  <span class="winSlot">${p2Win ? `<span class="winDot" title="Winner"></span>` : ``}</span>
+                  <span class="winSlot">${m.p2RaceWinner ? `<span class="raceDot" title="Race Winner Driver"></span>` : ``}</span>
+                  <span class="winSlot">${p2Win ? `<span class="winDot" title="Matchup Winner"></span>` : ``}</span>
                   <span class="avgBox ${m.a2 == null ? "empty" : ""}">${m.a2 == null ? "—" : escapeHtml(fmtAvg(m.a2))}</span>
                 </div>
               </div>
