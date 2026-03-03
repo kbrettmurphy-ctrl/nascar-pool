@@ -19,6 +19,18 @@
    ************************************************************/
 
   /* =========================
+   * 0) LAYOUT STABILITY FIXES
+   * ========================= */
+  html{
+    /* Prevents the “page shifts when scrollbar appears” nonsense */
+    scrollbar-gutter: stable;
+  }
+  @supports not (scrollbar-gutter: stable){
+    /* Fallback: always reserve a scrollbar lane (desktop) */
+    html{ overflow-y: scroll; }
+  }
+
+  /* =========================
    * 1) THEME TOKENS (VARS)
    * ========================= */
   :root{
@@ -222,6 +234,116 @@
   #standingsArea{ white-space: normal; }
 
   /* =========================
+   * 3.5) TOP HEADER / SUB / TOP BAR (no inline spelunking)
+   * ========================= */
+  .titleRow{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:10px;
+    position:relative;
+    z-index:3;
+  }
+
+  .titleRow h2{ margin:0; }
+
+  .easterEgg{
+    opacity:0.03;
+    font-size:5px;
+    color: var(--muted);
+    margin-left: 50px;
+    white-space: nowrap;
+  }
+
+  #welcomeName{
+    text-align:right;
+    font-weight:800;
+    color: var(--muted);
+    font-size:13px;
+
+    /* You said no wrap. This obeys. */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 52%;
+  }
+
+  .subRow{
+    position:relative;
+    z-index:3;
+  }
+
+  .subRowRight{
+    margin-left:auto;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+
+  .topBar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    position:relative;
+    z-index:3;
+  }
+
+  .topBarRight{
+    margin-left:auto;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+
+  /* =========================
+   * 3.6) SPOILER TOGGLE (dedicated section, because we’re civilized)
+   * ========================= */
+  .spoilerToggle{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    border-radius:999px;
+    background: rgba(0,122,194,.16);
+    border:1px solid var(--line);
+    color: var(--text);
+    cursor:pointer;
+  }
+
+  .spoilerToggle .label{
+    font-weight:900;
+  }
+
+  .spoilerToggle .track{
+    width:42px;
+    height:22px;
+    border-radius:999px;
+    background: rgba(0,0,0,.35);
+    border:1px solid var(--line);
+    position:relative;
+    flex:0 0 auto;
+  }
+
+  .spoilerToggle .thumb{
+    position:absolute;
+    top:2px;
+    left:2px;
+    width:18px;
+    height:18px;
+    border-radius:999px;
+    background: var(--red);
+    transition: transform .18s ease, background .18s ease;
+  }
+
+  .spoilerToggle .state{
+    font-weight:900;
+    letter-spacing:.3px;
+  }
+
+  /* =========================
    * 4) CURRENT RACE VIEW
    * ========================= */
   .raceHeaderRow{
@@ -261,37 +383,38 @@
   .side.right{ text-align:right; align-items:flex-end; }
 
   /* --- Player name: keep original styling + allow absolute pill anchoring --- */
-.pName{
-  font-weight:900;
-  font-size:15px;
-  line-height:1.1;
-  margin:0;
+  .pName{
+    font-weight:900;
+    font-size:15px;
+    line-height:1.1;
+    margin:0;
 
-  /* keep centering behavior */
-  position:relative;
-  display:inline-block;
+    /* keep centering behavior */
+    position:relative;
+    display:inline-block;
 
-  /* KEY FIX: do NOT clip the pill */
-  overflow:visible;
-}
+    /* KEY FIX: do NOT clip the pill */
+    overflow:visible;
+  }
 
-.nameWrap{
-  position:relative;         /* pill anchor */
-  display:inline-block;
-  max-width:100%;
-  overflow:visible;          /* IMPORTANT: do NOT clip the pill */
-  vertical-align:middle;
-}
+  .nameWrap{
+    position:relative;         /* pill anchor */
+    display:inline-block;
+    max-width:100%;
+    overflow:visible;          /* IMPORTANT: do NOT clip the pill */
+    vertical-align:middle;
+  }
 
-/* ellipsis belongs on the TEXT only */
-.nameText{
-  display:inline-block;
-  max-width:100%;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  vertical-align:middle;
-}
+  /* ellipsis belongs on the TEXT only */
+  .nameText{
+    display:inline-block;
+    max-width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    vertical-align:middle;
+  }
+
   .pMeta{
     font-size:12px;
     color: var(--yellow);
@@ -324,43 +447,44 @@
     color:#111;
     letter-spacing:0.4px;
   }
-  
+
   /* --- WIN pill: absolutely positioned so it NEVER pushes name --- */
-.winPill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:2px 6px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.4px;
-  color: var(--winnerGreen);
-  border:1px solid rgba(22,163,74,.35);
-  background: rgba(22,163,74,.12);
+  .winPill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:2px 6px;
+    border-radius:999px;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.4px;
+    color: var(--winnerGreen);
+    border:1px solid rgba(22,163,74,.35);
+    background: rgba(22,163,74,.12);
 
-  position:absolute;
-  top:50%;
-  left:100%;
-  transform: translate(6px, -50%);
-  white-space:nowrap;
-  margin:0;
-}
-
-/* >=700px: right column pill goes inward (left of the name) */
-@media (min-width:700px){
-  .side.right .nameWrap .winPill{
-    left:auto;
-    right:100%;
-    transform: translate(-6px, -50%);
+    position:absolute;
+    top:50%;
+    left:100%;
+    transform: translate(6px, -50%);
+    white-space:nowrap;
+    margin:0;
   }
-}
-@media (max-width:700px){
-  .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
-  .side.right{ text-align:center; align-items:center; }
-  .vsBadge{ margin:2px auto; }
-  .pMeta{ white-space:normal; }
-}
+
+  /* >=700px: right column pill goes inward (left of the name) */
+  @media (min-width:700px){
+    .side.right .nameWrap .winPill{
+      left:auto;
+      right:100%;
+      transform: translate(-6px, -50%);
+    }
+  }
+  @media (max-width:700px){
+    .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
+    .side.right{ text-align:center; align-items:center; }
+    .vsBadge{ margin:2px auto; }
+    .pMeta{ white-space:normal; }
+    #welcomeName{ max-width: 100%; }
+  }
 
   .elimItem{ font-size:14px; color: var(--muted); margin-top:4px; }
 
@@ -968,38 +1092,39 @@
   }
   *::-webkit-scrollbar-thumb:hover{ background: rgba(0,122,194,.60); }
   *::-webkit-scrollbar-corner{ background: transparent; }
-</style>
+  </style>
 </head>
 
 <body>
   <!-- Title row: welcome message moved up + right aligned -->
-  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; position:relative; z-index:3;">
-    <h2>NASCAR Pool 2026</span>
+  <div class="titleRow">
+    <h2>
+      NASCAR Pool 2026
+      <span class="easterEgg">🖕🏼 Fuck you, Russ. 🖕🏼</span>
     </h2>
-    <div id="welcomeName" style="text-align:right; font-weight:800; color: var(--muted); font-size:13px;"></div>
+    <div id="welcomeName"></div>
   </div>
 
   <!-- Sub row: player selector moved here (right side) -->
-  <div class="sub" style="position:relative; z-index:3;">
+  <div class="sub subRow">
     <span class="pill">Player Portal</span>
 
-    <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+    <div class="subRowRight">
       <select id="globalPlayer"></select>
     </div>
   </div>
 
   <!-- Top controls: spoiler toggle moved to where player selector used to be -->
-  <div class="topBar" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; z-index:3;">
-    <button id="spoilerToggle" class="topactions" type="button" role="switch" aria-checked="true"
-      style="display:inline-flex; align-items:center; gap:8px; padding:6px 6px; border-radius:999px; background: rgba(0,122,194,.16);">
-      <span style="font-weight:900;">Spoilers</span>
-      <span id="spoilerTrack" style="width:42px; height:22px; border-radius:999px; background: rgba(0,0,0,.35); border:1px solid var(--line); position:relative; flex:0 0 auto;">
-        <span id="spoilerThumb" style="position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:999px; background: var(--red); transition: transform .18s ease;"></span>
+  <div class="topBar">
+    <button id="spoilerToggle" class="spoilerToggle topactions" type="button" role="switch" aria-checked="true">
+      <span class="label">Spoilers</span>
+      <span id="spoilerTrack" class="track">
+        <span id="spoilerThumb" class="thumb"></span>
       </span>
-      <span id="spoilerState" style="font-weight:900; letter-spacing:.3px;">ON</span>
+      <span id="spoilerState" class="state">ON</span>
     </button>
 
-    <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
+    <div class="topBarRight">
       <button class="topactions" onclick="clearSavedAndReset()">🚫 Forget me</button>
       <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
     </div>
@@ -1009,7 +1134,7 @@
   <div id="view-current" class="card" style="display:none;">
     <div class="raceHeaderRow">
       <div id="currentHeader">Current Race</div>
-      <select id="raceSelect" style="width:auto";></select>
+      <select id="raceSelect" style="width:auto;"></select>
     </div>
     <div class="muted" id="currentSub"></div>
     <div id="matchupsArea" style="margin-top:10px;"></div>
@@ -1440,7 +1565,7 @@
       .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
       .join("");
     if (gp) gp.innerHTML = options;
-  
+
     const saved = loadPlayerName();
     if (saved && gp) gp.value = saved;
 
@@ -1484,7 +1609,7 @@
 
     return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
   }
-  
+
   function applyYouRowsNow_(){
     const you = loadPlayerName().trim().toLowerCase();
 
@@ -1557,18 +1682,18 @@
   let RACE_LIST = [];
   let _raceSelectWiringDone = false;
   let _raceSelectIsProgrammatic = false;
-  
+
   function raceKey_(tournament, race){
     return String(tournament || "").trim() + "||" + String(race || "").trim();
   }
-  
+
   async function getBracket_(){
     if (_bracketBlob) return _bracketBlob;
     try { _bracketBlob = await fetchSnapshotJson("bracket", false); }
     catch(e){ _bracketBlob = null; }
     return _bracketBlob;
   }
-  
+
   function setRaceSelectValue_(tournament, race){
     const sel = document.getElementById("raceSelect");
     if(!sel) return;
@@ -1682,7 +1807,7 @@
       if (!Number.isFinite(x)) return "";
       return x.toFixed(1).replace(/\.0$/, "");
     };
-    
+
     function matchupBracketInfo_(m){
       if(!roundObj?.matchups?.length) return { winner:"", a1:null, a2:null };
       const bm = roundObj.matchups.find(x =>
@@ -1823,7 +1948,7 @@
 
     sel.style.width = width + "px";
   }
-    
+
   async function loadSelectedRace_(){
     const sel = document.getElementById("raceSelect");
     const area = document.getElementById("matchupsArea");
@@ -1884,7 +2009,7 @@
       console.log(e);
     }
   }
-    
+
   async function loadPlayersThenInit() {
     try{
       const players = await getData_("players", "playerGetPlayerList");
@@ -2863,6 +2988,6 @@
     loadPlayersThenInit();
     persistHScroll(".navInner", "nascar_nav_scroll");
   };
-</script>
+  </script>
 </body>
 </html>
