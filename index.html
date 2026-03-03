@@ -279,6 +279,11 @@
     text-overflow:ellipsis;
   }
 
+  .driverWinner{
+    color: var(--winnerGreen);
+    font-weight: 800;
+  }
+
   .vsBadge{
     font-weight:800;
     font-size:10px;
@@ -1487,19 +1492,40 @@
 
       card.className = "matchupCard" + (isYou ? " youRow" : "");
 
-      const leftMeta  = formatDriversOrNumbers(m.p1Drivers, m.p1Nums);
-      const rightMeta = formatDriversOrNumbers(m.p2Drivers, m.p2Nums);
+      const winner = String(data.raceWinnerDriver || "").trim().toLowerCase();
+
+      function metaHtml_(driversArr, numsArr){
+        const d1 = driversArr && driversArr[0] ? String(driversArr[0]).trim() : "";
+        const d2 = driversArr && driversArr[1] ? String(driversArr[1]).trim() : "";
+
+        // If we have driver names, render them and highlight ONLY the race winner
+        if (d1 || d2) {
+          return [d1, d2].filter(Boolean).map(d => {
+            const isWinner = winner && d.toLowerCase() === winner;
+            return isWinner
+              ? `<span class="driverWinner">${escapeHtml(d)}</span>`
+              : escapeHtml(d);
+          }).join(", ");
+        }
+
+        // Fallback to your existing formatting for numbers-only
+        const plain = formatDriversOrNumbers(driversArr, numsArr);
+        return plain ? escapeHtml(plain) : "";
+      }
+
+      const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
+      const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
 
       card.innerHTML = `
         <div class="matchupRow">
           <div class="side left">
             <div class="pName">${escapeHtml(m.p1)}</div>
-            ${leftMeta ? `<div class="pMeta">${escapeHtml(leftMeta)}</div>` : ``}
+            ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
           </div>
           <div class="vsBadge">VS</div>
           <div class="side right">
             <div class="pName">${escapeHtml(m.p2)}</div>
-            ${rightMeta ? `<div class="pMeta">${escapeHtml(rightMeta)}</div>` : ``}
+            ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
           </div>
         </div>
       `;
