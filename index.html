@@ -927,6 +927,10 @@
     <span id="welcomeName"></span>
   </div>
 
+  <div class="topPlayer">
+    <select id="globalPlayer"></select>
+  </div>
+  
   <div class="topActions">
     <button class="topactions" onclick="clearSavedAndReset()">🧼 Forget me</button>
     <button class="topactions" onclick="refreshActiveView()">🔄 Refresh </button>
@@ -949,11 +953,11 @@
     <div class="muted">Pick your name once — I might remember it, might not.</div>
     
     <!-- <label>Your name</label> -->
-    <select id="mmName" style="margin-top:10px;"></select>
+    <!-- <select id="mmName" style="margin-top:10px;"></select> -->
 
-    <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button>
-    <div id="mmStatus" class="mmWrap"></div>
-  </div>
+    <!-- <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button> -->
+    <div id="mmStatus" class="mmWrap"></div> -->
+  <!-- </div> -->
 
   <!-- STANDINGS -->
   <div id="view-standings" class="card" style="display:none;">
@@ -968,11 +972,11 @@
     <div class="muted">Pick your fuckin name.</div>
     
     <!-- <label>Your name</label> -->
-    <select id="duesName" style="margin-top:10px;"></select>
+    <!-- <select id="duesName" style="margin-top:10px;"></select> -->
 
-    <button class="primary" onclick="loadDues()">Show me the money</button>
-    <div id="duesStatus" class="mmWrap"></div>
-  </div>
+    <!-- <button class="primary" onclick="loadDues()">Show me the money</button> -->
+    <div id="duesStatus" class="mmWrap"></div> -->
+  <!-- </div> -->
 
   <!-- BRACKET -->
   <div id="view-bracket" class="card" style="display:none;">
@@ -1265,8 +1269,8 @@
 
   function clearSavedAndReset() {
     localStorage.removeItem(STORAGE_KEY);
-    const mm = document.getElementById("mmName");
-    const dd = document.getElementById("duesName");
+    const mm = document.getElementById("globalPlayer")
+    const dd = document.getElementById("globalPlayer")
     if (mm) mm.value = "";
     if (dd) dd.value = "";
     setWelcome();
@@ -1319,6 +1323,7 @@
       if (mm.value) {
         savePlayerName(mm.value);
         if (dd) dd.value = mm.value;
+        loadMyMatchup();
       }
     };
 
@@ -1326,6 +1331,7 @@
       if (dd.value) {
         savePlayerName(dd.value);
         if (mm) mm.value = dd.value;
+        loadDues();
       }
     };
   }
