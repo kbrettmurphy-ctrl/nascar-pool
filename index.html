@@ -972,18 +972,39 @@
 </head>
 
 <body>
-  <h2>NASCAR Pool 2026<span style="opacity:0.03; font-size:5px; color: var(--muted); margin-left: 50px;">🖕🏼 Fuck you, Russ. 🖕🏼</span></h2>
-
-  <div class="sub">
-    <span class="pill">Player Portal</span>
-    <span id="welcomeName"></span>
+  <!-- Title row: welcome message moved up + right aligned -->
+  <div style="display:flex; align-items:baseline; justify-content:space-between; gap:10px; position:relative; z-index:3;">
+    <h2 style="margin:0;">
+      NASCAR Pool 2026
+      <span style="opacity:0.03; font-size:5px; color: var(--muted); margin-left: 50px;">🖕🏼 Fuck you, Russ. 🖕🏼</span>
+    </h2>
+    <div id="welcomeName" style="text-align:right; font-weight:800; color: var(--muted); font-size:13px;"></div>
   </div>
 
-  <div class="topBar">
-    <select id="globalPlayer"></select>
+  <!-- Sub row: player selector moved here (right side) -->
+  <div class="sub" style="position:relative; z-index:3;">
+    <span class="pill">Player Portal</span>
 
-    <button class="topactions" onclick="clearSavedAndReset()">🚫 Forget me</button>
-    <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
+    <div style="margin-left:auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+      <select id="globalPlayer"></select>
+    </div>
+  </div>
+
+  <!-- Top controls: spoiler toggle moved to where player selector used to be -->
+  <div class="topBar" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; position:relative; z-index:3;">
+    <button id="spoilerToggle" class="topactions" type="button" role="switch" aria-checked="true"
+      style="display:inline-flex; align-items:center; gap:10px; padding:8px 10px; border-radius:999px; background: rgba(0,122,194,.16);">
+      <span style="font-weight:900;">Spoilers</span>
+      <span id="spoilerTrack" style="width:42px; height:22px; border-radius:999px; background: rgba(0,0,0,.35); border:1px solid var(--line); position:relative; flex:0 0 auto;">
+        <span id="spoilerThumb" style="position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:999px; background: var(--red); transition: transform .18s ease;"></span>
+      </span>
+      <span id="spoilerState" style="font-weight:900; letter-spacing:.3px;">ON</span>
+    </button>
+
+    <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
+      <button class="topactions" onclick="clearSavedAndReset()">🚫 Forget me</button>
+      <button class="topactions" onclick="refreshActiveView()">🔄 Refresh</button>
+    </div>
   </div>
 
   <!-- CURRENT RACE -->
@@ -1001,11 +1022,6 @@
   <div id="view-mymatchup" class="card" style="display:none;">
     <div class="big">My Matchup</div>
     <div class="muted">Who you can talk shit to this week.</div>
-    
-    <!-- <label>Your name</label> -->
-    <!-- <select id="mmName" style="margin-top:10px;"></select> -->
-
-    <!-- <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button> -->
     <div id="mmStatus" class="mmWrap"></div>
   </div>
 
@@ -1019,12 +1035,7 @@
   <!-- DUES -->
   <div id="view-dues" class="card" style="display:none;">
     <div class="big">Dues</div>
-    <!-- <div class="muted">Pick your fuckin name.</div>       THIS IS FROM WHEN THE SELECTOR WAS IN THE DUES CARD. KEPT FOR HISTORICAL FALLBACK PURPOSES--> 
     <div class="muted">Here's how much you owe me.</div>
-    <!-- <label>Your name</label> -->
-    <!-- <select id="duesName" style="margin-top:10px;"></select> -->
-
-    <!-- <button class="primary" onclick="loadDues()">Show me the money</button> -->
     <div id="duesStatus" class="mmWrap"></div>
   </div>
 
@@ -1069,7 +1080,7 @@
   <script>
   /************************************************************
    * NASCAR Pool 2026 — Player Portal JS
-   * Structured only. No behavior changes.
+   * Spoiler toggle added (minimal changes, no CSS edits).
    ************************************************************/
 
   /* =========================
@@ -1078,6 +1089,7 @@
   const API_BASE = "https://script.google.com/macros/s/AKfycbw9ZWpslxculbHs3kwNWSBx9jU_QZx2PpLsWpa4N8DPK8qypXQObwfG5Vw_lh5lEizjuA/exec"; // <-- REPLACE ME
   const STORAGE_KEY = "nascar_pool_player_name";
   const VIEW_KEY = "nascar_pool_active_view";
+  const SPOILER_KEY = "nascar_pool_spoilers_on"; // "1" or "0"
 
   const roundLabel = (n) => (Number(n) === 4 ? "Final" : `Rnd ${n}`);
   const views = ["current","mymatchup","standings","dues","bracket"];
@@ -1088,8 +1100,68 @@
   const ADMIN_KEY = ""; // leave blank on the public site
 
   /* =========================
-   * 2) iOS viewport bottom bar fix
-   * (keeps your nav + layout stable on iOS)
+   * 2) Spoiler toggle (global)
+   * ========================= */
+  function spoilersOn_(){
+    const v = String(localStorage.getItem(SPOILER_KEY) ?? "1");
+    return v !== "0";
+  }
+
+  function setSpoilersOn_(on){
+    localStorage.setItem(SPOILER_KEY, on ? "1" : "0");
+    paintSpoilerToggle_();
+    enforceSpoilerNav_();
+  }
+
+  function paintSpoilerToggle_(){
+    const btn = document.getElementById("spoilerToggle");
+    const state = document.getElementById("spoilerState");
+    const thumb = document.getElementById("spoilerThumb");
+    const on = spoilersOn_();
+
+    if(!btn || !state || !thumb) return;
+
+    btn.setAttribute("aria-checked", on ? "true" : "false");
+    state.textContent = on ? "ON" : "OFF";
+
+    // ON = spoilers shown; OFF = spoilers hidden
+    thumb.style.transform = on ? "translateX(20px)" : "translateX(0px)";
+    thumb.style.background = on ? "var(--red)" : "var(--blue)";
+
+    // subtle button tint
+    btn.style.background = on ? "rgba(228, 0, 43, .22)" : "rgba(0,122,194,.18)";
+    btn.title = on ? "Spoilers ON (shows winners)" : "Spoilers OFF (hides winners)";
+  }
+
+  function initSpoilerToggle_(){
+    const btn = document.getElementById("spoilerToggle");
+    if(!btn) return;
+
+    paintSpoilerToggle_();
+    enforceSpoilerNav_();
+
+    btn.onclick = () => {
+      setSpoilersOn_(!spoilersOn_());
+
+      // If they were on a spoiler-locked view, kick them out immediately.
+      if (!spoilersOn_()) {
+        if (activeView === "bracket") showView("current");
+      }
+
+      // Refresh only what's currently visible (fast + minimal work)
+      refreshActiveView();
+    };
+  }
+
+  function enforceSpoilerNav_(){
+    const on = spoilersOn_();
+
+    const bracketBtn = document.getElementById("nav-bracket");
+    if (bracketBtn) bracketBtn.style.display = on ? "" : "none";
+  }
+
+  /* =========================
+   * 3) iOS viewport bottom bar fix
    * ========================= */
   (function fixIOSBottomBar(){
     function update(){
@@ -1115,17 +1187,14 @@
   })();
 
   /* =========================
-   * 3) API helpers (Fetch + optional JSONP fallback)
+   * 4) API helpers (Fetch + optional JSONP fallback)
    * ========================= */
-
-  // Currently unused but kept for potential future use.
   function apiUrl(params){
     const u = new URL(API_BASE);
     Object.keys(params).forEach(k => u.searchParams.set(k, params[k]));
     return u.toString();
   }
 
-  // Currently unused but kept (legacy / fallback option).
   function jsonp(url){
     return new Promise((resolve, reject) => {
       const cb = "__jsonp_cb_" + Math.random().toString(36).slice(2);
@@ -1177,7 +1246,7 @@
   }
 
   /* =========================
-   * 4) Snapshot Loader (GitHub Pages /data/*.json)
+   * 5) Snapshot Loader (GitHub Pages /data/*.json)
    * ========================= */
   const SNAP_MAP = {
     context:   "./data/context.json",
@@ -1193,9 +1262,8 @@
     drivers:   "./data/driverUsage.json",
   };
 
-  // Snapshot versioning (prevents stale GitHub Pages cache)
-  let SNAP_VER = null;   // encoded string
-  let SNAP_CTX = null;   // last context object
+  let SNAP_VER = null;
+  let SNAP_CTX = null;
 
   async function refreshSnapshotVersion_(){
     const url = SNAP_MAP.context + (SNAP_MAP.context.includes("?") ? "&" : "?") + "v=" + Date.now();
@@ -1233,7 +1301,7 @@
   }
 
   /* =========================
-   * 5) UI helpers
+   * 6) UI helpers
    * ========================= */
   function setActiveNav(which){
     const map = {
@@ -1277,6 +1345,9 @@
   }
 
   function showView(which) {
+    // If spoilers are OFF, do not allow bracket view to render at all.
+    if (!spoilersOn_() && which === "bracket") which = "current";
+
     activeView = which;
     setActiveNav(which);
     localStorage.setItem(VIEW_KEY, which);
@@ -1326,10 +1397,8 @@
 
     setWelcome();
 
-    // Immediately remove any youRow highlights
     applyYouRowsNow_();
 
-    // If currently on Me or Dues, clear their content
     if (activeView === "mymatchup") {
       const out = document.getElementById("mmStatus");
       if (out) out.textContent = "";
@@ -1377,18 +1446,15 @@
     const saved = loadPlayerName();
     if (saved && gp) gp.value = saved;
 
-    // When global player changes:
     if (gp) gp.onchange = () => {
       const name = String(gp.value || "").trim();
       if (!name) return;
 
-      savePlayerName(name);   // updates localStorage + welcome
+      savePlayerName(name);
       setWelcome();
 
-      // Re-apply highlights immediately without fetching anything
       applyYouRowsNow_();
 
-      // If you're sitting on Me or Dues, you probably want the content to update too:
       if (activeView === "mymatchup") loadMyMatchup();
       if (activeView === "dues") loadDues();
     };
@@ -1404,23 +1470,18 @@
     const hasDrivers = !!(d1 || d2);
     const hasNums = !!(n1 || n2);
 
-    // Case 1: no drivers, no numbers -> show nothing
     if (!hasDrivers && !hasNums) return "";
-  
-    // Case 2: numbers only -> keep current behavior
     if (!hasDrivers && hasNums){
       return `Numbers: ${[n1, n2].filter(Boolean).join(", ")}`;
     }
 
-    // Case 3: drivers exist -> show numbers + drivers (per driver)
-    // Format: (number) driver, (number) driver
     function fmtPair(num, drv){
       const numClean = String(num || "").trim();
       const drvClean = String(drv || "").trim();
       if (!numClean && !drvClean) return "";
       if (numClean && drvClean) return `(${numClean}) ${drvClean}`;
-      if (drvClean) return drvClean;          // if number missing, still show driver
-      return `(${numClean})`;                 // if driver missing, still show number
+      if (drvClean) return drvClean;
+      return `(${numClean})`;
     }
 
     return [fmtPair(n1, d1), fmtPair(n2, d2)].filter(Boolean).join(", ");
@@ -1429,7 +1490,6 @@
   function applyYouRowsNow_(){
     const you = loadPlayerName().trim().toLowerCase();
 
-    // Current race matchup cards (uses dataset so WIN pill can't break it)
     document.querySelectorAll("#matchupsArea .matchupCard").forEach(card => {
       const isYou = !!you && (
         (card.dataset.p1 || "") === you ||
@@ -1438,7 +1498,6 @@
       card.classList.toggle("youRow", isYou);
     });
 
-    // Standings rows
     document.querySelectorAll("#standingsArea .statsRow").forEach(row => {
       const nameEl = row.querySelector(".statsName");
       const nm = String(nameEl?.textContent || "").trim().toLowerCase();
@@ -1448,7 +1507,7 @@
   }
 
   /* =========================
-   * 6) Snapshot caches / helpers
+   * 7) Snapshot caches / helpers
    * ========================= */
   let _cache_myMatchupsAll = null;
 
@@ -1481,7 +1540,7 @@
   }
 
   /* =========================
-   * 7) Data access (snapshots first, live GAS fallback)
+   * 8) Data access (snapshots first, live GAS fallback)
    * ========================= */
   async function getData_(snapKey, action, params){
     try{
@@ -1494,11 +1553,10 @@
   }
 
   /* =========================
-   * 8) Loaders
+   * 9) Loaders
    * ========================= */
-
   let ALL_MATCHUPS = null;
-  let RACE_LIST = [];              // [{tournament, race, round}]
+  let RACE_LIST = [];
   let _raceSelectWiringDone = false;
   let _raceSelectIsProgrammatic = false;
   
@@ -1507,11 +1565,11 @@
   }
   
   async function getBracket_(){
-  if (_bracketBlob) return _bracketBlob;
-  try { _bracketBlob = await fetchSnapshotJson("bracket", false); }
-  catch(e){ _bracketBlob = null; }
-  return _bracketBlob;
-}
+    if (_bracketBlob) return _bracketBlob;
+    try { _bracketBlob = await fetchSnapshotJson("bracket", false); }
+    catch(e){ _bracketBlob = null; }
+    return _bracketBlob;
+  }
   
   function setRaceSelectValue_(tournament, race){
     const sel = document.getElementById("raceSelect");
@@ -1520,7 +1578,7 @@
     _raceSelectIsProgrammatic = true;
     try{
       sel.value = key;
-      autoSizeRaceSelect_(sel);     // <-- ADD THIS
+      autoSizeRaceSelect_(sel);
     } finally {
       _raceSelectIsProgrammatic = false;
     }
@@ -1543,7 +1601,6 @@
       sel.innerHTML = RACE_LIST.map(r => {
         const t = r.tournament;
         const race = r.race;
-        const round = r.round;
         const label = `${race}`;
         return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
       }).join("") || `<option value="">No races</option>`;
@@ -1582,29 +1639,46 @@
     elim.innerHTML = "";
 
     const you = loadPlayerName().trim().toLowerCase();
+    const spoilersOn = spoilersOn_();
 
-    // --- winner pills (past races) pulled from bracket.json ---
-    let roundObj = null;
-    try{
-      const b = await getBracket_();
-      const raceLabel = String(data?.race || "").trim().toLowerCase();
-      const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
-
-      roundObj = b?.rounds?.find(r =>
-        String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
-        Number(r?.round) === roundNum
-      ) || null;
-    }catch(e){
-      roundObj = null;
-    }
-
-    // helper for winner lookup
     const norm = (s) => String(s ?? "").trim().toLowerCase();
     const isCurrentRace =
       ALL_MATCHUPS?.current &&
       norm(ALL_MATCHUPS.current.race) === norm(data.race) &&
       String(ALL_MATCHUPS.current.tournament || "").trim() === String(data.tournament || "").trim();
-    const showPastAvgs = !isCurrentRace;
+
+    // Spoilers OFF: do not render current race matchup cards at all.
+    if (!spoilersOn && isCurrentRace){
+      area.innerHTML = `
+        <div class="microBox" style="margin-top:10px;">
+          <div class="microTitle">Spoilers are OFF</div>
+          <div class="microMeta" style="color: var(--muted); font-weight:700;">
+            Current race matchups are hidden. Pick a past race (or a future one) from the dropdown.
+          </div>
+        </div>
+      `;
+      elim.innerHTML = "";
+      return;
+    }
+
+    // Winner pills + averages come from bracket.json, but ONLY when spoilers are ON.
+    let roundObj = null;
+    if (spoilersOn){
+      try{
+        const b = await getBracket_();
+        const raceLabel = String(data?.race || "").trim().toLowerCase();
+        const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
+
+        roundObj = b?.rounds?.find(r =>
+          String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
+          Number(r?.round) === roundNum
+        ) || null;
+      }catch(e){
+        roundObj = null;
+      }
+    }
+
+    const showPastAvgs = spoilersOn && !isCurrentRace;
     const fmtAvg = (n) => {
       const x = Number(n);
       if (!Number.isFinite(x)) return "";
@@ -1643,7 +1717,8 @@
         const n1 = (numsArr && numsArr[0] != null) ? String(numsArr[0]).trim() : "";
         const n2 = (numsArr && numsArr[1] != null) ? String(numsArr[1]).trim() : "";
 
-        const raceWinner = norm(data.raceWinnerDriver);
+        // Spoilers OFF: do not show race-winner highlight/flag/green.
+        const raceWinner = spoilersOn ? norm(data.raceWinnerDriver) : "";
 
         function renderOne(num, drv){
           const numClean = String(num || "").trim();
@@ -1677,12 +1752,16 @@
 
       const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
       const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
+
       const info = showPastAvgs ? matchupBracketInfo_(m) : { winner:"", a1:null, a2:null };
-      const w = info.winner;
-      const p1Win = w && w === norm(m.p1);
-      const p2Win = w && w === norm(m.p2);
+      const w = spoilersOn ? info.winner : "";
+      const p1Win = spoilersOn && w && w === norm(m.p1);
+      const p2Win = spoilersOn && w && w === norm(m.p2);
+
       const p1AvgTxt = showPastAvgs ? fmtAvg(info.a1) : "";
       const p2AvgTxt = showPastAvgs ? fmtAvg(info.a2) : "";
+
+      // Spoilers OFF: do not render (avg) on the label at all.
       const p1Label = `${String(m.p1 || "").trim()}${p1AvgTxt ? ` (${p1AvgTxt})` : ""}`;
       const p2Label = `${String(m.p2 || "").trim()}${p2AvgTxt ? ` (${p2AvgTxt})` : ""}`;
 
@@ -1702,13 +1781,17 @@
       area.appendChild(card);
     }
 
+    // Spoilers OFF: also hide eliminated list (it’s basically a giant “who lost” billboard).
+    if (!spoilersOn){
+      elim.innerHTML = "";
+    }
+
     applyYouRowsNow_();
   }
 
   function autoSizeRaceSelect_(sel){
     if(!sel) return;
 
-    // Create a hidden measurer once
     if(!autoSizeRaceSelect_._measurer){
       const s = document.createElement("span");
       s.style.position = "absolute";
@@ -1731,7 +1814,7 @@
     const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
     const paddingRight = parseFloat(cs.paddingRight) || 0;
 
-    const arrowSpace = 34; // space for dropdown arrow
+    const arrowSpace = 34;
 
     const width = Math.ceil(
       measurer.getBoundingClientRect().width +
@@ -1767,11 +1850,7 @@
       if (!raceData) {
         area.innerHTML = `
           <div style="padding:20px; font-weight:600; font-size:14px;">
-            THAT FUCKING RACE HASN’T HAPPENED YET, YOU IMPATIENT COCKSUCKER.<br><br>
-            The cars haven’t even rolled off the goddamn haulers — engines still cold as a dead hooker’s cunt — and you’re already in here screaming for results like a meth-riddled fanboy who bet his rent money on the wrong redneck.<br><br>
-            Calm the fuck down, you pathetic little bitch. Time is linear, not your personal fucktoy. Sit your ass down, crack a beer, and wait like the rest of us miserable bastards. You’ll survive…
-            probably. The weak ones usually eat the wall by lap 47 anyway.<br><br>
-            Raise Hell, Praise Dale.
+            That race isn’t in the data blob yet. Either it’s future, missing, or the spreadsheet gods are being petty.
           </div>
         `;
         return;
@@ -1779,19 +1858,24 @@
 
       await renderMatchupsInto_(raceData);
 
-      const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
-      if (eliminated.length > 0) {
-        let html = `<div class="elimTitle">Eliminated</div>`;
-      const myAll = await getMyMatchupsAllSnapshot();
+      // Eliminated list: renderMatchupsInto_ already hides it when spoilers are OFF.
+      if (spoilersOn_()){
+        const eliminated = Array.isArray(raceData.eliminated) ? raceData.eliminated : [];
+        if (eliminated.length > 0) {
+          let html = `<div class="elimTitle">Eliminated</div>`;
+          const myAll = await getMyMatchupsAllSnapshot();
 
-        eliminated.forEach(p => {
-          const entry = getEntryByName(myAll, p);
-          const picks = extractPicksFromMyEntry(entry);
-          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
-        });
+          eliminated.forEach(p => {
+            const entry = getEntryByName(myAll, p);
+            const picks = extractPicksFromMyEntry(entry);
+            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+          });
 
-        elim.innerHTML = html;
+          elim.innerHTML = html;
+        } else {
+          elim.innerHTML = "";
+        }
       } else {
         elim.innerHTML = "";
       }
@@ -1809,7 +1893,11 @@
       const safePlayers = Array.isArray(players) ? players : [];
       populatePlayerDropdowns(safePlayers);
       setWelcome();
-      await initRaceSelect_();   // <-- add this
+      await initRaceSelect_();
+
+      // Spoiler toggle init (after DOM exists)
+      initSpoilerToggle_();
+
       const last = String(localStorage.getItem(VIEW_KEY) || "").trim();
       const allowed = views.includes(last) ? last : "";
 
@@ -1821,13 +1909,12 @@
       console.log(e);
       setWelcome();
       await initRaceSelect_();
+      initSpoilerToggle_();
       showView("current");
     }
   }
 
   async function loadCurrent(){
-    const header = document.getElementById("currentHeader");
-    const sub = document.getElementById("currentSub");
     const area = document.getElementById("matchupsArea");
     const elim = document.getElementById("eliminatedArea");
 
@@ -1835,13 +1922,11 @@
     elim.innerHTML = "";
 
     try{
-      // Load the ALL-RACES blob from matchups.json (or fallback to API)
       const blob = (await getData_("matchups", "playerGetAllRaceMatchups")) || {};
       ALL_MATCHUPS = blob;
 
       await initRaceSelect_();
 
-      // Guard rails because humans and spreadsheets are unreliable
       if (!ALL_MATCHUPS || !ALL_MATCHUPS.current || !ALL_MATCHUPS.races) {
         area.innerHTML = "Matchups data malformed.";
         return;
@@ -1863,27 +1948,28 @@
         return;
       }
 
-      // Select dropdown to current
       setRaceSelectValue_(curT, curR);
 
-      // Render the race payload (single-race object)
       await renderMatchupsInto_(currentRaceData);
 
-      // Eliminated list (if any) for THIS race payload
-      const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
-      if (eliminated.length > 0) {
-        let html = `<div class="elimTitle">Eliminated</div>`;
+      // Eliminated list only when spoilers are ON.
+      if (spoilersOn_()){
+        const eliminated = Array.isArray(currentRaceData.eliminated) ? currentRaceData.eliminated : [];
+        if (eliminated.length > 0) {
+          let html = `<div class="elimTitle">Eliminated</div>`;
+          const myAll = await getMyMatchupsAllSnapshot();
 
-        const myAll = await getMyMatchupsAllSnapshot();
+          eliminated.forEach(p => {
+            const entry = getEntryByName(myAll, p);
+            const picks = extractPicksFromMyEntry(entry);
+            const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
+            html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
+          });
 
-        eliminated.forEach(p => {
-          const entry = getEntryByName(myAll, p);
-          const picks = extractPicksFromMyEntry(entry);
-          const meta = formatDriversOrNumbers(picks.drivers, picks.nums);
-          html += `<div class="elimItem">${escapeHtml(p)}${meta ? ` — ${escapeHtml(meta)}` : ``}</div>`;
-        });
-
-        elim.innerHTML = html;
+          elim.innerHTML = html;
+        } else {
+          elim.innerHTML = "";
+        }
       } else {
         elim.innerHTML = "";
       }
@@ -1915,7 +2001,7 @@
     const out = document.getElementById("mmStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
-    if (!name) { out.textContent = "Pick your name and click the button, dumbass."; return; }
+    if (!name) { out.textContent = "Pick your name first."; return; }
 
     savePlayerName(name);
     out.textContent = "Loading…";
@@ -1964,6 +2050,7 @@
 
       const youListHtml = youDriversArr.length ? youListText : escapeHtml(youListText);
 
+      // If not started / no opponent context, keep your existing behavior.
       if (!hasRealOpponent || !hasRealContext) {
         out.innerHTML = `
           <div class="microBox" style="margin-top:6px;">
@@ -2003,6 +2090,28 @@
       const youMeta = formatDriversOrNumbers(data.youDrivers, data.youNums);
       const oppMeta = formatDriversOrNumbers(data.oppDrivers, data.oppNums);
 
+      // Spoilers OFF: replace non-you microBox with shrug emoji.
+      if (!spoilersOn_()){
+        out.innerHTML = `
+          <div class="mmHeader">
+            Tourney ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
+          </div>
+
+          <div class="microBox youBox">
+            <div class="microTitle">${escapeHtml(data.you)}</div>
+            ${youMeta ? `<div class="microMeta">${escapeHtml(youMeta)}</div>` : ``}
+          </div>
+
+          <div class="centerVS">VS</div>
+
+          <div class="microBox" style="display:flex; align-items:center; justify-content:center; min-height:64px;">
+            <div style="font-size:34px; line-height:1;">🤷</div>
+          </div>
+        `;
+        return;
+      }
+
+      // Spoilers ON: normal rendering
       out.innerHTML = `
         <div class="mmHeader">
           Tourney ${escapeHtml(data.tournament)} · ${escapeHtml(data.race)} · Round ${escapeHtml(data.round)}
@@ -2026,9 +2135,22 @@
   }
 
   async function loadDues() {
-    const sel = document.getElementById("globalPlayer");
     const out = document.getElementById("duesStatus");
 
+    // Spoilers OFF: do not render dues at all.
+    if (!spoilersOn_()){
+      out.innerHTML = `
+        <div class="microBox" style="margin-top:6px;">
+          <div class="microTitle">Turn off spoilers to see this, dumbass.</div>
+          <div class="microMeta" style="color: var(--muted); font-weight:700;">
+            (It’s literally money. You’ll live.)
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const sel = document.getElementById("globalPlayer");
     const name = sel ? String(sel.value || "").trim() : "";
     if (!name) {
       out.textContent = "Pick your name first.";
@@ -2099,7 +2221,7 @@
   }
 
   /* =========================
-   * 9) Stats / Standings
+   * 10) Stats / Standings
    * ========================= */
   let _cache_standings = null;
   let _statsMode = "overall";
@@ -2169,6 +2291,25 @@
       const data = await getData_("standings", "playerGetStandings");
       _cache_standings = data || {};
 
+      // Spoilers OFF: do not render standings/tourney/h2h/wins. Keep driver usage only.
+      if (!spoilersOn_()){
+        area.innerHTML = `
+          <div class="microBox" style="margin-top:6px;">
+            <div class="microTitle">Spoilers are OFF</div>
+            <div class="microMeta" style="color: var(--muted); font-weight:700;">
+              Standings, tourney ranks, H2H, and wins are hidden because humans can’t behave.
+              Driver usage is still here because it doesn’t ruin anything.
+            </div>
+          </div>
+          <div class="statsPanel" id="statsPanel" style="margin-top:10px;"></div>
+        `;
+        const box = document.getElementById("statsPanel");
+        _statsMode = "drivers";
+        await renderDrivers_(box);
+        return;
+      }
+
+      // Normal (spoilers ON)
       area.innerHTML = `
         <div class="statsModes" id="statsModes">
           <button class="secondary" data-mode="overall">Standings</button>
@@ -2230,9 +2371,6 @@
       const name = r[nameKey] ?? "";
 
       const EXCLUDED_KEYS = new Set(["Matches"]);
-
-      // NOTE: getVal is unused right now. Leaving it for now (safe), but it’s clutter.
-      const getVal = (k) => r[k] ?? r[k?.toUpperCase?.()] ?? r[k?.toLowerCase?.()];
 
       const W = r["W"] ?? r["w"] ?? null;
       const L = r["L"] ?? r["l"] ?? null;
@@ -2341,16 +2479,6 @@
 
     html += `<div class="rankList">`;
 
-    const preferred = ["W","L","Avg","W%"];
-    const getKey = (obj, want) => Object.keys(obj).find(k => k.toLowerCase() === want.toLowerCase());
-
-    const sample = items[0] || {};
-    const badgeKeys = preferred
-      .map(w => getKey(sample, w))
-      .filter(Boolean);
-
-    const EXCLUDED_KEYS = new Set(["Matches"]);
-
     items.forEach((it, i) => {
       const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
       const name = it.player || "";
@@ -2397,7 +2525,7 @@
 
     box.innerHTML = `
       <div class="big">Head-to-Head</div>
-      <div class="muted">If not you, pick someone else, for fuck's sake.</div>
+      <div class="muted">If not you, pick someone else.</div>
       <div class="statsControls">
         <select id="h2hPick"></select>
       </div>
@@ -2560,11 +2688,25 @@
   }
 
   /* =========================
-   * 10) Bracket
+   * 11) Bracket
    * ========================= */
   async function loadBracket(){
     const sub = document.getElementById("bracketSub");
     const area = document.getElementById("bracketArea");
+
+    // Spoilers OFF: do not render bracket.
+    if (!spoilersOn_()){
+      sub.textContent = "Spoilers are OFF";
+      area.innerHTML = `
+        <div class="microBox" style="margin-top:6px;">
+          <div class="microTitle">Bracket hidden</div>
+          <div class="microMeta" style="color: var(--muted); font-weight:700;">
+            Turn spoilers back ON if you want the bracket.
+          </div>
+        </div>
+      `;
+      return;
+    }
 
     sub.textContent = "Loading…";
     area.innerHTML = "Loading…";
@@ -2629,10 +2771,7 @@
         (r.matchups || []).forEach(m => {
           const norm = (s) => String(s ?? "").trim().toLowerCase();
 
-          // winner might be "TIE" and the actual winner is stored elsewhere
           let winnerName = String(m.winner ?? "").trim();
-
-          // If winner is blank or explicitly a tie, fall back to common tiebreak fields
           if (!winnerName || /^tie$/i.test(winnerName)) {
             winnerName = String(
               m.tieBreakerWinner ??
@@ -2646,7 +2785,6 @@
             ).trim();
           }
 
-          // If your backend stores a side instead of a name (1/2), handle that too
           const winnerSide = (m.winnerSide ?? m.sideWinner ?? m.winnerIdx ?? null);
 
           const p1Name = String(m.p1 ?? "").trim();
@@ -2712,7 +2850,7 @@
   }
 
   /* =========================
-   * 11) Events / Init
+   * 12) Events / Init
    * ========================= */
   window.addEventListener("resize", () => {
     if (_statsMode !== "overall" && _statsMode !== "tourney") return;
@@ -2725,8 +2863,8 @@
 
   window.onload = () => {
     loadPlayersThenInit();
-
-    // Persist bottom nav scroll
     persistHScroll(".navInner", "nascar_nav_scroll");
   };
 </script>
+</body>
+</html>
