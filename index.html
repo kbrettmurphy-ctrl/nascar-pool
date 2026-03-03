@@ -262,8 +262,10 @@
 
   .pName{
   position: relative;
-  display: inline-block;     /* stays centered by the card’s text-align */
-  padding-right: 34px;       /* reserve space so WIN doesn’t overlap */
+  display: inline-block; /* shrink-wrap to the NAME only */
+  padding: 0;            /* no reserved space */
+  margin: 0;
+  line-height: 1.1;
 }
 
   .pMeta{
@@ -314,22 +316,32 @@
   background: rgba(22,163,74,.12);
 }
 
-/* name stays centered, pill doesn't push it */
-.nameWrap{
-  position: relative;
-  display: inline-block;  /* width = name only */
-}
-
-/* pill sits next to name without affecting centering */
-.nameWrap .winPill{
+/* pill should not affect centering */
+.pName .winPill{
   position: absolute;
-  left: 100%;
   top: 50%;
-  transform: translate(6px, -50%);
-  margin: 0;              /* kill any margin-left you had */
+  transform: translateY(-50%);
+  white-space: nowrap;
+  margin: 0;
 }
 
-  @media (max-width:600px){
+/* default: pill to the RIGHT of name (mobile/stacked view) */
+.pName .winPill{
+  left: 100%;
+  margin-left: 6px;
+}
+
+/* >=700px: right column pill goes inward (LEFT of name) */
+@media (min-width:700px){
+  .side.right .pName .winPill{
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-right: 6px;
+  }
+}
+
+  @media (max-width:700px){
     .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
     .side.right{ text-align:center; align-items:center; }
     .vsBadge{ margin:2px auto; }
