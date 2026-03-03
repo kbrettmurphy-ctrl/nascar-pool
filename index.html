@@ -1432,7 +1432,7 @@
         const t = r.tournament;
         const race = r.race;
         const round = r.round;
-        const label = `T${t} · ${roundLabel(round)} · ${race}`;
+        const label = `${race}`;
         return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
       }).join("") || `<option value="">No races</option>`;
 
