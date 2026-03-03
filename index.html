@@ -1600,12 +1600,17 @@
 
     // helper for winner lookup
     const norm = (s) => String(s ?? "").trim().toLowerCase();
+    const fmtAvg = (n) => {
+      const x = Number(n);
+      if (!Number.isFinite(x)) return "";
+      return x.toFixed(1).replace(/\.0$/, "");
+    };
     function matchupWinnerLower_(m){
       if(!roundObj?.matchups?.length) return "";
       const bm = roundObj.matchups.find(x =>
-        norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
-      );
-      return norm(bm?.winner);
+      norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
+    );
+    return norm(bm?.winner);
     }
 
     for (const m of (data.matchups || [])) {
@@ -1662,20 +1667,24 @@
 
       const leftMeta  = metaHtml_(m.p1Drivers, m.p1Nums);
       const rightMeta = metaHtml_(m.p2Drivers, m.p2Nums);
-
-      const w = matchupWinnerLower_(m);
+      const info = matchupBracketInfo_(m);
+      const w = info.winner;
       const p1Win = w && w === norm(m.p1);
       const p2Win = w && w === norm(m.p2);
+      const p1AvgTxt = fmtAvg(info.a1);
+      const p2AvgTxt = fmtAvg(info.a2);
+      const p1Label = `${String(m.p1 || "").trim()}${p1AvgTxt ? ` (${p1AvgTxt})` : ""}`;
+      const p2Label = `${String(m.p2 || "").trim()}${p2AvgTxt ? ` (${p2AvgTxt})` : ""}`;
 
       card.innerHTML = `
         <div class="matchupRow">
           <div class="side left">
-            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(m.p1)}</span>${p1Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(p1Label)}</span>${p1Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
             ${leftMeta ? `<div class="pMeta">${leftMeta}</div>` : ``}
           </div>
           <div class="vsBadge">VS</div>
           <div class="side right">
-            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(m.p2)}</span>${p2Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
+            <div class="pName"><span class="nameWrap"><span class="nameText">${escapeHtml(p2Label)}</span>${p2Win ? `<span class="winPill">WIN</span>` : ``}</span></div>
             ${rightMeta ? `<div class="pMeta">${rightMeta}</div>` : ``}
           </div>
         </div>
