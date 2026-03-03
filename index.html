@@ -347,16 +347,19 @@
   margin:0;
 }
 
-@media (max-width:700px){
-  .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
-  .side.right{ text-align:center; align-items:center; }
-  .vsBadge{ margin:2px auto; }
-  .pMeta{ white-space:normal; }
+/* >=700px: right column pill goes inward (left of the name) */
+@media (min-width:700px){
   .side.right .nameWrap .winPill{
     left:auto;
     right:100%;
     transform: translate(-6px, -50%);
   }
+}
+@media (max-width:700px){
+  .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
+  .side.right{ text-align:center; align-items:center; }
+  .vsBadge{ margin:2px auto; }
+  .pMeta{ white-space:normal; }
 }
 
   .elimItem{ font-size:14px; color: var(--muted); margin-top:4px; }
