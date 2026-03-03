@@ -1429,17 +1429,16 @@
   function applyYouRowsNow_(){
     const you = loadPlayerName().trim().toLowerCase();
 
-    // Current race matchup cards
+    // Current race matchup cards (uses dataset so WIN pill can't break it)
     document.querySelectorAll("#matchupsArea .matchupCard").forEach(card => {
-      const names = Array.from(card.querySelectorAll(".pName"))
-        .map(el => String(el.textContent || "").trim().toLowerCase())
-        .filter(Boolean);
-
-      const isYou = !!you && names.includes(you);
+      const isYou = !!you && (
+        (card.dataset.p1 || "") === you ||
+        (card.dataset.p2 || "") === you
+      );
       card.classList.toggle("youRow", isYou);
     });
 
-    // Standings rows (overall + tourney ranks use same layout)
+    // Standings rows
     document.querySelectorAll("#standingsArea .statsRow").forEach(row => {
       const nameEl = row.querySelector(".statsName");
       const nm = String(nameEl?.textContent || "").trim().toLowerCase();
@@ -1619,6 +1618,8 @@
         );
 
       card.className = "matchupCard" + (isYou ? " youRow" : "");
+      card.dataset.p1 = norm(m.p1);
+      card.dataset.p2 = norm(m.p2);
 
       function metaHtml_(driversArr, numsArr){
         const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
