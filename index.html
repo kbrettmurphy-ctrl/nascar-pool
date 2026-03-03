@@ -266,14 +266,25 @@
   font-size:15px;
   line-height:1.1;
   margin:0;
+
+  /* keep centering behavior */
+  position:relative;
+  display:inline-block;
+
+  /* KEY FIX: do NOT clip the pill */
+  overflow:visible;
+}
+
+.nameWrap{
+  position:relative;         /* pill anchor */
+  display:inline-block;
+  max-width:100%;
+
+  /* ellipsis belongs on the TEXT wrapper, not the pill container */
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-
-  /* pill anchor */
-  position:relative;
-  display:inline-block;   /* critical: width = text only, so centering is true centering */
-  padding:0;              /* IMPORTANT: remove the padding-right you added */
+  vertical-align:middle;
 }
   .pMeta{
     font-size:12px;
@@ -327,34 +338,17 @@
   left:100%;
   transform: translate(6px, -50%);
   white-space:nowrap;
-  margin:0;               /* kill any old margins */
-}
-
-
-/* pill should not affect centering */
-.pName .winPill{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  margin: 0;
-}
-
-/* default: pill to the RIGHT of name (mobile/stacked view) */
-.pName .winPill{
-  left: 100%;
-  margin-left: 6px;
+  margin:0;
 }
 
 /* >=700px: right column pill goes inward (left of the name) */
 @media (min-width:700px){
-  .side.right .pName .winPill{
+  .side.right .nameWrap .winPill{
     left:auto;
     right:100%;
     transform: translate(-6px, -50%);
   }
 }
-
   @media (max-width:700px){
     .matchupRow{ grid-template-columns:1fr; gap:6px; text-align:center; }
     .side.right{ text-align:center; align-items:center; }
