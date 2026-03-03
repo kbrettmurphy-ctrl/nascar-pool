@@ -260,14 +260,21 @@
   }
   .side.right{ text-align:right; align-items:flex-end; }
 
-  .pName{
-  position: relative;
-  display: inline-block; /* shrink-wrap to the NAME only */
-  padding: 0;            /* no reserved space */
-  margin: 0;
-  line-height: 1.1;
-}
+  /* --- Player name: keep original styling + allow absolute pill anchoring --- */
+.pName{
+  font-weight:900;
+  font-size:15px;
+  line-height:1.1;
+  margin:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 
+  /* pill anchor */
+  position:relative;
+  display:inline-block;   /* critical: width = text only, so centering is true centering */
+  padding:0;              /* IMPORTANT: remove the padding-right you added */
+}
   .pMeta{
     font-size:12px;
     color: var(--yellow);
@@ -301,8 +308,8 @@
     letter-spacing:0.4px;
   }
   
-  /* matchup winner pill */
-  .winPill{
+  /* --- WIN pill: absolutely positioned so it NEVER pushes name --- */
+.winPill{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -314,7 +321,15 @@
   color: var(--winnerGreen);
   border:1px solid rgba(22,163,74,.35);
   background: rgba(22,163,74,.12);
+
+  position:absolute;
+  top:50%;
+  left:100%;
+  transform: translate(6px, -50%);
+  white-space:nowrap;
+  margin:0;               /* kill any old margins */
 }
+
 
 /* pill should not affect centering */
 .pName .winPill{
@@ -331,13 +346,12 @@
   margin-left: 6px;
 }
 
-/* >=700px: right column pill goes inward (LEFT of name) */
+/* >=700px: right column pill goes inward (left of the name) */
 @media (min-width:700px){
   .side.right .pName .winPill{
-    left: auto;
-    right: 100%;
-    margin-left: 0;
-    margin-right: 6px;
+    left:auto;
+    right:100%;
+    transform: translate(-6px, -50%);
   }
 }
 
