@@ -956,7 +956,7 @@
     <!-- <select id="mmName" style="margin-top:10px;"></select> -->
 
     <!-- <button class="primary" onclick="loadMyMatchup()">Who am I losing to?</button> -->
-    <div id="mmStatus" class="mmWrap"></div> -->
+    <div id="mmStatus" class="mmWrap"></div>
   <!-- </div> -->
 
   <!-- STANDINGS -->
@@ -975,7 +975,7 @@
     <!-- <select id="duesName" style="margin-top:10px;"></select> -->
 
     <!-- <button class="primary" onclick="loadDues()">Show me the money</button> -->
-    <div id="duesStatus" class="mmWrap"></div> -->
+    <div id="duesStatus" class="mmWrap"></div>
   <!-- </div> -->
 
   <!-- BRACKET -->
@@ -1269,8 +1269,8 @@
 
   function clearSavedAndReset() {
     localStorage.removeItem(STORAGE_KEY);
-    const mm = document.getElementById("globalPlayer")
-    const dd = document.getElementById("globalPlayer")
+    const gp = document.getElementById("globalPlayer");
+    if (gp) gp.value = "";
     if (mm) mm.value = "";
     if (dd) dd.value = "";
     setWelcome();
@@ -1303,36 +1303,26 @@
   }
 
   function populatePlayerDropdowns(playerList) {
-    const mm = document.getElementById("mmName");
-    const dd = document.getElementById("duesName");
+    const gp = document.getElementById("globalPlayer");
+    if (!gp) return;
 
     const options = [`<option value="">Who the fuck are you?</option>`]
       .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
       .join("");
 
-    if (mm) mm.innerHTML = options;
-    if (dd) dd.innerHTML = options;
-
+    gp.innerHTML = options;
+  
     const saved = loadPlayerName();
-    if (saved) {
-      if (mm) mm.value = saved;
-      if (dd) dd.value = saved;
-    }
+    if (saved) gp.value = saved;
 
-    if (mm) mm.onchange = () => {
-      if (mm.value) {
-        savePlayerName(mm.value);
-        if (dd) dd.value = mm.value;
-        loadMyMatchup();
-      }
-    };
+    gp.onchange = () => {
+      const name = gp.value;
+      if (!name) return;
 
-    if (dd) dd.onchange = () => {
-      if (dd.value) {
-        savePlayerName(dd.value);
-        if (mm) mm.value = dd.value;
-        loadDues();
-      }
+      savePlayerName(name);
+
+      if (activeView === "mymatchup") loadMyMatchup();
+      if (activeView === "dues") loadDues();
     };
   }
 
@@ -1777,7 +1767,7 @@
   }
 
   async function loadMyMatchup() {
-    const sel = document.getElementById("mmName");
+    const sel = document.getElementById("globalPlayer");
     const out = document.getElementById("mmStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
@@ -1892,7 +1882,7 @@
   }
 
   async function loadDues() {
-    const sel = document.getElementById("duesName");
+    const sel = document.getElementById("globalPlayer");
     const out = document.getElementById("duesStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
