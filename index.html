@@ -1605,12 +1605,17 @@
       if (!Number.isFinite(x)) return "";
       return x.toFixed(1).replace(/\.0$/, "");
     };
-    function matchupWinnerLower_(m){
-      if(!roundObj?.matchups?.length) return "";
+    
+    function matchupBracketInfo_(m){
+      if(!roundObj?.matchups?.length) return { winner:"", a1:null, a2:null };
       const bm = roundObj.matchups.find(x =>
-      norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
-    );
-    return norm(bm?.winner);
+        norm(x?.p1) === norm(m?.p1) && norm(x?.p2) === norm(m?.p2)
+      );
+      return {
+        winner: norm(bm?.winner),
+        a1: (bm?.a1 ?? null),
+        a2: (bm?.a2 ?? null),
+      };
     }
 
     for (const m of (data.matchups || [])) {
