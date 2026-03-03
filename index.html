@@ -922,7 +922,7 @@
   <div id="view-current" class="card" style="display:none;">
     <div class="raceHeaderRow">
       <div id="currentHeader">Current Race</div>
-      <select id="raceSelect" style="width:auto; min-width:220px; max-width:340px;"></select>
+      <select id="raceSelect" style="width:auto";></select>
     </div>
     <div class="muted" id="currentSub"></div>
     <div id="matchupsArea" style="margin-top:10px;"></div>
@@ -1423,6 +1423,7 @@
     if(!sel) return;
 
     sel.innerHTML = `<option value="">Loading races...</option>`;
+    autoSizeRaceSelect_(sel);
 
     try{
       const list = await getData_("raceList", "playerGetRaceList");
@@ -1435,6 +1436,8 @@
         const label = `${race}`;
         return `<option value="${escapeHtml(raceKey_(t, race))}">${escapeHtml(label)}</option>`;
       }).join("") || `<option value="">No races</option>`;
+
+      autoSizeRaceSelect_(sel);
 
       sel.addEventListener("change", () => {
         if(_raceSelectIsProgrammatic) return;
@@ -1498,6 +1501,44 @@
     });
   }
 
+  function autoSizeRaceSelect_(sel){
+    if(!sel) return;
+
+    // Create a hidden measurer once
+    if(!autoSizeRaceSelect_._measurer){
+      const s = document.createElement("span");
+      s.style.position = "absolute";
+      s.style.top = "-9999px";
+      s.style.left = "-9999px";
+      s.style.whiteSpace = "pre";
+      document.body.appendChild(s);
+      autoSizeRaceSelect_._measurer = s;
+    }
+
+    const measurer = autoSizeRaceSelect_._measurer;
+
+    const cs = getComputedStyle(sel);
+    measurer.style.font = cs.font;
+    measurer.style.letterSpacing = cs.letterSpacing;
+
+    const text = sel.options[sel.selectedIndex]?.text || "";
+    measurer.textContent = text;
+
+    const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
+    const paddingRight = parseFloat(cs.paddingRight) || 0;
+
+    const arrowSpace = 34; // space for dropdown arrow
+
+    const width = Math.ceil(
+      measurer.getBoundingClientRect().width +
+      paddingLeft +
+      paddingRight +
+      arrowSpace
+    );
+
+    sel.style.width = width + "px";
+  }
+    
   async function loadSelectedRace_(){
     const sel = document.getElementById("raceSelect");
     const area = document.getElementById("matchupsArea");
@@ -1612,6 +1653,7 @@
 
       // Select dropdown to current
       setRaceSelectValue_(curT, curR);
+      autoSizeRaceSelect_(document.getElementById("raceSelect"));
 
       // Render the race payload (single-race object)
       renderMatchupsInto_(currentRaceData);
