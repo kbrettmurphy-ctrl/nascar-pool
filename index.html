@@ -1774,13 +1774,7 @@
         <div class="microBox" style="margin-top:10px;">
           <div class="microTitle">Spoilers are OFF</div>
           <div class="microMeta" style="color: var(--muted); font-weight:700;">
-            Spoilers are OFF, you fragile fantasy princess.<br><br>
-      Current matchups? Hidden like a crew chief's real strategy sheet.<br><br>
-      This is the default page, dipshit—pick a race that's already wrecked, finished, and posted from the dropdown if you want to see who your drivers are up against.<br><br>
-      We're not spoiling the live action just because you DVR'd the race or were too busy pretending to work to watch the Big One turn the field into scrap metal.<br><br>
-      Some of us still like the thrill of not knowing if your pick survived the restart carnage or got parked on lap 12 thanks to fuel mileage roulette.<br><br>
-      Quit hammering refresh like it's going to magically un-hide the results. Go select a completed race, or sit tight and pretend the caution didn't just fuck your entire lineup.<br><br>
-      The checkered flag drops when it drops. Not when your patience does.
+            Current race matchups are hidden. Pick a past race (or a future one) from the dropdown.
           </div>
         </div>
       `;
@@ -2128,12 +2122,7 @@
     const out = document.getElementById("mmStatus");
 
     const name = sel ? String(sel.value || "").trim() : "";
-    if (!name) { out.textContent = "Pick your damn name first, you anonymous ghost.<br><br>
-      We can't show your pathetic stats, overdue dues, your sad matchups, or even highlight your sorry ass in the full-field view until you select who the hell you are from the dropdown.<br><br>
-      This ain't the pace car parade—nobody's waiting on your indecisive ass to drop the green.<br><br>
-      Without a name, you're just another random dipshit in the grandstands yelling at the TV like your fantasy pick didn't just get taken out in the Big One on lap 47.<br><br>
-      Click a name already. Or keep lurking like a crew chief hiding bad fuel strategy notes. Your call, but the leaderboard ain't gonna populate itself.<br><br>
-      Select or GTFO. The checkered flag waits for no one... especially not you."; return; }
+    if (!name) { out.textContent = "Pick your name first."; return; }
 
     savePlayerName(name);
     out.textContent = "Loading…";
@@ -2273,14 +2262,9 @@
     if (!spoilersOn_()){
       out.innerHTML = `
         <div class="microBox" style="margin-top:6px;">
-          <div class="microTitle">Turn off spoilers to see this, you broke-ass crybaby.<br><br>
-      It’s literally dues—money you owe because your fantasy picks wrecked harder than a backmarker on pit road.<br><br>
-      We’re not flashing your overdue balance while the race is live just so you can whine in the chat that “the Big One cost me everything” before the checkered even drops.<br><br>
-      Some of us are still pretending the caution didn’t fuck the entire playoff chase and your wallet at the same time.<br><br>
-      Flip the spoiler switch, see how much you’re bleeding cash, pay up like a grown-ass adult, and quit acting like seeing your own tab is worse than watching your driver get turned on a restart.<br><br>
-      You’ll live. Your bank account might not, but that’s between you and Venmo.</div>
+          <div class="microTitle">Turn off spoilers to see this, dumbass.</div>
           <div class="microMeta" style="color: var(--muted); font-weight:700;">
-            Spoilers off = dues visible. Simple as that, dipshit.
+            (It’s literally money. You’ll live.)
           </div>
         </div>
       `;
@@ -2290,12 +2274,7 @@
     const sel = document.getElementById("globalPlayer");
     const name = sel ? String(sel.value || "").trim() : "";
     if (!name) {
-      out.textContent = "Pick your damn name first, you anonymous ghost.<br><br>
-      We can't show your pathetic stats, overdue dues, your sad matchups, or even highlight your sorry ass in the full-field view until you select who the hell you are from the dropdown.<br><br>
-      This ain't the pace car parade—nobody's waiting on your indecisive ass to drop the green.<br><br>
-      Without a name, you're just another random dipshit in the grandstands yelling at the TV like your fantasy pick didn't just get taken out in the Big One on lap 47.<br><br>
-      Click a name already. Or keep lurking like a crew chief hiding bad fuel strategy notes. Your call, but the leaderboard ain't gonna populate itself.<br><br>
-      Select or GTFO. The checkered flag waits for no one... especially not you.";
+      out.textContent = "Pick your name first.";
       return;
     }
 
@@ -2439,11 +2418,8 @@
           <div class="microBox" style="margin-top:6px;">
             <div class="microTitle">Spoilers are OFF</div>
             <div class="microMeta" style="color: var(--muted); font-weight:700;">
-              Standings? Tourney ranks? Head-to-head? Wins? All buried deeper than a wrecked car in the Turn 4 wall after the Big One.<br><br>
-      Humans can't behave—someone always screenshots the leaderboard, spoils the playoff bubble for the guy who DVR'd the race, or ruins the surprise that your driver's stage points just got wiped out by a caution-lap bullshit fest.<br><br>
-      Driver usage is still here because knowing who the field picked doesn't ruin the magic of watching your fantasy lineup get fucked on a late-race restart.<br><br>
-      If you're that desperate to see how badly you're losing, pick a completed race from the dropdown like the rest of us. Until then, enjoy the ignorance—it's the only thing keeping half this pool from rage-quitting.<br><br>
-      The checkered flag doesn't care about your fragile feelings. Neither do we.
+              Standings, tourney ranks, H2H, and wins are hidden because humans can’t behave.
+              Driver usage is still here because it doesn’t ruin anything.
             </div>
           </div>
           <div class="statsPanel" id="statsPanel" style="margin-top:10px;"></div>
