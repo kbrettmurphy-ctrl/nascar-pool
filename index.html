@@ -1532,11 +1532,36 @@
   }
 
   function setWelcome() {
-    const w = document.getElementById("welcomeName");
-    const name = loadPlayerName();
-    if (!w) return;
-    w.textContent = name ? `Fuck, it's ${name}?` : "Who the fuck are you?";
+  const w = document.getElementById("welcomeName");
+  const name = loadPlayerName();
+  if (!w) return;
+
+  const messages = {
+    "Beau": "Helleau, Beau.",
+    "Bob": "Nebraska sucks 🤘🏻",
+    "Brett": "Hey, commish!",
+    "Chris": "Hello Edward",
+    "Don": "Sloan Broadwell!",
+    "Jason": "You're still here?",
+    "Justin": "Hi, Brett's brother",
+    "Nate C.": "Earl's gotta die!",
+    "Nate M.": "Jeffrey Dexter Boomhauer III",
+    "Nick": "Got syrup?",
+    "Pat": "Go inspect something",
+    "Rob": "Aye, Aye Capt 🫡",
+    "Russ": "DSI President",
+    "Stacy": "East bound and down!",
+    "Steven": "I need Velo's!",
+    "Tyler": "Navel Bush, huh?"
+  };
+
+  if (!name) {
+    w.textContent = "Select your name to begin.";
+    return;
   }
+
+  w.textContent = messages[name] || `Welcome ${name}.`;
+}
 
   function escapeHtml(s) {
     return String(s ?? "")
