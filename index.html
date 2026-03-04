@@ -1514,7 +1514,12 @@
     localStorage.removeItem(STORAGE_KEY);
 
     const gp = document.getElementById("globalPlayer");
-    if (gp) gp.value = "";
+if (gp) {
+  const ph = gp.querySelector("#playerPlaceholder");
+  if (ph) ph.hidden = false;  // show placeholder again since name is cleared
+  gp.value = "";
+  autoSizePlayerSelect_(gp);
+}
 
     setWelcome();
 
@@ -1582,29 +1587,53 @@
   }
 
   function populatePlayerDropdowns(playerList) {
-    const gp = document.getElementById("globalPlayer");
+  const gp = document.getElementById("globalPlayer");
+  if (!gp) return;
 
-    const options = [`<option value="">Who the fuck are you?</option>`]
-      .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
-      .join("");
-    if (gp) gp.innerHTML = options;
+  // Placeholder exists, but is disabled (not selectable).
+  // We'll show it ONLY when there is no saved player.
+  const options = [
+    `<option value="" id="playerPlaceholder" disabled>Who the fuck are you?</option>`
+  ]
+    .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
+    .join("");
 
-    const saved = loadPlayerName();
-    if (saved && gp) gp.value = saved;
+  gp.innerHTML = options;
 
-    if (gp) gp.onchange = () => {
-      const name = String(gp.value || "").trim();
-      if (!name) return;
+  const ph = gp.querySelector("#playerPlaceholder");
+  const saved = loadPlayerName();
 
-      savePlayerName(name);
-      setWelcome();
-
-      applyYouRowsNow_();
-
-      if (activeView === "mymatchup") loadMyMatchup();
-      if (activeView === "dues") loadDues();
-    };
+  if (saved) {
+    gp.value = saved;
+    if (ph) ph.hidden = true;   // hide placeholder from dropdown list once we have a saved name
+  } else {
+    gp.value = "";
+    if (ph) {
+      ph.hidden = false;        // show placeholder only when nothing is saved
+      ph.selected = true;
+    }
   }
+
+  autoSizePlayerSelect_(gp);
+
+  gp.onchange = () => {
+    const name = String(gp.value || "").trim();
+    if (!name) return;
+
+    // once a real name is chosen, hide placeholder so only players are in the list
+    if (ph) ph.hidden = true;
+
+    savePlayerName(name);
+    setWelcome();
+
+    applyYouRowsNow_();
+
+    autoSizePlayerSelect_(gp);
+
+    if (activeView === "mymatchup") loadMyMatchup();
+    if (activeView === "dues") loadDues();
+  };
+}
 
   function formatDriversOrNumbers(driversArr, numsArr){
     const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
@@ -1976,7 +2005,47 @@
 
     sel.style.width = width + "px";
   }
+  
+  function autoSizePlayerSelect_(sel){
+  if(!sel) return;
 
+  let measurer = document.getElementById("__playerSelectMeasurer");
+  if(!measurer){
+    measurer = document.createElement("span");
+    measurer.id = "__playerSelectMeasurer";
+    measurer.style.position = "absolute";
+    measurer.style.visibility = "hidden";
+    measurer.style.whiteSpace = "pre";
+    measurer.style.left = "-9999px";
+    measurer.style.top = "-9999px";
+    document.body.appendChild(measurer);
+  }
+
+  const cs = getComputedStyle(sel);
+
+  // match the select's font so the measurement is accurate
+  measurer.style.fontFamily = cs.fontFamily;
+  measurer.style.fontSize = cs.fontSize;
+  measurer.style.fontWeight = cs.fontWeight;
+  measurer.style.letterSpacing = cs.letterSpacing;
+
+  const text = sel.options[sel.selectedIndex]?.text || "";
+  measurer.textContent = text;
+
+  const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
+  const paddingRight = parseFloat(cs.paddingRight) || 0;
+
+  const arrowSpace = 34;
+
+  const width = Math.ceil(
+    measurer.getBoundingClientRect().width +
+    paddingLeft +
+    paddingRight +
+    arrowSpace
+  );
+
+  sel.style.width = width + "px";
+}
   async function loadSelectedRace_(){
     const sel = document.getElementById("raceSelect");
     const area = document.getElementById("matchupsArea");
