@@ -2597,61 +2597,67 @@ if (gp) {
   }
 
   function showDuesNag_(opts){
-    ensureDuesNagStyles_();
-    closeDuesNag_();
+  ensureDuesNagStyles_();
+  closeDuesNag_();
 
-    const {
-      name,
-      required,
-      paid,
-      behind,
-      raceDisplay
-    } = opts;
+  const {
+    name,
+    required,
+    paid,
+    winnings,
+    effectivePaid,
+    behind,
+    raceDisplay
+  } = opts;
 
-    const overlay = document.createElement("div");
-    overlay.id = "duesNagOverlay";
-    overlay.className = "duesNagOverlay";
-    overlay.addEventListener("click", (e) => {
-      if(e.target === overlay) closeDuesNag_();
-    });
+  const overlay = document.createElement("div");
+  overlay.id = "duesNagOverlay";
+  overlay.className = "duesNagOverlay";
+  overlay.addEventListener("click", (e) => {
+    if(e.target === overlay) closeDuesNag_();
+  });
 
-    // Optional image: swap src to whatever you want (or delete the <img> line)
-    const imgSrc = ""; // e.g. "buschlight.png" or "your-annoying-image.png"
+  // Optional image: set this to a real path if you want an image.
+  // Example: const imgSrc = "img/pay-dues.png";
+  const imgSrc = "";
 
-    overlay.innerHTML = `
-      <div class="duesNagCard" role="dialog" aria-modal="true" aria-label="Dues reminder">
-        <div class="duesNagTitle">Pay your damn dues, ${escapeHtml(name)}.</div>
-        <div class="duesNagBody">
-          Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
-          Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
-          You’ve paid: <b>$${Number(paid).toFixed(2)}</b><br/>
-          You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
-        </div>
+  overlay.innerHTML = `
+    <div class="duesNagCard" role="dialog" aria-modal="true" aria-label="Dues reminder">
+      <div class="duesNagTitle">Pay your damn dues, ${escapeHtml(name)}.</div>
 
-        ${imgSrc ? `<img class="duesNagImg" src="${escapeAttr(imgSrc)}" alt="Pay your dues">` : ``}
-
-        <div class="duesNagFinePrint">
-          This pops up once per race until you catch up. Yes, it’s petty. That’s the point.
-        </div>
-
-        <div class="duesNagRow">
-          <button class="duesNagBtn ghost" id="duesNagCloseBtn" type="button">I hate this</button>
-          <button class="duesNagBtn primary" id="duesNagViewBtn" type="button">Take me to Dues</button>
-        </div>
+      <div class="duesNagBody">
+        Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
+        Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
+        Cash paid: <b>$${Number(paid).toFixed(2)}</b><br/>
+        Winnings credit: <b>$${Number(winnings).toFixed(2)}</b><br/>
+        Paid + credit: <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
+        You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
       </div>
-    `;
 
-    document.body.appendChild(overlay);
+      ${imgSrc ? `<img class="duesNagImg" src="${escapeAttr(imgSrc)}" alt="Pay your dues">` : ``}
 
-    const closeBtn = document.getElementById("duesNagCloseBtn");
-    const duesBtn  = document.getElementById("duesNagViewBtn");
+      <div class="duesNagFinePrint">
+        This pops up once per race until you catch up. Yes, it’s petty. That’s the point.
+      </div>
 
-    if(closeBtn) closeBtn.onclick = closeDuesNag_;
-    if(duesBtn) duesBtn.onclick = () => {
-      closeDuesNag_();
-      showView("dues");
-    };
-  }
+      <div class="duesNagRow">
+        <button class="duesNagBtn ghost" id="duesNagCloseBtn" type="button">I hate this</button>
+        <button class="duesNagBtn primary" id="duesNagViewBtn" type="button">Take me to Dues</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const closeBtn = document.getElementById("duesNagCloseBtn");
+  const duesBtn  = document.getElementById("duesNagViewBtn");
+
+  if(closeBtn) closeBtn.onclick = closeDuesNag_;
+  if(duesBtn) duesBtn.onclick = () => {
+    closeDuesNag_();
+    showView("dues");
+  };
+}
 
   async function checkDuesNag_(){
     try{
@@ -2685,9 +2691,12 @@ if (gp) {
       // Pull dues record for this player
       const data = await getData_("dues", "playerGetDues", { name });
       const paid = Number(data?.paid ?? 0);
+      const winnings = Number(data?.winnings ?? 0);
 
-      // Only nag if they're behind the "to current race" amount
-      const behind = required - paid;
+      // “Paid up to current race” can be satisfied by cash OR winnings credit.
+      const effectivePaid = paid + winnings;
+
+      const behind = required - effectivePaid;
       if(!(behind > 0.0001)) return;
 
       // Mark seen immediately (so refresh spam doesn't re-open it)
@@ -2696,7 +2705,7 @@ if (gp) {
       // Nice display label for current race (use ALL_MATCHUPS current race string)
       const raceDisplay = ALL_MATCHUPS?.current?.race || "";
 
-      showDuesNag_({ name, required, paid, behind, raceDisplay });
+      showDuesNag_({ name, required, paid, winnings, effectivePaid, behind, raceDisplay });
     }catch(e){
       // Silent fail. A nag popup should never break the site.
       console.log("checkDuesNag_ failed:", e);
