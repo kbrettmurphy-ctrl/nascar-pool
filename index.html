@@ -2000,7 +2000,9 @@
 
       if (!raceData) {
         area.innerHTML = `
-          <div style="padding:20px; font-weight:700; color: var(--muted); font-size:14px;">
+          <div class="microBox" style="margin-top:10px;">
+          <div class="microTitle">Back to the future?</div>
+          <div class="microMeta" style="color: var(--muted); font-weight:700;">
             This race ain’t even fuckin’ started, you mouth-breathin’ dipshit.<br><br>
       The haulers are still sittin’ in the lot, tires ain’t even warm, drivers are prolly still 
       scratchin’ their balls and arguin’ over who gets the last Moon Pie, and your dumb redneck 
@@ -2011,8 +2013,10 @@
       carcass down. The checkered flag don’t give a rat’s ass about your toddler tantrum.<br><br>
       We’ll let ya know when the real men finish racin’. Until then… shut the entire fuck up.
           </div>
-        `;
-        return;
+        </div>
+      `;
+      elim.innerHTML = "";
+      return;
       }
 
       await renderMatchupsInto_(raceData);
