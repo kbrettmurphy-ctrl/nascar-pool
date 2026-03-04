@@ -302,26 +302,27 @@
    * 3.6) SPOILER TOGGLE (dedicated section, because we’re civilized)
    * ========================= */
   .spoilerToggle{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 6px;
-    border-radius:12px;
-    background: rgba(0,122,194,.16);
-    border:1px solid var(--line);
-    color: var(--text);
-    cursor:pointer;
-    position:relative;
-    padding-right:54px;
-  }
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 6px;
+  border-radius:12px;
+  background: rgba(0,122,194,.16);
+  border:1px solid var(--line);
+  color: var(--text);
+  cursor:pointer;
+
+  position:relative;   /* anchor for absolute children */
+}
 
   .spoilerToggle .label{
     font-weight:900;
+    margin-right:42px;
   }
 
   .spoilerToggle .track{
   position:absolute;
-  right:6px;              /* where it sits in the button */
+  /* right:6px;              /* where it sits in the button */
   top:50%;
   transform:translateY(-50%);
   width:42px;
