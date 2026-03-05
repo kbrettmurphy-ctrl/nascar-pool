@@ -328,9 +328,6 @@
     border-radius:999px;
     background: rgba(0,0,0,.35);
     border:1px solid var(--line);
-    display:grid;
-    grid-template-columns:1fr 18px; /* text area + thumb area */
-    align-items:center;
     overflow:hidden; /* <-- keeps ON/OFF inside the pill */
   }
 
@@ -341,26 +338,31 @@
     width:14px;
     height:14px;            /* taller */
     border-radius:999px;
-    z-index:2;
   }
 
   .spoilerToggle .state{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
     font-weight:900;
     font-size:11px;
     letter-spacing:.3px;
     pointer-events:none;
+    padding:0 6px;
     line-height:1;
-    justify-self:start;
-    padding-left:4px;
   }
 
-  .spoilerToggle[aria-checked="false"] .track{
-    grid-template-columns:18px 1fr;
+  /* thumb right => text left */
+  .spoilerToggle[aria-checked="true"] .state{
+    justify-content:flex-start;
+    padding-right:20px; /* reserve space so text doesn't go under the thumb */
   }
 
+  /* thumb left => text right */
   .spoilerToggle[aria-checked="false"] .state{
-    justify-self:end;
-    padding-right:4px;
+    justify-content:flex-end;
+    padding-left:20px; /* reserve space so text doesn't go under the thumb */
   }  
 
   /* =========================
