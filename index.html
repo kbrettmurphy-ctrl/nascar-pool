@@ -314,17 +314,6 @@
     cursor:pointer;
   }
 
-  /* ON → thumb right → text left */
-  .spoilerToggle[aria-checked="true"] .state{
-    left:6px;
-    right:auto;
-  }
-
-  /* OFF → thumb left → text right */
-  .spoilerToggle[aria-checked="false"] .state{
-    right:6px;
-    left:auto;
-  }  
   /* remove this entirely */
   /* .spoilerToggle .label{ margin-right:42px; } */
 
@@ -360,6 +349,18 @@
     pointer-events:none;
     transition:left .15s ease, right .15s ease;
   }
+
+  /* ON → thumb right → text left */
+  .spoilerToggle[aria-checked="true"] .state{
+    left:6px;
+    right:auto;
+  }
+
+  /* OFF → thumb left → text right */
+  .spoilerToggle[aria-checked="false"] .state{
+    right:6px;
+    left:auto;
+  }  
 
   /* =========================
    * 4) CURRENT RACE VIEW
