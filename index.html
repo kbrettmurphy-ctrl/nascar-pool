@@ -302,41 +302,41 @@
    * 3.6) SPOILER TOGGLE (dedicated section, because we’re civilized)
    * ========================= */
   .spoilerToggle{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 10px;
-  height:30px;            /* lock button height */
-  border-radius:12px;
-  background: rgba(0,122,194,.16);
-  border:1px solid var(--line);
-  color: var(--text);
-  cursor:pointer;
-}
-/* remove this entirely */
-/* .spoilerToggle .label{ margin-right:42px; } */
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 10px;
+    height:30px;            /* lock button height */
+    border-radius:12px;
+    background: rgba(0,122,194,.16);
+    border:1px solid var(--line);
+    color: var(--text);
+    cursor:pointer;
+  }
+  /* remove this entirely */
+  /* .spoilerToggle .label{ margin-right:42px; } */
 
-.spoilerToggle .label{
-  font-weight:900;
-}
+  .spoilerToggle .label{
+    font-weight:900;
+  }
 
-.spoilerToggle .track{
-  position:relative;
-  width:42px;
-  height:20px;            /* taller */
-  border-radius:999px;
-  background: rgba(0,0,0,.35);
-  border:1px solid var(--line);
-}
+  .spoilerToggle .track{
+    position:relative;
+    width:42px;
+    height:20px;            /* taller */
+    border-radius:999px;
+    background: rgba(0,0,0,.35);
+    border:1px solid var(--line);
+  }
 
   .spoilerToggle .thumb{
-  position:absolute;
-  top:2px;
-  left:3px;
-  width:14px;
-  height:14px;            /* taller */
-  border-radius:999px;
-}
+    position:absolute;
+    top:2px;
+    left:3px;
+    width:14px;
+    height:14px;            /* taller */
+    border-radius:999px;
+  }
 
   .spoilerToggle .state{
     margin-left:auto; 
@@ -1514,12 +1514,12 @@
     localStorage.removeItem(STORAGE_KEY);
 
     const gp = document.getElementById("globalPlayer");
-if (gp) {
-  const ph = gp.querySelector("#playerPlaceholder");
-  if (ph) ph.hidden = false;  // show placeholder again since name is cleared
-  gp.value = "";
-  autoSizePlayerSelect_(gp);
-}
+    if (gp) {
+      const ph = gp.querySelector("#playerPlaceholder");
+      if (ph) ph.hidden = false;  // show placeholder again since name is cleared
+      gp.value = "";
+      autoSizePlayerSelect_(gp);
+    }
 
     setWelcome();
 
@@ -1537,36 +1537,36 @@ if (gp) {
   }
 
   function setWelcome() {
-  const w = document.getElementById("welcomeName");
-  const name = loadPlayerName();
-  if (!w) return;
+    const w = document.getElementById("welcomeName");
+    const name = loadPlayerName();
+    if (!w) return;
 
-  const messages = {
-    "Beau": "Helleau, Beau.",
-    "Bob": "Nebraska sucks 🤘🏻",
-    "Brett": "Hey, commish!",
-    "Chris": "Hello, Edward.",
-    "Don": "Sloan Broadwell!",
-    "Jason": "You're still here?",
-    "Justin": "Hi, Brett's brother.",
-    "Nate C.": "Earl's gotta die!",
-    "Nate M.": "Ol' Boomhauer",
-    "Nick": "Got syrup?",
-    "Pat": "Go inspect something.",
-    "Rob": "Aye, Aye Capt 🫡",
-    "Russ": "DSI President",
-    "Stacy": "East bound and down!",
-    "Steven": "I need Velo's!",
-    "Tyler": "Navel Bush, huh?"
-  };
+    const messages = {
+      "Beau": "Helleau, Beau.",
+      "Bob": "Nebraska sucks 🤘🏻",
+      "Brett": "Hey, commish!",
+      "Chris": "Hello, Edward.",
+      "Don": "Sloan Broadwell!",
+      "Jason": "You're still here?",
+      "Justin": "Hi, Brett's brother.",
+      "Nate C.": "Earl's gotta die!",
+      "Nate M.": "Ol' Boomhauer",
+      "Nick": "Got syrup?",
+      "Pat": "Go inspect something.",
+      "Rob": "Aye, Aye Capt 🫡",
+      "Russ": "DSI President",
+      "Stacy": "East bound and down!",
+      "Steven": "I need Velo's!",
+      "Tyler": "Navel Bush, huh?"
+    };
 
-  if (!name) {
-    w.textContent = "👻";
-    return;
+    if (!name) {
+      w.textContent = "👻";
+      return;
+    }
+
+    w.textContent = messages[name] || `Welcome ${name}.`;
   }
-
-  w.textContent = messages[name] || `Welcome ${name}.`;
-}
 
   function escapeHtml(s) {
     return String(s ?? "")
@@ -1587,54 +1587,52 @@ if (gp) {
   }
 
   function populatePlayerDropdowns(playerList) {
-  const gp = document.getElementById("globalPlayer");
-  if (!gp) return;
+    const gp = document.getElementById("globalPlayer");
+    if (!gp) return;
 
-  // Placeholder exists, but is disabled (not selectable).
-  // We'll show it ONLY when there is no saved player.
-  const options = [
-    `<option value="" id="playerPlaceholder" disabled>Who the fuck are you?</option>`
-  ]
-    .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
-    .join("");
+    // Placeholder exists, but is disabled (not selectable).
+    // We'll show it ONLY when there is no saved player.
+    const options = [
+      `<option value="" id="playerPlaceholder" disabled>Who the fuck are you?</option>`
+    ]
+      .concat(playerList.map(n => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`))
+      .join("");
 
-  gp.innerHTML = options;
+    gp.innerHTML = options;
 
-  const ph = gp.querySelector("#playerPlaceholder");
-  const saved = loadPlayerName();
+    const ph = gp.querySelector("#playerPlaceholder");
+    const saved = loadPlayerName();
 
-  if (saved) {
-    gp.value = saved;
-    if (ph) ph.hidden = true;   // hide placeholder from dropdown list once we have a saved name
-  } else {
-    gp.value = "";
-    if (ph) {
-      ph.hidden = false;        // show placeholder only when nothing is saved
-      ph.selected = true;
+    if (saved) {
+      gp.value = saved;
+      if (ph) ph.hidden = true;   // hide placeholder from dropdown list once we have a saved name
+    } else {
+      gp.value = "";
+      if (ph) {
+        ph.hidden = false;        // show placeholder only when nothing is saved
+        ph.selected = true;
+      }
     }
-  }
-
-  autoSizePlayerSelect_(gp);
-
-  gp.onchange = () => {
-    const name = String(gp.value || "").trim();
-    if (!name) return;
-
-    // once a real name is chosen, hide placeholder so only players are in the list
-    if (ph) ph.hidden = true;
-
-    savePlayerName(name);
-    setWelcome();
-    checkDuesNag_();
-
-    applyYouRowsNow_();
 
     autoSizePlayerSelect_(gp);
 
-    if (activeView === "mymatchup") loadMyMatchup();
-    if (activeView === "dues") loadDues();
-  };
-}
+    gp.onchange = () => {
+      const name = String(gp.value || "").trim();
+      if (!name) return;
+
+      // once a real name is chosen, hide placeholder so only players are in the list
+      if (ph) ph.hidden = true;
+
+      savePlayerName(name);
+      setWelcome();
+      checkDuesNag_();
+      applyYouRowsNow_();
+      autoSizePlayerSelect_(gp);
+
+      if (activeView === "mymatchup") loadMyMatchup();
+      if (activeView === "dues") loadDues();
+    };
+  }
 
   function formatDriversOrNumbers(driversArr, numsArr){
     const d1 = (driversArr && driversArr[0] != null) ? String(driversArr[0]).trim() : "";
@@ -1986,11 +1984,11 @@ if (gp) {
     const measurer = autoSizeRaceSelect_._measurer;
 
     const cs = getComputedStyle(sel);
-    measurer.style.font = cs.font;
-    measurer.style.letterSpacing = cs.letterSpacing;
+      measurer.style.font = cs.font;
+      measurer.style.letterSpacing = cs.letterSpacing;
 
     const text = sel.options[sel.selectedIndex]?.text || "";
-    measurer.textContent = text;
+      measurer.textContent = text;
 
     const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
     const paddingRight = parseFloat(cs.paddingRight) || 0;
@@ -2008,45 +2006,44 @@ if (gp) {
   }
   
   function autoSizePlayerSelect_(sel){
-  if(!sel) return;
+    if(!sel) return;
 
-  let measurer = document.getElementById("__playerSelectMeasurer");
-  if(!measurer){
-    measurer = document.createElement("span");
-    measurer.id = "__playerSelectMeasurer";
-    measurer.style.position = "absolute";
-    measurer.style.visibility = "hidden";
-    measurer.style.whiteSpace = "pre";
-    measurer.style.left = "-9999px";
-    measurer.style.top = "-9999px";
-    document.body.appendChild(measurer);
+    let measurer = document.getElementById("__playerSelectMeasurer");
+    if(!measurer){
+      measurer = document.createElement("span");
+      measurer.id = "__playerSelectMeasurer";
+      measurer.style.position = "absolute";
+      measurer.style.visibility = "hidden";
+      measurer.style.whiteSpace = "pre";
+      measurer.style.left = "-9999px";
+      measurer.style.top = "-9999px";
+      document.body.appendChild(measurer);
+    }
+
+    const cs = getComputedStyle(sel);
+
+    // match the select's font so the measurement is accurate
+    measurer.style.fontFamily = cs.fontFamily;
+    measurer.style.fontSize = cs.fontSize;
+    measurer.style.fontWeight = cs.fontWeight;
+    measurer.style.letterSpacing = cs.letterSpacing;
+
+    const text = sel.options[sel.selectedIndex]?.text || "";
+    measurer.textContent = text;
+
+    const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
+    const paddingRight = parseFloat(cs.paddingRight) || 0;
+    const arrowSpace = 34;
+    const width = Math.ceil(
+      measurer.getBoundingClientRect().width +
+      paddingLeft +
+      paddingRight +
+      arrowSpace
+    );
+
+    sel.style.width = width + "px";
   }
-
-  const cs = getComputedStyle(sel);
-
-  // match the select's font so the measurement is accurate
-  measurer.style.fontFamily = cs.fontFamily;
-  measurer.style.fontSize = cs.fontSize;
-  measurer.style.fontWeight = cs.fontWeight;
-  measurer.style.letterSpacing = cs.letterSpacing;
-
-  const text = sel.options[sel.selectedIndex]?.text || "";
-  measurer.textContent = text;
-
-  const paddingLeft  = parseFloat(cs.paddingLeft)  || 0;
-  const paddingRight = parseFloat(cs.paddingRight) || 0;
-
-  const arrowSpace = 34;
-
-  const width = Math.ceil(
-    measurer.getBoundingClientRect().width +
-    paddingLeft +
-    paddingRight +
-    arrowSpace
-  );
-
-  sel.style.width = width + "px";
-}
+    
   async function loadSelectedRace_(){
     const sel = document.getElementById("raceSelect");
     const area = document.getElementById("matchupsArea");
@@ -2498,113 +2495,108 @@ if (gp) {
     const css = document.createElement("style");
     css.id = "duesNagStyles";
     css.textContent = `
-  .duesNagOverlay{
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    z-index: 999999;
-  }
+      .duesNagOverlay{
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        z-index: 999999;
+      }
 
-  .duesNagCard{
-    width: min(560px, 100%);
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 14px;
-    color: var(--text);
-    box-shadow: 0 24px 80px rgba(0,0,0,0.55);
-  }
+      .duesNagCard{
+        width: min(560px, 100%);
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+        color: var(--text);
+        box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+      }
 
-  .duesNagTitle{
-    font-weight: 900;
-    font-size: 16px;
-    letter-spacing: -0.2px;
-    margin: 0 0 6px 0;
-  }
+      .duesNagTitle{
+        font-weight: 900;
+        font-size: 16px;
+        letter-spacing: -0.2px;
+        margin: 0 0 6px 0;
+      }
 
-  .duesNagBody{
-    font-size: 13px;
-    line-height: 1.35;
-    color: var(--muted);
-  }
+      .duesNagBody{
+        font-size: 13px;
+        line-height: 1.35;
+        color: var(--muted);
+      }
 
-  .duesNagBody b{
-    color: var(--text);
-    font-weight: 900;
-  }
+      .duesNagBody b{
+        color: var(--text);
+        font-weight: 900;
+      }
 
-  .duesNagFinePrint{
-    margin-top: 10px;
-    font-size: 12px;
-    color: rgba(255,255,255,.60);
-  }
+      .duesNagFinePrint{
+        margin-top: 10px;
+        font-size: 12px;
+        color: rgba(255,255,255,.60);
+      }
 
-    .duesNagRow{
-    margin-top: 12px;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
+      .duesNagRow{
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: nowrap;
+      }
 
-  /* Target the actual element type to beat your global button rules cleanly */
-  button.duesNagBtn{
-    -webkit-appearance: none;
-    appearance: none;
+      /* Target the actual element type to beat your global button rules cleanly */
+      button.duesNagBtn{
+        -webkit-appearance: none;
+        appearance: none;
+        box-sizing: border-box;
+        margin: 0 !important;          /* kills button.primary margin-top:3px */
+        padding: 0 16px !important;     /* kills global button padding */
+        height: 40px;
+        line-height: 1;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 900;
+        cursor: pointer;
+        background: rgba(255,255,255,.06);
+        color: var(--text);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+      }
 
-    box-sizing: border-box;
-    margin: 0 !important;          /* kills button.primary margin-top:3px */
-    padding: 0 16px !important;     /* kills global button padding */
-    height: 40px;
-    line-height: 1;
+      button.duesNagBtn:hover{
+        background: rgba(255,255,255,.10);
+      }
 
-    border: 1px solid var(--line);
-    border-radius: 12px;
+      /* Rename “primary” so it doesn’t collide with button.primary */
+      button.duesNagBtn.duesNagPrimary{
+        background: rgba(228, 0, 43, .40);
+        border: 1px solid rgba(255,255,255,.32);
+      }
 
-    font-size: 12px;
-    font-weight: 900;
-    cursor: pointer;
+      button.duesNagBtn.duesNagPrimary:hover{
+        background: rgba(228, 0, 43, .55);
+      }
 
-    background: rgba(255,255,255,.06);
-    color: var(--text);
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-  }
-
-  button.duesNagBtn:hover{
-    background: rgba(255,255,255,.10);
-  }
-
-  /* Rename “primary” so it doesn’t collide with button.primary */
-  button.duesNagBtn.duesNagPrimary{
-    background: rgba(228, 0, 43, .40);
-    border: 1px solid rgba(255,255,255,.32);
-  }
-
-  button.duesNagBtn.duesNagPrimary:hover{
-    background: rgba(228, 0, 43, .55);
-  }
-
-  .duesNagImg{
-    width: 100%;
-    max-height: 170px;
-    object-fit: contain;
-    margin-top: 10px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--line);
-  }
-`;
+      .duesNagImg{
+        width: 100%;
+        max-height: 170px;
+        object-fit: contain;
+        margin-top: 10px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--line);
+      }
+    `;
     document.head.appendChild(css);
   }
 
@@ -2614,138 +2606,138 @@ if (gp) {
   }
 
   function showDuesNag_(opts){
-  ensureDuesNagStyles_();
-  closeDuesNag_();
+    ensureDuesNagStyles_();
+    closeDuesNag_();
 
-  const {
-    name,
-    required,
-    paid,
-    winnings,
-    effectivePaid,
-    behind,
-    raceDisplay
-  } = opts;
+    const {
+      name,
+      required,
+      paid,
+      winnings,
+      effectivePaid,
+      behind,
+      raceDisplay
+    } = opts;
 
-  const overlay = document.createElement("div");
-  overlay.id = "duesNagOverlay";
-  overlay.className = "duesNagOverlay";
-  overlay.addEventListener("click", (e) => {
-    if(e.target === overlay) closeDuesNag_();
-  });
+    const overlay = document.createElement("div");
+    overlay.id = "duesNagOverlay";
+    overlay.className = "duesNagOverlay";
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeDuesNag_();
+    });
 
-  // Optional image: set this to a real path if you want an image.
-  // Example: const imgSrc = "img/pay-dues.png";
-  const imgSrc = "";
+    // Optional image: set this to a real path if you want an image.
+    // Example: const imgSrc = "img/pay-dues.png";
+    const imgSrc = "";
 
-  overlay.innerHTML = `
-    <div class="duesNagCard" role="dialog" aria-modal="true" aria-label="Dues reminder">
-      <div class="duesNagTitle">Pay your fuckin dues, ${escapeHtml(name)}.</div>
+    overlay.innerHTML = `
+      <div class="duesNagCard" role="dialog" aria-modal="true" aria-label="Dues reminder">
+        <div class="duesNagTitle">Pay your fuckin dues, ${escapeHtml(name)}.</div>
 
-      <div class="duesNagBody">
-        Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
-        Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
-        You've paid: <b>$${Number(paid).toFixed(2)}</b><br/>
-        You've won: <b>$${Number(winnings).toFixed(2)}</b><br/>
-        Paid + credit: <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
-        You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
+        <div class="duesNagBody">
+          Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
+          Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
+          You've paid: <b>$${Number(paid).toFixed(2)}</b><br/>
+          You've won: <b>$${Number(winnings).toFixed(2)}</b><br/>
+          Paid + credit: <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
+          You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
+        </div>
+
+        ${imgSrc ? `<img class="duesNagImg" src="${escapeAttr(imgSrc)}" alt="Pay your dues">` : ``}
+
+        <div class="duesNagFinePrint">
+          I'll bug you until you pony up the cash. Yes, it’s petty. That’s the point.
+        </div>
+
+        <div class="duesNagRow">
+          <button class="duesNagBtn ghost" id="duesNagCloseBtn" type="button">I hate this</button>
+          <button class="duesNagBtn duesNagPrimary" id="duesNagViewBtn" type="button">Take me to Dues</button>
+        </div>
       </div>
+    `;
 
-      ${imgSrc ? `<img class="duesNagImg" src="${escapeAttr(imgSrc)}" alt="Pay your dues">` : ``}
+    document.body.appendChild(overlay);
 
-      <div class="duesNagFinePrint">
-        I'll bug you until you pony up the cash. Yes, it’s petty. That’s the point.
-      </div>
+    const closeBtn = document.getElementById("duesNagCloseBtn");
+    const duesBtn  = document.getElementById("duesNagViewBtn");
 
-      <div class="duesNagRow">
-        <button class="duesNagBtn ghost" id="duesNagCloseBtn" type="button">I hate this</button>
-        <button class="duesNagBtn duesNagPrimary" id="duesNagViewBtn" type="button">Take me to Dues</button>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-
-  const closeBtn = document.getElementById("duesNagCloseBtn");
-  const duesBtn  = document.getElementById("duesNagViewBtn");
-
-  if(closeBtn) closeBtn.onclick = closeDuesNag_;
-  if(duesBtn) duesBtn.onclick = () => {
-  // open Venmo profile in a new tab/window
-  window.open("https://venmo.com/u/brettmurphyjr", "_blank", "noopener,noreferrer");
-};
-}
+    if(closeBtn) closeBtn.onclick = closeDuesNag_;
+    if(duesBtn) duesBtn.onclick = () => {
+    // open Venmo profile in a new tab/window
+    window.open("https://venmo.com/u/brettmurphyjr", "_blank", "noopener,noreferrer");
+    };
+  }
 
   async function checkDuesNag_(){
-  try{
-    // Only nag if they already have a saved player selected
-    const rawName = loadPlayerName();
-    const name = String(rawName || "").trim();
-    if(!name) return;
+    try{
+      // Only nag if they already have a saved player selected
+      const rawName = loadPlayerName();
+      const name = String(rawName || "").trim();
+      if(!name) return;
 
-    // Need matchups blob to know "current race"
-    if(!ALL_MATCHUPS || !ALL_MATCHUPS.current){
-      ALL_MATCHUPS = (await getData_("matchups", "playerGetAllRaceMatchups")) || null;
+      // Need matchups blob to know "current race"
+      if(!ALL_MATCHUPS || !ALL_MATCHUPS.current){
+        ALL_MATCHUPS = (await getData_("matchups", "playerGetAllRaceMatchups")) || null;
+      }
+
+      const rk = currentRaceKey_();
+      if(!rk) return;
+
+      // Only once per player per race
+      const seenKey = duesNagKey_(name, rk);
+      if(localStorage.getItem(seenKey) === "1") return;
+
+      // Need race list order to compute "races completed"
+      if(!Array.isArray(RACE_LIST) || !RACE_LIST.length){
+        const list = await getData_("raceList", "playerGetRaceList");
+        RACE_LIST = Array.isArray(list) ? list : [];
+      }
+
+      const completed = racesCompletedCount_();
+      if(completed == null) return;
+
+      const required = completed * DUES_PER_RACE;
+
+      // Pull dues record (may come back as per-player OR a map keyed by player)
+      const res = await getData_("dues", "playerGetDues", { name });
+
+      let data = null;
+
+      // Case 1: per-player object
+      if (res && typeof res === "object" && (
+        res.paid != null || res.winnings != null || res.balance != null
+      )) {
+        data = res;
+      }
+      // Case 2: map keyed by player name
+      else if (res && typeof res === "object") {
+        const want = name.toLowerCase();
+        const key = Object.keys(res).find(k => String(k || "").trim().toLowerCase() === want);
+        data = key ? res[key] : null;
+      }
+
+      const paid = Number(data?.paid ?? 0);
+      const winnings = Number(data?.winnings ?? 0);
+
+      // “Paid up to current race” can be satisfied by cash OR winnings credit.
+      const effectivePaid = paid + winnings;
+
+      const behind = required - effectivePaid;
+      if(!(behind > 0.0001)) return;
+
+      // Mark seen immediately (so refresh spam doesn't re-open it)
+      localStorage.setItem(seenKey, "1");
+
+      // Nice display label for current race (use ALL_MATCHUPS current race string)
+      const raceDisplay = ALL_MATCHUPS?.current?.race || "";
+
+      showDuesNag_({ name, required, paid, winnings, effectivePaid, behind, raceDisplay });
+
+      }catch(e){
+      // Silent fail. A nag popup should never break the site.
+      console.log("checkDuesNag_ failed:", e);
     }
-
-    const rk = currentRaceKey_();
-    if(!rk) return;
-
-    // Only once per player per race
-    const seenKey = duesNagKey_(name, rk);
-    if(localStorage.getItem(seenKey) === "1") return;
-
-    // Need race list order to compute "races completed"
-    if(!Array.isArray(RACE_LIST) || !RACE_LIST.length){
-      const list = await getData_("raceList", "playerGetRaceList");
-      RACE_LIST = Array.isArray(list) ? list : [];
-    }
-
-    const completed = racesCompletedCount_();
-    if(completed == null) return;
-
-    const required = completed * DUES_PER_RACE;
-
-    // Pull dues record (may come back as per-player OR a map keyed by player)
-    const res = await getData_("dues", "playerGetDues", { name });
-
-    let data = null;
-
-    // Case 1: per-player object
-    if (res && typeof res === "object" && (
-      res.paid != null || res.winnings != null || res.balance != null
-    )) {
-      data = res;
-    }
-    // Case 2: map keyed by player name
-    else if (res && typeof res === "object") {
-      const want = name.toLowerCase();
-      const key = Object.keys(res).find(k => String(k || "").trim().toLowerCase() === want);
-      data = key ? res[key] : null;
-    }
-
-    const paid = Number(data?.paid ?? 0);
-    const winnings = Number(data?.winnings ?? 0);
-
-    // “Paid up to current race” can be satisfied by cash OR winnings credit.
-    const effectivePaid = paid + winnings;
-
-    const behind = required - effectivePaid;
-    if(!(behind > 0.0001)) return;
-
-    // Mark seen immediately (so refresh spam doesn't re-open it)
-    localStorage.setItem(seenKey, "1");
-
-    // Nice display label for current race (use ALL_MATCHUPS current race string)
-    const raceDisplay = ALL_MATCHUPS?.current?.race || "";
-
-    showDuesNag_({ name, required, paid, winnings, effectivePaid, behind, raceDisplay });
-
-  }catch(e){
-    // Silent fail. A nag popup should never break the site.
-    console.log("checkDuesNag_ failed:", e);
   }
-}
   
   /* =========================
    * 10) Stats / Standings
