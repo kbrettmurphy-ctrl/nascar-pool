@@ -328,6 +328,7 @@
     border-radius:999px;
     background: rgba(0,0,0,.35);
     border:1px solid var(--line);
+    overflow:hidden; /* <-- keeps ON/OFF inside the pill */
   }
 
   .spoilerToggle .thumb{
@@ -341,25 +342,26 @@
 
   .spoilerToggle .state{
     position:absolute;
-    top:50%;
-    transform:translateY(-50%);
+    inset:0;
+    display:flex;
+    align-items:center;
     font-weight:900;
     font-size:11px;
     letter-spacing:.3px;
     pointer-events:none;
-    transition:left .15s ease, right .15s ease;
+    padding:0 6px;
   }
 
-  /* ON → thumb right → text left */
+  /* thumb right => text left */
   .spoilerToggle[aria-checked="true"] .state{
-    left:6px;
-    right:auto;
+    justify-content:flex-start;
+    padding-right:20px; /* reserve space so text doesn't go under the thumb */
   }
 
-  /* OFF → thumb left → text right */
+  /* thumb left => text right */
   .spoilerToggle[aria-checked="false"] .state{
-    right:6px;
-    left:auto;
+    justify-content:flex-end;
+    padding-left:20px; /* reserve space so text doesn't go under the thumb */
   }  
 
   /* =========================
