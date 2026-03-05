@@ -313,6 +313,18 @@
     color: var(--text);
     cursor:pointer;
   }
+
+  /* ON → thumb right → text left */
+  .spoilerToggle[aria-checked="true"] .state{
+    left:6px;
+    right:auto;
+  }
+
+  /* OFF → thumb left → text right */
+  .spoilerToggle[aria-checked="false"] .state{
+    right:6px;
+    left:auto;
+  }  
   /* remove this entirely */
   /* .spoilerToggle .label{ margin-right:42px; } */
 
@@ -339,9 +351,14 @@
   }
 
   .spoilerToggle .state{
-    margin-left:auto; 
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
     font-weight:900;
+    font-size:11px;
     letter-spacing:.3px;
+    pointer-events:none;
+    transition:left .15s ease, right .15s ease;
   }
 
   /* =========================
@@ -1117,9 +1134,9 @@
     <button id="spoilerToggle" class="spoilerToggle topactions" type="button" role="switch" aria-checked="true">
       <span class="label">Spoilers</span>
       <span id="spoilerTrack" class="track">
+        <span id="spoilerState" class="state">ON</span>
         <span id="spoilerThumb" class="thumb"></span>
       </span>
-      <span id="spoilerState" class="state">ON</span>
     </button>
 
     <div class="topBarRight">
