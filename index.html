@@ -2640,13 +2640,13 @@ if (gp) {
 
   overlay.innerHTML = `
     <div class="duesNagCard" role="dialog" aria-modal="true" aria-label="Dues reminder">
-      <div class="duesNagTitle">Pay your damn dues, ${escapeHtml(name)}.</div>
+      <div class="duesNagTitle">Pay your fuckin dues, ${escapeHtml(name)}.</div>
 
       <div class="duesNagBody">
         Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
         Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
-        Cash paid: <b>$${Number(paid).toFixed(2)}</b><br/>
-        Winnings credit: <b>$${Number(winnings).toFixed(2)}</b><br/>
+        You've paid: <b>$${Number(paid).toFixed(2)}</b><br/>
+        You've won: <b>$${Number(winnings).toFixed(2)}</b><br/>
         Paid + credit: <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
         You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
       </div>
@@ -2654,7 +2654,7 @@ if (gp) {
       ${imgSrc ? `<img class="duesNagImg" src="${escapeAttr(imgSrc)}" alt="Pay your dues">` : ``}
 
       <div class="duesNagFinePrint">
-        This pops up once per race until you catch up. Yes, it’s petty. That’s the point.
+        I'll bug you until you pony up the cash. Yes, it’s petty. That’s the point.
       </div>
 
       <div class="duesNagRow">
