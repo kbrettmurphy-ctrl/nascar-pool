@@ -2545,41 +2545,53 @@ if (gp) {
     color: rgba(255,255,255,.60);
   }
 
-  .duesNagRow{
-  margin-top: 12px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  align-items: stretch; /* <- make both controls same height */
-  flex-wrap: wrap;
-}
+    .duesNagRow{
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
 
-.duesNagBtn{
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0 14px;          /* <- no vertical padding, use height */
-  height: 38px;             /* <- forces same button height */
-  line-height: 38px;        /* <- centers text perfectly */
-  font-size: 12px;
-  font-weight: 900;
-  cursor: pointer;
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  display: inline-flex;     /* <- consistent text centering */
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-}
-  .duesNagBtn:hover{
+  /* Target the actual element type to beat your global button rules cleanly */
+  button.duesNagBtn{
+    -webkit-appearance: none;
+    appearance: none;
+
+    box-sizing: border-box;
+    margin: 0 !important;          /* kills button.primary margin-top:3px */
+    padding: 0 16px !important;     /* kills global button padding */
+    height: 40px;
+    line-height: 1;
+
+    border: 1px solid var(--line);
+    border-radius: 12px;
+
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  button.duesNagBtn:hover{
     background: rgba(255,255,255,.10);
   }
 
-  .duesNagBtn.primary{
+  /* Rename “primary” so it doesn’t collide with button.primary */
+  button.duesNagBtn.duesNagPrimary{
     background: rgba(228, 0, 43, .40);
     border: 1px solid rgba(255,255,255,.32);
   }
 
-  .duesNagBtn.primary:hover{
+  button.duesNagBtn.duesNagPrimary:hover{
     background: rgba(228, 0, 43, .55);
   }
 
@@ -2647,7 +2659,7 @@ if (gp) {
 
       <div class="duesNagRow">
         <button class="duesNagBtn ghost" id="duesNagCloseBtn" type="button">I hate this</button>
-        <button class="duesNagBtn primary" id="duesNagViewBtn" type="button">Take me to Dues</button>
+        <button class="duesNagBtn duesNagPrimary" id="duesNagViewBtn" type="button">Take me to Dues</button>
       </div>
     </div>
   `;
