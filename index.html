@@ -2660,10 +2660,8 @@
 
         <div class="duesNagBody">
           Current race: <b>${escapeHtml(raceDisplay || "Current")}</b><br/>
-          Required to be current: <b>$${Number(required).toFixed(2)}</b><br/>
-          You've paid: <b>$${Number(paid).toFixed(2)}</b><br/>
-          You've won: <b>$${Number(winnings).toFixed(2)}</b><br/>
-          Paid + credit: <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
+          Bare minimum to not be a bum: <b>$${Number(required).toFixed(2)}</b><br/>
+          Paid: <b>$${Number(paid).toFixed(2)}</b> | Won: <b>$${Number(winnings).toFixed(2)}</b> = <b>$${Number(effectivePaid).toFixed(2)}</b><br/>
           You’re behind by: <b style="color: var(--red);">$${Number(behind).toFixed(2)}</b>
         </div>
 
