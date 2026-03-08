@@ -522,160 +522,160 @@
           "p1": "Brett",
           "p2": "Chris",
           "p1Drivers": [
-            "Carson Hocevar",
-            "Shane van Gisbergen"
+            "Shane van Gisbergen",
+            "Austin Cindric"
           ],
           "p2Drivers": [
-            "Zane Smith",
-            "Austin Dillon"
+            "Chase Elliott",
+            "Austin Hill"
           ],
           "p1Nums": [
-            7,
-            18
+            18,
+            3
           ],
           "p2Nums": [
-            24,
-            25
+            26,
+            27
           ]
         },
         {
           "p1": "Nate C.",
           "p2": "Russ",
           "p1Drivers": [
-            "Josh Berry",
-            "Denny Hamlin"
+            "John H. Nemechek",
+            "Chase Briscoe"
           ],
           "p2Drivers": [
-            "Ty Gibbs",
-            "John H. Nemechek"
+            "Ryan Preece",
+            "Joey Logano"
           ],
           "p1Nums": [
-            10,
-            11
+            15,
+            20
           ],
           "p2Nums": [
-            14,
-            15
+            13,
+            1
           ]
         },
         {
           "p1": "Jason",
           "p2": "Steven",
           "p1Drivers": [
-            "Tyler Reddick",
-            "Kyle Busch"
+            "Zane Smith",
+            "Tyler Reddick"
           ],
           "p2Drivers": [
-            "Daniel Suárez",
-            "William Byron"
+            "Erik Jones",
+            "Denny Hamlin"
           ],
           "p1Nums": [
-            8,
-            29
+            24,
+            8
           ],
           "p2Nums": [
-            4,
-            9
+            32,
+            11
           ]
         },
         {
           "p1": "Stacy",
           "p2": "Bob",
           "p1Drivers": [
-            "Riley Herbst",
-            "Michael McDowell"
+            "Kyle Larson",
+            "Carson Hocevar"
           ],
           "p2Drivers": [
-            "Erik Jones",
-            "Ryan Preece"
+            "Ross Chastain",
+            "Daniel Suárez"
           ],
           "p1Nums": [
-            22,
-            16
+            2,
+            7
           ],
           "p2Nums": [
-            32,
-            13
+            6,
+            4
           ]
         },
         {
           "p1": "Don",
           "p2": "Justin",
           "p1Drivers": [
-            "AJ Allmendinger",
-            "Todd Gilliland"
+            "Michael McDowell",
+            "Ryan Blaney"
           ],
           "p2Drivers": [
-            "Ross Chastain",
-            "Kyle Larson"
+            "Bubba Wallace",
+            "Austin Dillon"
           ],
           "p1Nums": [
-            23,
-            30
+            16,
+            5
           ],
           "p2Nums": [
-            6,
-            2
+            28,
+            25
           ]
         },
         {
           "p1": "Rob",
           "p2": "Pat",
           "p1Drivers": [
-            "Christopher Bell",
-            "Bubba Wallace"
-          ],
-          "p2Drivers": [
-            "Joey Logano",
+            "Anthony Alfredo",
             "Chris Buescher"
           ],
+          "p2Drivers": [
+            "Riley Herbst",
+            "AJ Allmendinger"
+          ],
           "p1Nums": [
-            12,
-            28
+            31,
+            17
           ],
           "p2Nums": [
-            1,
-            17
+            22,
+            23
           ]
         },
         {
           "p1": "Beau",
           "p2": "Nate M.",
           "p1Drivers": [
-            "Austin Cindric",
-            "Connor Zilisch"
+            "Todd Gilliland",
+            "William Byron"
           ],
           "p2Drivers": [
-            "Chase Briscoe",
-            "Ricky Stenhouse Jr."
+            "Christopher Bell",
+            "Josh Berry"
           ],
           "p1Nums": [
-            3,
-            19
+            30,
+            9
           ],
           "p2Nums": [
-            20,
-            21
+            12,
+            10
           ]
         },
         {
           "p1": "Tyler",
           "p2": "Nick",
           "p1Drivers": [
-            "Austin Hill",
-            "Ryan Blaney"
+            "Ricky Stenhouse Jr.",
+            "Connor Zilisch"
           ],
           "p2Drivers": [
-            "Chase Elliott",
-            "Anthony Alfredo"
+            "Kyle Busch",
+            "Ty Gibbs"
           ],
           "p1Nums": [
-            27,
-            5
+            21,
+            19
           ],
           "p2Nums": [
-            26,
-            31
+            29,
+            14
           ]
         }
       ],
