@@ -666,19 +666,15 @@
   function showWheel(){
     const overlay = document.getElementById("wheelOverlay");
     const vid = document.getElementById("wheelVideo");
-    if(!overlay || !vid) return;
 
     overlay.classList.remove("hide");
-    overlay.setAttribute("aria-hidden", "false");
 
     vid.currentTime = 0;
+    vid.play();
 
-    const p = vid.play();
-    if (p && typeof p.catch === "function") {
-      p.catch(() => {
-        // autoplay can fail if browser acts like a toddler
-      });
-    }
+    vid.addEventListener("ended", () => {
+      vid.pause(); // freeze on last frame
+    }, { once:true });
   }
 
   function hideWheel(){
