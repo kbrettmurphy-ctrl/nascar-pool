@@ -1,5 +1,9 @@
 {
-  "current": null,
+  "current": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4
+  },
   "races": {
     "1||Daytona": {
       "tournament": 1,
@@ -512,7 +516,7 @@
       "tournament": 1,
       "race": "Phoenix",
       "round": 4,
-      "raceWinnerDriver": "Ryan Blaney",
+      "raceWinnerDriver": "",
       "matchups": [
         {
           "p1": "Brett",
