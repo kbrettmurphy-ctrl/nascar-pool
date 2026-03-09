@@ -1,0 +1,581 @@
+{
+  "current": {
+    "tournament": 2,
+    "round": 1,
+    "race": "Las Vegas"
+  },
+  "roundsByKey": {
+    "1||Daytona": {
+      "tournament": 1,
+      "round": 1,
+      "raceLabel": "Daytona",
+      "matchups": [
+        {
+          "s1": 1,
+          "s2": 16,
+          "p1": "Jason",
+          "p2": "Don",
+          "a1": 20.5,
+          "a2": 31,
+          "winner": "Jason",
+          "p1RaceWinner": true,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": 2,
+          "s2": 15,
+          "p1": "Chris",
+          "p2": "Nick",
+          "a1": 24,
+          "a2": 24,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": 3,
+          "s2": 14,
+          "p1": "Rob",
+          "p2": "Nate C.",
+          "a1": 22.5,
+          "a2": 6.5,
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": 4,
+          "s2": 13,
+          "p1": "Beau",
+          "p2": "Bob",
+          "a1": 23,
+          "a2": 17.5,
+          "winner": "Bob",
+          "p1RaceWinner": true,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": 5,
+          "s2": 12,
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "a1": 27.5,
+          "a2": 16,
+          "winner": "Nate M.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": 6,
+          "s2": 11,
+          "p1": "Pat",
+          "p2": "Stacy",
+          "a1": 22,
+          "a2": 15,
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": 7,
+          "s2": 10,
+          "p1": "Justin",
+          "p2": "Steven",
+          "a1": 21.5,
+          "a2": 23,
+          "winner": "Justin",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": 8,
+          "s2": 9,
+          "p1": "Brett",
+          "p2": "Tyler",
+          "a1": 5,
+          "a2": 20,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        }
+      ]
+    },
+    "1||Atlanta": {
+      "tournament": 1,
+      "round": 2,
+      "raceLabel": "Atlanta",
+      "matchups": [
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Brett",
+          "p2": "Nate C.",
+          "a1": 8,
+          "a2": 31,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Stacy",
+          "p2": "Nate M.",
+          "a1": 21.5,
+          "a2": 34,
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Bob",
+          "p2": "Jason",
+          "a1": 8.5,
+          "a2": 20,
+          "winner": "Bob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Justin",
+          "p2": "Chris",
+          "a1": 17.5,
+          "a2": 14.5,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Tyler",
+          "p2": "Pat",
+          "a1": 25,
+          "a2": 16.5,
+          "winner": "Pat",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Rob",
+          "p2": "Beau",
+          "a1": 22,
+          "a2": 11.5,
+          "winner": "Beau",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Steven",
+          "p2": "Nick",
+          "a1": 13,
+          "a2": 18,
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Russ",
+          "p2": "Don",
+          "a1": 15.5,
+          "a2": 21.5,
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        }
+      ]
+    },
+    "1||COTA": {
+      "tournament": 1,
+      "round": 3,
+      "raceLabel": "COTA",
+      "matchups": [
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Brett",
+          "p2": "Bob",
+          "a1": 23,
+          "a2": 36,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Stacy",
+          "p2": "Chris",
+          "a1": 24.5,
+          "a2": 21.5,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Beau",
+          "p2": "Steven",
+          "a1": 23,
+          "a2": 21,
+          "winner": "Steven",
+          "p1RaceWinner": true,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Nate C.",
+          "p2": "Pat",
+          "a1": 4.5,
+          "a2": 17.5,
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Justin",
+          "p2": "Jason",
+          "a1": 16,
+          "a2": 15,
+          "winner": "Jason",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "a1": 10,
+          "a2": 16,
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Nick",
+          "p2": "Rob",
+          "a1": 29.5,
+          "a2": 11,
+          "winner": "Rob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Tyler",
+          "p2": "Don",
+          "a1": 15,
+          "a2": 1.5,
+          "winner": "Don",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        }
+      ]
+    },
+    "1||Phoenix": {
+      "tournament": 1,
+      "round": 4,
+      "raceLabel": "Phoenix",
+      "matchups": [
+        {
+          "s1": "3-0",
+          "s2": "3-0",
+          "p1": "Brett",
+          "p2": "Chris",
+          "a1": 22.5,
+          "a2": 22,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Nate C.",
+          "p2": "Russ",
+          "a1": 31,
+          "a2": 22,
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Jason",
+          "p2": "Steven",
+          "a1": 17.5,
+          "a2": 7.5,
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Stacy",
+          "p2": "Bob",
+          "a1": 11.5,
+          "a2": 29,
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Don",
+          "p2": "Justin",
+          "a1": 5,
+          "a2": 11,
+          "winner": "Don",
+          "p1RaceWinner": true,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Rob",
+          "p2": "Pat",
+          "a1": 23.5,
+          "a2": 18.5,
+          "winner": "Pat",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Beau",
+          "p2": "Nate M.",
+          "a1": 9.5,
+          "a2": 17,
+          "winner": "Beau",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-3",
+          "s2": "0-3",
+          "p1": "Tyler",
+          "p2": "Nick",
+          "a1": 25.5,
+          "a2": 10.5,
+          "winner": "Nick",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        }
+      ]
+    },
+    "2||Las Vegas": {
+      "tournament": 2,
+      "round": 1,
+      "raceLabel": "Las Vegas",
+      "matchups": []
+    },
+    "2||Darlington": {
+      "tournament": 2,
+      "round": 2,
+      "raceLabel": "Darlington",
+      "matchups": []
+    },
+    "2||Martinsville": {
+      "tournament": 2,
+      "round": 3,
+      "raceLabel": "Martinsville",
+      "matchups": []
+    },
+    "2||Bristol": {
+      "tournament": 2,
+      "round": 4,
+      "raceLabel": "Bristol",
+      "matchups": []
+    },
+    "3||Kansas": {
+      "tournament": 3,
+      "round": 1,
+      "raceLabel": "Kansas",
+      "matchups": []
+    },
+    "3||Talladega": {
+      "tournament": 3,
+      "round": 2,
+      "raceLabel": "Talladega",
+      "matchups": []
+    },
+    "3||Texas": {
+      "tournament": 3,
+      "round": 3,
+      "raceLabel": "Texas",
+      "matchups": []
+    },
+    "3||Watkins Glen": {
+      "tournament": 3,
+      "round": 4,
+      "raceLabel": "Watkins Glen",
+      "matchups": []
+    },
+    "4||Charlotte": {
+      "tournament": 4,
+      "round": 1,
+      "raceLabel": "Charlotte",
+      "matchups": []
+    },
+    "4||Nashville": {
+      "tournament": 4,
+      "round": 2,
+      "raceLabel": "Nashville",
+      "matchups": []
+    },
+    "4||Michigan": {
+      "tournament": 4,
+      "round": 3,
+      "raceLabel": "Michigan",
+      "matchups": []
+    },
+    "4||Pocono": {
+      "tournament": 4,
+      "round": 4,
+      "raceLabel": "Pocono",
+      "matchups": []
+    },
+    "5||San Diego": {
+      "tournament": 5,
+      "round": 1,
+      "raceLabel": "San Diego",
+      "matchups": []
+    },
+    "5||Sonoma": {
+      "tournament": 5,
+      "round": 2,
+      "raceLabel": "Sonoma",
+      "matchups": []
+    },
+    "5||Chicago": {
+      "tournament": 5,
+      "round": 3,
+      "raceLabel": "Chicago",
+      "matchups": []
+    },
+    "5||Atlanta 2": {
+      "tournament": 5,
+      "round": 4,
+      "raceLabel": "Atlanta 2",
+      "matchups": []
+    },
+    "6||N. Wilksboro": {
+      "tournament": 6,
+      "round": 1,
+      "raceLabel": "N. Wilksboro",
+      "matchups": []
+    },
+    "6||Indianapolis": {
+      "tournament": 6,
+      "round": 2,
+      "raceLabel": "Indianapolis",
+      "matchups": []
+    },
+    "6||Iowa": {
+      "tournament": 6,
+      "round": 3,
+      "raceLabel": "Iowa",
+      "matchups": []
+    },
+    "6||Richmond": {
+      "tournament": 6,
+      "round": 4,
+      "raceLabel": "Richmond",
+      "matchups": []
+    },
+    "7||New Hampshire": {
+      "tournament": 7,
+      "round": 1,
+      "raceLabel": "New Hampshire",
+      "matchups": []
+    },
+    "7||Daytona 2": {
+      "tournament": 7,
+      "round": 2,
+      "raceLabel": "Daytona 2",
+      "matchups": []
+    },
+    "7||Darlington 2": {
+      "tournament": 7,
+      "round": 3,
+      "raceLabel": "Darlington 2",
+      "matchups": []
+    },
+    "7||WWTR": {
+      "tournament": 7,
+      "round": 4,
+      "raceLabel": "WWTR",
+      "matchups": []
+    },
+    "8||Bristol 2": {
+      "tournament": 8,
+      "round": 1,
+      "raceLabel": "Bristol 2",
+      "matchups": []
+    },
+    "8||Kansas 2": {
+      "tournament": 8,
+      "round": 2,
+      "raceLabel": "Kansas 2",
+      "matchups": []
+    },
+    "8||Las Vegas 2": {
+      "tournament": 8,
+      "round": 3,
+      "raceLabel": "Las Vegas 2",
+      "matchups": []
+    },
+    "8||Charlotte 2": {
+      "tournament": 8,
+      "round": 4,
+      "raceLabel": "Charlotte 2",
+      "matchups": []
+    },
+    "9||Phoenix 2": {
+      "tournament": 9,
+      "round": 1,
+      "raceLabel": "Phoenix 2",
+      "matchups": []
+    },
+    "9||Talladega 2": {
+      "tournament": 9,
+      "round": 2,
+      "raceLabel": "Talladega 2",
+      "matchups": []
+    },
+    "9||Martinsville 2": {
+      "tournament": 9,
+      "round": 3,
+      "raceLabel": "Martinsville 2",
+      "matchups": []
+    },
+    "9||Homestead": {
+      "tournament": 9,
+      "round": 4,
+      "raceLabel": "Homestead",
+      "matchups": []
+    }
+  }
+}

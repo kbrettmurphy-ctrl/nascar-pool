@@ -20,12 +20,12 @@
   "Chris": {
     "player": "Chris",
     "raceWins": 0,
-    "tourneyWins": 0,
+    "tourneyWins": 1,
     "bracketWins": 4
   },
   "Don": {
     "player": "Don",
-    "raceWins": 1,
+    "raceWins": 2,
     "tourneyWins": 0,
     "bracketWins": 2
   },
