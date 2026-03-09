@@ -245,48 +245,6 @@
       width:auto;
       opacity:0.5;
     }
-
-    /* Wheel overlay */
-    .wheelOverlay{
-    position: fixed;
-      inset: 0;
-      z-index: 20000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(2,11,18,.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .wheelModal{
-      width: min(420px, calc(100vw - 32px));
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      padding: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      box-shadow: 0 20px 50px rgba(0,0,0,.45);
-      text-align: center;
-    }
-
-    .wheelModal video{
-      width: 100%;
-      display: block;
-      border-radius: 16px;
-      background: #000;
-    }
-
-    .wheelTitle{
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .wheelSub{
-      margin-top: 6px;
-      font-size: 13px;
-      color: var(--muted);
-    }
     </style>
   </head>
 
@@ -507,7 +465,7 @@
   </div>
   <div class="bottomNav">
     <div class="navInner">
-      <button class="navBtn active" onclick="showPanel('Numbers', this)">
+      <button class="navBtn avtive" onclick="showPanel('Numbers', this)">
         <div class="ico">🎲</div><div>Numbers</div></button>
       <button class="navBtn" onclick="showPanel('Import', this)">
         <div class="ico">📋</div><div>Lineups</div></button>
@@ -520,16 +478,6 @@
         <div class="ico">🚀</div><div>Publish</div></button>
       <button class="navBtn" onclick="toggleConfigCard()">
         <div class="ico">⚙️</div><div>Config</div></button>
-    </div>
-  </div>
-
-  <div id="wheelOverlay" class="wheelOverlay hide" aria-hidden="true">
-    <div class="wheelModal">
-      <video id="wheelVideo" muted playsinline loop preload="auto">
-        <source src="wheelspin.mp4" type="video/mp4">
-      </video>
-      <div class="wheelTitle">Assigning Numbers</div>
-      <div class="wheelSub">Letting fake destiny do its thing…</div>
     </div>
   </div>
 
@@ -661,30 +609,6 @@
       .replace(/>/g,"&gt;")
       .replace(/"/g,"&quot;")
       .replace(/'/g,"&#039;");
-  }
-
-  function showWheel(){
-    const overlay = document.getElementById("wheelOverlay");
-    const vid = document.getElementById("wheelVideo");
-
-    overlay.classList.remove("hide");
-
-    vid.currentTime = 0;
-    vid.play();
-
-    vid.addEventListener("ended", () => {
-      vid.pause(); // freeze on last frame
-    }, { once:true });
-  }
-
-  function hideWheel(){
-    const overlay = document.getElementById("wheelOverlay");
-    const vid = document.getElementById("wheelVideo");
-    if(!overlay || !vid) return;
-
-    vid.pause();
-    overlay.classList.add("hide");
-    overlay.setAttribute("aria-hidden", "true");
   }
 
   function showPanel(name, btn){
@@ -838,26 +762,16 @@
 
     const t = document.getElementById("numTourneySel").value;
     const race = document.getElementById("numRaceSel").value;
-    if(!race){ 
-      showMsg(msg, "Pick a race first.", true); 
-      return; 
-    }
+    if(!race){ showMsg(msg, "Pick a race first.", true); return; }
 
     try{
       showMsg(msg, "Working…", false);
-
-      showWheel();
-      await new Promise(requestAnimationFrame);
-
       const r = await apiCall("adminAssignNumbersForRace", { tournament: t, race }, true);
       if(!r.ok) throw new Error(r.error || "API failed");
-
       showMsg(msg, r.data?.message || "Done.", false);
       refreshContext();
     }catch(e){
       showMsg(msg, "Error: " + (e.message || e), true);
-    }finally{
-      hideWheel();
     }
   }
 
