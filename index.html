@@ -1243,7 +1243,12 @@
 
   // Player site uses API_BASE directly. (No extra config helper needed.)
   const ADMIN_KEY = ""; // leave blank on the public site
-
+  const TOURNAMENT_PAYOUTS = {
+    1: "🖕🏻$100",
+    2: "$60",
+    3: "$40",
+    4: "$20"
+};
   /* =========================
    * 2) Spoiler toggle (global)
    * ========================= */
@@ -2985,90 +2990,99 @@
   }
 
   function showTournamentRanks(label) {
-    const box = document.getElementById("tourneyRanksBox");
-    const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
-    const listRaw = t[label] || [];
+  const box = document.getElementById("tourneyRanksBox");
+  const t = (_cache_standings && _cache_standings.tournaments) ? _cache_standings.tournaments : {};
+  const listRaw = t[label] || [];
 
-    let html = ``;
+  let html = ``;
 
-    if (!Array.isArray(listRaw) || listRaw.length === 0) {
-      html += `<div class="muted">(No data yet)</div>`;
-      box.innerHTML = html;
-      return;
-    }
-
-    const items = listRaw
-      .map((it) => {
-        if (it && typeof it === "object") {
-          const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
-          const rank = Number(it.rank ?? it.Rank ?? it.RANK);
-
-          const out = { ...it };
-          out.player = String(player || "").trim();
-          out.rank = Number.isFinite(rank) ? rank : null;
-          return out;
-        }
-        return { rank: null, player: String(it || "").trim() };
-      })
-      .filter(x => x.player);
-
-    if (items.length === 0) {
-      html += `<div class="muted">(No data yet)</div>`;
-      box.innerHTML = html;
-      return;
-    }
-
-    const hasRanks = items.some(x => Number.isFinite(x.rank));
-    if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
-
-    let startRank = 17 - items.length;
-    if (startRank < 1) startRank = 1;
-    if (startRank > 16) startRank = 16;
-
-    const you = loadPlayerName().trim().toLowerCase();
-
-    html += `<div class="rankList">`;
-
-    items.forEach((it, i) => {
-      const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
-      const name = it.player || "";
-      const isPaid = r <= 4;
-      const isYou  = you && name.trim().toLowerCase() === you;
-
-      const W = it["W"] ?? it["w"] ?? null;
-      const L = it["L"] ?? it["l"] ?? null;
-      const record = (W != null && L != null) ? `${W}-${L}` : "";
-
-      const keys = Object.keys(it || {});
-      const avgK = keys.find(k => /^avg$/i.test(k));
-      const wpK  = keys.find(k => /^w%$/i.test(k) || /^wpct$/i.test(k) || /^win%$/i.test(k));
-
-      const avgVal = avgK ? it[avgK] : null;
-      const wpVal  = wpK  ? it[wpK]  : null;
-
-      const badges = [
-        record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
-        avgVal != null && String(avgVal).trim() !== ""
-          ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
-        wpVal != null && String(wpVal).trim() !== ""
-          ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : ""
-      ].filter(Boolean).join("");
-
-      html += `
-        <div class="statsRow overallRow ${isPaid ? "paidRow" : ""} ${isYou ? "youRow" : ""}">
-          <div class="rankBadge">${escapeHtml(r)}</div>
-          <div class="statsName">${escapeHtml(name)}</div>
-          <div class="statsBadges">${badges}</div>
-        </div>
-      `;
-    });
-
-    html += `</div>`;
-
+  if (!Array.isArray(listRaw) || listRaw.length === 0) {
+    html += `<div class="muted">(No data yet)</div>`;
     box.innerHTML = html;
-    requestAnimationFrame(syncOverallNameColumnWidth_);
-    resetStatPillScrollSoon(box);
+    return;
   }
+
+  const items = listRaw
+    .map((it) => {
+      if (it && typeof it === "object") {
+        const player = it.player ?? it.name ?? it.Player ?? it.PLAYER ?? "";
+        const rank = Number(it.rank ?? it.Rank ?? it.RANK);
+
+        const out = { ...it };
+        out.player = String(player || "").trim();
+        out.rank = Number.isFinite(rank) ? rank : null;
+        return out;
+      }
+      return { rank: null, player: String(it || "").trim() };
+    })
+    .filter(x => x.player);
+
+  if (items.length === 0) {
+    html += `<div class="muted">(No data yet)</div>`;
+    box.innerHTML = html;
+    return;
+  }
+
+  const hasRanks = items.some(x => Number.isFinite(x.rank));
+  if (hasRanks) items.sort((a,b) => (a.rank ?? 999) - (b.rank ?? 999));
+
+  let startRank = 17 - items.length;
+  if (startRank < 1) startRank = 1;
+  if (startRank > 16) startRank = 16;
+
+  const you = loadPlayerName().trim().toLowerCase();
+
+  // Tournament complete when all 16 players are present and ranked
+  const tournamentComplete =
+    items.length === 16 &&
+    items.every(x => Number.isFinite(x.rank));
+
+  html += `<div class="rankList">`;
+
+  items.forEach((it, i) => {
+    const r = Number.isFinite(it.rank) ? it.rank : (startRank + i);
+    const name = it.player || "";
+    const isPaid = r <= 4;
+    const isYou  = you && name.trim().toLowerCase() === you;
+
+    const W = it["W"] ?? it["w"] ?? null;
+    const L = it["L"] ?? it["l"] ?? null;
+    const record = (W != null && L != null) ? `${W}-${L}` : "";
+
+    const keys = Object.keys(it || {});
+    const avgK = keys.find(k => /^avg$/i.test(k));
+    const wpK  = keys.find(k => /^w%$/i.test(k) || /^wpct$/i.test(k) || /^win%$/i.test(k));
+
+    const avgVal = avgK ? it[avgK] : null;
+    const wpVal  = wpK  ? it[wpK]  : null;
+
+    const payout = tournamentComplete ? TOURNAMENT_PAYOUTS[r] || "" : "";
+
+    const badges = [
+      record ? `<span class="miniPill">${escapeHtml(record)}</span>` : "",
+      avgVal != null && String(avgVal).trim() !== ""
+        ? `<span class="miniPill"><span class="k">Avg:</span> ${escapeHtml(avgVal)}</span>` : "",
+      wpVal != null && String(wpVal).trim() !== ""
+        ? `<span class="miniPill"><span class="k">W%:</span> ${escapeHtml(wpVal)}</span>` : "",
+      payout
+        ? `<span class="miniPill"><span class="k">Won:</span> ${escapeHtml(payout)}</span>` : ""
+    ].filter(Boolean).join("");
+
+    html += `
+      <div class="statsRow overallRow ${isPaid ? "paidRow" : ""} ${isYou ? "youRow" : ""}">
+        <div class="rankBadge">${escapeHtml(r)}</div>
+        <div class="statsName">${escapeHtml(name)}</div>
+        <div class="statsBadges">${badges}</div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  box.innerHTML = html;
+  requestAnimationFrame(syncOverallNameColumnWidth_);
+  resetStatPillScrollSoon(box);
+}
 
   async function renderH2H_(box){
     const you = loadPlayerName().trim();
