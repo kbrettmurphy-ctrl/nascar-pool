@@ -1405,6 +1405,7 @@
     h2h:       "./data/h2h.json",
     wins:      "./data/wins.json",
     drivers:   "./data/driverUsage.json",
+    bracketHistory: "./data/bracketHistory.json",
   };
 
   let SNAP_VER = null;
@@ -1513,6 +1514,7 @@
     SNAP_VER = null;
     SNAP_CTX = null;
     _cache_myMatchupsAll = null;
+    _bracketHistoryBlob = null;
 
     if (activeView === "current") loadCurrent();
     else if (activeView === "standings") loadStandings();
@@ -1757,6 +1759,14 @@
   let RACE_LIST = [];
   let _raceSelectWiringDone = false;
   let _raceSelectIsProgrammatic = false;
+  let _bracketHistoryBlob = null;
+
+  async function getBracketHistory_(){
+    if (_bracketHistoryBlob) return _bracketHistoryBlob;
+    try { _bracketHistoryBlob = await fetchSnapshotJson("bracketHistory", false); }
+    catch(e){ _bracketHistoryBlob = null; }
+    return _bracketHistoryBlob;
+  }
 
   function raceKey_(tournament, race){
     return String(tournament || "").trim() + "||" + String(race || "").trim();
@@ -1868,14 +1878,9 @@
     let roundObj = null;
     if (spoilersOn){
       try{
-        const b = await getBracket_();
-        const raceLabel = String(data?.race || "").trim().toLowerCase();
-        const roundNum  = Number(data?.currentRound ?? data?.round ?? NaN);
-
-        roundObj = b?.rounds?.find(r =>
-          String(r?.raceLabel || "").trim().toLowerCase() === raceLabel &&
-          Number(r?.round) === roundNum
-        ) || null;
+        const hist = await getBracketHistory_();
+        const key = raceKey_(data?.tournament, data?.race);
+        roundObj = hist?.roundsByKey?.[key] || null;
       }catch(e){
         roundObj = null;
       }
