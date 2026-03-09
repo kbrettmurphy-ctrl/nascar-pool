@@ -1,31 +1,387 @@
 {
-  "tournament": 2,
-  "currentRound": 1,
-  "currentRace": "Las Vegas",
+  "tournament": 1,
+  "currentRound": 4,
+  "currentRace": "Phoenix",
   "rounds": [
     {
       "round": 1,
-      "raceLabel": "Las Vegas",
-      "isCurrent": true,
-      "matchups": []
+      "raceLabel": "Daytona",
+      "isCurrent": false,
+      "matchups": [
+        {
+          "s1": "1",
+          "s2": "16",
+          "p1": "Jason",
+          "p2": "Don",
+          "a1": 20.5,
+          "a2": 31,
+          "winner": "Jason",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2",
+          "s2": "15",
+          "p1": "Chris",
+          "p2": "Nick",
+          "a1": 24,
+          "a2": 24,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "3",
+          "s2": "14",
+          "p1": "Rob",
+          "p2": "Nate C.",
+          "a1": 22.5,
+          "a2": 6.5,
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "4",
+          "s2": "13",
+          "p1": "Beau",
+          "p2": "Bob",
+          "a1": 23,
+          "a2": 17.5,
+          "winner": "Bob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "5",
+          "s2": "12",
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "a1": 27.5,
+          "a2": 16,
+          "winner": "Nate M.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "6",
+          "s2": "11",
+          "p1": "Pat",
+          "p2": "Stacy",
+          "a1": 22,
+          "a2": 15,
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "7",
+          "s2": "10",
+          "p1": "Justin",
+          "p2": "Steven",
+          "a1": 21.5,
+          "a2": 23,
+          "winner": "Justin",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "8",
+          "s2": "9",
+          "p1": "Brett",
+          "p2": "Tyler",
+          "a1": 5,
+          "a2": 20,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        }
+      ]
     },
     {
       "round": 2,
-      "raceLabel": "Darlington",
+      "raceLabel": "Atlanta",
       "isCurrent": false,
-      "matchups": []
+      "matchups": [
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Brett",
+          "p2": "Nate C.",
+          "a1": 8,
+          "a2": 31,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Stacy",
+          "p2": "Nate M.",
+          "a1": 21.5,
+          "a2": 34,
+          "winner": "Stacy",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Bob",
+          "p2": "Jason",
+          "a1": 8.5,
+          "a2": 20,
+          "winner": "Bob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-0",
+          "s2": "1-0",
+          "p1": "Justin",
+          "p2": "Chris",
+          "a1": 17.5,
+          "a2": 14.5,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Tyler",
+          "p2": "Pat",
+          "a1": 25,
+          "a2": 16.5,
+          "winner": "Pat",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Rob",
+          "p2": "Beau",
+          "a1": 22,
+          "a2": 11.5,
+          "winner": "Beau",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Steven",
+          "p2": "Nick",
+          "a1": 13,
+          "a2": 18,
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-1",
+          "s2": "0-1",
+          "p1": "Russ",
+          "p2": "Don",
+          "a1": 15.5,
+          "a2": 21.5,
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        }
+      ]
     },
     {
       "round": 3,
-      "raceLabel": "Martinsville",
+      "raceLabel": "COTA",
       "isCurrent": false,
-      "matchups": []
+      "matchups": [
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Brett",
+          "p2": "Bob",
+          "a1": 23,
+          "a2": 36,
+          "winner": "Brett",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-0",
+          "s2": "2-0",
+          "p1": "Stacy",
+          "p2": "Chris",
+          "a1": 24.5,
+          "a2": 21.5,
+          "winner": "Chris",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Beau",
+          "p2": "Steven",
+          "a1": 23,
+          "a2": 21,
+          "winner": "Steven",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Nate C.",
+          "p2": "Pat",
+          "a1": 4.5,
+          "a2": 17.5,
+          "winner": "Nate C.",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Justin",
+          "p2": "Jason",
+          "a1": 16,
+          "a2": 15,
+          "winner": "Jason",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-1",
+          "s2": "1-1",
+          "p1": "Russ",
+          "p2": "Nate M.",
+          "a1": 10,
+          "a2": 16,
+          "winner": "Russ",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Nick",
+          "p2": "Rob",
+          "a1": 29.5,
+          "a2": 11,
+          "winner": "Rob",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-2",
+          "s2": "0-2",
+          "p1": "Tyler",
+          "p2": "Don",
+          "a1": 15,
+          "a2": 1.5,
+          "winner": "Don",
+          "p1RaceWinner": false,
+          "p2RaceWinner": true
+        }
+      ]
     },
     {
       "round": 4,
-      "raceLabel": "Bristol",
-      "isCurrent": false,
-      "matchups": []
+      "raceLabel": "Phoenix",
+      "isCurrent": true,
+      "matchups": [
+        {
+          "s1": "3-0",
+          "s2": "3-0",
+          "p1": "Brett",
+          "p2": "Chris",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Nate C.",
+          "p2": "Russ",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Jason",
+          "p2": "Steven",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "2-1",
+          "s2": "2-1",
+          "p1": "Stacy",
+          "p2": "Bob",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Don",
+          "p2": "Justin",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Rob",
+          "p2": "Pat",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "1-2",
+          "s2": "1-2",
+          "p1": "Beau",
+          "p2": "Nate M.",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        },
+        {
+          "s1": "0-3",
+          "s2": "0-3",
+          "p1": "Tyler",
+          "p2": "Nick",
+          "a1": null,
+          "a2": null,
+          "winner": "",
+          "p1RaceWinner": false,
+          "p2RaceWinner": false
+        }
+      ]
     }
   ]
 }
