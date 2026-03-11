@@ -1,9 +1,9 @@
 {
   "Beau": {
     "name": "Beau",
-    "paid": 0,
+    "paid": 180,
     "winnings": 25,
-    "balance": 155
+    "balance": -25
   },
   "Bob": {
     "name": "Bob",
@@ -31,9 +31,9 @@
   },
   "Jason": {
     "name": "Jason",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Justin": {
     "name": "Justin",
@@ -55,9 +55,9 @@
   },
   "Nick": {
     "name": "Nick",
-    "paid": 0,
+    "paid": 180,
     "winnings": 0,
-    "balance": 180
+    "balance": 0
   },
   "Pat": {
     "name": "Pat",
