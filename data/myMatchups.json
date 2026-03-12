@@ -1,1 +1,434 @@
-{}
+{
+  "Brett": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Brett",
+    "opponent": "Chris",
+    "youDrivers": [
+      "Shane van Gisbergen",
+      "Austin Cindric"
+    ],
+    "oppDrivers": [
+      "Chase Elliott",
+      "Austin Hill"
+    ],
+    "youNums": [
+      18,
+      3
+    ],
+    "oppNums": [
+      26,
+      27
+    ],
+    "youAvg": 22.5,
+    "oppAvg": 22,
+    "winner": "Chris",
+    "status": "active"
+  },
+  "Chris": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Chris",
+    "opponent": "Brett",
+    "youDrivers": [
+      "Chase Elliott",
+      "Austin Hill"
+    ],
+    "oppDrivers": [
+      "Shane van Gisbergen",
+      "Austin Cindric"
+    ],
+    "youNums": [
+      26,
+      27
+    ],
+    "oppNums": [
+      18,
+      3
+    ],
+    "youAvg": 22,
+    "oppAvg": 22.5,
+    "winner": "Chris",
+    "status": "active"
+  },
+  "Nate C.": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Nate C.",
+    "opponent": "Russ",
+    "youDrivers": [
+      "John H. Nemechek",
+      "Chase Briscoe"
+    ],
+    "oppDrivers": [
+      "Ryan Preece",
+      "Joey Logano"
+    ],
+    "youNums": [
+      15,
+      20
+    ],
+    "oppNums": [
+      13,
+      1
+    ],
+    "youAvg": 31,
+    "oppAvg": 22,
+    "winner": "Russ",
+    "status": "active"
+  },
+  "Russ": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Russ",
+    "opponent": "Nate C.",
+    "youDrivers": [
+      "Ryan Preece",
+      "Joey Logano"
+    ],
+    "oppDrivers": [
+      "John H. Nemechek",
+      "Chase Briscoe"
+    ],
+    "youNums": [
+      13,
+      1
+    ],
+    "oppNums": [
+      15,
+      20
+    ],
+    "youAvg": 22,
+    "oppAvg": 31,
+    "winner": "Russ",
+    "status": "active"
+  },
+  "Jason": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Jason",
+    "opponent": "Steven",
+    "youDrivers": [
+      "Zane Smith",
+      "Tyler Reddick"
+    ],
+    "oppDrivers": [
+      "Erik Jones",
+      "Denny Hamlin"
+    ],
+    "youNums": [
+      24,
+      8
+    ],
+    "oppNums": [
+      32,
+      11
+    ],
+    "youAvg": 17.5,
+    "oppAvg": 7.5,
+    "winner": "Steven",
+    "status": "active"
+  },
+  "Steven": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Steven",
+    "opponent": "Jason",
+    "youDrivers": [
+      "Erik Jones",
+      "Denny Hamlin"
+    ],
+    "oppDrivers": [
+      "Zane Smith",
+      "Tyler Reddick"
+    ],
+    "youNums": [
+      32,
+      11
+    ],
+    "oppNums": [
+      24,
+      8
+    ],
+    "youAvg": 7.5,
+    "oppAvg": 17.5,
+    "winner": "Steven",
+    "status": "active"
+  },
+  "Stacy": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Stacy",
+    "opponent": "Bob",
+    "youDrivers": [
+      "Kyle Larson",
+      "Carson Hocevar"
+    ],
+    "oppDrivers": [
+      "Ross Chastain",
+      "Daniel Suárez"
+    ],
+    "youNums": [
+      2,
+      7
+    ],
+    "oppNums": [
+      6,
+      4
+    ],
+    "youAvg": 11.5,
+    "oppAvg": 29,
+    "winner": "Stacy",
+    "status": "active"
+  },
+  "Bob": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Bob",
+    "opponent": "Stacy",
+    "youDrivers": [
+      "Ross Chastain",
+      "Daniel Suárez"
+    ],
+    "oppDrivers": [
+      "Kyle Larson",
+      "Carson Hocevar"
+    ],
+    "youNums": [
+      6,
+      4
+    ],
+    "oppNums": [
+      2,
+      7
+    ],
+    "youAvg": 29,
+    "oppAvg": 11.5,
+    "winner": "Stacy",
+    "status": "active"
+  },
+  "Don": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Don",
+    "opponent": "Justin",
+    "youDrivers": [
+      "Michael McDowell",
+      "Ryan Blaney"
+    ],
+    "oppDrivers": [
+      "Bubba Wallace",
+      "Austin Dillon"
+    ],
+    "youNums": [
+      16,
+      5
+    ],
+    "oppNums": [
+      28,
+      25
+    ],
+    "youAvg": 5,
+    "oppAvg": 11,
+    "winner": "Don",
+    "status": "active"
+  },
+  "Justin": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Justin",
+    "opponent": "Don",
+    "youDrivers": [
+      "Bubba Wallace",
+      "Austin Dillon"
+    ],
+    "oppDrivers": [
+      "Michael McDowell",
+      "Ryan Blaney"
+    ],
+    "youNums": [
+      28,
+      25
+    ],
+    "oppNums": [
+      16,
+      5
+    ],
+    "youAvg": 11,
+    "oppAvg": 5,
+    "winner": "Don",
+    "status": "active"
+  },
+  "Rob": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Rob",
+    "opponent": "Pat",
+    "youDrivers": [
+      "Anthony Alfredo",
+      "Chris Buescher"
+    ],
+    "oppDrivers": [
+      "Riley Herbst",
+      "AJ Allmendinger"
+    ],
+    "youNums": [
+      31,
+      17
+    ],
+    "oppNums": [
+      22,
+      23
+    ],
+    "youAvg": 23.5,
+    "oppAvg": 18.5,
+    "winner": "Pat",
+    "status": "active"
+  },
+  "Pat": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Pat",
+    "opponent": "Rob",
+    "youDrivers": [
+      "Riley Herbst",
+      "AJ Allmendinger"
+    ],
+    "oppDrivers": [
+      "Anthony Alfredo",
+      "Chris Buescher"
+    ],
+    "youNums": [
+      22,
+      23
+    ],
+    "oppNums": [
+      31,
+      17
+    ],
+    "youAvg": 18.5,
+    "oppAvg": 23.5,
+    "winner": "Pat",
+    "status": "active"
+  },
+  "Beau": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Beau",
+    "opponent": "Nate M.",
+    "youDrivers": [
+      "Todd Gilliland",
+      "William Byron"
+    ],
+    "oppDrivers": [
+      "Christopher Bell",
+      "Josh Berry"
+    ],
+    "youNums": [
+      30,
+      9
+    ],
+    "oppNums": [
+      12,
+      10
+    ],
+    "youAvg": 9.5,
+    "oppAvg": 17,
+    "winner": "Beau",
+    "status": "active"
+  },
+  "Nate M.": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Nate M.",
+    "opponent": "Beau",
+    "youDrivers": [
+      "Christopher Bell",
+      "Josh Berry"
+    ],
+    "oppDrivers": [
+      "Todd Gilliland",
+      "William Byron"
+    ],
+    "youNums": [
+      12,
+      10
+    ],
+    "oppNums": [
+      30,
+      9
+    ],
+    "youAvg": 17,
+    "oppAvg": 9.5,
+    "winner": "Beau",
+    "status": "active"
+  },
+  "Tyler": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Tyler",
+    "opponent": "Nick",
+    "youDrivers": [
+      "Ricky Stenhouse Jr.",
+      "Connor Zilisch"
+    ],
+    "oppDrivers": [
+      "Kyle Busch",
+      "Ty Gibbs"
+    ],
+    "youNums": [
+      21,
+      19
+    ],
+    "oppNums": [
+      29,
+      14
+    ],
+    "youAvg": 25.5,
+    "oppAvg": 10.5,
+    "winner": "Nick",
+    "status": "active"
+  },
+  "Nick": {
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4,
+    "you": "Nick",
+    "opponent": "Tyler",
+    "youDrivers": [
+      "Kyle Busch",
+      "Ty Gibbs"
+    ],
+    "oppDrivers": [
+      "Ricky Stenhouse Jr.",
+      "Connor Zilisch"
+    ],
+    "youNums": [
+      29,
+      14
+    ],
+    "oppNums": [
+      21,
+      19
+    ],
+    "youAvg": 10.5,
+    "oppAvg": 25.5,
+    "winner": "Nick",
+    "status": "active"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "current": {
-    "tournament": 2,
-    "round": 1,
-    "race": "Las Vegas"
+    "tournament": 1,
+    "round": 4,
+    "race": "Phoenix"
   },
   "roundsByKey": {
     "1||Daytona": {
@@ -315,7 +315,7 @@
           "a2": 22,
           "winner": "Russ",
           "p1RaceWinner": false,
-          "p2RaceWinner": true
+          "p2RaceWinner": false
         },
         {
           "s1": "2-1",
@@ -347,7 +347,7 @@
           "a1": 5,
           "a2": 11,
           "winner": "Don",
-          "p1RaceWinner": true,
+          "p1RaceWinner": false,
           "p2RaceWinner": false
         },
         {

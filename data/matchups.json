@@ -1,8 +1,8 @@
 {
   "current": {
-    "tournament": 2,
-    "race": "Las Vegas",
-    "round": 1
+    "tournament": 1,
+    "race": "Phoenix",
+    "round": 4
   },
   "races": {
     "1||Daytona": {
@@ -516,7 +516,7 @@
       "tournament": 1,
       "race": "Phoenix",
       "round": 4,
-      "raceWinnerDriver": "Ryan Blaney",
+      "raceWinnerDriver": "",
       "matchups": [
         {
           "p1": "Brett",
@@ -679,14 +679,6 @@
           ]
         }
       ],
-      "eliminated": []
-    },
-    "2||Las Vegas": {
-      "tournament": 2,
-      "race": "Las Vegas",
-      "round": 1,
-      "raceWinnerDriver": "",
-      "matchups": [],
       "eliminated": []
     }
   }
